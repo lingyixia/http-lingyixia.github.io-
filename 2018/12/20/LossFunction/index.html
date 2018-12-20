@@ -29,14 +29,14 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="为什么使用交叉熵损失函数而不是二次代价函数">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/assets/img/firstloss.jpg">
-<meta property="og:image" content="http://yoursite.com/assets/img/secondloss.jpg">
-<meta property="og:image" content="http://yoursite.com/assets/img/sigmoid.jpg">
-<meta property="og:updated_time" content="2018-10-29T02:50:04.113Z">
+<meta property="og:image" content="http://yoursite.com/img/firstloss.jpg">
+<meta property="og:image" content="http://yoursite.com/img/secondloss.jpg">
+<meta property="og:image" content="http://yoursite.com/img/sigmoid.jpg">
+<meta property="og:updated_time" content="2018-12-20T10:01:24.065Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为什么使用交叉熵损失函数">
 <meta name="twitter:description" content="为什么使用交叉熵损失函数而不是二次代价函数">
-<meta name="twitter:image" content="http://yoursite.com/assets/img/firstloss.jpg">
+<meta name="twitter:image" content="http://yoursite.com/img/firstloss.jpg">
     
         <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
     
@@ -207,14 +207,14 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/assets/img/firstloss.jpg" alt="" title="">
+                    <img src="/img/firstloss.jpg" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure>  
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/assets/img/secondloss.jpg" alt="" title="">
+                    <img src="/img/secondloss.jpg" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure>   
@@ -226,10 +226,7 @@
 </li>
 </ol>
 <p>下面计算两种损失函数,eg:$y$是真实值,$\hat y$是计算值,$z=wx+b$,$\hat y = \sigma (z)$  </p>
-<h2 id="二次代价损失函数"><a href="#二次代价损失函数" class="headerlink" title="二次代价损失函数"></a>二次代价损失函数</h2><p>$$<br>C=\frac{1}{2n}\sum_x|y-\hat y |^2<br>$$</p>
-<p>以一个样本为例:  </p>
-<p>$$<br>L=\frac{(y-\hat y)^2}{2}<br>$$</p>
-<p>则有</p>
+<h2 id="二次代价损失函数"><a href="#二次代价损失函数" class="headerlink" title="二次代价损失函数"></a>二次代价损失函数</h2><p>$$<br>C=\frac{1}{2n}\sum_x|y-\hat y |^2<br>$$<br>以一个样本为例:<br>$$<br>L=\frac{(y-\hat y)^2}{2}<br>$$<br>则有</p>
 <p>$$<br>\begin{align}<br>\frac{\partial L}{\partial w} &amp;=\frac{\partial L}{\partial \hat y} \frac{\partial \hat y}{\partial z} \frac{\partial z}{\partial w} \<br>&amp;=(\hat y-y) \sigma\prime(x)x<br>\end{align}<br>$$</p>
 <p>$$<br>\begin{align}<br>\frac{\partial L}{\partial w} &amp;=\frac{\partial L}{\partial \hat y} \frac{\partial \hat y}{\partial z} \<br>&amp;=(\hat y-y) \sigma\prime(x)<br>\end{align}<br>$$</p>
 <blockquote>
@@ -237,7 +234,7 @@
 <p>其中，z表示神经元的输入，表示激活函数。从以上公式可以看出，w和b的梯度跟激活函数的梯度成正比，激活函数的梯度越大，w和b的大小调整得越快，训练收敛得就越快。而神经网络常用的激活函数为sigmoid函数，该函数的曲线如下所示:  </p>
 </blockquote>
 </blockquote>
-<p><img src="/assets/img/sigmoid.jpg" alt="">  </p>
+<p><img src="/img/sigmoid.jpg" alt="">  </p>
 <blockquote>
 <blockquote>
 <p>如图所示，实验2的初始输出值（0.98）对应的梯度明显小于实验1的输出值（0.82），因此实验2的参数梯度下降得比实验1慢。这就是初始的代价（误差）越大，导致训练越慢的原因。与我们的期望不符，即：不能像人一样，错误越大，改正的幅度越大，从而学习得越快。  </p>
@@ -275,7 +272,7 @@
     <div class="content">
         
 <span class="post-time">
-    最終更新：<time datetime="2018-10-29T02:50:04.113Z" itemprop="dateUpdated">2018-10-29 10:50:04</time>
+    最終更新：<time datetime="2018-12-20T10:01:24.065Z" itemprop="dateUpdated">2018-12-20 18:01:24</time>
 </span><br>
 
 
