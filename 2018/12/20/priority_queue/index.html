@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="C++优先队列简单简单介绍">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-29T02:50:04.120Z">
+<meta property="og:updated_time" content="2018-12-20T12:58:43.604Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++优先队列">
 <meta name="twitter:description" content="C++优先队列简单简单介绍">
@@ -150,7 +150,7 @@
 </time>
 
 
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/基础/">基础</a></li></ul>
 
             
         </h5>
@@ -164,6 +164,13 @@
 
 <div class="container body-wrap">
     
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#include"><span class="post-toc-number">1.</span> <span class="post-toc-text">include</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#include-1"><span class="post-toc-number">2.</span> <span class="post-toc-text">include</span></a></li></ol>
+        </nav>
+    </aside>
+
 
 <article id="post-priority_queue" class="post-article article-type-post fade" itemprop="blogPost">
 
@@ -173,7 +180,7 @@
             <time class="post-time" title="2018-12-20 16:05:09" datetime="2018-12-20T08:05:09.664Z" itemprop="datePublished">2018-12-20</time>
 
             
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/基础/">基础</a></li></ul>
 
 
 
@@ -204,9 +211,8 @@
 </blockquote>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">struct Node</span><br><span class="line">&#123;</span><br><span class="line">	int val;</span><br><span class="line">	Node(int val) :val(val) &#123;&#125;</span><br><span class="line">	bool operator &lt;(Node a) const &#123; return val &lt; a.val; &#125;</span><br><span class="line">	bool operator &gt;(Node a) const &#123; return val &gt; a.val; &#125;</span><br><span class="line">&#125;;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">第二种:</span><br></pre></td></tr></table></figure>
-<p>#include<iostream></iostream></p>
-<p>#include<queue><br>using namespace std;<br>struct Node<br>{<br>    int val;<br>    Node(int val) :val(val) {}</queue></p>
-<p>};<br>struct cmp<br>{<br>    bool operator()(Node a, Node b)<br>    {<br>        return a.val &lt; b.val;<br>    }<br>};<br>int main()<br>{<br>    priority_queue&lt;Node,vector<node>,cmp&gt; A;                    //大根堆<br>    priority_queue&lt;Node, vector<node>, less<node> &gt; B;    //小根堆<br>    A.push(Node(1));<br>    A.push(Node(9));<br>    A.push(Node(4));<br>    cout &lt;&lt; A.top().val &lt;&lt; endl;<br>    A.pop();<br>    cout &lt;&lt; A.top().val &lt;&lt; endl;<br>    A.pop();<br>    cout &lt;&lt; A.top().val &lt;&lt; endl;<br>    A.pop();<br>    return 0;<br>}<br><code>`</code></node></node></node></p>
+<h1 id="include"><a href="#include" class="headerlink" title="include"></a>include<iostream></iostream></h1><h1 id="include-1"><a href="#include-1" class="headerlink" title="include"></a>include<queue></queue></h1><p>using namespace std;<br>struct Node<br>{<br>    int val;<br>    Node(int val) :val(val) {}</p>
+<p>};<br>struct cmp<br>{<br>    bool operator()(Node a, Node b)<br>    {<br>        return a.val &lt; b.val;<br>    }<br>};<br>int main()<br>{<br>    priority_queue<node,vector<node>,cmp&gt; A;                    //大根堆<br>    priority_queue<node, vector<node="">, less<node> &gt; B;    //小根堆<br>    A.push(Node(1));<br>    A.push(Node(9));<br>    A.push(Node(4));<br>    cout &lt;&lt; A.top().val &lt;&lt; endl;<br>    A.pop();<br>    cout &lt;&lt; A.top().val &lt;&lt; endl;<br>    A.pop();<br>    cout &lt;&lt; A.top().val &lt;&lt; endl;<br>    A.pop();<br>    return 0;<br>}<br>```</node></node,></node,vector<node></p>
 
         </div>
 
@@ -215,7 +221,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-10-29T02:50:04.120Z" itemprop="dateUpdated">2018-10-29 10:50:04</time>
+    最后更新时间：<time datetime="2018-12-20T12:58:43.604Z" itemprop="dateUpdated">2018-12-20 20:58:43</time>
 </span><br>
 
 

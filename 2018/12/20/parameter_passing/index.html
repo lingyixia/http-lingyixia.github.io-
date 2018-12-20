@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="C++三种参数传递方式">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-29T02:50:04.119Z">
+<meta property="og:updated_time" content="2018-12-20T12:58:35.323Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++参数传递方式">
 <meta name="twitter:description" content="C++三种参数传递方式">
@@ -150,7 +150,7 @@
 </time>
 
 
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/基础/">基础</a></li></ul>
 
             
         </h5>
@@ -180,7 +180,7 @@
             <time class="post-time" title="2018-12-20 16:05:09" datetime="2018-12-20T08:05:09.648Z" itemprop="datePublished">2018-12-20</time>
 
             
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/基础/">基础</a></li></ul>
 
 
 
@@ -199,11 +199,7 @@
 <blockquote>
 <blockquote>
 <p>实质是传递地址的值，即地址的‘值传递’</p>
-</blockquote>
-</blockquote>
 <h3 id="引用传递"><a href="#引用传递" class="headerlink" title="引用传递"></a>引用传递</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">void fun(int &amp;x)</span><br><span class="line">&#123;</span><br><span class="line">   x += 5; //修改的是x引用的对象值 &amp;x = y;</span><br><span class="line">&#125;</span><br><span class="line">void main(void)</span><br><span class="line">&#123;</span><br><span class="line">int y = 0;</span><br><span class="line">fun(y);</span><br><span class="line">cout&lt;&lt;&lt;&lt;\&quot;y = \&quot;&lt;&lt;y&lt;&lt;endl; //y = 5;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<blockquote>
 <p>实质是取别名，&amp;在C++中有两种作用，取别名和取地址（C中只有后者）,=号左边是引用，=号右边是取址。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a=3;  </span><br><span class="line">int &amp;b=a;//引用              </span><br><span class="line">int *p=&amp;a; //取地址</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 </blockquote>
@@ -216,7 +212,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-10-29T02:50:04.119Z" itemprop="dateUpdated">2018-10-29 10:50:04</time>
+    最后更新时间：<time datetime="2018-12-20T12:58:35.323Z" itemprop="dateUpdated">2018-12-20 20:58:35</time>
 </span><br>
 
 

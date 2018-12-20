@@ -20,9 +20,9 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="深度学习">
+    <meta name="keywords" content="CNN">
     <meta name="description" content="CNN的卷积层和普通神经网络全连接层对比">
-<meta name="keywords" content="深度学习">
+<meta name="keywords" content="CNN">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CNN理解">
 <meta property="og:url" content="http://yoursite.com/2018/12/20/CNN/index.html">
@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://yoursite.com/img/filter1.jpg">
 <meta property="og:image" content="http://yoursite.com/img/fullconnect.jpg">
 <meta property="og:image" content="http://yoursite.com/img/cnn.jpg">
-<meta property="og:updated_time" content="2018-12-20T11:40:29.876Z">
+<meta property="og:updated_time" content="2018-12-20T12:56:39.455Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CNN理解">
 <meta name="twitter:description" content="CNN的卷积层和普通神经网络全连接层对比">
@@ -155,7 +155,7 @@
 </time>
 
 
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
 
             
         </h5>
@@ -185,7 +185,7 @@
             <time class="post-time" title="2018-12-20 16:05:09" datetime="2018-12-20T08:05:09.630Z" itemprop="datePublished">2018-12-20</time>
 
             
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
 
 
 
@@ -227,7 +227,7 @@
 <p>参数数量为 $(3\times 3+1)\times n$</p>
 <h3 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h3><p>可以很明显的看出，其实两者相差并不很多，其实feather map数量就是全连接层中的神经元数量，由于每个神经元所含参数只有9个，不能像全连接(每个神经元36个参数)那样按照矩阵相乘想乘得到一个数字，因此是用卷积的方式得到一个feather map，卷积过程中36个数据<strong>共享</strong>9个参数。</p>
 <h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>1.很明显，通过卷积+池化+全连接层也能反向传播  </p>
-<ol start="2">
+<ol>
 <li>其实能学到东西，关键在于初始化$Weights$，在普通全连接神经网络中:  </li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def add_layer(inputs, in_size, out_size, activation_function=None):</span><br><span class="line">    Weights = tf.Variable(tf.random_normal([in_size, out_size]))</span><br><span class="line">    biases = tf.Variable(tf.zeros([1, out_size]) + 0.1)</span><br><span class="line">    Wx_plus_b = tf.matmul(inputs, Weights) + biases</span><br><span class="line">        output = tf.nn.dropout(output, keep_prob)</span><br><span class="line">    if activation_function is None:</span><br><span class="line">        outputs = Wx_plus_b</span><br><span class="line">    else:</span><br><span class="line">        outputs = activation_function(Wx_plus_b)</span><br><span class="line">    return outputs</span><br></pre></td></tr></table></figure>
@@ -242,7 +242,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-12-20T11:40:29.876Z" itemprop="dateUpdated">2018-12-20 19:40:29</time>
+    最后更新时间：<time datetime="2018-12-20T12:56:39.455Z" itemprop="dateUpdated">2018-12-20 20:56:39</time>
 </span><br>
 
 
@@ -268,7 +268,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/深度学习/">深度学习</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CNN/">CNN</a></li></ul>
 
 
             
