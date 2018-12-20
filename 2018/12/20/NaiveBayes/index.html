@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="朴素贝叶斯简介">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-20T11:54:55.921Z">
+<meta property="og:updated_time" content="2018-12-20T12:12:45.260Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="朴素贝叶斯">
 <meta name="twitter:description" content="朴素贝叶斯简介">
@@ -209,20 +209,20 @@
 <h4 id="后验概率最大化的含义"><a href="#后验概率最大化的含义" class="headerlink" title="后验概率最大化的含义"></a>后验概率最大化的含义</h4><p>先说结论：<strong>后验概率最大化</strong>的含义就是选择$0-1$损失函数时的<strong>期望风险最小化</strong>，下面证明这个结论：<br>首先$0-1$损失函数：</p>
 <script type="math/tex; mode=display">
 L(Y,f(X))= \begin{cases}
-1 & Y ≠ f(X)\\\\
-0 & Y=f(X) \\\\
+1 & Y ≠ f(X)\\
+0 & Y=f(X) \\
 \end{cases}</script><p>其中$Y$和$f(X)$分别是$X$的实际标签和计算所的标签，则期望风险函数为：</p>
 <script type="math/tex; mode=display">
 \begin{align}
-R_{exp}(f(X)) &= E[L(Y,f(X))] \\\\
-              &=\sum_{x=1}^N\sum_{k=1}^K[L(Y=c_k,f(X)]P(Y=c_k,X=x_i)\\\\
+R_{exp}(f(X)) &= E[L(Y,f(X))] \\
+              &=\sum_{x=1}^N\sum_{k=1}^K[L(Y=c_k,f(X)]P(Y=c_k,X=x_i)\\
               &=E_X(\sum_{k=1}^K[L(Y=c_k,f(X)]P(Y=c_k|X))
 \end{align}</script><p>意思就是先对确定$X=x$求<strong>条件期望</strong>,其实就是两层而来来算。<br>这样，针对确定的$X=x$而言：</p>
 <script type="math/tex; mode=display">
 \begin{align}
-f(x) &= arg\min_{y\subset\chi}\sum_{k=1}^KL(Y=c_k,f(X)=y)P(Y=c_k,|X=x) \\\\
+f(x) &= arg\min_{y\subset\chi}\sum_{k=1}^KL(Y=c_k,f(X)=y)P(Y=c_k,|X=x) \\
      &= arg\min_{y\subset\chi}\sum_{k=1}^KP(Y≠c_k,|X=x) \\\\
-     &= arg\min_{y\subset\chi}\sum_{k=1}^K(1-P(Y=c_k,|X=x)) \\\\
+     &= arg\min_{y\subset\chi}\sum_{k=1}^K(1-P(Y=c_k,|X=x)) \\
      &= arg\max_{y\subset\chi}\sum_{k=1}^KP(Y=c_k,|X=x)
 \end{align}</script><p>由此，我们从<strong>期望风险最小化</strong>入手，最终得到了<strong>后验概率最小化</strong>，即朴素贝叶斯的原理。</p>
 
@@ -233,7 +233,7 @@ f(x) &= arg\min_{y\subset\chi}\sum_{k=1}^KL(Y=c_k,f(X)=y)P(Y=c_k,|X=x) \\\\
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2018-12-20T11:54:55.921Z" itemprop="dateUpdated">2018-12-20 19:54:55</time>
+    Last updated: <time datetime="2018-12-20T12:12:45.260Z" itemprop="dateUpdated">2018-12-20 20:12:45</time>
 </span><br>
 
 
