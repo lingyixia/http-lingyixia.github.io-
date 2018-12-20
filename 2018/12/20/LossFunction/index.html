@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://yoursite.com/img/firstloss.jpg">
 <meta property="og:image" content="http://yoursite.com/img/secondloss.jpg">
 <meta property="og:image" content="http://yoursite.com/img/sigmoid.jpg">
-<meta property="og:updated_time" content="2018-12-20T10:01:24.065Z">
+<meta property="og:updated_time" content="2018-12-20T11:57:51.320Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为什么使用交叉熵损失函数">
 <meta name="twitter:description" content="为什么使用交叉熵损失函数而不是二次代价函数">
@@ -130,7 +130,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="検索">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -226,10 +226,19 @@
 </li>
 </ol>
 <p>下面计算两种损失函数,eg:$y$是真实值,$\hat y$是计算值,$z=wx+b$,$\hat y = \sigma (z)$  </p>
-<h2 id="二次代价损失函数"><a href="#二次代价损失函数" class="headerlink" title="二次代价损失函数"></a>二次代价损失函数</h2><p>$$<br>C=\frac{1}{2n}\sum_x|y-\hat y |^2<br>$$<br>以一个样本为例:<br>$$<br>L=\frac{(y-\hat y)^2}{2}<br>$$<br>则有</p>
-<p>$$<br>\begin{align}<br>\frac{\partial L}{\partial w} &amp;=\frac{\partial L}{\partial \hat y} \frac{\partial \hat y}{\partial z} \frac{\partial z}{\partial w} \<br>&amp;=(\hat y-y) \sigma\prime(x)x<br>\end{align}<br>$$</p>
-<p>$$<br>\begin{align}<br>\frac{\partial L}{\partial w} &amp;=\frac{\partial L}{\partial \hat y} \frac{\partial \hat y}{\partial z} \<br>&amp;=(\hat y-y) \sigma\prime(x)<br>\end{align}<br>$$</p>
-<blockquote>
+<h2 id="二次代价损失函数"><a href="#二次代价损失函数" class="headerlink" title="二次代价损失函数"></a>二次代价损失函数</h2><script type="math/tex; mode=display">
+C=\frac{1}{2n}\sum_x|y-\hat y |^2</script><p>以一个样本为例:  </p>
+<script type="math/tex; mode=display">
+L=\frac{(y-\hat y)^2}{2}</script><p>则有</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial L}{\partial w} &=\frac{\partial L}{\partial \hat y} \frac{\partial \hat y}{\partial z} \frac{\partial z}{\partial w} \\
+&=(\hat y-y) \sigma\prime(x)x
+\end{align}</script><script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial L}{\partial w} &=\frac{\partial L}{\partial \hat y} \frac{\partial \hat y}{\partial z} \\
+&=(\hat y-y) \sigma\prime(x)
+\end{align}</script><blockquote>
 <blockquote>
 <p>其中，z表示神经元的输入，表示激活函数。从以上公式可以看出，w和b的梯度跟激活函数的梯度成正比，激活函数的梯度越大，w和b的大小调整得越快，训练收敛得就越快。而神经网络常用的激活函数为sigmoid函数，该函数的曲线如下所示:  </p>
 </blockquote>
@@ -240,30 +249,40 @@
 <p>如图所示，实验2的初始输出值（0.98）对应的梯度明显小于实验1的输出值（0.82），因此实验2的参数梯度下降得比实验1慢。这就是初始的代价（误差）越大，导致训练越慢的原因。与我们的期望不符，即：不能像人一样，错误越大，改正的幅度越大，从而学习得越快。  </p>
 </blockquote>
 </blockquote>
-<h2 id="交叉熵损失函数"><a href="#交叉熵损失函数" class="headerlink" title="交叉熵损失函数"></a>交叉熵损失函数</h2><p>$$<br>C=\frac{1}{n}\sum_x[y\ln \hat y+(1-y)\ln (1-\hat y)]<br>$$</p>
-<p>以一个样本为例:  </p>
-<p>$$<br>L=-\sum_x[y\ln \hat y+(1-y)\ln (1-\hat y)]<br>$$</p>
-<p>则有</p>
-<p>$$<br>\begin{align}<br>\frac{\partial L}{\partial w}&amp;=-\sum_x[\frac{y}{\hat y}-\frac{(1-y)}{1-\hat y}] \frac{\partial \hat y}{\partial z}\frac{\partial z}{\partial w}\<br>&amp;=-\sum_x[\frac{y}{\hat y}-\frac{(1-y)}{1-\hat y}]\sigma \prime(x)x\<br>&amp;=-\sum_x[\frac{y- \sigma (x)}{\sigma(x)(1-\sigma(x))}] \sigma \prime(x) x \<br>&amp;= -\sum_x[y-\sigma(x)]x<br>\end{align}<br>$$</p>
-<p>$$<br>\begin{align}<br>\frac{\partial L}{\partial b}&amp;=-\sum_x[y-\sigma(x)]<br>\end{align}<br>$$</p>
-<blockquote>
+<h2 id="交叉熵损失函数"><a href="#交叉熵损失函数" class="headerlink" title="交叉熵损失函数"></a>交叉熵损失函数</h2><script type="math/tex; mode=display">
+C=\frac{1}{n}\sum_x[y\ln \hat y+(1-y)\ln (1-\hat y)]</script><p>以一个样本为例:  </p>
+<script type="math/tex; mode=display">
+L=-\sum_x[y\ln \hat y+(1-y)\ln (1-\hat y)]</script><p>则有</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial L}{\partial w}&=-\sum_x[\frac{y}{\hat y}-\frac{(1-y)}{1-\hat y}] \frac{\partial \hat y}{\partial z}\frac{\partial z}{\partial w}\\
+&=-\sum_x[\frac{y}{\hat y}-\frac{(1-y)}{1-\hat y}]\sigma \prime(x)x\\
+&=-\sum_x[\frac{y- \sigma (x)}{\sigma(x)(1-\sigma(x))}] \sigma \prime(x) x \\
+&= -\sum_x[y-\sigma(x)]x
+\end{align}</script><script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial L}{\partial b}&=-\sum_x[y-\sigma(x)]
+\end{align}</script><blockquote>
 <blockquote>
 <p>因此，$w$的梯度公式中$\sigma \prime (z)$原来的被消掉了;另外，该梯度公式中的表示输出值与实际值之间的误差。所以，当误差越大，梯度就越大，参数$w$调整得越快，训练速度也就越快,$b$的梯度同理.</p>
 </blockquote>
 </blockquote>
 <h2 id="交叉熵函数来源"><a href="#交叉熵函数来源" class="headerlink" title="交叉熵函数来源"></a>交叉熵函数来源</h2><p>以$w$的偏导为例:在二次代价函数中:</p>
-<p>$$<br>\frac{\partial L}{\partial w} = (\hat y - y) \sigma \prime(x) x<br>$$</p>
-<p>为了消除$\sigma \prime(x)$,我们令要计算的$w$偏导为:</p>
-<p>$$<br>\frac{\partial L}{\partial w} = (\hat y - y) x<br>$$</p>
-<p>而$w$偏导实际计算为:</p>
-<p>$$<br>\begin{align}<br>\frac{\partial L}{\partial w} &amp;=\frac{\partial L}{\partial \hat y}\sigma \prime(x)x \<br>&amp;=\frac{\partial L}{\partial \hat y}\hat y(1-\hat y) x \<br>\end{align}<br>$$</p>
-<p>则:</p>
-<p>$$<br>\frac{\partial L}{\partial \hat y}\hat y(1-\hat y) x= (\hat y - y) x<br>$$</p>
-<p>x被消掉得:</p>
-<p>$$<br>\frac{\partial L}{\partial \hat y} = \frac{\hat y-y}{(1-\hat y)\hat y}<br>$$</p>
-<p>求积分得:</p>
-<p>$$<br>L=-[y \ln \hat y +(1-y) \ln (1- \hat y)]<br>$$</p>
-<p>即交叉熵函数.</p>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial w} = (\hat y - y) \sigma \prime(x) x</script><p>为了消除$\sigma \prime(x)$,我们令要计算的$w$偏导为:</p>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial w} = (\hat y - y) x</script><p>而$w$偏导实际计算为:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial L}{\partial w} &=\frac{\partial L}{\partial \hat y}\sigma \prime(x)x \\
+&=\frac{\partial L}{\partial \hat y}\hat y(1-\hat y) x \\
+\end{align}</script><p>则:</p>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial \hat y}\hat y(1-\hat y) x= (\hat y - y) x</script><p>x被消掉得:</p>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial \hat y} = \frac{\hat y-y}{(1-\hat y)\hat y}</script><p>求积分得:</p>
+<script type="math/tex; mode=display">
+L=-[y \ln \hat y +(1-y) \ln (1- \hat y)]</script><p>即交叉熵函数.</p>
 
         </div>
 
@@ -272,7 +291,7 @@
     <div class="content">
         
 <span class="post-time">
-    最終更新：<time datetime="2018-12-20T10:01:24.065Z" itemprop="dateUpdated">2018-12-20 18:01:24</time>
+    Last updated: <time datetime="2018-12-20T11:57:51.320Z" itemprop="dateUpdated">2018-12-20 19:57:51</time>
 </span><br>
 
 
