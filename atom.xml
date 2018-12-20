@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>灵翼俠的个人博客</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2018-12-20T07:37:33.489Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>陈飞宇</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>朴素贝叶斯</title>
+    <link href="http://yoursite.com/2018/12/20/NaiveBayes/"/>
+    <id>http://yoursite.com/2018/12/20/NaiveBayes/</id>
+    <published>2018-12-20T07:36:51.000Z</published>
+    <updated>2018-12-20T07:37:33.489Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>朴素贝叶斯简单推导</p></blockquote><h3 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h3><p>设输入空间$\chi\subseteq R^n$，为n维空间的集合，输出空间为类标记集合$\gamma={c_1,c_2,…,c_K}$，输入为特征向量$x\subset\chi$，输出为类标记$y\subset\gamma$，$X$是输入控件$\chi$上的随机向量,$Y$是定义在输出空间$\gamma$,$P(X,Y)$是$X$和$Y$的联合分布，训练数据集:</p><p>$$T={(x_1,y_1),(x_2,y_2),…(x_N,y_N)}$$</p><p>由$P(X,Y)$独立同分布产生(谨记：$(x_1,y_1)$中的$x_1\subset\chi$，即$x_1$是n维)。<br>现在需要用T训练贝叶斯模型，并判断$x’$的标签。</p><h3 id="问题探究"><a href="#问题探究" class="headerlink" title="问题探究"></a>问题探究</h3><p>显然，$x’$的标签可以$y_1$~$y_N$中任何一个，若一定要判断标签也等同于哪个标签的概率最高，即计算:</p><p>$$y=arg\max_{c_k}P(Y=c_k|X=x) \qquad k=1,2,3,…,K \tag{1}$$</p><p>已知:</p><p>$$P(Y=c_k|X=x)=\frac{P(X=x|Y=c_k)P(Y=c_k)}{\Sigma_kP(X=x|Y=c_k)P(Y=c_k)} \quad k=1,2,3,…K \tag{2}$$</p><p>其中，分母对于每个$c_k$都是相同的，略去不计算，只需计算:<br>$P(X=x|Y=c_k)P(Y=c_k)$<br>，即:</p><p>$$y=arg\max_{c_k}P(X=x|Y=c_k)P(Y=c_k) \qquad  k=1,2,3,…K \tag{3}$$</p><p>对于$P(Y=c_k)$只需要在给出的$T$中数出来即可，因此现在只需要计算$P(X=x|Y=c_k)$，这也是整个朴素贝叶斯过程最困难的一步，为什么说困难呢？<br>$P(X=x|y=c_k)$完整表示为$P(X^{(1)}=x^{(1)},X^{(2)}=x^{(2)},X^{(3)}=x^{(3)},….,X^{(N)}=x^{(N)}|Y=c_k)$<br>若和$P(Y=c_k)$一样只有一个维度，很容易数出来，但这里需要同时考虑N个维度，数的过程是相当复杂的，因此，朴素贝叶斯在此处做了条件<strong>独立性假设</strong>：</p><p>$$P(X=x|y=c_k)=\prod_{i=1}^n(X^{(i)}=x^{(i)}|Y=c_k) \qquad k=1,2,3,…K \tag{4}$$</p><p>这样就只需要同时考虑一个维度，简单了许多，最后将$(4)$带入$(3)$中得:</p><p>$$y=arg\max_{c_k}\prod_{i=1}^n(X^{(i)}=x^{(i)}|Y=c_k)P(Y=c_k) \qquad k=1,2,3,…K \tag{5}$$</p><p>至此朴素贝叶斯过程结束。</p><h3 id="名词谨记"><a href="#名词谨记" class="headerlink" title="名词谨记"></a>名词谨记</h3><p>1.先验概率:<br>$P(Y=c_k)$，即不管$X$，直接在$T$中数出来的概率</p><p>2.后验概率:<br>$arg\max_{c_k}P(Y=c_k|X=x)$，即考虑$X$的约束下，数出来的概率（注意：两个概率都是针对$Y$的概率）</p><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>其实前面已经可以说是整个朴素贝叶斯的过程，但是还要继续说明一个问题：<br>$(1)$式是整个朴素贝叶斯要计算的基本公式，我们可以看出，其实该公式就是后验概率，也就是说，朴素贝叶斯是一个<strong>后验概率最大化</strong>的过程。</p><p>####后验概率最大化的含义<br>先说结论：<strong>后验概率最大化</strong>的含义就是选择$0-1$损失函数时的<strong>期望风险最小化</strong>，下面证明这个结论：<br>首先$0-1$损失函数：</p><p>$$<br>L(Y,f(X))= \begin{cases}<br>1 &amp; Y ≠ f(X)\<br>0 &amp; Y=f(X) \<br>\end{cases}<br>$$</p><p>其中$Y$和$f(X)$分别是$X$的实际标签和计算所的标签，则期望风险函数为：</p><p>$$<br>\begin{align}<br>R_{exp}(f(X)) &amp;= E[L(Y,f(X))] \<br>              &amp;=\sum_{x=1}^N\sum_{k=1}^K[L(Y=c_k,f(X)]P(Y=c_k,X=x_i)\<br>              &amp;=E_X(\sum_{k=1}^K[L(Y=c_k,f(X)]P(Y=c_k|X))<br>\end{align}<br>$$</p><p>意思就是先对确定$X=x$求<strong>条件期望</strong>,其实就是两层而来来算。<br>这样，针对确定的$X=x$而言：</p><p>$$<br>\begin{align}<br>f(x) &amp;= arg\min_{y\subset\chi}\sum_{k=1}^KL(Y=c_k,f(X)=y)P(Y=c_k,|X=x) \<br>     &amp;= arg\min_{y\subset\chi}\sum_{k=1}^KP(Y≠c_k,|X=x) \<br>     &amp;= arg\min_{y\subset\chi}\sum_{k=1}^K(1-P(Y=c_k,|X=x)) \<br>     &amp;= arg\max_{y\subset\chi}\sum_{k=1}^KP(Y=c_k,|X=x)<br>\end{align}<br>$$</p><p>由此，我们从<strong>期望风险最小化</strong>入手，最终得到了<strong>后验概率最小化</strong>，即朴素贝叶斯的原理。</p>]]></content>
+    
+    <summary type="html">
+    
+      朴素贝叶斯简介
+    
+    </summary>
+    
+      <category term="技术" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="分类" scheme="http://yoursite.com/tags/%E5%88%86%E7%B1%BB/"/>
+    
+      <category term="无监督" scheme="http://yoursite.com/tags/%E6%97%A0%E7%9B%91%E7%9D%A3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://yoursite.com/2018/12/20/hello-world/"/>
+    <id>http://yoursite.com/2018/12/20/hello-world/</id>
+    <published>2018-12-20T07:31:44.079Z</published>
+    <updated>2018-12-20T07:31:44.080Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
