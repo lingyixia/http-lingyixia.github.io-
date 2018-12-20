@@ -77,26 +77,33 @@
             <li class="waves-block waves-effect">
               <a href="/archives">
                 <i class="icon icon-lg icon-archives"></i>
-                Archives
+                归档
               </a>
             </li>
         
             <li class="waves-block waves-effect">
               <a href="/tags">
                 <i class="icon icon-lg icon-tags"></i>
-                Tags
+                标签
               </a>
             </li>
         
             <li class="waves-block waves-effect">
               <a href="/categories">
                 <i class="icon icon-lg icon-th-list"></i>
-                Categories
+                类别
               </a>
             </li>
         
             <li class="waves-block waves-effect">
-              <a href="https://github.com/yscoder" target="_blank">
+              <a href="/about">
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/linngyixia" target="_blank">
                 <i class="icon icon-lg icon-github"></i>
                 Github
               </a>
@@ -133,7 +140,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -234,7 +241,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-12-20T07:37:33.489Z" itemprop="dateUpdated">2018-12-20 15:37:33</time>
+    Last updated: <time datetime="2018-12-20T07:37:33.489Z" itemprop="dateUpdated">2018-12-20 15:37:33</time>
 </span><br>
 
 
@@ -468,27 +475,6 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
 <script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
 
 
-
-<!-- mathjax config similar to math.stackexchange -->
-
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-        processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    }
-});
-
-MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-        all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-});
-</script>
-
-<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 
 
