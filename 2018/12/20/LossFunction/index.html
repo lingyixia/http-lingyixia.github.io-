@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>为什么使用交叉熵损失函数 | 灵翼俠的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="深度学习">
+    <meta name="description" content="为什么使用交叉熵损失函数而不是二次代价函数">
+<meta name="keywords" content="深度学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么使用交叉熵损失函数">
+<meta property="og:url" content="http://yoursite.com/2018/12/20/LossFunction/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="为什么使用交叉熵损失函数而不是二次代价函数">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/assets/img/firstloss.jpg">
+<meta property="og:image" content="http://yoursite.com/assets/img/secondloss.jpg">
+<meta property="og:image" content="http://yoursite.com/assets/img/sigmoid.jpg">
+<meta property="og:updated_time" content="2018-10-29T02:50:04.113Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为什么使用交叉熵损失函数">
+<meta name="twitter:description" content="为什么使用交叉熵损失函数而不是二次代价函数">
+<meta name="twitter:image" content="http://yoursite.com/assets/img/firstloss.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/linngyixia" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/custom">
+                <i class="icon icon-lg icon-link"></i>
+                测试
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">为什么使用交叉熵损失函数</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">为什么使用交叉熵损失函数</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-12-20T08:05:09.639Z" itemprop="datePublished" class="page-time">
+  2018-12-20
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前奏"><span class="post-toc-number">1.</span> <span class="post-toc-text">前奏</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#二次代价损失函数"><span class="post-toc-number">2.</span> <span class="post-toc-text">二次代价损失函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#交叉熵损失函数"><span class="post-toc-number">3.</span> <span class="post-toc-text">交叉熵损失函数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#交叉熵函数来源"><span class="post-toc-number">4.</span> <span class="post-toc-text">交叉熵函数来源</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-LossFunction" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">为什么使用交叉熵损失函数</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-12-20 16:05:09" datetime="2018-12-20T08:05:09.639Z" itemprop="datePublished">2018-12-20</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p>为什么使用交叉熵损失函数而不是二次代价函数</p>
+</blockquote>
+<p>本文基本转自<a href="https://blog.csdn.net/yuanjunliang/article/details/79394805" target="_blank" rel="noopener">这篇文章</a>，感谢作者</p>
+<h2 id="前奏"><a href="#前奏" class="headerlink" title="前奏"></a>前奏</h2><ol>
+<li><p>作为神经网络，应当具有自学习的能力，为了更好的模拟人学习的过程，神经网络的学习能力应当能够自我调整，当发现自己犯的错误越大时，改正的力度就越大。比如投篮：当运动员发现自己的投篮方向离正确方向越远，那么他调整的投篮角度就应该越大，篮球就更容易投进篮筐。这所谓的学习能力便体现在<strong>损失函数</strong>中，常见的损失函数有两种：<strong>二次代价函数</strong>和<strong>交叉熵损失函数</strong>，前者主要用在线性回归中，而在神经网络中主要用后者，下面我们来说明为什么。</p>
+</li>
+<li><p>以一个神经元的二类分类训练为例，进行两次实验,激活函数采用$sigmoid$：输入一个相同的样本数据x=1.0（该样本对应的实际分类y=0）；两次实验各自随机初始化参数，从而在各自的第一次前向传播后得到不同的输出值，形成不同的$Loss$：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/assets/img/firstloss.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>  
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/assets/img/secondloss.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>   
+<blockquote>
+<blockquote>
+<p>在实验1中，随机初始化参数，使得第一次输出值为0.82（该样本对应的实际值为0）;经过300次迭代训练后，输出值由0.82降到0.09，逼近实际值。而在实验2中，第一次输出值为0.98，同样经过300迭代训练，输出值只降到了0.20。<br>从两次实验的代价曲线中可以看出：实验1的代价随着训练次数增加而快速降低，但实验2的代价在一开始下降得非常缓慢；直观上看，初始的误差越大，收敛得越缓慢。  </p>
+</blockquote>
+</blockquote>
+</li>
+</ol>
+<p>下面计算两种损失函数,eg:$y$是真实值,$\hat y$是计算值,$z=wx+b$,$\hat y = \sigma (z)$  </p>
+<h2 id="二次代价损失函数"><a href="#二次代价损失函数" class="headerlink" title="二次代价损失函数"></a>二次代价损失函数</h2><p>$$<br>C=\frac{1}{2n}\sum_x|y-\hat y |^2<br>$$</p>
+<p>以一个样本为例:  </p>
+<p>$$<br>L=\frac{(y-\hat y)^2}{2}<br>$$</p>
+<p>则有</p>
+<p>$$<br>\begin{align}<br>\frac{\partial L}{\partial w} &amp;=\frac{\partial L}{\partial \hat y} \frac{\partial \hat y}{\partial z} \frac{\partial z}{\partial w} \<br>&amp;=(\hat y-y) \sigma\prime(x)x<br>\end{align}<br>$$</p>
+<p>$$<br>\begin{align}<br>\frac{\partial L}{\partial w} &amp;=\frac{\partial L}{\partial \hat y} \frac{\partial \hat y}{\partial z} \<br>&amp;=(\hat y-y) \sigma\prime(x)<br>\end{align}<br>$$</p>
+<blockquote>
+<blockquote>
+<p>其中，z表示神经元的输入，表示激活函数。从以上公式可以看出，w和b的梯度跟激活函数的梯度成正比，激活函数的梯度越大，w和b的大小调整得越快，训练收敛得就越快。而神经网络常用的激活函数为sigmoid函数，该函数的曲线如下所示:  </p>
+</blockquote>
+</blockquote>
+<p><img src="/assets/img/sigmoid.jpg" alt="">  </p>
+<blockquote>
+<blockquote>
+<p>如图所示，实验2的初始输出值（0.98）对应的梯度明显小于实验1的输出值（0.82），因此实验2的参数梯度下降得比实验1慢。这就是初始的代价（误差）越大，导致训练越慢的原因。与我们的期望不符，即：不能像人一样，错误越大，改正的幅度越大，从而学习得越快。  </p>
+</blockquote>
+</blockquote>
+<h2 id="交叉熵损失函数"><a href="#交叉熵损失函数" class="headerlink" title="交叉熵损失函数"></a>交叉熵损失函数</h2><p>$$<br>C=\frac{1}{n}\sum_x[y\ln \hat y+(1-y)\ln (1-\hat y)]<br>$$</p>
+<p>以一个样本为例:  </p>
+<p>$$<br>L=-\sum_x[y\ln \hat y+(1-y)\ln (1-\hat y)]<br>$$</p>
+<p>则有</p>
+<p>$$<br>\begin{align}<br>\frac{\partial L}{\partial w}&amp;=-\sum_x[\frac{y}{\hat y}-\frac{(1-y)}{1-\hat y}] \frac{\partial \hat y}{\partial z}\frac{\partial z}{\partial w}\<br>&amp;=-\sum_x[\frac{y}{\hat y}-\frac{(1-y)}{1-\hat y}]\sigma \prime(x)x\<br>&amp;=-\sum_x[\frac{y- \sigma (x)}{\sigma(x)(1-\sigma(x))}] \sigma \prime(x) x \<br>&amp;= -\sum_x[y-\sigma(x)]x<br>\end{align}<br>$$</p>
+<p>$$<br>\begin{align}<br>\frac{\partial L}{\partial b}&amp;=-\sum_x[y-\sigma(x)]<br>\end{align}<br>$$</p>
+<blockquote>
+<blockquote>
+<p>因此，$w$的梯度公式中$\sigma \prime (z)$原来的被消掉了;另外，该梯度公式中的表示输出值与实际值之间的误差。所以，当误差越大，梯度就越大，参数$w$调整得越快，训练速度也就越快,$b$的梯度同理.</p>
+</blockquote>
+</blockquote>
+<h2 id="交叉熵函数来源"><a href="#交叉熵函数来源" class="headerlink" title="交叉熵函数来源"></a>交叉熵函数来源</h2><p>以$w$的偏导为例:在二次代价函数中:</p>
+<p>$$<br>\frac{\partial L}{\partial w} = (\hat y - y) \sigma \prime(x) x<br>$$</p>
+<p>为了消除$\sigma \prime(x)$,我们令要计算的$w$偏导为:</p>
+<p>$$<br>\frac{\partial L}{\partial w} = (\hat y - y) x<br>$$</p>
+<p>而$w$偏导实际计算为:</p>
+<p>$$<br>\begin{align}<br>\frac{\partial L}{\partial w} &amp;=\frac{\partial L}{\partial \hat y}\sigma \prime(x)x \<br>&amp;=\frac{\partial L}{\partial \hat y}\hat y(1-\hat y) x \<br>\end{align}<br>$$</p>
+<p>则:</p>
+<p>$$<br>\frac{\partial L}{\partial \hat y}\hat y(1-\hat y) x= (\hat y - y) x<br>$$</p>
+<p>x被消掉得:</p>
+<p>$$<br>\frac{\partial L}{\partial \hat y} = \frac{\hat y-y}{(1-\hat y)\hat y}<br>$$</p>
+<p>求积分得:</p>
+<p>$$<br>L=-[y \ln \hat y +(1-y) \ln (1- \hat y)]<br>$$</p>
+<p>即交叉熵函数.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-10-29T02:50:04.113Z" itemprop="dateUpdated">2018-10-29 10:50:04</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2018/12/20/LossFunction/" target="_blank" rel="external">http://yoursite.com/2018/12/20/LossFunction/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/深度学习/">深度学习</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/12/20/LossFunction/&title=《为什么使用交叉熵损失函数》 — 灵翼俠的个人博客&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/12/20/LossFunction/&title=《为什么使用交叉熵损失函数》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/12/20/LossFunction/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《为什么使用交叉熵损失函数》 — 灵翼俠的个人博客&url=http://yoursite.com/2018/12/20/LossFunction/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/12/20/LossFunction/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/12/20/parameter_passing/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">C++参数传递方式</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/12/20/CNN/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">CNN理解</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2015 - 2018
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/12/20/LossFunction/&title=《为什么使用交叉熵损失函数》 — 灵翼俠的个人博客&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/12/20/LossFunction/&title=《为什么使用交叉熵损失函数》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/12/20/LossFunction/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《为什么使用交叉熵损失函数》 — 灵翼俠的个人博客&url=http://yoursite.com/2018/12/20/LossFunction/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/12/20/LossFunction/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLklEQVR42u3aQW4CMQwFUO5/abqtRCd82xRpkpcVgmmSNwvXsfN4xON5MX7/evX86zOvv66//9jAwMC4LeO5HJOFr2ZYz5/81R8rYmBgHMBINpFvvfrMeq313jAwMDDy0DmBJetiYGBgTAJunlDm32BgYGD0DrHridYH3WRbXzqLY2Bg3JCRV92///lf+hsYGBi3YjyLIwm180SwvCsMDIytGXmAy1O09WzNA+pyPxgYGOcw5sfIXsjOQ/kHbq5hYGDcnFG91JW8gupGRyU/DAyMAxj5pvOmZjlottJEDAyMvRnVQDkZyczVTA8DA+McxmSBXqlu0p2MojIGBsbWjCSZmzQ189dXaC1gYGBszehdlZikldXLZ4UXjYGBcQCjeqRMwmKyibyd+WZmDAyMTRm9yxOTZkM1xJeblxgYGNsxqiWzaouxmmj2jsoYGBjnMPJD7CQPzcPrv5/FMTAwbsLItzUJzUla+bE7IxgYGNsxklBYbVjmpGqIj143BgbGpozqcbFXyk8+V4+ylxkuBgbGpoxeG7I6w7zoFl22wMDA2JSRNCwnYTcvpTWP0BgYGJsynsXRC7W9Qlt+XQMDA2NvRjXYVa9z5clfNaznjQoMDIw9GL0gm5fGJpdf86QTAwPjBMakoD9pbfaQGBgYGL12Yx5G5zXCy8sWGBgYGK2a/PpF5Jdi37QuMDAwDmDkBbVquT9/vgfDwMA4gTFJ1HphtNfazP8NYGBgbMT4ATomvCol/lZFAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+</body>
+</html>

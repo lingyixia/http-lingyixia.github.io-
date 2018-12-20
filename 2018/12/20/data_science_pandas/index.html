@@ -14,25 +14,25 @@
     
     
     
-    <title>朴素贝叶斯 | 灵翼俠的个人博客</title>
+    <title>数据科学常用之Pandas | 灵翼俠的个人博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="机器学习,分类,无监督">
-    <meta name="description" content="朴素贝叶斯简介">
-<meta name="keywords" content="机器学习,分类,无监督">
+    <meta name="keywords" content="数据科学">
+    <meta name="description" content="数据科学常用Pandas函数">
+<meta name="keywords" content="数据科学">
 <meta property="og:type" content="article">
-<meta property="og:title" content="朴素贝叶斯">
-<meta property="og:url" content="http://yoursite.com/2018/12/20/NaiveBayes/index.html">
+<meta property="og:title" content="数据科学常用之Pandas">
+<meta property="og:url" content="http://yoursite.com/2018/12/20/data_science_pandas/index.html">
 <meta property="og:site_name" content="灵翼俠的个人博客">
-<meta property="og:description" content="朴素贝叶斯简介">
+<meta property="og:description" content="数据科学常用Pandas函数">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-20T07:37:33.489Z">
+<meta property="og:updated_time" content="2018-10-31T12:32:14.830Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="朴素贝叶斯">
-<meta name="twitter:description" content="朴素贝叶斯简介">
+<meta name="twitter:title" content="数据科学常用之Pandas">
+<meta name="twitter:description" content="数据科学常用Pandas函数">
     
         <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
     
@@ -127,7 +127,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">朴素贝叶斯</div>
+        <div class="flex-col header-title ellipsis">数据科学常用之Pandas</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -149,15 +149,15 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">朴素贝叶斯</h1>
+        <h1 class="title">数据科学常用之Pandas</h1>
         <h5 class="subtitle">
             
-                <time datetime="2018-12-20T07:36:51.000Z" itemprop="datePublished" class="page-time">
+                <time datetime="2018-12-20T08:05:09.673Z" itemprop="datePublished" class="page-time">
   2018-12-20
 </time>
 
 
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/pandas/">pandas</a></li></ul>
 
             
         </h5>
@@ -171,23 +171,16 @@
 
 <div class="container body-wrap">
     
-    <aside class="post-widget">
-        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
-            <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#问题定义"><span class="post-toc-number">1.</span> <span class="post-toc-text">问题定义</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#问题探究"><span class="post-toc-number">2.</span> <span class="post-toc-text">问题探究</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#名词谨记"><span class="post-toc-number">3.</span> <span class="post-toc-text">名词谨记</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#原理"><span class="post-toc-number">4.</span> <span class="post-toc-text">原理</span></a></li></ol>
-        </nav>
-    </aside>
 
-
-<article id="post-NaiveBayes" class="post-article article-type-post fade" itemprop="blogPost">
+<article id="post-data_science_pandas" class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">朴素贝叶斯</h1>
+        <h1 class="post-card-title">数据科学常用之Pandas</h1>
         <div class="post-meta">
-            <time class="post-time" title="2018-12-20 15:36:51" datetime="2018-12-20T07:36:51.000Z" itemprop="datePublished">2018-12-20</time>
+            <time class="post-time" title="2018-12-20 16:05:09" datetime="2018-12-20T08:05:09.673Z" itemprop="datePublished">2018-12-20</time>
 
             
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/pandas/">pandas</a></li></ul>
 
 
 
@@ -200,32 +193,9 @@
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             <blockquote>
-<p>朴素贝叶斯简单推导</p>
+<p>包含数据科学常用Pandas函数</p>
 </blockquote>
-<h3 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h3><p>设输入空间$\chi\subseteq R^n$，为n维空间的集合，输出空间为类标记集合$\gamma={c_1,c_2,…,c_K}$，输入为特征向量$x\subset\chi$，输出为类标记$y\subset\gamma$，$X$是输入控件$\chi$上的随机向量,$Y$是定义在输出空间$\gamma$,$P(X,Y)$是$X$和$Y$的联合分布，训练数据集:</p>
-<p>$$T={(x_1,y_1),(x_2,y_2),…(x_N,y_N)}$$</p>
-<p>由$P(X,Y)$独立同分布产生(谨记：$(x_1,y_1)$中的$x_1\subset\chi$，即$x_1$是n维)。<br>现在需要用T训练贝叶斯模型，并判断$x’$的标签。</p>
-<h3 id="问题探究"><a href="#问题探究" class="headerlink" title="问题探究"></a>问题探究</h3><p>显然，$x’$的标签可以$y_1$~$y_N$中任何一个，若一定要判断标签也等同于哪个标签的概率最高，即计算:</p>
-<p>$$y=arg\max_{c_k}P(Y=c_k|X=x) \qquad k=1,2,3,…,K \tag{1}$$</p>
-<p>已知:</p>
-<p>$$P(Y=c_k|X=x)=\frac{P(X=x|Y=c_k)P(Y=c_k)}{\Sigma_kP(X=x|Y=c_k)P(Y=c_k)} \quad k=1,2,3,…K \tag{2}$$</p>
-<p>其中，分母对于每个$c_k$都是相同的，略去不计算，只需计算:<br>$P(X=x|Y=c_k)P(Y=c_k)$<br>，即:</p>
-<p>$$y=arg\max_{c_k}P(X=x|Y=c_k)P(Y=c_k) \qquad  k=1,2,3,…K \tag{3}$$</p>
-<p>对于$P(Y=c_k)$只需要在给出的$T$中数出来即可，因此现在只需要计算$P(X=x|Y=c_k)$，这也是整个朴素贝叶斯过程最困难的一步，为什么说困难呢？<br>$P(X=x|y=c_k)$完整表示为$P(X^{(1)}=x^{(1)},X^{(2)}=x^{(2)},X^{(3)}=x^{(3)},….,X^{(N)}=x^{(N)}|Y=c_k)$<br>若和$P(Y=c_k)$一样只有一个维度，很容易数出来，但这里需要同时考虑N个维度，数的过程是相当复杂的，因此，朴素贝叶斯在此处做了条件<strong>独立性假设</strong>：</p>
-<p>$$P(X=x|y=c_k)=\prod_{i=1}^n(X^{(i)}=x^{(i)}|Y=c_k) \qquad k=1,2,3,…K \tag{4}$$</p>
-<p>这样就只需要同时考虑一个维度，简单了许多，最后将$(4)$带入$(3)$中得:</p>
-<p>$$y=arg\max_{c_k}\prod_{i=1}^n(X^{(i)}=x^{(i)}|Y=c_k)P(Y=c_k) \qquad k=1,2,3,…K \tag{5}$$</p>
-<p>至此朴素贝叶斯过程结束。</p>
-<h3 id="名词谨记"><a href="#名词谨记" class="headerlink" title="名词谨记"></a>名词谨记</h3><p>1.先验概率:<br>$P(Y=c_k)$，即不管$X$，直接在$T$中数出来的概率</p>
-<p>2.后验概率:<br>$arg\max_{c_k}P(Y=c_k|X=x)$，即考虑$X$的约束下，数出来的概率（注意：两个概率都是针对$Y$的概率）</p>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>其实前面已经可以说是整个朴素贝叶斯的过程，但是还要继续说明一个问题：<br>$(1)$式是整个朴素贝叶斯要计算的基本公式，我们可以看出，其实该公式就是后验概率，也就是说，朴素贝叶斯是一个<strong>后验概率最大化</strong>的过程。</p>
-<p>####后验概率最大化的含义<br>先说结论：<strong>后验概率最大化</strong>的含义就是选择$0-1$损失函数时的<strong>期望风险最小化</strong>，下面证明这个结论：<br>首先$0-1$损失函数：</p>
-<p>$$<br>L(Y,f(X))= \begin{cases}<br>1 &amp; Y ≠ f(X)\<br>0 &amp; Y=f(X) \<br>\end{cases}<br>$$</p>
-<p>其中$Y$和$f(X)$分别是$X$的实际标签和计算所的标签，则期望风险函数为：</p>
-<p>$$<br>\begin{align}<br>R_{exp}(f(X)) &amp;= E[L(Y,f(X))] \<br>              &amp;=\sum_{x=1}^N\sum_{k=1}^K[L(Y=c_k,f(X)]P(Y=c_k,X=x_i)\<br>              &amp;=E_X(\sum_{k=1}^K[L(Y=c_k,f(X)]P(Y=c_k|X))<br>\end{align}<br>$$</p>
-<p>意思就是先对确定$X=x$求<strong>条件期望</strong>,其实就是两层而来来算。<br>这样，针对确定的$X=x$而言：</p>
-<p>$$<br>\begin{align}<br>f(x) &amp;= arg\min_{y\subset\chi}\sum_{k=1}^KL(Y=c_k,f(X)=y)P(Y=c_k,|X=x) \<br>     &amp;= arg\min_{y\subset\chi}\sum_{k=1}^KP(Y≠c_k,|X=x) \<br>     &amp;= arg\min_{y\subset\chi}\sum_{k=1}^K(1-P(Y=c_k,|X=x)) \<br>     &amp;= arg\max_{y\subset\chi}\sum_{k=1}^KP(Y=c_k,|X=x)<br>\end{align}<br>$$</p>
-<p>由此，我们从<strong>期望风险最小化</strong>入手，最终得到了<strong>后验概率最小化</strong>，即朴素贝叶斯的原理。</p>
+<p>1.pd.set_option<br>[set_option文档地址]  (<a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.set_option.html?highlight=set_option#pandas.set_option" target="_blank" rel="noopener">http://pandas.pydata.org/pandas-docs/stable/generated/pandas.set_option.html?highlight=set_option#pandas.set_option</a>)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#显示所有列</span><br><span class="line">pd.set_option(&apos;display.max_columns&apos;, None)</span><br><span class="line">#显示所有行</span><br><span class="line">pd.set_option(&apos;display.max_rows&apos;, None)</span><br><span class="line">#设置value的显示长度为100，默认为50</span><br><span class="line">pd.set_option(&apos;max_colwidth&apos;,100)</span><br></pre></td></tr></table></figure></p>
 
         </div>
 
@@ -234,12 +204,12 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2018-12-20T07:37:33.489Z" itemprop="dateUpdated">2018-12-20 15:37:33</time>
+    Last updated: <time datetime="2018-10-31T12:32:14.830Z" itemprop="dateUpdated">2018-10-31 20:32:14</time>
 </span><br>
 
 
         
-        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2018/12/20/NaiveBayes/" target="_blank" rel="external">http://yoursite.com/2018/12/20/NaiveBayes/</a>
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2018/12/20/data_science_pandas/" target="_blank" rel="external">http://yoursite.com/2018/12/20/data_science_pandas/</a>
         
     </div>
     
@@ -260,7 +230,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分类/">分类</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/无监督/">无监督</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据科学/">数据科学</a></li></ul>
 
 
             
@@ -270,7 +240,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/12/20/NaiveBayes/&title=《朴素贝叶斯》 — 灵翼俠的个人博客&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/12/20/data_science_pandas/&title=《数据科学常用之Pandas》 — 灵翼俠的个人博客&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -280,22 +250,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/12/20/NaiveBayes/&title=《朴素贝叶斯》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/12/20/data_science_pandas/&title=《数据科学常用之Pandas》 — 灵翼俠的个人博客&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/12/20/NaiveBayes/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/12/20/data_science_pandas/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《朴素贝叶斯》 — 灵翼俠的个人博客&url=http://yoursite.com/2018/12/20/NaiveBayes/&via=http://yoursite.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《数据科学常用之Pandas》 — 灵翼俠的个人博客&url=http://yoursite.com/2018/12/20/data_science_pandas/&via=http://yoursite.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/12/20/NaiveBayes/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/12/20/data_science_pandas/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -318,13 +288,20 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2018/12/20/regression/" id="post-prev" class="post-nav-link">
+      <a href="/2018/12/20/jekyll_github_record/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">线性回归和逻辑回归对比</h4>
+        <h4 class="title">github博客小记</h4>
       </a>
     </div>
   
 
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/12/20/tensorflow_rnn/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Tensorflow中Rnn的实现</h4>
+      </a>
+    </div>
   
 </nav>
 
@@ -409,7 +386,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/12/20/NaiveBayes/&title=《朴素贝叶斯》 — 灵翼俠的个人博客&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/12/20/data_science_pandas/&title=《数据科学常用之Pandas》 — 灵翼俠的个人博客&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -419,22 +396,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/12/20/NaiveBayes/&title=《朴素贝叶斯》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/12/20/data_science_pandas/&title=《数据科学常用之Pandas》 — 灵翼俠的个人博客&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/12/20/NaiveBayes/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/12/20/data_science_pandas/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《朴素贝叶斯》 — 灵翼俠的个人博客&url=http://yoursite.com/2018/12/20/NaiveBayes/&via=http://yoursite.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《数据科学常用之Pandas》 — 灵翼俠的个人博客&url=http://yoursite.com/2018/12/20/data_science_pandas/&via=http://yoursite.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/12/20/NaiveBayes/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/12/20/data_science_pandas/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -445,7 +422,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABxklEQVR42u3ay4rDMAwF0Pz/T3dgtiHplRWrLRyvCnkddyGsx3HE6/W/rn6f1/nZq6eOHQsXF7fNfd2uM/GecnX//TsTAy4u7jw3CV75xtZC270BFxf3O7n51epTuLi4v8vNN9D/O3Bxcb+Bu3ZwWSuCdN6Pi4s7w+0XTPu/R+u7uLi4ja5EUjzNGyT3IS/6Oi4u7gh3LY1J2ifVZCkvoeLi4s5w8/ZJvr37jyVXo+QHFxd3M7dfDK0eg/Kk6E2VFxcXdxs3L2VWU521Aa9C3MXFxX2UWyhGxCEp30x+eCpUcXBxcR/iJgGldRBpdEkKNVdcXNyHuP1Wax6qOoUSXFzcSW7nIFId0uoPcuHi4s5wO+2NagjrFERwcXEnuWufz+uvSSqVvBMXF3eSmzdQ8xSlM4wV5Tu4uLibuXl6k7dg19qu0RdxcXEHudWQlKcx+dVCIMPFxR3h5itnVZsx5VYKLi7uNu5ae7XafK0eevLQiYuLu4+bB6/OEEYeyN4kVLi4uIPczhhWddhiy/EFFxf3Q9zqZqojGlFShIuL+4PchL54uMHFxR3nrhVJky3lLZnoTlxc3BFuNeNYK4VUcbi4uB/i/gHSCC7lCXRNOwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLklEQVR42u3ay26kQAwF0Pz/TxNpdtEkcG2TSJhTq1aLLjgs3H7Ux0e8jn8rv+b4YZ3v9v+VNy8MDIzHMo7TlTzi+TX5N/nr+IaKgYHxAkY1gN4ViHv7Y2BgYPx0+/NfVYNsvgMGBgbGJOAmJes8DcXAwMDIt56E5mT9US2OgYHxQEZ1MPCXn39xvoGBgfEQxlFcvYKzN+AsPBUGBsZqRt5KuzfJS3jll4WBgbGUkbfPcna1iZYXwFFqiIGBsY7Ra9Ynj1Jtn+WPfvG/gYGBsY4xKSDzcnR+FOPiGgwMjNWMJPjeNSS4q+bGwMB4G2PyQPeG12qm9+WOGBgYr2FMDo9WU8bCP0BSZmNgYKxmJKOCpHyt/ja/b3NggIGBsZQRncsYNMXK84q4lMXAwHgboxr48qMb5cMTxSNrGBgYuxn51r1RQbWpl48KvnyDgYGxlDE/ADEpPgvts/OSGAMD4wWMeUk5H3xWeYX5BgYGxsMZSfv+N9pqvWHDRTmNgYGxlFHdrtoO640zm2NLDAyM1YxeI2ySFPaC+0VSiIGBsZSRp3eT42LVQWk+2rxIEDEwMFYwjuKaN9p6DbiLF4GBgbGaUQ1w+XGK6khyPmDAwMDYzUiCbG+0OW+rFdJHDAyMFzDyoWP19j1edQiBgYGBUU0H503/ZLdmwMXAwHgNo5cC5iOEJPTfEHAxMDAexcib9b3RZvI6JjtjYGDsZswHA9WitxrKC4fDMDAwtjE+AfpbddOauTVXAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

@@ -14,7 +14,7 @@
     
     
     
-    <title>Tags: 分类 | 灵翼俠的个人博客</title>
+    <title>灵翼俠的个人博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -23,7 +23,7 @@
     <meta name="keywords" content="">
     <meta property="og:type" content="website">
 <meta property="og:title" content="灵翼俠的个人博客">
-<meta property="og:url" content="http://yoursite.com/tags/分类/index.html">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:locale" content="default">
 <meta name="twitter:card" content="summary">
@@ -76,7 +76,7 @@
               </a>
             </li>
         
-            <li class="waves-block waves-effect active">
+            <li class="waves-block waves-effect">
               <a href="/tags">
                 <i class="icon icon-lg icon-tags"></i>
                 标签
@@ -122,7 +122,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Tags: 分类</div>
+        <div class="flex-col header-title ellipsis">灵翼俠的个人博客</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -141,96 +141,147 @@
         
     </div>
 </header>
-<header class="content-header tags-header">
+<header class="content-header index-header">
 
     <div class="container fade-scale">
-        <h1 class="title">Tags: 分类</h1>
+        <h1 class="title">灵翼俠的个人博客</h1>
         <h5 class="subtitle">
+            
+                
             
         </h5>
     </div>
 
     
-<div class="tabs-bar container">
-    <nav class="tags-list">
-        <a href="/tags" style="-webkit-order:-1;order:-1" class="tags-list-item waves-effect waves-button waves-light
-            ">All</a>
-        
-
-            <a href="/tags/深度学习/" style="-webkit-order:11;order:11" class="tags-list-item waves-effect waves-button waves-light">深度学习</a>
-
-        
-
-            <a href="/tags/机器学习/" style="-webkit-order:0;order:0" class="tags-list-item waves-effect waves-button waves-light">机器学习</a>
-
-        
-
-            <a href="/tags/分类/" style="-webkit-order:1;order:1" class="tags-list-item waves-effect waves-button waves-light active">分类</a>
-
-        
-
-            <a href="/tags/无监督/" style="-webkit-order:2;order:2" class="tags-list-item waves-effect waves-button waves-light">无监督</a>
-
-        
-
-            <a href="/tags/C/" style="-webkit-order:3;order:3" class="tags-list-item waves-effect waves-button waves-light">C++</a>
-
-        
-
-            <a href="/tags/算法/" style="-webkit-order:4;order:4" class="tags-list-item waves-effect waves-button waves-light">算法</a>
-
-        
-
-            <a href="/tags/数据科学/" style="-webkit-order:5;order:5" class="tags-list-item waves-effect waves-button waves-light">数据科学</a>
-
-        
-
-            <a href="/tags/github/" style="-webkit-order:6;order:6" class="tags-list-item waves-effect waves-button waves-light">github</a>
-
-        
-
-            <a href="/tags/leetcode/" style="-webkit-order:7;order:7" class="tags-list-item waves-effect waves-button waves-light">leetcode</a>
-
-        
-
-            <a href="/tags/动态规划/" style="-webkit-order:8;order:8" class="tags-list-item waves-effect waves-button waves-light">动态规划</a>
-
-        
-
-            <a href="/tags/有监督/" style="-webkit-order:9;order:9" class="tags-list-item waves-effect waves-button waves-light">有监督</a>
-
-        
-
-            <a href="/tags/tensorflow/" style="-webkit-order:10;order:10" class="tags-list-item waves-effect waves-button waves-light">tensorflow</a>
-
-        
-    </nav>
-    <!-- PC show more-->
-    <div class="tags-list-more">
-        <a href="javascript:;" onclick="BLOG.tabBar(this)" class="action tags-list-item waves-effect waves-circle waves-light"><i class="icon icon-ellipsis-h"></i></a>
-    </div>
-</div>
-
 
 
 </header>
 
-<div class="container body-wrap fade">
+<div class="container body-wrap">
+
+    <ul class="post-list">
     
-            <div class="waterfall">
-          
+        <li class="post-list-item fade">
+            <article id="post-CNN" class="article-card article-type-post" itemprop="blogPost">
 
-            <div class="waterfall-item">
-  <article class="article-card archive-article">
     <div class="post-meta">
-      <time class="post-time" title="2018-12-20 16:05:09" datetime="2018-12-20T08:05:09.597Z" itemprop="datePublished">2018-12-20</time>
+        <time class="post-time" title="2018-12-20 16:05:09" datetime="2018-12-20T08:05:09.630Z" itemprop="datePublished">2018-12-20</time>
 
-      
+        
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
 
 
 
     </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/12/20/CNN/">CNN理解</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+CNN的卷积层和普通神经网络全连接层对比
+
+为了过渡，首先看一下这篇笔记   
+举例: 只有一个数据:$6\times6$,$Filter:3\times3$,如图所示:    
+
+                
+                    
+                    
+                
+                ($filter$是随机初...
+    
+
+        <a href="/2018/12/20/CNN/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/深度学习/">深度学习</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-entropy" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-12-20 16:05:09" datetime="2018-12-20T08:05:09.623Z" itemprop="datePublished">2018-12-20</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/12/20/entropy/">各种熵</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+熵(信息熵)、交叉熵和相对熵(KL散度)、条件熵
+
+熵(信息熵)
+信息熵有两个含义:1.系统包含的信息量的期望 2.定量描述该系统所需的编码长度的期望
+
+公式推导定性推导:设$h(x)$为$x$包含的信息量,如果我们有俩个不相关的事件$x$和$y$,那么我们观察到的俩个事件同时发生时获得的信息量应该等于观察到的事件各自发生时获得的信息量之和,即:$h(x,y) = h(x) + h(y)$...
+    
+
+        <a href="/2018/12/20/entropy/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-regression" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-12-20 16:05:09" datetime="2018-12-20T08:05:09.597Z" itemprop="datePublished">2018-12-20</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+    </div>
+
     
 
 
@@ -242,6 +293,26 @@
 
 
 
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+温故而知新啊，今天复习线性回归和逻辑回归，发现了以前没想过的东西,即为什么逻辑回归要用交叉熵函数。
+
+简单对比1.最终函数
+线性回归:
+$$f(x)_{w,b}=wx+b$$
+逻辑回归:
+$$P(Y=1|X)=\frac{e^{wx+b}}{1+e^{wx+b}}\P(Y=0|X)=\frac{1}{1+e^{wx+b}}$$
+令:
+$$f(x)_{w,b}=P(1|X)=\frac{e^...
+    
+
+        <a href="/2018/12/20/regression/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
     
     <div class="post-footer">
         
@@ -249,22 +320,23 @@
 
     </div>
     
-  </article>
-</div>
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
+            <article id="post-NaiveBayes" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-12-20 15:36:51" datetime="2018-12-20T07:36:51.000Z" itemprop="datePublished">2018-12-20</time>
 
         
-
-            <div class="waterfall-item">
-  <article class="article-card archive-article">
-    <div class="post-meta">
-      <time class="post-time" title="2018-12-20 15:36:51" datetime="2018-12-20T07:36:51.000Z" itemprop="datePublished">2018-12-20</time>
-
-      
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
 
 
 
     </div>
+
     
 
 
@@ -276,6 +348,20 @@
 
 
 
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+朴素贝叶斯简单推导
+
+问题定义设输入空间$\chi\subseteq R^n$，为n维空间的集合，输出空间为类标记集合$\gamma={c_1,c_2,…,c_K}$，输入为特征向量$x\subset\chi$，输出为类标记$y\subset\gamma$，$X$是输入控件$\chi$上的随机向量,$Y$是定义在输出空间$\gamma$,$P(X,Y)$是$X$和$Y$的联合分布，训练数据...
+    
+
+        <a href="/2018/12/20/NaiveBayes/" class="post-more waves-effect waves-button">
+            Continue reading...
+        </a>
+    </div>
     
     <div class="post-footer">
         
@@ -283,15 +369,21 @@
 
     </div>
     
-  </article>
-</div>
+</article>
 
-        
-            </div>
-        
+        </li>
     
-</div>
+    </ul>
 
+    
+<nav id="page-nav">
+    <div class="inner">
+    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </div>
+</nav>
+
+
+</div>
 
         <footer class="footer">
     <div class="bottom">
@@ -323,7 +415,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/tags/分类/&title=灵翼俠的个人博客&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/page/2/&title=灵翼俠的个人博客&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -333,22 +425,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/tags/分类/&title=灵翼俠的个人博客&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/page/2/&title=灵翼俠的个人博客&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/tags/分类/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/page/2/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=灵翼俠的个人博客&url=http://yoursite.com/tags/分类/&via=http://yoursite.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=灵翼俠的个人博客&url=http://yoursite.com/page/2/&via=http://yoursite.com" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/tags/分类/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/page/2/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -359,7 +451,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABy0lEQVR42u3awWrDMBAEUP//T7vQW6FKZ3ctJYXnUwi189TDYM3quuLr/r5ef17dtfqb1/eOLlxc3DH3fnmtiCtK797EgIuLe56bhNcKl1DyJf1hw8XF/TBu9dFJVOHi4v53brLV6W2KcHFxP5ObBE3++lJd/Ja9Gi4u7oD7VGE6+fyGfhcXF7c1lUhCLalQJ7/445m4uLhHuL3XlGRYksRW8i+4qu0LLi7uo9xkaJoMVOYHLMp7NVxc3IPcZyuPXhT+8g0uLu5mbrJp6dWp1WhLtli4uLhnuEk9Wn0ZymvW3hEuXFzc93KrR6l6r0fVKMTFxd3N3TGtrUILv4iLi3ucm8fKJOaS75dPw8XFPcLt1aB55ZGEIy4u7qdxq7XF/LBFfsBrOUrBxcXdzJ00KNVjmsk4Nok5XFzc3dx7fFXr1yQ0l0vCxcU9yM1HHeWKsxh5UZDh4uIe4VZjK6k+kyK1vAxcXNwj3PnoNGflm6IHhr64uLhjbi+AetmSBFl0PAsXF/cINx+y9gaxk1eZ0UwYFxd3Mzff/ORP2BhkuLi4B7l5PCV35cvAxcU9z62WpJN6tFqFNGsRXFzcAfepwjRZWO8VChcX9yD3C18FvlU1bqZ4AAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABx0lEQVR42u3aQW7DMAwEwP7/0y7QUw+1s2vJTAqMToGhSKMLQZH6+orH8TOuvx+/RvvfzQMXF3eZe1yOs6VX5iTfzw6Pi4s7yc2D1IvlLrn5UU+/4+Lifhj3+l/Xx2gDJS4u7n/hJpu1c3BxcT+Zm4DyLfOg9uBdDRcXd4HbFkyf+P1gfRcXF7fkHuVIglTeVql3x8XFHeHmJY8nZt67DuHi4s5zk0WT3GM9nYqarLi4uA9w86dUbWvk3vOLF7vj4uIOcvNQUjQ8brVMrpMeXFzcGW7bSmnLGW0Sk4RCXFzcGW6eymy4aZVdkqLDg4uLu4mbF0HapxJFATRvuOLi4o5w8+CyUmBtk5j2qLi4uHu57QUmL6PkGRYuLu7nc9fDWZv0JEVSXFzcSW6SlOT0e9ehvLSKi4s7w82D1Ia2R7z+6ZFwcXEHuUkLJAleLaWuguLi4g5y26JG+8yiDZF1JxYXF3crtw0obfE0mdm2e3FxcWe4efBaaZzkAfHFgXFxcQe5bfFipZC6OX3BxcV9Kzef0157HglkuLi4H8DN+7p5weWP9XFxcQe5bZE0b720bdptZRFcXNwF7sqNI39+0eJwcXHfxP0GEhklC9XK3vUAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 
