@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="https://lingyixia.github.io/about/"/>
   <updated>2018-10-29T02:50:04.121Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>https://lingyixia.github.io/about/</id>
   
   <author>
     <name>陈飞宇</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>股票最大利润</title>
-    <link href="http://yoursite.com/2018/12/20/leetcode_121/"/>
-    <id>http://yoursite.com/2018/12/20/leetcode_121/</id>
+    <link href="https://lingyixia.github.io/about/2018/12/20/leetcode_121/"/>
+    <id>https://lingyixia.github.io/about/2018/12/20/leetcode_121/</id>
     <published>2018-12-20T08:05:09.705Z</published>
     <updated>2018-10-29T02:50:04.121Z</updated>
     
@@ -31,19 +31,19 @@
     
     </summary>
     
-      <category term="算法" scheme="http://yoursite.com/categories/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://lingyixia.github.io/about/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="leetcode" scheme="http://yoursite.com/tags/leetcode/"/>
+      <category term="leetcode" scheme="https://lingyixia.github.io/about/tags/leetcode/"/>
     
-      <category term="动态规划" scheme="http://yoursite.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+      <category term="动态规划" scheme="https://lingyixia.github.io/about/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
     
   </entry>
   
   <entry>
     <title>背包问题</title>
-    <link href="http://yoursite.com/2018/12/20/backpack/"/>
-    <id>http://yoursite.com/2018/12/20/backpack/</id>
+    <link href="https://lingyixia.github.io/about/2018/12/20/backpack/"/>
+    <id>https://lingyixia.github.io/about/2018/12/20/backpack/</id>
     <published>2018-12-20T08:05:09.692Z</published>
     <updated>2018-12-20T12:57:48.156Z</updated>
     
@@ -55,21 +55,21 @@
     
     </summary>
     
-      <category term="算法" scheme="http://yoursite.com/categories/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://lingyixia.github.io/about/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="动态规划" scheme="http://yoursite.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+      <category term="动态规划" scheme="https://lingyixia.github.io/about/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
     
-      <category term="递归" scheme="http://yoursite.com/tags/%E9%80%92%E5%BD%92/"/>
+      <category term="递归" scheme="https://lingyixia.github.io/about/tags/%E9%80%92%E5%BD%92/"/>
     
-      <category term="背包" scheme="http://yoursite.com/tags/%E8%83%8C%E5%8C%85/"/>
+      <category term="背包" scheme="https://lingyixia.github.io/about/tags/%E8%83%8C%E5%8C%85/"/>
     
   </entry>
   
   <entry>
     <title>连续数组最大和</title>
-    <link href="http://yoursite.com/2018/12/20/leetcode_53/"/>
-    <id>http://yoursite.com/2018/12/20/leetcode_53/</id>
+    <link href="https://lingyixia.github.io/about/2018/12/20/leetcode_53/"/>
+    <id>https://lingyixia.github.io/about/2018/12/20/leetcode_53/</id>
     <published>2018-12-20T08:05:09.691Z</published>
     <updated>2018-10-29T02:50:04.120Z</updated>
     
@@ -81,19 +81,19 @@
     
     </summary>
     
-      <category term="算法" scheme="http://yoursite.com/categories/%E7%AE%97%E6%B3%95/"/>
+      <category term="算法" scheme="https://lingyixia.github.io/about/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="leetcode" scheme="http://yoursite.com/tags/leetcode/"/>
+      <category term="leetcode" scheme="https://lingyixia.github.io/about/tags/leetcode/"/>
     
-      <category term="动态规划" scheme="http://yoursite.com/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+      <category term="动态规划" scheme="https://lingyixia.github.io/about/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
     
   </entry>
   
   <entry>
     <title>C++数组长度</title>
-    <link href="http://yoursite.com/2018/12/20/cpp-array/"/>
-    <id>http://yoursite.com/2018/12/20/cpp-array/</id>
+    <link href="https://lingyixia.github.io/about/2018/12/20/cpp-array/"/>
+    <id>https://lingyixia.github.io/about/2018/12/20/cpp-array/</id>
     <published>2018-12-20T08:05:09.690Z</published>
     <updated>2018-12-20T12:56:50.442Z</updated>
     
@@ -105,19 +105,19 @@
     
     </summary>
     
-      <category term="基础" scheme="http://yoursite.com/categories/%E5%9F%BA%E7%A1%80/"/>
+      <category term="基础" scheme="https://lingyixia.github.io/about/categories/%E5%9F%BA%E7%A1%80/"/>
     
     
-      <category term="C++" scheme="http://yoursite.com/tags/C/"/>
+      <category term="C++" scheme="https://lingyixia.github.io/about/tags/C/"/>
     
-      <category term="坑" scheme="http://yoursite.com/tags/%E5%9D%91/"/>
+      <category term="坑" scheme="https://lingyixia.github.io/about/tags/%E5%9D%91/"/>
     
   </entry>
   
   <entry>
     <title>github博客小记</title>
-    <link href="http://yoursite.com/2018/12/20/jekyll_github_record/"/>
-    <id>http://yoursite.com/2018/12/20/jekyll_github_record/</id>
+    <link href="https://lingyixia.github.io/about/2018/12/20/jekyll_github_record/"/>
+    <id>https://lingyixia.github.io/about/2018/12/20/jekyll_github_record/</id>
     <published>2018-12-20T08:05:09.674Z</published>
     <updated>2018-12-20T12:55:58.435Z</updated>
     
@@ -129,17 +129,17 @@
     
     </summary>
     
-      <category term="github" scheme="http://yoursite.com/categories/github/"/>
+      <category term="github" scheme="https://lingyixia.github.io/about/categories/github/"/>
     
     
-      <category term="坑" scheme="http://yoursite.com/tags/%E5%9D%91/"/>
+      <category term="坑" scheme="https://lingyixia.github.io/about/tags/%E5%9D%91/"/>
     
   </entry>
   
   <entry>
     <title>数据科学常用之Pandas</title>
-    <link href="http://yoursite.com/2018/12/20/data_science_pandas/"/>
-    <id>http://yoursite.com/2018/12/20/data_science_pandas/</id>
+    <link href="https://lingyixia.github.io/about/2018/12/20/data_science_pandas/"/>
+    <id>https://lingyixia.github.io/about/2018/12/20/data_science_pandas/</id>
     <published>2018-12-20T08:05:09.673Z</published>
     <updated>2018-12-20T12:56:57.811Z</updated>
     
@@ -151,19 +151,19 @@
     
     </summary>
     
-      <category term="数据科学" scheme="http://yoursite.com/categories/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/"/>
+      <category term="数据科学" scheme="https://lingyixia.github.io/about/categories/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/"/>
     
     
-      <category term="pandas" scheme="http://yoursite.com/tags/pandas/"/>
+      <category term="pandas" scheme="https://lingyixia.github.io/about/tags/pandas/"/>
     
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+      <category term="python" scheme="https://lingyixia.github.io/about/tags/python/"/>
     
   </entry>
   
   <entry>
     <title>Tensorflow中Rnn的实现</title>
-    <link href="http://yoursite.com/2018/12/20/tensorflow_rnn/"/>
-    <id>http://yoursite.com/2018/12/20/tensorflow_rnn/</id>
+    <link href="https://lingyixia.github.io/about/2018/12/20/tensorflow_rnn/"/>
+    <id>https://lingyixia.github.io/about/2018/12/20/tensorflow_rnn/</id>
     <published>2018-12-20T08:05:09.668Z</published>
     <updated>2018-12-20T12:58:59.435Z</updated>
     
@@ -175,19 +175,19 @@
     
     </summary>
     
-      <category term="深度学习" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+      <category term="深度学习" scheme="https://lingyixia.github.io/about/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
     
-      <category term="tensorflow" scheme="http://yoursite.com/tags/tensorflow/"/>
+      <category term="tensorflow" scheme="https://lingyixia.github.io/about/tags/tensorflow/"/>
     
-      <category term="rnn" scheme="http://yoursite.com/tags/rnn/"/>
+      <category term="rnn" scheme="https://lingyixia.github.io/about/tags/rnn/"/>
     
   </entry>
   
   <entry>
     <title>C++优先队列</title>
-    <link href="http://yoursite.com/2018/12/20/priority_queue/"/>
-    <id>http://yoursite.com/2018/12/20/priority_queue/</id>
+    <link href="https://lingyixia.github.io/about/2018/12/20/priority_queue/"/>
+    <id>https://lingyixia.github.io/about/2018/12/20/priority_queue/</id>
     <published>2018-12-20T08:05:09.664Z</published>
     <updated>2018-12-20T12:58:43.604Z</updated>
     
@@ -199,17 +199,17 @@
     
     </summary>
     
-      <category term="基础" scheme="http://yoursite.com/categories/%E5%9F%BA%E7%A1%80/"/>
+      <category term="基础" scheme="https://lingyixia.github.io/about/categories/%E5%9F%BA%E7%A1%80/"/>
     
     
-      <category term="C++" scheme="http://yoursite.com/tags/C/"/>
+      <category term="C++" scheme="https://lingyixia.github.io/about/tags/C/"/>
     
   </entry>
   
   <entry>
     <title>C++参数传递方式</title>
-    <link href="http://yoursite.com/2018/12/20/parameter_passing/"/>
-    <id>http://yoursite.com/2018/12/20/parameter_passing/</id>
+    <link href="https://lingyixia.github.io/about/2018/12/20/parameter_passing/"/>
+    <id>https://lingyixia.github.io/about/2018/12/20/parameter_passing/</id>
     <published>2018-12-20T08:05:09.648Z</published>
     <updated>2018-12-20T12:58:35.323Z</updated>
     
@@ -221,17 +221,17 @@
     
     </summary>
     
-      <category term="基础" scheme="http://yoursite.com/categories/%E5%9F%BA%E7%A1%80/"/>
+      <category term="基础" scheme="https://lingyixia.github.io/about/categories/%E5%9F%BA%E7%A1%80/"/>
     
     
-      <category term="C++" scheme="http://yoursite.com/tags/C/"/>
+      <category term="C++" scheme="https://lingyixia.github.io/about/tags/C/"/>
     
   </entry>
   
   <entry>
     <title>为什么使用交叉熵损失函数</title>
-    <link href="http://yoursite.com/2018/12/20/LossFunction/"/>
-    <id>http://yoursite.com/2018/12/20/LossFunction/</id>
+    <link href="https://lingyixia.github.io/about/2018/12/20/LossFunction/"/>
+    <id>https://lingyixia.github.io/about/2018/12/20/LossFunction/</id>
     <published>2018-12-20T08:05:09.639Z</published>
     <updated>2018-12-20T12:58:11.864Z</updated>
     
@@ -243,19 +243,19 @@
     
     </summary>
     
-      <category term="深度学习" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+      <category term="深度学习" scheme="https://lingyixia.github.io/about/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
     
-      <category term="熵" scheme="http://yoursite.com/tags/%E7%86%B5/"/>
+      <category term="熵" scheme="https://lingyixia.github.io/about/tags/%E7%86%B5/"/>
     
-      <category term="损失函数" scheme="http://yoursite.com/tags/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/"/>
+      <category term="损失函数" scheme="https://lingyixia.github.io/about/tags/%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/"/>
     
   </entry>
   
   <entry>
     <title>CNN理解</title>
-    <link href="http://yoursite.com/2018/12/20/CNN/"/>
-    <id>http://yoursite.com/2018/12/20/CNN/</id>
+    <link href="https://lingyixia.github.io/about/2018/12/20/CNN/"/>
+    <id>https://lingyixia.github.io/about/2018/12/20/CNN/</id>
     <published>2018-12-20T08:05:09.630Z</published>
     <updated>2018-12-20T12:56:39.455Z</updated>
     
@@ -267,17 +267,17 @@
     
     </summary>
     
-      <category term="深度学习" scheme="http://yoursite.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+      <category term="深度学习" scheme="https://lingyixia.github.io/about/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
     
-      <category term="CNN" scheme="http://yoursite.com/tags/CNN/"/>
+      <category term="CNN" scheme="https://lingyixia.github.io/about/tags/CNN/"/>
     
   </entry>
   
   <entry>
     <title>各种熵</title>
-    <link href="http://yoursite.com/2018/12/20/entropy/"/>
-    <id>http://yoursite.com/2018/12/20/entropy/</id>
+    <link href="https://lingyixia.github.io/about/2018/12/20/entropy/"/>
+    <id>https://lingyixia.github.io/about/2018/12/20/entropy/</id>
     <published>2018-12-20T08:05:09.623Z</published>
     <updated>2018-12-20T12:57:01.789Z</updated>
     
@@ -289,17 +289,17 @@
     
     </summary>
     
-      <category term="机器学习" scheme="http://yoursite.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="机器学习" scheme="https://lingyixia.github.io/about/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
-      <category term="熵" scheme="http://yoursite.com/tags/%E7%86%B5/"/>
+      <category term="熵" scheme="https://lingyixia.github.io/about/tags/%E7%86%B5/"/>
     
   </entry>
   
   <entry>
     <title>线性回归和逻辑回归对比</title>
-    <link href="http://yoursite.com/2018/12/20/regression/"/>
-    <id>http://yoursite.com/2018/12/20/regression/</id>
+    <link href="https://lingyixia.github.io/about/2018/12/20/regression/"/>
+    <id>https://lingyixia.github.io/about/2018/12/20/regression/</id>
     <published>2018-12-20T08:05:09.597Z</published>
     <updated>2018-12-20T12:57:30.411Z</updated>
     
@@ -311,21 +311,21 @@
     
     </summary>
     
-      <category term="机器学习" scheme="http://yoursite.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="机器学习" scheme="https://lingyixia.github.io/about/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
-      <category term="分类" scheme="http://yoursite.com/tags/%E5%88%86%E7%B1%BB/"/>
+      <category term="分类" scheme="https://lingyixia.github.io/about/tags/%E5%88%86%E7%B1%BB/"/>
     
-      <category term="有监督" scheme="http://yoursite.com/tags/%E6%9C%89%E7%9B%91%E7%9D%A3/"/>
+      <category term="有监督" scheme="https://lingyixia.github.io/about/tags/%E6%9C%89%E7%9B%91%E7%9D%A3/"/>
     
-      <category term="回归" scheme="http://yoursite.com/tags/%E5%9B%9E%E5%BD%92/"/>
+      <category term="回归" scheme="https://lingyixia.github.io/about/tags/%E5%9B%9E%E5%BD%92/"/>
     
   </entry>
   
   <entry>
     <title>朴素贝叶斯</title>
-    <link href="http://yoursite.com/2018/12/20/NaiveBayes/"/>
-    <id>http://yoursite.com/2018/12/20/NaiveBayes/</id>
+    <link href="https://lingyixia.github.io/about/2018/12/20/NaiveBayes/"/>
+    <id>https://lingyixia.github.io/about/2018/12/20/NaiveBayes/</id>
     <published>2018-12-20T07:36:51.000Z</published>
     <updated>2018-12-20T12:58:22.926Z</updated>
     
@@ -337,12 +337,12 @@
     
     </summary>
     
-      <category term="机器学习" scheme="http://yoursite.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+      <category term="机器学习" scheme="https://lingyixia.github.io/about/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
-      <category term="分类" scheme="http://yoursite.com/tags/%E5%88%86%E7%B1%BB/"/>
+      <category term="分类" scheme="https://lingyixia.github.io/about/tags/%E5%88%86%E7%B1%BB/"/>
     
-      <category term="无监督" scheme="http://yoursite.com/tags/%E6%97%A0%E7%9B%91%E7%9D%A3/"/>
+      <category term="无监督" scheme="https://lingyixia.github.io/about/tags/%E6%97%A0%E7%9B%91%E7%9D%A3/"/>
     
   </entry>
   
