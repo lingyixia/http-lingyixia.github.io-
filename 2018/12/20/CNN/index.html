@@ -9,7 +9,7 @@
 
 
 
-    <meta charset="utf-8">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     
     
     
@@ -29,15 +29,15 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="CNN的卷积层和普通神经网络全连接层对比">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/assets/img/66image.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/12/20/CNN/img/66image.jpg">
 <meta property="og:image" content="http://yoursite.com/assets/img/filter1.jpg)">
 <meta property="og:image" content="http://yoursite.com/assets/img/fullconnect.jpg">
 <meta property="og:image" content="http://yoursite.com/assets/img/cnn.jpg">
-<meta property="og:updated_time" content="2018-10-29T02:50:04.112Z">
+<meta property="og:updated_time" content="2018-12-20T09:16:19.429Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CNN理解">
 <meta name="twitter:description" content="CNN的卷积层和普通神经网络全连接层对比">
-<meta name="twitter:image" content="http://yoursite.com/assets/img/66image.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2018/12/20/CNN/img/66image.jpg">
     
         <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
     
@@ -45,13 +45,13 @@
     <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
     <script>window.lazyScripts=[]</script>
 
-    <!-- custom head -->
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
 </head>
 
 <body>
-    <div id="loading" class="active"></div>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
 
     <aside id="menu" class="hide">
   <div class="inner flex-row-vertical">
@@ -60,7 +60,7 @@
     </a>
     <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
       <div class="brand">
-        <a href="/" class="avatar waves-effect waves-circle waves-light">
+        <a href="https://lingyixia.github.io/about/" class="avatar waves-effect waves-circle waves-light">
           <img src="/img/avatar.jpg">
         </a>
         <hgroup class="introduce">
@@ -202,7 +202,7 @@
 </blockquote>
 <p>为了过渡，首先看一下<a href="https://app.yinxiang.com/Home.action?login=true#n=c3ac6a3d-1140-4dca-9149-95539535fb93&amp;s=s32&amp;b=35353f67-3554-4bbc-9e1f-cad110a0c1ef&amp;ses=4&amp;sh=1&amp;sds=5&amp;" target="_blank" rel="noopener">这篇笔记</a>   </p>
 <p>举例: 只有一个数据:$6\times6$,$Filter:3\times3$,如图所示:    </p>
-<p><img src="/assets/img/66image.jpg" alt=""><br><figure class="image-bubble">
+<p><img src="img/66image.jpg" alt=""><br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
                     <img src="/assets/img/filter1.jpg)" alt="($filter$是随机初始化的，一般开始并不是左图这样" title="">
@@ -242,7 +242,7 @@
     <div class="content">
         
 <span class="post-time">
-    最終更新：<time datetime="2018-10-29T02:50:04.112Z" itemprop="dateUpdated">2018-10-29 10:50:04</time>
+    最終更新：<time datetime="2018-12-20T09:16:19.429Z" itemprop="dateUpdated">2018-12-20 17:16:19</time>
 </span><br>
 
 
@@ -564,7 +564,24 @@ MathJax.Hub.Queue(function() {
         }
     });
 })();
+</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 </body>
