@@ -104,13 +104,6 @@
               </a>
             </li>
         
-            <li class="waves-block waves-effect">
-              <a href="/custom">
-                <i class="icon icon-lg icon-link"></i>
-                测试
-              </a>
-            </li>
-        
       </ul>
     </div>
   </div>
@@ -128,7 +121,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="検索">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -196,7 +189,7 @@ If you were only permitted to complete at most one transaction (i.e., buy one an
     
 
         <a href="/2018/12/20/leetcode_121/" class="post-more waves-effect waves-button">
-            Continue reading...
+            続きを読む…
         </a>
     </div>
     
@@ -246,7 +239,7 @@ If you were only permitted to complete at most one transaction (i.e., buy one an
     
 
         <a href="/2018/12/20/backpack/" class="post-more waves-effect waves-button">
-            Continue reading...
+            続きを読む…
         </a>
     </div>
     
@@ -295,7 +288,7 @@ Given an integer array nums, find the contiguous subarray (containing at least o
     
 
         <a href="/2018/12/20/leetcode_53/" class="post-more waves-effect waves-button">
-            Continue reading...
+            続きを読む…
         </a>
     </div>
     
@@ -344,7 +337,7 @@ Given an integer array nums, find the contiguous subarray (containing at least o
     
 
         <a href="/2018/12/20/cpp-array/" class="post-more waves-effect waves-button">
-            Continue reading...
+            続きを読む…
         </a>
     </div>
     
@@ -394,7 +387,7 @@ Given an integer array nums, find the contiguous subarray (containing at least o
     
 
         <a href="/2018/12/20/jekyll_github_record/" class="post-more waves-effect waves-button">
-            Continue reading...
+            続きを読む…
         </a>
     </div>
     
@@ -443,7 +436,7 @@ Given an integer array nums, find the contiguous subarray (containing at least o
     
 
         <a href="/2018/12/20/data_science_pandas/" class="post-more waves-effect waves-button">
-            Continue reading...
+            続きを読む…
         </a>
     </div>
     
@@ -498,7 +491,7 @@ Given an integer array nums, find the contiguous subarray (containing at least o
     
 
         <a href="/2018/12/20/tensorflow_rnn/" class="post-more waves-effect waves-button">
-            Continue reading...
+            続きを読む…
         </a>
     </div>
     
@@ -548,7 +541,7 @@ Given an integer array nums, find the contiguous subarray (containing at least o
     
 
         <a href="/2018/12/20/priority_queue/" class="post-more waves-effect waves-button">
-            Continue reading...
+            続きを読む…
         </a>
     </div>
     
@@ -597,7 +590,7 @@ C++函数的三种传递方式为：值传递、指针传递和引用传递
     
 
         <a href="/2018/12/20/parameter_passing/" class="post-more waves-effect waves-button">
-            Continue reading...
+            続きを読む…
         </a>
     </div>
     
@@ -648,7 +641,7 @@ C++函数的三种传递方式为：值传递、指针传递和引用传递
     
 
         <a href="/2018/12/20/LossFunction/" class="post-more waves-effect waves-button">
-            Continue reading...
+            続きを読む…
         </a>
     </div>
     
@@ -776,6 +769,27 @@ var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 <script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
 
 
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 
 
