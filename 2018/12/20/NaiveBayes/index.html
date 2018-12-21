@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="朴素贝叶斯简介">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-20T12:58:22.926Z">
+<meta property="og:updated_time" content="2018-12-21T05:52:31.338Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="朴素贝叶斯">
 <meta name="twitter:description" content="朴素贝叶斯简介">
@@ -203,8 +203,12 @@
 <script type="math/tex; mode=display">y=arg\max_{c_k}P(X=x|Y=c_k)P(Y=c_k) \qquad  k=1,2,3,...K \tag{3}</script><p>对于$P(Y=c_k)$只需要在给出的$T$中数出来即可，因此现在只需要计算$P(X=x|Y=c_k)$，这也是整个朴素贝叶斯过程最困难的一步，为什么说困难呢？<br>$P(X=x|y=c_k)$完整表示为$P(X^{(1)}=x^{(1)},X^{(2)}=x^{(2)},X^{(3)}=x^{(3)},….,X^{(N)}=x^{(N)}|Y=c_k)$<br>若和$P(Y=c_k)$一样只有一个维度，很容易数出来，但这里需要同时考虑N个维度，数的过程是相当复杂的，因此，朴素贝叶斯在此处做了条件<strong>独立性假设</strong>：</p>
 <script type="math/tex; mode=display">P(X=x|y=c_k)=\prod_{i=1}^n(X^{(i)}=x^{(i)}|Y=c_k) \qquad k=1,2,3,...K \tag{4}</script><p>这样就只需要同时考虑一个维度，简单了许多，最后将$(4)$带入$(3)$中得:</p>
 <script type="math/tex; mode=display">y=arg\max_{c_k}\prod_{i=1}^n(X^{(i)}=x^{(i)}|Y=c_k)P(Y=c_k) \qquad k=1,2,3,...K \tag{5}</script><p>至此朴素贝叶斯过程结束。</p>
-<h3 id="名词谨记"><a href="#名词谨记" class="headerlink" title="名词谨记"></a>名词谨记</h3><p>1.先验概率:<br>$P(Y=c_k)$，即不管$X$，直接在$T$中数出来的概率</p>
-<p>2.后验概率:<br>$arg\max_{c_k}P(Y=c_k|X=x)$，即考虑$X$的约束下，数出来的概率（注意：两个概率都是针对$Y$的概率）</p>
+<h3 id="名词谨记"><a href="#名词谨记" class="headerlink" title="名词谨记"></a>名词谨记</h3><ol>
+<li><p>先验概率:<br>$P(Y=c_k)$，即不管$X$，直接在$T$中数出来的概率</p>
+</li>
+<li><p>后验概率:<br>$arg\max_{c_k}P(Y=c_k|X=x)$，即考虑$X$的约束下，数出来的概率（注意：两个概率都是针对$Y$的概率）</p>
+</li>
+</ol>
 <h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>其实前面已经可以说是整个朴素贝叶斯的过程，但是还要继续说明一个问题：<br>$(1)$式是整个朴素贝叶斯要计算的基本公式，我们可以看出，其实该公式就是后验概率，也就是说，朴素贝叶斯是一个<strong>后验概率最大化</strong>的过程。</p>
 <h4 id="后验概率最大化的含义"><a href="#后验概率最大化的含义" class="headerlink" title="后验概率最大化的含义"></a>后验概率最大化的含义</h4><p>先说结论：<strong>后验概率最大化</strong>的含义就是选择$0-1$损失函数时的<strong>期望风险最小化</strong>，下面证明这个结论：<br>首先$0-1$损失函数：</p>
 <script type="math/tex; mode=display">
@@ -233,7 +237,7 @@ f(x) &= arg\min_{y\subset\chi}\sum_{k=1}^KL(Y=c_k,f(X)=y)P(Y=c_k,|X=x) \\
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-12-20T12:58:22.926Z" itemprop="dateUpdated">2018-12-20 20:58:22</time>
+    最后更新时间：<time datetime="2018-12-21T05:52:31.338Z" itemprop="dateUpdated">2018-12-21 13:52:31</time>
 </span><br>
 
 
