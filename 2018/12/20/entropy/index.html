@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="各种熵总结">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-20T12:57:01.789Z">
+<meta property="og:updated_time" content="2018-12-21T05:57:40.490Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="各种熵">
 <meta name="twitter:description" content="各种熵总结">
@@ -201,7 +201,11 @@
 <h4 id="公式推导"><a href="#公式推导" class="headerlink" title="公式推导"></a>公式推导</h4><h5 id="定性推导"><a href="#定性推导" class="headerlink" title="定性推导:"></a>定性推导:</h5><p>设$h(x)$为$x$包含的<strong>信息量</strong>,如果我们有俩个<strong>不相关</strong>的事件$x$和$y$,那么我们观察到的俩个事件同时发生时获得的<strong>信息量</strong>应该等于观察到的事件各自发生时获得的<strong>信息量</strong>之和,即:$h(x,y) = h(x) + h(y)$,由于$x$,$y$是俩个不相关的事件，则满足$p(x,y) = p(x)*p(y)$.那么要想让$h(x,y) = h(x) + h(y)$,$h(x)$就只能是$\log p(x)$,为了让信息量为非负,我们在其前面加负号，得到信息量公式:</p>
 <script type="math/tex; mode=display">
 h(x) = -\log p(x)</script><h5 id="定量推导"><a href="#定量推导" class="headerlink" title="定量推导:"></a>定量推导:</h5><p><a href="https://blog.csdn.net/stpeace/article/details/79052689" target="_blank" rel="noopener">参考该博客</a><br>这个很牛逼！！！！！开始推导：<br>首先说明信息量的定义，谨记x是个概率值，不是事件:</p>
-<p>1.信息量是概率的递减函数，记为$f(x)$,$x\in[0,1]$<br>2.$f(1)=0,f(0)=+∞$<br>3.独立事件(概率之积)的信息量等于各自信息量之和:$f  (x_1*x_2)=f(x_1)+f(x_2),x_1,x_2\in[0,1]$  </p>
+<ol>
+<li>信息量是概率的递减函数，记为$f(x)$,$x\in[0,1]$  </li>
+<li>$f(1)=0,f(0)=+∞$  </li>
+<li>独立事件(概率之积)的信息量等于各自信息量之和:$f  (x_1*x_2)=f(x_1)+f(x_2),x_1,x_2\in[0,1]$  </li>
+</ol>
 <script type="math/tex; mode=display">
 \begin{align}
 f(x)^\prime &= \lim_{\Delta x \to 0}\frac{f(x+\Delta x)-f(x)}{\Delta x} \\
@@ -282,7 +286,7 @@ I(X,Y) &= H(X)-H(X|Y) \\
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-12-20T12:57:01.789Z" itemprop="dateUpdated">2018-12-20 20:57:01</time>
+    最后更新时间：<time datetime="2018-12-21T05:57:40.490Z" itemprop="dateUpdated">2018-12-21 13:57:40</time>
 </span><br>
 
 
