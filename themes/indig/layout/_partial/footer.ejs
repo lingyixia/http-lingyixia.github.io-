@@ -1,0 +1,11 @@
+<footer class="footer">
+    <div class="bottom">
+        <%- partial('plugins/site-visit') %>
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            <%if (theme.since_year && theme.since_year < date(new Date(), 'YYYY')) {%><%- theme.since_year %> - <%}%><%- date(new Date(), 'YYYY') %>
+        </p>
+    </div>
+</footer>
