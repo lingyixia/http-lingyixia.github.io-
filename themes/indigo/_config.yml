@@ -30,7 +30,7 @@ menu:
 # 你的头像url
 avatar: /img/avatar.png
 # avatar link
-avatar_link: https://lingyixia.github.io/about/
+avatar_link: /about/
 # 头像背景图
 brand: /img/brand.jpg
 # favicon

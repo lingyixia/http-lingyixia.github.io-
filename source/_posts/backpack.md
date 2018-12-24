@@ -8,10 +8,10 @@ description: 三种背包问题
 
 >0-1背包、完全背包、多重背包问题简记
 
-1.0-1背包问题
-
+#0-1背包问题
+##常规写法
+递推公式为:`values[i][j] = max(values[i - 1][j], values[i-1][j - woods[i-1].volume] + woods[i-1].value);`
 ```
-//递推公式为：values[i][j] = max(values[i - 1][j], values[i-1][j - woods[i-1].volume] + woods[i-1].value);
 #include<iostream>
 #include<vector>
 #include<algorithm>
@@ -75,9 +75,9 @@ void findItems(int** values, vector<Woods> woods,int i ,int j)
 	}
 }
 ```
-上诉方法使用二维数组保存中间值，比较消耗空间，而且我们可以看出，对于每一步要求的values[i][j]而言，只依赖于values[i-1][:],即前一行，因此我们只需要一维数组即可，循环保存前一行数据。但是这样貌似就无法找物品组成了，回头在想。
+上诉方法使用二维数组保存中间值，比较消耗空间，而且我们可以看出，对于每一步要求的`values[i][j]`而言，只依赖于`values[i-1][:]`,即前一行，因此我们只需要一维数组即可，循环保存前一行数据。但是这样貌似就无法找物品组成了，回头在想。
+##空间优化写法
 ```
-//空间优化写法
 void backPack(vector<Woods> woods, int bag)
 {
 	int* values = new int[bag + 1]();
@@ -93,9 +93,8 @@ void backPack(vector<Woods> woods, int bag)
 	}
 }
 ```
-
+##再次改善
 ```
-//再次改善
 void backPack(vector<Woods> woods, int bag)
 {
 	int* values = new int[bag + 1]();
@@ -109,15 +108,12 @@ void backPack(vector<Woods> woods, int bag)
 }
 ```
 
-2.完全背包问题
+#完全背包问题
+##常规写法
+与0-1背包唯一的不同就是递推公式：`values[i][j] = max(values[i - 1][j], values[i][j - woods[i-1].volume] + woods[i-1].value);`不在详细说明
 
+##空间优化写法
 ```
-与0-1背包唯一的不同就是递推公式：values[i][j] = max(values[i - 1][j], values[i][j - woods[i-1].volume] + woods[i-1].value);
-//不在详细说明
-```
-
-```
-//空间优化写法
 void backPack(vector<Woods> woods, int bag)
 {
 	int* values = new int[bag + 1]();
@@ -132,10 +128,10 @@ void backPack(vector<Woods> woods, int bag)
 
 ```
 
-3.多重背包问题（即每种物品的数量有上限）
-
+#多重背包问题（即每种物品的数量有上限）
+##常规写法
+在0-1背包的基础上增加数量循环判断,递推公式为:`values[i][j] = max(values[i][j], values[i-1][j - k * woods[i - 1].volume] + k * woods[i - 1].value);`
 ```
-//在0-1背包的基础上增加数量循环判断,递推公式为：values[i][j] = max(values[i][j], values[i-1][j - k * woods[i - 1].volume] + k * woods[i - 1].value);
 #include<iostream>
 #include<vector>
 #include<algorithm>
@@ -182,9 +178,8 @@ void backPack(vector<Woods> woods, int bag)
 	delete values;
 }
 ```
-
+##空间优化写法
 ```
-//空间优化写法
 void backPack(vector<Woods> woods, int bag)
 {
 	int* values = new int[bag + 1]();
