@@ -121,3 +121,45 @@ with tf.Session() as sess:
 ```
 >>也就是说把两个tensor相应维度合并成一个新维度，如eg2,把第1维度的[1,1,1]和[5,5,5]合并为\[[1,1,1],[5,5,5]],同理tf.unstack().
 与conact不同的一点是conact中tensor维度有多少axis就最大是多少,stack()的axis可以大1个维度。
+
+#tf.scatter_nd()
+给0tensor插入数据，参数说明:
+```
+indices: shape的坐标
+updates: 实际数据，根据indices中的坐标插入shape中
+shape: 一个0tensor
+```
+eg:(简单例子直接百度)
+```
+import tensorflow as tf
+
+indices = tf.constant([[0, 1], [2, 3]])
+updates = tf.constant([[5, 5, 5, 5],
+                       [8, 8, 8, 8]])
+shape = tf.constant([4, 4, 4])
+scatter = tf.scatter_nd(indices, updates, shape)
+with tf.Session() as sess:
+    print(sess.run(scatter))
+输出:
+[[[0 0 0 0]
+  [5 5 5 5]
+  [0 0 0 0]
+  [0 0 0 0]]
+
+ [[0 0 0 0]
+  [0 0 0 0]
+  [0 0 0 0]
+  [0 0 0 0]]
+
+ [[0 0 0 0]
+  [0 0 0 0]
+  [0 0 0 0]
+  [8 8 8 8]]
+
+ [[0 0 0 0]
+  [0 0 0 0]
+  [0 0 0 0]
+  [0 0 0 0]]]
+```
+
+>>解释: 上诉例子中indices是(2,2),其中最后一维代表shape中的位置，前面所有的维度代表update的位置,updates是(2,4),其中前缀必须和indices除了最后一维剩下的shape相同(否则indices表示位置的部分就不能喝update一一对应了).总结起来就是把indices除去最后一维剩下的在updates中表示的位置插入到indices最后一维在shape中表示的位置。(蕴含着indices和update前缀相同，update和shape后缀相同，除了插入tensor为单值的情况)
