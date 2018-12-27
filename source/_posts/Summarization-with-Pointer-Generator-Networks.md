@@ -30,4 +30,4 @@ $$
 由于`h`的`shape`是`(batch_size,encode_length,hidden_size)`，无法直接加权重`W`,
 作者首先增加其维度,得到`(batch_size,encode_length,1,hidden_size)`利用了`conv2d`卷积函数实现,得到相同`shape`,而$s_t$的`shape`是`(batch_size,hidden_size)`,要加到每个`encode_length`上,作者首先增加其维度，得到`shape`为`(batch_size,1,1,hidden_size)`,然后利用**广播机制**,直接相加即可.
 #Pointer-generator network
-原理很简单，就是在`Attention`步骤中,认为(2)中得到的就是词概率，当然，此时的词概率所计算的词只有`encoder`部分原文的词量，而上面求得的P_{vocab}的词量是整个词典的量,但是两者并不是后者包含前者，而是交集关系，因为`encoder`的原文很可能包含原训练集不包含的词语,因此
+原理很简单，就是在`Attention`步骤中,认为(2)中得到的就是词概率，当然，此时的词概率所计算的词只有`encoder`部分原文的词量，而上面求得的$P_{vocab}$的词量是整个词典的量,但是两者并不是后者包含前者，而是交集关系，因为`encoder`的原文很可能包含原训练集不包含的词语,因此
