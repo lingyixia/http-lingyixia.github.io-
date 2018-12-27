@@ -2,7 +2,8 @@
 layout: post
 title: Summarization-with-Pointer-Generator-Networks
 date: 2018-12-26 19:30:48
-tags: [论文,深度学习]
+category: 深度学习
+tags: [论文,tensorflow]
 description: Get To The Point:Summarization with Pointer-Generator Networks论文导读
 ---
 >本论文针对的是摘要生成任务,普遍而言文本生成类的任务都是使用Seq2Seq模型,本论文也不例外,一般而言文本生成有两种模式:抽取式和生成式,顾名思义不在详细描述，本论文分为三个部分:传统Attention,Pointer-Generator Networks和Coverage机制.论文连接: https://arxiv.org/pdf/1704.04368.pdf
