@@ -2,7 +2,7 @@
 layout: post
 title: github博客小记
 category: 博客
-tags: [坑]
+tags: [坑,jekyll]
 description: 简单记录搭建github page的坑
 ---
 
