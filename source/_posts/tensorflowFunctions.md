@@ -163,3 +163,42 @@ with tf.Session() as sess:
 ```
 
 >>解释: 上诉例子中indices是(2,2),其中最后一维代表shape中的位置，前面所有的维度代表update的位置,updates是(2,4),其中前缀必须和indices除了最后一维剩下的shape相同(否则indices表示位置的部分就不能喝update一一对应了).总结起来就是把indices除去最后一维剩下的在updates中表示的位置插入到indices最后一维在shape中表示的位置。(蕴含着indices和update前缀相同，update和shape后缀相同，除了插入tensor为单值的情况)
+#判断不合法值
+>>nan:not a number,inf:infinity只有这两个!!!其他的:np.NAN和np.NaN就是nan,np.NINF就是-inf
+##np.isfinite
+判断是否是nan或inf
+eg:
+```
+import numpy as np
+
+print(np.isfinite([np.inf, np.log(0), 1, np.nan]))
+输出:
+/opt/home/chenfeiyu/PythonWorkSpace/MyPointerGeneratorDataset/ttttt.py:9: RuntimeWarning: divide by zero encountered in log
+  print(np.isfinite([np.inf, np.log(0), 1, np.nan]))
+[False False  True False]
+```
+注意:此时系统对于$np.log(0)$给出的是warning,但是对于1/0就没办法判断是否是nan或inf了,因为对于分母为零系统给出的是error,程序会直接中断。
+##np.isinf
+>>判断是否为infinity。
+eg:
+```
+import numpy as np
+
+print(np.isinf([np.inf, np.log(0), 1, np.nan]))
+输出:
+/opt/home/chenfeiyu/PythonWorkSpace/MyPointerGeneratorDataset/ttttt.py:9: RuntimeWarning: divide by zero encountered in log
+  print(np.isinf([np.inf, np.log(0), 1, np.nan]))
+[ True  True False False]
+```
+##np.nan
+>>判断是否为not a number
+```
+import numpy as np
+
+print(np.isnan([np.inf, np.log(0), 1, np.nan]))
+输出:
+/opt/home/chenfeiyu/PythonWorkSpace/MyPointerGeneratorDataset/ttttt.py:9: RuntimeWarning: divide by zero encountered in log
+  print(np.isnan([np.inf, np.log(0), 1, np.nan]))
+[False False False  True]
+```
+
