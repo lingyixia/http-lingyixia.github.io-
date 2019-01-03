@@ -204,8 +204,8 @@ print(np.isnan([np.inf, np.log(0), 1, np.nan]))
   print(np.isnan([np.inf, np.log(0), 1, np.nan]))
 [False False False  True]
 ```
-#tf.slice(inputs,begin,size,name='')
->>从inputs的指定位置连续的取,大小为size
+#tf.slice()
+>>原型:tf.slice(inputs,begin,size,name='')从inputs的指定位置连续的取,大小为size
 
 ```
 import tensorflow as tf
