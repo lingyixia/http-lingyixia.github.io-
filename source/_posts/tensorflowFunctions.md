@@ -41,8 +41,12 @@ with tf.Session() as sess:
 
 解释: multiples各个维度表示对input相应维度重复多少倍,如该实例中表示对input的第0个维度重复2次，第1个维度重复1次,第2个维度重复3次，因此得到的shape必然是(2,3,6)
 ```
-#tf.stack()
-用于连接tensor，与concat不同的是stack增加维度数量，concat不增加维度数量。
+#拼接
+##tf.concat
+>>原型:`tf.concat(values, axis, name='concat')`:按照指定的已经存在的轴进行拼接
+eg:略
+##tf.stack()
+>>原型:`tf.stack(values, axis=0, name='')`:按照指定的新建的轴进行拼接,用于连接tensor，与concat不同的是stack增加维度数量，concat不增加维度数量。
 ```
 eg 1:
 import tensorflow as tf
@@ -204,8 +208,9 @@ print(np.isnan([np.inf, np.log(0), 1, np.nan]))
   print(np.isnan([np.inf, np.log(0), 1, np.nan]))
 [False False False  True]
 ```
-#tf.slice()
->>原型:tf.slice(inputs,begin,size,name='')从inputs的指定位置连续的取,大小为size
+#抽取
+##tf.slice()
+>>原型:tf.slice(inputs,begin,size,name='')从inputs的指定位置**连续**的取,大小为size
 
 ```
 import tensorflow as tf
@@ -219,3 +224,24 @@ with tf.Session() as sess:
   [4 4]]]
 ```
 说明:begin和size必和inputs的shape同型,上例中指的是从inputs的[1,0,0]开始,即第一个3处,取第一个维度size为1,第二个维度size为2,第三个维度size为2,即得到上述输出.
+
+##tf.gather()
+>>原型:`tf.gather(params, indices, validate_indices=None, name=None)`:按照指定的下标集合从**axis=0**中抽取子集,适合抽取不连续区域的子集.
+
+```
+import tensorflow as tf
+
+params = tf.constant([[[1, 1, 1], [2, 2, 2]], [[3, 3, 3], [4, 4, 4]], [[5, 5, 5], [6, 6, 6]]])
+indices=tf.constant([1,2])
+
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    print(sess.run(tf.gather(params, indices)))
+输出:
+[[[3 3 3]
+  [4 4 4]]
+
+ [[5 5 5]
+  [6 6 6]]]
+```
+说明:略
