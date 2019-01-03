@@ -139,10 +139,10 @@ int main()
 }
 void directInsertSort(vector<int>& array)
 {
-	for (int i = 0; i < array.size()-1; i++)
+	for (int i = 1; i < array.size(); i++)
 	{
-		int temp = array[i+1];
-		int j = i;
+		int temp = array[i];
+		int j = i - 1;
 		while (j >= 0 && temp < array[j])
 		{
 			array[j + 1] = array[j];
@@ -302,6 +302,7 @@ void heapAdjust(vector<int>& array,int start,int end)
 >>归并排序的形式是一颗二叉树，遍历的次数就是二叉树的深度$O(logn)$,一共n个数
 
 ```
+递归:
 #include<iostream>
 #include<vector>
 #include<string>
@@ -359,7 +360,78 @@ void merge(vector<int>& array,int left,int mid,int right)
 		array[left+i] = temp[i];
 	}
 }
+非递归:
+#include<iostream>
+#include<vector>
+#include<string>
+#include<ctime>
+using namespace std;
+void merge(vector<int>& array, int left, int mid, int right);
+void merge_sort_down2up(vector<int> &array);
+void merge_groups(vector<int>& array, int gap);
+int main()
+{
+	clock_t startTime, endTime;
+	startTime = clock();//计时开始
+	vector<int> array = {5, 1, 9, 3, 7, 4, 8, 6, 2 };
+	merge_sort_down2up(array);
+	endTime = clock();//计时结束
+	cout << "总计时长" << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
+	return 0;
+}
+void merge(vector<int>& array,int left,int mid,int right)
+{
+	int i = left;
+	int j = mid + 1;
+	vector<int> temp;
+	while (i<=mid && j<=right)
+	{
+		if (array[i]<array[j])
+		{
+			temp.push_back(array[i++]);
+		}
+		else
+		{
+			temp.push_back(array[j++]);
+		}
+	}
+	while (i<=mid)
+	{
+		temp.push_back(array[i++]);
+	}
+	while (j<=right)
+	{
+		temp.push_back(array[j++]);
+	}
+	for (int i = 0; i < temp.size(); i++)
+	{
+		array[left+i] = temp[i];
+	}
+}
+void merge_sort_down2up(vector<int>& array) 
+{
+	for (int i = 1; i < array.size(); i = i * 2)
+	{
+		merge_groups(array, i);
+	}
+}
+void merge_groups(vector<int>& array, int gap)
+{
+	int twolen = 2 * gap;
+	int i;
+	for (i = 0; i + twolen - 1 < array.size(); i += twolen) {
+		int start = i;
+		int mid = i + gap - 1;
+		int end = i + twolen - 1;
+		merge(array, start, mid, end);
+	}
+	// 最后还有一个gap
+	if (i + gap - 1 < array.size() - 1) {
+		merge(array, i, i + gap - 1, array.size() - 1);
+	}
+}
 ```
+
 分析总结:
 
 |名称|时间|最好|最坏|空间|稳定|备注|
