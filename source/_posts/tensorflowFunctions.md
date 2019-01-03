@@ -204,4 +204,18 @@ print(np.isnan([np.inf, np.log(0), 1, np.nan]))
   print(np.isnan([np.inf, np.log(0), 1, np.nan]))
 [False False False  True]
 ```
+#tf.slice(inputs,begin,size,name='')
+>>从inputs的指定位置连续的取,大小为size
 
+```
+import tensorflow as tf
+inputs = tf.constant([[[1, 1, 1], [2, 2, 2]], [[3, 3, 3], [4, 4, 4]], [[5, 5, 5], [6, 6, 6]]])
+data = tf.slice(inputs, [1, 0, 0], [1, 2, 2])
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    print(data.eval())
+输出:
+[[[3 3]
+  [4 4]]]
+```
+说明:begin和size必和inputs的shape同型,上例中指的是从inputs的[1,0,0]开始,即第一个3处,取第一个维度size为1,第二个维度size为2,第三个维度size为2,即得到上述输出.
