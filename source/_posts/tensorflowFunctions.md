@@ -44,9 +44,11 @@ with tf.Session() as sess:
 #拼接
 ##tf.concat
 >>原型:`tf.concat(values, axis, name='concat')`:按照指定的已经存在的轴进行拼接
+
 eg:略
 ##tf.stack()
->>原型:`tf.stack(values, axis=0, name='')`:按照指定的新建的轴进行拼接,用于连接tensor，与concat不同的是stack增加维度数量，concat不增加维度数量。
+>>原型:`tf.stack(values, axis=0, name='')`:按照指定的新建的轴进行拼接,用于连接tensor，与concat不同的是stack增加维度数量,concat不增加维度数量。
+
 ```
 eg 1:
 import tensorflow as tf
@@ -167,8 +169,10 @@ with tf.Session() as sess:
 ```
 
 >>解释: 上诉例子中indices是(2,2),其中最后一维代表shape中的位置，前面所有的维度代表update的位置,updates是(2,4),其中前缀必须和indices除了最后一维剩下的shape相同(否则indices表示位置的部分就不能喝update一一对应了).总结起来就是把indices除去最后一维剩下的在updates中表示的位置插入到indices最后一维在shape中表示的位置。(蕴含着indices和update前缀相同，update和shape后缀相同，除了插入tensor为单值的情况)
+
 #判断不合法值
 >>nan:not a number,inf:infinity只有这两个!!!其他的:np.NAN和np.NaN就是nan,np.NINF就是-inf
+
 ##np.isfinite
 >>判断是否是nan或inf
 
@@ -226,7 +230,7 @@ with tf.Session() as sess:
 说明:begin和size必和inputs的shape同型,上例中指的是从inputs的[1,0,0]开始,即第一个3处,取第一个维度size为1,第二个维度size为2,第三个维度size为2,即得到上述输出.
 
 ##tf.gather()
->>原型:`tf.gather(params, indices, validate_indices=None, name=None)`:按照指定的下标集合从**axis=0**中抽取子集,适合抽取不连续区域的子集.
+>>原型:`tf.gather(params, indices, validate_indices=None, name=None)`:按照指定的下标集合从`params`的**axis=0**中抽取子集,适合抽取不连续区域的子集.
 
 ```
 import tensorflow as tf
@@ -244,4 +248,78 @@ with tf.Session() as sess:
  [[5 5 5]
   [6 6 6]]]
 ```
-说明:略
+说明:上诉是一般用法,实际的操作为[params[1],params[2]],无论indices是多少维,params直接找最里面的整形数字。
+
+##tf.gather_nd()
+>>原型同上,唯一不同点是该函数取得不是**axis=0**,下面的例子阐述了两个函数的区别
+
+```
+import tensorflow as tf
+
+params = tf.constant([[[1, 1, 1], [2, 2, 2]], [[3, 3, 3], [4, 4, 4]], [[5, 5, 5], [6, 6, 6]]])
+indices = tf.constant([[[0,1],[1,1]]])
+
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    print(sess.run(tf.gather(params, indices)))
+输出:
+[[[[[1 1 1]
+    [2 2 2]]
+
+   [[3 3 3]
+    [4 4 4]]]
+
+
+  [[[3 3 3]
+    [4 4 4]]
+
+   [[3 3 3]
+    [4 4 4]]]]]
+
+import tensorflow as tf
+
+params = tf.constant([[[1, 1, 1], [2, 2, 2]], [[3, 3, 3], [4, 4, 4]], [[5, 5, 5], [6, 6, 6]]])
+indices = tf.constant([[[0,1],[1,1]]])
+
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    print(sess.run(tf.gather_nd(params, indices)))
+输出:
+[[[2 2 2]
+  [4 4 4]]]
+```
+说明:对于indices = tf.constant(\[[\[0,1],[1,1]]]),`gather`函数的操作是\[[\[params[0],params[1]],[params[1],params[1]]]],即直接找整形.而`gather_nd`函数的操作是[\[params[0,1],params[1,1]]],即找整形外面一层.
+
+#tf.split()
+>>原型为:`split(value, num_or_size_splits, axis=0, num=None, name="split")`:将value分裂,若`num_or_size_splits`为一个整形,则把`value`的第`axis`维分为`num_or_size_splits`个`Tensor`(此时的`value`的`axis`必须满足整除`num_or_size_splits`),若`num_or_size_splits`为一个一维`Tensor`,则分成该`Tensor`的`shape`个`Tensor`(此时该`Tensor`各个维度相加必须等于该`value`的`axis`)
+
+```
+eg1:
+import tensorflow as tf
+
+value = tf.Variable(initial_value=tf.truncated_normal(shape=[6, 30]))
+split0, split1, split2 = tf.split(value, 3, 0)
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    print(split0.shape)
+    print(split1.shape)
+    print(split2.shape)
+输出:
+(2, 30)
+(2, 30)
+(2, 30)
+
+import tensorflow as tf
+
+value = tf.Variable(initial_value=tf.truncated_normal(shape=[6, 30]))
+split0, split1, split2 = tf.split(value, [15,4,11], 1)
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())
+    print(split0.shape)
+    print(split1.shape)
+    print(split2.shape)
+输出:
+(6, 15)
+(6, 4)
+(6, 11)
+```
