@@ -166,7 +166,8 @@ with tf.Session() as sess:
 #判断不合法值
 >>nan:not a number,inf:infinity只有这两个!!!其他的:np.NAN和np.NaN就是nan,np.NINF就是-inf
 ##np.isfinite
-判断是否是nan或inf
+>>判断是否是nan或inf
+
 eg:
 ```
 import numpy as np
@@ -180,6 +181,7 @@ print(np.isfinite([np.inf, np.log(0), 1, np.nan]))
 注意:此时系统对于$np.log(0)$给出的是warning,但是对于1/0就没办法判断是否是nan或inf了,因为对于分母为零系统给出的是error,程序会直接中断。
 ##np.isinf
 >>判断是否为infinity。
+
 eg:
 ```
 import numpy as np
@@ -192,6 +194,7 @@ print(np.isinf([np.inf, np.log(0), 1, np.nan]))
 ```
 ##np.nan
 >>判断是否为not a number
+
 ```
 import numpy as np
 
