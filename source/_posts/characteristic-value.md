@@ -16,7 +16,7 @@ description: 证明n阶方针不同特征值的特征向量线性无关
 左乘$A$得:
 $$k_1A\alpha_1+k_2A\alpha_2+k_3A\alpha_3+...+k_sA\alpha_s=0  \tag{2}$$
 即:
-$$k_1\lambda_1\alpha_1+k_2\lambda_2\alpha_2+k_3\lambda_3\alpha_3+...+k_s\lambda_s\alpha_s=0 \tag{3}$$
+$$k_1\lambda_1\alpha_1+k_2\lambda_2\alpha_2+k_3\lambda_3\alpha_3hexo+...+k_s\lambda_s\alpha_s=0 \tag{3}$$
 由(1)得:
 $$k_1\alpha_1=-(k_2\alpha_2+k_3\alpha_3+...+k_s\alpha_s)\tag{4}$$
 带入(3)中得:

@@ -2,7 +2,8 @@
 layout: post
 title: dotAndLine
 date: 2018-12-22 21:02:26
-tags: [数学]
+category: 数学
+tag: [点,线]
 description: 关于点和直线的关系
 ---
 >关于点和直线的关系
