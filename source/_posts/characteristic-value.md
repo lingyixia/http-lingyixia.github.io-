@@ -1,5 +1,5 @@
 ---
-title: characteristic_value
+title: 不同特征值的特征向量线性无关
 date: 2019-01-10 14:18:16
 category: 数学
 tags: [矩阵]
