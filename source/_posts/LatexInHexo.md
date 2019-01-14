@@ -2,6 +2,7 @@
 layout: post
 title: Hexo中Latex公式显示
 date: 2019-01-14 11:05:00
+category: 博客
 tags: [Latex,Markdown,Hexo]
 mathjax: true
 description: Hexo中Latex公式显示问题解决
