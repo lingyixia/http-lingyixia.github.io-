@@ -8,7 +8,7 @@ description: Hexo中Latex公式显示问题解决
 ---
 >Hexo中Latex公式显示问题解决
 
-1.Hexo中Latex公式显示问题解决 卸载:
+1. 卸载:
 >>npm install hexo-math --save
 
 2. 安装
