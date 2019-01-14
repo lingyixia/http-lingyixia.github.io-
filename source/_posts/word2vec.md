@@ -3,6 +3,7 @@ title: word2vec
 date: 2019-01-10 18:00:04
 category: 深度学习
 tags: [词向量]
+mathjax: true
 description: 词向量小记
 ---
 >本文不作为详细教程，知识自己容易遗忘知识点的记录。
@@ -62,6 +63,10 @@ $$
 * Projection Layer是:$x\_w=\sum_{i=1}^{2c}v(context(w)_i)$
 * Output Layer是一颗由训练语料构成的Huffman树
 
-与NPML相比,他们的$x_w$不同,NPML是收尾相接,而$CBOW$是向量加和.他们的输出层不同,NPML是输出层是线性结构,$CBOW$输出层是Huffman树.
-损失函数计算:[见这里](https://blog.csdn.net/itplus/article/details/37969979)
+与NPML相比,他们的$x_w$不同,NPML是收尾相接,而$CBOW$是向量加和.他们的输出层不同,NPML是输出层是线性结构,$CBOW$输出层是$Huffman$树.
+损失函数计算:
+引入一些符号:
+* $p^w$:从根节点到达$w$节点的路径
+* $l^w$:路径$p^w$中节点的个数
+* $p^w_1$...$p^w_{lw}$
 ####Skip-gram
