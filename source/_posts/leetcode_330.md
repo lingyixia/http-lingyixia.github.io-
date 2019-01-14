@@ -1,5 +1,5 @@
 ---
-layout:post
+layout: post
 title: PatchArray
 date: 2019-01-14 21:52:31
 category: 算法 
