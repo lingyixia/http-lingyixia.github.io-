@@ -1,9 +1,8 @@
 ---
-title: inverse
+title: 矩阵可逆条件
 date: 2019-01-10 15:38:41
 category: 数学
 tags: [矩阵]
-description: 矩阵可逆条件
 ---
 >矩阵可逆条件
 
