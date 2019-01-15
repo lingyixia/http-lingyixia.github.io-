@@ -9,6 +9,7 @@ tags: [贪心算法,动态规划]
 Each element in the array represents your maximum jump length at that position.
 Determine if you are able to reach the last index.
 (可以不是正好最后一个坐标,能到最后就行)
+
 贪心一:
 ```
 bool canJump(vector<int>& nums) 
@@ -25,6 +26,7 @@ bool canJump(vector<int>& nums)
 	return reach >= nums.size() - 1;
 }
 ```
+
 >>每到一个i,如果i<=reach意味着[0,i-1]的坐标能达到reach,如果i>reach,则意味着根本就到不了这里,无需继续。
 
 贪心二:
