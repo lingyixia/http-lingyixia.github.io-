@@ -41,11 +41,11 @@ void backPack(vector<Woods> woods, int bag)
 	{
 		for (int j = 1; j <= bag; j++)
 		{
-			if (j < woods[i-1].volume)
+			if (j < woods[i-1].volume)//装不进去
 			{
 				values[i][j] = values[i - 1][j];
 			}
-			else
+			else//能装进去
 			{
 				values[i][j] = max(values[i - 1][j], values[i-1][j - woods[i-1].volume] + woods[i-1].value);
 			}
@@ -75,7 +75,7 @@ void findItems(int** values, vector<Woods> woods,int i ,int j)
 	}
 }
 ```
-上诉方法使用二维数组保存中间值，比较消耗空间，而且我们可以看出，对于每一步要求的`values[i][j]`而言，只依赖于`values[i-1][:]`,即前一行，因此我们只需要一维数组即可，循环保存前一行数据。但是这样貌似就无法找物品组成了，回头在想。
+上诉方法使用二维数组保存中间值values,values[i][j]表示当背包空间为j,允许使用的物品只有前两个的时候的最大价值，比较消耗空间，而且我们可以看出，对于每一步要求的`values[i][j]`而言，只依赖于`values[i-1][:]`,即前一行，因此我们只需要一维数组即可，循环保存前一行数据。但是这样貌似就无法找物品组成了，回头在想。
 ##空间优化写法
 ```
 void backPack(vector<Woods> woods, int bag)
