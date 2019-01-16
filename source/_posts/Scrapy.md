@@ -24,7 +24,8 @@ tags: [scrapy]
 * Response对象: 不在调用其他`DownloaderMiddleware`的`process_request`函数,返回给`scrapy`引擎该Response对象
 * Request对象: Scrapy则停止调用`process_request`方法并重新调度返回的request
 * raise一个IgnoreRequest异常: 则安装的下载中间件的 process_exception() 方法会被调用
-2.`process_response(self, request, response, spider)`
+
+2.`process_response(self, request, response, spider)`hexo 
 返回值有三种:
 * Response对象:继续执行下一个`DownloaderMiddleware`(正常情况)
 * Request对象:同上
