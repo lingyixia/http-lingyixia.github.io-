@@ -2,7 +2,7 @@
 title: Scrapy
 date: 2019-01-16 10:36:54
 category: 爬虫
-tags: [scrapy]
+tags: [scrapy,python]
 ---
 
 >scrapy爬虫小记
