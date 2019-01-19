@@ -77,17 +77,18 @@ int maxDepth(Node* root)
 	Node* cursor = NULL;
 	while (!q.empty())
 	{
-		int size = q.size();
-		for (int i = 0; i < size;i++)//注意该队列其实是一层一层从做到右入队列的,切不可用while(!q.empty())
-		{
-			cursor = q.front();
-			q.pop();
-			for (int j = 0; j < cursor->children.size(); j++)
-			{
-				q.push(cursor->children[j]);
-			}
+	    int size = q.size();
+	    for (int i = 0; i < size;i++)//注意该队列其实是一层一层从做到右入队列的,切不可用while(!q.empty())
+	    {
+		    cursor = q.front();
+		    q.pop();
+		    for (int j = 0; j < cursor->children.size(); j++)
+		    {
+			    q.push(cursor->children[j]);
+		    }
 		}
-        depth++;//每层加1
+                depth++;//每层加1
 	}
+    return depth;
 }
 ```
