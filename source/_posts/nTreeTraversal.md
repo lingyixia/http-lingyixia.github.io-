@@ -30,7 +30,7 @@ int main()
 }
 int maxDepth(Node* root) 
 {
-    if(!root)
+    if(!root)//出口条件
     {
         return 0;
     }
@@ -67,7 +67,7 @@ int main()
 }
 int maxDepth(Node* root)
 {
-    if(!root)//出口条件
+    if(!root)//只是当root为空时候的一个判断
     {
         return 0;
     }
@@ -92,3 +92,4 @@ int maxDepth(Node* root)
     return depth;
 }
 ```
+>>注意，两个方法中的`if(!root)`作用并不一样，对于递归而言是跳出条件，而对于非递归而言只是一种情况
