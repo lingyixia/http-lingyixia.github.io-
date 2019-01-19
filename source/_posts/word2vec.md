@@ -55,13 +55,13 @@ $$
 
 
 ##词向量模型
-###基于Hjerarchjcal SoftMax
+###基于Hierarchical SoftMax
 ####CBOW
 由上下文词推断当前词的词向量模型
 ![](/img/hcbow.png)
 * Input Layer: $2c$个词的随机初始化词向量
 * Projectjon Layer是:$x\_w=\sum_{j=1}^{2c}v(context(w)_j)$
-* Output Layer是一颗由训练语料构成的Huffman树
+* Output Layer:是一颗由训练语料构成的Huffman树
 
 与NPML相比,他们的$x_w$不同,NPML是收尾相接,而$CBOW$是向量加和.他们的输出层不同,NPML是输出层是线性结构,$CBOW$输出层是$Huffman$树.
 损失函数计算:
@@ -115,5 +115,22 @@ $
 $$
 L=\sum_{w \in C}L(w,j)
 $$
-对于具体求导见[参考](https://blog.csdn.net/itplus/article/details/37969979)
-####Skj-gram
+对于具体求导见[参考1](https://blog.csdn.net/itplus/article/details/37969979)和[参考2](https://plmsmile.github.io/2017/11/02/word2vec-math/)
+####Skip-Gram
+由上下文词推断当前词的词向量模型
+![](/img/skipgram.PNG)
+* Input Layer:中心词w的词向量$v_w$
+* Projectjon Layer:其实在这里是多余的，只是为了和CBOW做对比
+* Output Layer:是一颗由训练语料构成的Huffman树
+由于需要预测中心词左右共2c个词，因此每次预测都需要走2c遍该Huffman树(CBOW)只需要走一遍，因此条件概率应为:
+$$
+p(Context(w)|w)=\prod_{u \in Context(w)} p(u|w)
+$$
+而
+$$
+p(u|w)=\prod_{j=2}^{l^u}p(d_j^u|v_w,\theta_{j-1}^u)
+$$
+上诉公式仿照CBOW即可
+$$
+p(d_j^u|v_w,\theta_{-1}^u)=[\sigma(v_w^T\theta_{j-1}^u)]^{1-d_j^u}·[1-\sigma(v_w^T\theta_{j-1}^u)]^{d_j^u}
+$$
