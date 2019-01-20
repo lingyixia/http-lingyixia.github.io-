@@ -134,3 +134,16 @@ $$
 $$
 p(d_j^u|v_w,\theta_{-1}^u)=[\sigma(v_w^T\theta_{j-1}^u)]^{1-d_j^u}·[1-\sigma(v_w^T\theta_{j-1}^u)]^{d_j^u}
 $$
+根据最大似然估计得: 
+$$
+\begin{align}
+L &=\sum_{w \in c} log \prod_{u \in Context(w)} \prod_{j=2}^{l^u}\{[\sigma(v_w^T\theta_{j-1}^u)]^{1-d_j^u}·[1-\sigma(v_w)^T\theta_{j-1}^u]\} \\
+&= \sum_{w \in C} \sum_{u \in Context(w)} \sum_{j=2}^{l^u}\{(1-d_j^u)·log[\sigma(v_w)^T\theta_{j-1}^u]+d_j^u·log[1-\sigma(v_w)^T\theta_{j-1}^u]\}
+\end{align}
+$$
+令
+$$
+L(w,u,j)=(1-d_j^u)·log[\sigma(v_w)^T\theta_{j-1}^u]+d_j^u·log[1-\sigma(v_w)^T\theta_{j-1}^u]
+$$
+求梯度同上
+###基于Negative Sampling
