@@ -61,7 +61,7 @@ repeat
 3.不易于并行实现。
 
 从迭代的次数上来看，SGD迭代的次数较多，在解空间的搜索过程看起来很盲目。其迭代的收敛曲线示意图可以表示如下:
-![](/img/SGD.jpg)
+![](/img/SGD.png)
 
 #小批量梯度下降(Mini-Batch Gradient Descent, MBGD)
 思想为综合BGD和SGD两种方式取中,伪代码为:
