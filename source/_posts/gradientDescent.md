@@ -87,3 +87,5 @@ repeat
 
 #三者对比图
 ![](/img/MBGD.jpg)
+
+[参考文章](https://www.cnblogs.com/maybe2030/p/5089753.html)
