@@ -16,7 +16,7 @@ description: 各种熵总结
 
 ##### 定性推导:
 
-设$h(x)$为$x$包含的**信息量**,如果我们有俩个**不相关**的事件$x$和$y$,那么我们观察到的俩个事件同时发生时获得的**信息量**应该等于观察到的事件各自发生时获得的**信息量**之和,即:$h(x,y) = h(x) + h(y)$,由于$x$,$y$是俩个不相关的事件，则满足$p(x,y) = p(x)*p(y)$.那么要想让$h(x,y) = h(x) + h(y)$,$h(x)$就只能是$\log p(x)$,为了让信息量为非负,我们在其前面加负号，得到信息量公式:
+设$h(x)$为$x$包含的**信息量**,如果我们有俩个**不相关**的事件$x$和$y$,那么我们观察到的俩个事件同时发生时获得的**信息量**应该等于观察到的事件各自发生时获得的**信息量**之和,即:$h(x,y) = h(x) + h(y)$,由于$x$,$y$是俩个不相关的事件，则满足$p(x,y) = p(x) \times p(y)$.那么要想让$h(x,y) = h(x) + h(y)$,$h(x)$就只能是$\log p(x)$,为了让信息量为非负,我们在其前面加负号，得到信息量公式:
 
 $$
 h(x) = -\log p(x)
@@ -29,12 +29,12 @@ $$
 
 1. 信息量是概率的递减函数，记为$f(x)$,$x\in[0,1]$  
 2. $f(1)=0,f(0)=+∞$  
-3. 独立事件(概率之积)的信息量等于各自信息量之和:$f  (x_1*x_2)=f(x_1)+f(x_2),x_1,x_2\in[0,1]$  
+3. 独立事件(概率之积)的信息量等于各自信息量之和:$f  (x_1 \times x_2)=f(x_1)+f(x_2),x_1,x_2\in[0,1]$  
 
 $$
 \begin{align}
 f(x)^\prime &= \lim_{\Delta x \to 0}\frac{f(x+\Delta x)-f(x)}{\Delta x} \\
-&= \lim_{\Delta x \to 0}\frac{f(\frac{x+\Delta x}{x}*x)-f(x)}{\Delta x} \\
+&= \lim_{\Delta x \to 0}\frac{f(\frac{x+\Delta x}{x} \times x)-f(x)}{\Delta x} \\
 &= \lim_{\Delta x \to 0}\frac{f(x+\Delta x)+f(x)-f(x)}{\Delta x} \\
 &=\lim_{\Delta x \to 0}\frac{f(\frac{x+\Delta x}{x})}{\Delta x} \\
 &= \frac{1}{x}\lim_{\Delta x \to 0}\frac{f(1+\frac{\Delta x}{x})}{\frac{\Delta x}{x}} \\
@@ -54,7 +54,7 @@ $$
 \begin{align}
 f(x) &= f(1)^\prime\ln x \\
      &=f(1)^\prime\frac{\log_ax}{\log_ae} \\
-     &= \frac{f(1)^\prime}{\log_ae} *\log_ax
+     &= \frac{f(1)^\prime}{\log_ae} ] \times \log_ax
 \end{align}
 $$
 
@@ -88,7 +88,7 @@ $$
 
 $$
 \begin{cases}
-p_i-\lambda*r^{-l_i}\ln r =0 \\
+p_i-\lambda \times r^{-l_i}\ln r =0 \\
 \sum r^{-l_i}-1=0 \\
 \end{cases}
 $$
@@ -97,16 +97,16 @@ $$
 
 $$
 \begin{cases}
-r^{-l_i}= \frac{p_i}{\lambda * \ln r} \\
+r^{-l_i}= \frac{p_i}{\lambda \times \ln r} \\
 \sum r^{-l_i}=1 \\
 \end{cases}
 $$
 
-一式带入二式得:$\sum r^{-l_i} = \sum \frac{p_i}{\lambda * \ln r} = \frac{1}{\lambda * \ln r} = 1$  
+一式带入二式得:$\sum r^{-l_i} = \sum \frac{p_i}{\lambda \times \ln r} = \frac{1}{\lambda \times \ln r} = 1$  
 
 因此:$\lambda = \frac{1}{\ln r}$
 
-最终得:$l_i = \log r \frac{\lambda * \ln r}{p_i}=\log r\frac{1}{p_i}$，正好是熵!!!
+最终得:$l_i = \log r \frac{\lambda \times \ln r}{p_i}=\log r\frac{1}{p_i}$，正好是熵!!!
 
 
 则公式信息熵: 

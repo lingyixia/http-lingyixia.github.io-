@@ -33,8 +33,8 @@ $$
 逻辑回归:
 $$\begin{align}
 \sum_{i=1}^NC(f(x_i),y_i) &= \sum_{i=1}^N-[y_i\ln(f(x_i))+(1-y_i)\ln(1-f(x_i))]\\
-						  &= -\sum_{i=1}^N[y_i\ln(\frac{f(x_i)}{1-f(x_i)})-\ln(1-f(x_i))]\\
-						  &= -\sum_{i=1}^N[y_i(wx_i+b)-\ln(1-f(x_i))]\\
+						  &= -\sum_{i=1}^N[y_i\ln(\frac{f(x_i)}{1-f(x_i)})+\ln(1-f(x_i))]\\
+						  &= -\sum_{i=1}^N[y_i(wx_i+b)+\ln(1-f(x_i))]\\
 						  &= -\sum_{i=1}^N[y_i(wx_i+b)-\ln(1+e^{wx+b})]
 \end{align}$$
 $$
