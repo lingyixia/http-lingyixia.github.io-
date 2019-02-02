@@ -323,3 +323,36 @@ with tf.Session() as sess:
 (6, 4)
 (6, 11)
 ```
+
+#损失函数
+##sparse_softmax_cross_entropy_with_logits
+eg:
+```
+import tensorflow as tf
+
+if __name__ == '__main__':
+    logits=tf.constant(value=[[0.00827806,-0.03050169],[-0.01209893,-0.03642108],[-0.0045999,-0.01193358],[-0.00983661,-0.04756571],[0.00212166,-0.05041311]])
+    labels = tf.constant(value=[1,1,1,0,0])
+    losses = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits,labels=labels)
+    with tf.Session() as sess:
+        tf.global_variables_initializer().run()
+        print(losses.eval())
+#输出:[0.71272504 0.70538217 0.6968208  0.6744606  0.6672247 ]
+```
+>>sparse_softmax_cross_entropy_with_logits的作用是首先将logits每一行做`softmax`,然后对labels每一个label转为one_hot,最后计算$\sum_i^n y\prime ln y$(e为底数)
+
+##softmax_cross_entropy_with_logits
+eg:
+```
+import tensorflow as tf
+
+if __name__ == '__main__':
+    logits=tf.constant(value=[[0.00827806,-0.03050169],[-0.01209893,-0.03642108],[-0.0045999,-0.01193358],[-0.00983661,-0.04756571],[0.00212166,-0.05041311]])
+    labels = tf.constant(value=[[0,1],[0,1],[0,1],[1,0],[1,0]])
+    losses = tf.nn.softmax_cross_entropy_with_logits(logits=logits,labels=labels)
+    with tf.Session() as sess:
+        tf.global_variables_initializer().run()
+        print(losses.eval())
+#输出:[0.71272504 0.70538217 0.6968208  0.6744606  0.6672247 ]
+```
+>>注意，下面的函数的labels本来就是one_hot类型,下面函数和上面唯一的不同就是这个,即下面的无需将labels转为one_hot,而是直接输入one_hot类型。
