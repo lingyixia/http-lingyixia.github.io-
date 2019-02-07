@@ -48,6 +48,7 @@ if __name__ == '__main__':
 ```
 
 >>注意回复模型的时候不需要`tf.global_variables_initializer().run()`,这种方式是先把原始图构建出来，然后在回复模型,把模型保存的变量恢复到刚刚构建的图中,还可以不定义原图,直接加载保存的图.
+
 ```
 import tensorflow as tf
 
