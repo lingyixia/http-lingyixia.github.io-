@@ -35,7 +35,7 @@ int maxDepth(Node* root)
         return 0;
     }
     int maxDep=0;
-    for(int i =i;i<root->children.size();i++)
+    for(int i =0;i<root->children.size();i++)
     {
         maxDep=max(maxDep,maxDepth(root->children[i]));
     }
