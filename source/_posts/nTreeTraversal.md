@@ -75,7 +75,7 @@ int maxDepth(Node* root)
 	queue<Node*> q;
 	q.push(root);
 	Node* cursor = NULL;
-	while (!q.empty())
+	while (!q.empty())//这里的三层循环第二层目的是将每一层都组成一个数组,并计算层序,如果单纯为了输出层序遍历的结果完全可以使用两层循环
 	{
 	    int size = q.size();
 	    for (int i = 0; i < size;i++)//注意该队列其实是一层一层从做到右入队列的,切不可用while(!q.empty())
