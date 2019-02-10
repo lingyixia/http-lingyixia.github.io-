@@ -10,7 +10,7 @@ description: 求连续数组最大和
 
 ```
 //动态规划
-//递推公式为DP[i] = max{DP[i-1] + A[i],A[i]}
+//递推公式为DP[i] = max{DP[i-1] + A[i],DP[i-1]}
 int maxSubArray(vector<int>& nums)
 {
 	int currentMax = 0;//currentMax是i处以及之前的连续最大值
