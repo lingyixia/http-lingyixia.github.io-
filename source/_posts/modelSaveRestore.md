@@ -7,9 +7,9 @@ tags: [tensorflow]
 >本文用于记录`tensorflow`的`tf.train.Saver()`函数
 
 一个模型保存后会有四个文件:
-1. model.ckpt.meta文件: 图结构信息
-2. model.ckpt.data-*+model.ckpt.index:保存变量取值
-3. checkpoint:保存模型名称,即`restore`的时候的需要传入的名称
+1. `model.ckpt.meta`文件: 图结构信息
+2. `model.ckpt.data-*+model.ckpt.index`:保存变量取值
+3. `checkpoint`:保存模型名称,即`restore`的时候的需要传入的名称
 
 #模型保存
 ```
