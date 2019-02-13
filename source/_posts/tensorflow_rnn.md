@@ -124,7 +124,7 @@ with tf.Session() as sess:
 $$
 \begin{gather}
 f_t = \sigma(W_f[h_{t-1},x_t]+b_f) \\
-i_t = \tanh(W_i[h_{t-1,x_t}]+b_i) \\
+i_t = \sigma(W_i[h_{t-1,x_t}]+b_i) \\
 \widetilde C_t = \tanh(W_C[h_{t-1,x_t}]+b_C) \\
 O_t = \sigma(W_o[h_{t-1},x_t]+b_o)\\
 C_t = f_t*C_{t-1}+i_t*\widetilde C_t \\
@@ -135,7 +135,7 @@ $$
 $$
 \begin{gather}
 f_t = \sigma([h_{t-1},x_t]*W_f+b_f)\\
-i_t = \tanh([h_{t-1,x_t}]*W_i+b_i) \\
+i_t = \sigma([h_{t-1,x_t}]*W_i+b_i) \\
 \widetilde C_t = \tanh([h_{t-1,x_t}]*W_C+b_C) \\
 O_t = \sigma([h_{t-1},x_t]*W_o+b_o)\\
 C_t = f_t*C_{t-1}+i_t*\widetilde C_t \\
