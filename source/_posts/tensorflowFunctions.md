@@ -129,11 +129,11 @@ with tf.Session() as sess:
 与conact不同的一点是conact中tensor维度有多少axis就最大是多少,stack()的axis可以大1个维度。
 
 #tf.scatter_nd()
-给0tensor插入数据，参数说明:
+给全为0的tensor插入数据，参数说明:
 ```
 indices: shape的坐标
 updates: 实际数据，根据indices中的坐标插入shape中
-shape: 一个0tensor
+shape: 一个该shape的全为0的tensor
 ```
 eg:(简单例子直接百度)
 ```
@@ -168,7 +168,7 @@ with tf.Session() as sess:
   [0 0 0 0]]]
 ```
 
->>解释: 上诉例子中indices是(2,2),其中最后一维代表shape中的位置，前面所有的维度代表update的位置,updates是(2,4),其中前缀必须和indices除了最后一维剩下的shape相同(否则indices表示位置的部分就不能喝update一一对应了).总结起来就是把indices除去最后一维剩下的在updates中表示的位置插入到indices最后一维在shape中表示的位置。(蕴含着indices和update前缀相同，update和shape后缀相同，除了插入tensor为单值的情况)
+>>解释: `indices`包含两个:[0,1]和[2,3],分别表示`updates`中[5, 5, 5, 5]和[8, 8, 8, 8]在`shape`为(4,4,4)的全为0的tensor中的位置,即[5,5,5,5]的位置是(0,1,*),[8,8,8,8]的位置是(2,3,*)
 
 #判断不合法值
 >>nan:not a number,inf:infinity只有这两个!!!其他的:np.NAN和np.NaN就是nan,np.NINF就是-inf
