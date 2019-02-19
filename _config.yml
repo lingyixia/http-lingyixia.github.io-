@@ -52,6 +52,10 @@ index_generator:
   path: ''
   per_page: 10
   order_by: -date
+
+# hexo-sage-posts
+sage_posts:
+  filter: hidden    # Change the filter name to fit your need
   
 # Category & Tag
 default_category: uncategorized
