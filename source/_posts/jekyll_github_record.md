@@ -3,6 +3,7 @@ layout: post
 title: github博客小记
 category: 博客
 tags: [坑,jekyll]
+date: 2019-1-20 10:11:08
 description: 简单记录搭建github page的坑
 ---
 

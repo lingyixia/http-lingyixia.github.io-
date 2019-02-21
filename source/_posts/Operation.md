@@ -3,6 +3,7 @@ layout: post
 title: C++操作符重载
 category: 基础
 tags: [C++]
+date: 2019-01-20 10:14:08
 description: C++中成员函数和非成员函数两种操作符重载
 ---
 >以平面点为例记录C++中操作符重载写法

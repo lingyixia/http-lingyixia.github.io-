@@ -3,6 +3,7 @@ layout: post
 title: Tensorflow中Rnn的实现
 category: 深度学习
 tags: [tensorflow,rnn]
+date: 2019-2-20 10:11:08
 description: tensorflow中各种rnn的实现
 ---
 

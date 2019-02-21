@@ -1,6 +1,6 @@
 ---
 title: gradientDescent
-date: 2019-01-26 16:01:48
+date: 2019-01-11 16:01:48
 category: 神经网络
 tags: [梯度]
 ---

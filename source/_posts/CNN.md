@@ -2,6 +2,7 @@
 layout: post
 title: CNN理解
 category: 深度学习
+date: 2019-01-23 20:11:10
 tags: [CNN]
 description: CNN的卷积层和普通神经网络全连接层对比
 ---

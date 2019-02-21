@@ -2,6 +2,7 @@
 layout: post
 title: 线性回归和逻辑回归对比
 category: 机器学习
+date: 2019-02-20 13:11:08
 tags: [回归,分类,有监督]
 description: 线性回归和逻辑回归对比
 ---

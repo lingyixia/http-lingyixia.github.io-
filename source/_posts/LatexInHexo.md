@@ -13,8 +13,7 @@ description: Hexo中Latex公式显示问题解决
 >>npm uninstall hexo-renderer-marked --save
 
 2. 安装
->>npm install hexo-math --save
-npm install hexo-renderer-kramed --save
+>>npm install hexo-renderer-kramed --save
 
 3. 解决冲突
 `node_modules\kramed\lib\rules\inline.js`中:

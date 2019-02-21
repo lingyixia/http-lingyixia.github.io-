@@ -1,6 +1,6 @@
 ---
 title: representationMethod
-date: 2019-02-21 16:35:12
+date: 2019-02-22 22:35:12
 category: 深度学习
 tags: [表征]
 mathjax: true

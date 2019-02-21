@@ -3,6 +3,7 @@ layout: post
 title: 各种熵
 category: 机器学习
 tags: [熵]
+date: 2018-12-26 13:11:08
 description: 各种熵总结
 ---
 

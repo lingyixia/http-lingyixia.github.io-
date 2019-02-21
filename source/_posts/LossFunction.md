@@ -2,6 +2,7 @@
 layout: post
 title: 为什么使用交叉熵损失函数
 category: 深度学习
+date: 2019-01-20 06:11:08
 tags: [熵,损失函数]
 description: 为什么使用交叉熵损失函数而不是二次代价函数
 ---
