@@ -36,4 +36,4 @@ $$
 指的是某个单词$w$的上下文范围的大小,也就是前后多少个单词以内的才算是上下文?
 
 ### Word2vec 
-上面介绍的三种Word Embedding方法都是确定性(deterministic)的方法,而接下来介绍一种非确定性的基于神经网络的预测模型——word2vec。它是只有一个隐含层的神经网络,且激活函数(active function)是线性的,最后一层output采用softmax来计算概率。它包含两种模型:CBOW和Skip-gram
+上面介绍的三种Word Embedding方法都是确定性(deterministic)的方法,而接下来介绍一种非确定性的基于神经网络的预测模型——word2vec。它是只有一个隐含层的神经网络,且激活函数(active function)是线性的,最后一层output采用softmax来计算概率。它包含两种模型:CBOW和Skip-gram.
