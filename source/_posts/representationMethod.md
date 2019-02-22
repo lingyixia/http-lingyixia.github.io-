@@ -34,11 +34,11 @@ $$
 协同出现指的是两个单词$w_1$和$w_2$在一个Context Window范围内共同出现的次数
     * Context Window
 指的是某个单词$w$的上下文范围的大小,也就是前后多少个单词以内的才算是上下文,比如一个Context Window Size = 2的示意图如下:
-![](/img/ContextWindow .jpg)
-比如我们有如下的语料库：
+![](/img/contextWindow.png)
+比如我们有如下的语料库:
 `He is not lazy. He is intelligent. He is smart.`
 我们假设Context Window=2，那么我们就可以得到如下的co-occurrence matrix(共现矩阵):
-[](/img/co_occurrence_matrix.jpg)
+![](/img/co_occurrence_matrix.png)
 
 ### Word2vec
 >>Word2vec的直观直觉是两个用两个单词同时出现的概率来区分不同单词。
@@ -52,4 +52,4 @@ $$
 基于以上两点想法，Glove提出了一个加权最小二乘回归模型,输入为单词-上下文同时出现频次矩阵(共现矩阵):
 ![](/img/trainJ.png)
 其中,f是加权函数,定义如下:
-![](img/f(x)J.png)
+![](/img/f(x)J.png)
