@@ -42,6 +42,7 @@ $$
 
 ### Word2vec
 >>Word2vec的直观直觉是两个用两个单词同时出现的概率来区分不同单词。
+
 上面介绍的三种Word Embedding方法都是确定性(deterministic)的方法,而接下来介绍一种非确定性的基于神经网络的预测模型——word2vec。它是只有一个隐含层的神经网络,且激活函数(active function)是线性的,最后一层output采用softmax来计算概率。它包含两种模型:CBOW和Skip-gram.
 
 ### Glove
