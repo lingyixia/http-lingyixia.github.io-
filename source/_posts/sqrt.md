@@ -66,11 +66,12 @@ double sqrtNewTon(double n)
 	return current;
 }
 ```
+
 牛顿法解释:
 ![](/img/newton.jpg)  
 对于求$x^2=n$的$x$,首先令$f(x)=x^2-n$,任意取$x_0$,则点为$(x_0,f(x_0))$,则该点的切线方程为:
 $$
-f(x)=f(x_0)+f(x_0)^{\prime}x_0
+f(x)=f(x_0)+f(x_0)^{\prime}(x-x_0)
 $$
 即:
 $$
