@@ -4,7 +4,7 @@ date: 2019-02-22 19:04:20
 category: 机器学习
 tags: [分类,回归]
 ---
->boosting 是一种特殊的集成学习方法。所有的‘基’分类器都是弱学习器，但通过采用特定的方式迭代，每次根据训练过的学习器的预测效果来更新样本权值,用于新的一轮学习,最终提高联合后的学习效果boosting。主要参考自[该博客](https://blog.csdn.net/guyuealian/article/details/70995333),感谢作者。
+>boosting 是一种特殊的集成学习方法。所有的‘基’分类器都是弱学习器，但通过采用特定的方式迭代，每次根据训练过的学习器的预测效果来更新样本权值,用于新的一轮学习,最终提高联合后的学习效果boosting。
 
 #AdaBoost
 
@@ -19,8 +19,8 @@ tags: [分类,回归]
 $$
 D_1=(w_{11},w_{12},...,w_{1N}),w_{1i}=\frac{1}{N}
 $$
-2. 开始迭代$m=1~M$
-a. 选取当前权值分布下误差率最低的分类器G最为第m个基本分类器$G_m$,并计算误差:
+2. 开始迭代$m=1\~M$
+a. 选取当前权值分布下误差率最低的分类器G为第m个基本分类器$G_m$,并计算误差:
 $$
 e_m=\sum_{t=1}^NP(G_m(x_i)≠y_i)=\sum_{i=1}^Nw_{mi}I(G_m(x_i)≠y_i)
 $$
@@ -63,7 +63,33 @@ f(x) &=sign(F(x)) \\
      &=\sum_{k=1}^K \alpha_kT_k(x;\beta_k)
 \end{align}
 $$
-损失函数定义为:
+#Boosting Tree(提升树算法)
+##模型
+采用加法模型,利用前向分布算法,第m步得到的模型为:
 $$
-
+f_m(x)=f_{m-1}(x)+T(x;\Theta_m)
 $$
+其中$T(x;\Theta_m)$表示第m部要得到的决策树,$\Theta_m$表示其参数,并通过经验风险极小化来确定$\Theta_m$:
+$$
+\hat{\Theta}_m=\arg \min_{\Theta_m} \sum_{i=1}^NL(y_i,f_{m-1}(x_i)+T(x_i;\Theta_m))
+$$
+##学习过程
+$$
+\begin{align}
+f_0(x)&=0 \\
+f_m(x)&=f_{m-1}(x)+T(x;\Theta_m) \\
+f_m(x)&=\sum_{m=1}^M T(x;\Theta_m)
+\end{align}
+$$
+当使用平方误差损失函数时:
+$$
+L(y,f(x))=(y-f(x))^2
+$$
+即:
+$$
+\begin{align}
+L(y,f_{m-1}(x)+T(x;\Theta_m))&=(y-f_{m-1}(x)-T(x;\Theta_m))^2 \\
+&=(r-T(x;\Theta_m))^2
+\end{align}
+$$
+其中$r=y-f_{m-1}(x)$,即第m-1论求得的树还剩下的残差,现在第m轮的目标是减少这个残差.
