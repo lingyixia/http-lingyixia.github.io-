@@ -19,7 +19,7 @@ tags: [分类,回归]
 $$
 D_1=(w_{11},w_{12},...,w_{1N}),w_{1i}=\frac{1}{N}
 $$
-2. 开始迭代$m=1\~M$
+2. 开始迭代$m=1$~$M$
 a. 选取当前权值分布下误差率最低的分类器G为第m个基本分类器$G_m$,并计算误差:
 $$
 e_m=\sum_{t=1}^NP(G_m(x_i)≠y_i)=\sum_{i=1}^Nw_{mi}I(G_m(x_i)≠y_i)
@@ -92,4 +92,73 @@ L(y,f_{m-1}(x)+T(x;\Theta_m))&=(y-f_{m-1}(x)-T(x;\Theta_m))^2 \\
 &=(r-T(x;\Theta_m))^2
 \end{align}
 $$
-其中$r=y-f_{m-1}(x)$,即第m-1论求得的树还剩下的残差,现在第m轮的目标是减少这个残差.
+其中$r=y-f_{m-1}(x)$,即第m-1论求得的树还剩下的**残差**,现在第m轮的目标是减少这个**残差**.
+
+
+#梯度提升
+>>主要思想和上诉算法相同,不同点在于使用负梯度(伪残差)代替残差
+
+1. 初始化
+$$
+f_0(x) = \arg \min_c \sum_{i=1}^N L(y_i,c)
+$$
+2. 对m=1,2,3...,M
+a. 对i=1,2,3...,N,计算伪残差:
+$$
+r_{mi}=-[\frac{\partial L(y,f(x_i))}{\partial f(x_i)}]_{f(x)=f_{m-1}(x)}
+$$
+b. 使用该残差列表$(x_i,r_{mi})$计算新的分类器$f_{m}$
+c. 计算部长(也就是所谓的学习率)
+$$
+\gamma _m=\arg \min_{\gamma} \sum_{i=1}^N L(y_i,f_{m-1}-\gamma f_m(x))
+$$
+d. 更新模型:
+$$
+f_m(x) = f_{m-1}(x)-\gamma_m f(x)
+$$
+
+#GBDT
+>>当上诉地图提升使用的是基函数是决策树的时候就是GBDT
+#XGboost
+>>补充:损失函数：计算的是一个样本的误差代价函数：是整个训练集上所有样本误差的平均目标函数：代价函数 + 正则化项
+
+损失函数为:
+$$
+Obj=\sum_{i=1}^n l(y_i,\hat{y_i})+\Omega(f_t)
+$$
+第一项是loss,第二项是正则项:
+$$
+\Omega(f_t) = \gamma T + \frac{1}{2}\gamma\sum_{j=1}^T w_j^2
+$$
+其中$w_j^2$是叶子节点j的权重.
+由于新生成的树要拟合上次预测的损失,因此有:
+$$
+\hat{y_i} = \hat{y_i}^{(t-1)} + f_t(x_i)
+$$
+同时,可以将目标函数改写为:
+$$
+L^t=\sum_{i=1}^n l(y_i,\hat{y_i}^{(t-1)}+f_t(x_i))+\Omega(f_t)
+$$
+二阶泰勒展开:
+$$
+L^t≈ \sum_{i=1}^n[l(y_i,\hat{y}^{(t-1)}+g_if_t(x_i)+\frac{1}{2}f_t^2(x_i))]+\Omega(f_t)
+$$
+其中$g_i$和$h_i$分别是一阶和二阶导数.可以直接去掉t-1棵树的残差:
+$$
+L^t≈ \sum_{i=1}^n[g_if_t(x_i)+\frac{1}{2}f_t^2(x_i))]+\Omega(f_t)
+$$
+将目标函数按照叶子节点展开:
+$$
+\begin{align}
+Obj^t &≈ \sum_{i=1}^n[l(y_i,\hat{y}^{(t-1)}+g_if_t(x_i)+\frac{1}{2}f_t^2(x_i))]+\Omega(f_t) \\
+&=\sum_{i=1}^n[l(y_i,\hat{y}^{(t-1)}+g_if_t(x_i)+\frac{1}{2}f_t^2(x_i))]+\gamma T + \frac{1}{2}\lambda\sum_{j=1}^T w_j^2 \\
+&=\sum_{j=1}^T[(\sum_{i \in I_j} g_i)w_j + \frac{1}{2}(\sum_{i \ in I_j}h_i + \lambda)w_j^2]+\gamma T
+\end{align}
+$$
+$$
+w_j^* = -\frac{G_j}{H_j+\lambda} \\ Obj = -\frac{1}{2}\sum_{j=1}^T \frac{G_j^2}{H_j+\lambda}+ \gamma T
+$$
+其中:
+$$
+G_j = \sum_{i \ in I} g_i \\ H_j = \sum_{i \in I} h_i
+$$
