@@ -28,7 +28,7 @@ b. 计算分类器权重:
 $$
 \alpha_m=\frac{1}{2}\ln \frac{1-e_m}{e_m}
 $$
-此处需要备注:当$e_m<1/2$时,$\alpha_m>0$，且$\alpha_m$随着$e_m$的增大而减少,即分类误差越小该弱分类器权值越大,意味着在最终的全国分类器中该弱分类器的权值大。
+**此处需要备注**:当$e_m$<1/2时,$\alpha_m$>0,且$\alpha_m$随着$e_m$的增大而减少,即分类误差越小该弱分类器权值越大,意味着在最终的全国分类器中该弱分类器的权值大。
 c. 更新样本权值分布$D_{t+1}$:
 $$
 \begin{gather}
@@ -40,7 +40,7 @@ $$
 $$
 Z_m=\sum_i^N w_{mi}e^{-\alpha_m y_i G_m(x_i)}=2 \sqrt{e_m(1-e_m)}(可证)
 $$
-此处需要备注:可以看出:
+**此处需要备注**:可以看出:
 $$
 w_{m+1,i} = \begin{cases}
 \frac{w_{mi}}{Z_m}e^{-alpha_m} &  G_m(x_i) = y_i( G_m(x_i) \times y_i =1) \\
@@ -160,5 +160,5 @@ w_j^* = -\frac{G_j}{H_j+\lambda} \\ Obj = -\frac{1}{2}\sum_{j=1}^T \frac{G_j^2}{
 $$
 其中:
 $$
-G_j = \sum_{i \ in I} g_i \\ H_j = \sum_{i \in I} h_i
+G_j = \sum_{i \in I} g_i \\ H_j = \sum_{i \in I} h_i
 $$
