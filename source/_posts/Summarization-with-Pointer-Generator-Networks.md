@@ -13,7 +13,7 @@ description: Get To The Point:Summarization with Pointer-Generator Networks论�
 简述:
 $$ 
 \begin{align}
-e_i^t&=V^Ttanh(W_hh_i+W_s+b_{attn}) \tag{1} \\
+e_i^t&=V^Ttanh(W_hh_i+W_ss_t+b_{attn}) \tag{1} \\
 a^t&=sotfmax(e^t) \tag{2} \\
 h_t^*&=\sum_ia_i^th_i \tag{3} \\
 \end{align}
