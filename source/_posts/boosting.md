@@ -4,7 +4,8 @@ date: 2019-02-22 19:04:20
 category: 机器学习
 tags: [分类,回归]
 ---
->boosting 是一种特殊的集成学习方法。所有的‘基’分类器都是弱学习器，但通过采用特定的方式迭代，每次根据训练过的学习器的预测效果来更新样本权值,用于新的一轮学习,最终提高联合后的学习效果boosting
+>boosting 是一种特殊的集成学习方法。所有的‘基’分类器都是弱学习器，但通过采用特定的方式迭代，每次根据训练过的学习器的预测效果来更新样本权值,用于新的一轮学习,最终提高联合后的学习效果boosting。
+
 #AdaBoost
 
 ##步骤:
@@ -55,6 +56,12 @@ $$
 得到最终分类器:
 $$
 G(x) = sign(f(x))=sign(\sum_{m=1}^M \alpha_m G_m(x_i))
+$$
+$$
+\begin{align}
+f(x) &=sign(F(x)) \\
+     &=\sum_{k=1}^K \alpha_kT_k(x;\beta_k)
+\end{align}
 $$
 #Boosting Tree(提升树算法)
 ##模型
@@ -150,4 +157,8 @@ Obj^t &≈ \sum_{i=1}^n[l(y_i,\hat{y}^{(t-1)}+g_if_t(x_i)+\frac{1}{2}f_t^2(x_i))
 $$
 $$
 w_j^* = -\frac{G_j}{H_j+\lambda} \\ Obj = -\frac{1}{2}\sum_{j=1}^T \frac{G_j^2}{H_j+\lambda}+ \gamma T
-$
+$$
+其中:
+$$
+G_j = \sum_{i \in I} g_i \\ H_j = \sum_{i \in I} h_i
+$$
