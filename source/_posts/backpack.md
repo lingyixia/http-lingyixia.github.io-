@@ -4,6 +4,8 @@ title: 背包问题
 category: 算法
 date: 2019-01-20 19:11:08
 tags: [递归,背包,动态规划]
+sage: true
+hidden: true
 description: 三种背包问题
 ---
 

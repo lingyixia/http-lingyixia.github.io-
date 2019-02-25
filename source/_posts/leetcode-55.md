@@ -2,6 +2,8 @@
 title: Jump Game
 date: 2019-01-15 21:03:15
 category: 算法
+sage: true
+hidden: true
 tags: [贪心算法,动态规划]
 ---
 
