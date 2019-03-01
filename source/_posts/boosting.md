@@ -177,7 +177,7 @@ $$
  b. 更新$f_m(x)=f_{m-1}(x)+\beta_m b(x;\lambda_m)$
 3. 得到最终加法模型:$f(x)=f_M(x)=\sum_{m=1}^M \beta_mb(x;\lambda_m)$
 
-##从前向分布算法到Adaboost
+#从前向分布算法到Adaboost
 >>简单来说,Adaboost就是当损失函数为**指数损失函数**时的前向分布算法,得到的是二分类模型
 
 对于Adaboost最终分类器是:
