@@ -129,7 +129,7 @@ Obj=\sum_{i=1}^n l(y_i,\hat{y_i})+\Omega(f_t)
 $$
 第一项是loss,第二项是正则项:
 $$
-\Omega(f_t) = \gamma T + \frac{1}{2}\gamma\sum_{j=1}^T w_j^2
+\Omega(f_t) = \gamma T + \frac{1}{2}\lambda\sum_{j=1}^T w_j^2
 $$
 其中$w_j^2$是叶子节点j的权重.
 由于新生成的树要拟合上次预测的损失,因此有:
