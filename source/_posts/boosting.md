@@ -31,6 +31,7 @@ $$
 \alpha_m=\frac{1}{2}\ln \frac{1-e_m}{e_m}
 $$
 **此处需要备注**:当$e_m$<1/2时,$\alpha_m$>0,且$\alpha_m$随着$e_m$的增大而减少,即分类误差越小该弱分类器权值越大,意味着在最终的全国分类器中该弱分类器的权值大。
+
 c. 更新样本权值分布$D_{t+1}$:
 $$
 \begin{gather}
@@ -110,7 +111,9 @@ a. 对i=1,2,3...,N,计算伪残差:
 $$
 r_{mi}=-[\frac{\partial L(y,f(x_i))}{\partial f(x_i)}]_{f(x)=f_{m-1}(x)}
 $$
-b. 使用该残差列表$(x_i,r_{mi})$计算新的分类器$f_{m}(x)$(即基函数,可能是决策树、逻辑回归、SVM等)
+
+b. 使用该残差列表$$(x_i,r_{mi})$$计算新的分类器$$f_m(x)$$(即基函数,可能是决策树、逻辑回归、SVM等)
+
 c. 计算步长(也就是所谓的学习率,在Boosting中称为权重)
 $$
 \gamma _m=\arg \min_{\gamma} \sum_{i=1}^N L(y_i,f_{m-1}-\gamma f_m(x))
@@ -176,9 +179,9 @@ $$
 步骤:
 1. 初始化$f_0(x)$
 2. 对$m=1,2,...,M$
- a. $(\beta_M,\lambda_m)=arg\min_{\beta,\lambda}\sum_{i=1}^NL(y_i,f_{m-1}(x_i)+\beta b(x_i;\lambda))$
- b. 更新$f_m(x)=f_{m-1}(x)+\beta_m b(x;\lambda_m)$
-3. 得到最终加法模型:$f(x)=f_M(x)=\sum_{m=1}^M \beta_mb(x;\lambda_m)$
+ a. $$(\beta_M,\lambda_m)=arg\min_{\beta,\lambda}\sum_{i=1}^NL(y_i,f_{m-1}(x_i)+\beta b(x_i;\lambda))$$
+ b. 更新$$f_m(x)=f_{m-1}(x)+\beta_m b(x;\lambda_m)$$
+3. 得到最终加法模型:$$f(x)=f_M(x)=\sum_{m=1}^M \beta_mb(x;\lambda_m)$$
 
 #从前向分布算法到Adaboost
 >>简单来说,Adaboost就是当损失函数为**指数损失函数**时的前向分布算法,得到的是二分类模型
@@ -206,13 +209,13 @@ $$
 $$
 (\alpha_m,G_m(x))=arg\min_{\alpha,G}\sum_{i=1}^N \overline w_{mi}  e^{-y_i\alpha G(x_i))} \tag{5.5}
 $$
-其中$\overline w_{mi}=e^{-y_if_{m-1}}$,可以看出$\overline w_{mi}$与$\alpha$和$G(x)$无关,故与最小化无关,但是和$f_{m-1}$有关,故每一轮都有变化。
-现在要证明的是使式5.5达到最小的$\alpha^*$和$G^*(x)$就是Adaboost算法所得到的$\alpha_m$和$G_m(x)$现在对两者分别求值:
-首先,对于$G_m^*(x)$,对任意$\alpha$>0有:
+其中$$\overline w_{mi}=e^{-y_if_{m-1}}$$,可以看出$$\overline w_{mi}$$与$$\alpha$$和$$G(x)$$无关,故与最小化无关,但是和$$f_{m-1}$$有关,故每一轮都有变化。
+现在要证明的是使式5.5达到最小的$$\alpha^*$$和$$G^*(x)$$就是Adaboost算法所得到的$$\alpha_m$$和$$G_m(x)$$现在对两者分别求值:
+首先,对于$$G_m^*(x)$$,对任意$\alpha$>0有:
 $$
 G_m(x)^*=arg\min_G\sum_{i=1}^N\overline w_{mi}I(y_i≠G(x_i)) \tag{5.6}
 $$
-该分类器$G_m^*(x)$就是式第m轮分类误差最小的分类器.然后求$\alpha^*_m$,参照式5.4和5.5:
+该分类器$$G_m^*(x)$$就是式第m轮分类误差最小的分类器.然后求$$\alpha^*_m$$,参照式5.4和5.5:
 首先需要知道:
 $$
 \sum_{y_i=G_m(x_i)}\overline w_{mi}e^{-\alpha}=\sum_i^N \overline w_{mi}I(y_i=G(x_i)) tag{5.7} \\
