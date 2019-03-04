@@ -133,7 +133,7 @@ $$
 
 目标函数为:
 $$
-Obj=\sum_{i=1}^n l(y_i,\hat{y_i})+\Omega(f_t)
+Obj=\sum_{i=1}^n l(y_i,\hat{y_i})+\sum_t^K \Omega(f_t)
 $$
 第一项是loss,第二项是正则项:
 $$
@@ -146,31 +146,47 @@ $$
 $$
 同时,可以将目标函数改写为:
 $$
-L^t=\sum_{i=1}^n l(y_i,\hat{y_i}^{(t-1)}+f_t(x_i))+\Omega(f_t)
+Obj^t=\sum_{i=1}^n l(y_i,\hat{y_i}^{(t-1)}+f_t(x_i))+\Omega(f_t)
 $$
 二阶泰勒展开:
 $$
-L^t≈ \sum_{i=1}^n[l(y_i,\hat{y}^{(t-1)}+g_if_t(x_i)+\frac{1}{2}f_t^2(x_i))]+\Omega(f_t)
+Obj^t≈ \sum_{i=1}^n[l(y_i,\hat{y}^{(t-1)})+g_if_t(x_i)+\frac{1}{2} h_i f_t^2(x_i)]+\Omega(f_t)
 $$
 其中$g_i$和$h_i$分别是一阶和二阶导数.可以直接去掉t-1棵树的残差:
 $$
-L^t≈ \sum_{i=1}^n[g_if_t(x_i)+\frac{1}{2}f_t^2(x_i))]+\Omega(f_t)
+g_i = \frac{\partial ^ \prime l(y_i,\hat{y}^{(t-1)})}{\partial \hat{y}^{(t-1)}} \\
+h_i = \frac{\partial ^2 l(y_i,\hat{y}^{(t-1)})}{\partial \hat{y}^{(t-1)}} \\
+Obj^t≈ \sum_{i=1}^n[g_if_t(x_i)+\frac{1}{2}f_t^2(x_i))]+\Omega(f_t)
 $$
 将目标函数按照叶子节点展开:
 $$
 \begin{align}
-Obj^t &≈ \sum_{i=1}^n[l(y_i,\hat{y}^{(t-1)}+g_if_t(x_i)+\frac{1}{2}f_t^2(x_i))]+\Omega(f_t) \\
-&=\sum_{i=1}^n[l(y_i,\hat{y}^{(t-1)}+g_if_t(x_i)+\frac{1}{2}f_t^2(x_i))]+\gamma T + \frac{1}{2}\lambda\sum_{j=1}^T w_j^2 \\
-&=\sum_{j=1}^T[(\sum_{i \in I_j} g_i)w_j + \frac{1}{2}(\sum_{i \ in I_j}h_i + \lambda)w_j^2]+\gamma T
+Obj^t &≈ \sum_{i=1}^n[l(y_i,\hat{y}^{(t-1)})+g_if_t(x_i)+\frac{1}{2}f_t^2(x_i)]+\Omega(f_t) \\
+&=\sum_{i=1}^n[l(y_i,\hat{y}^{(t-1)})+g_if_t(x_i)+\frac{1}{2}f_t^2(x_i)]+\gamma T + \frac{1}{2}\lambda\sum_{j=1}^T w_j^2 \\
+&=\sum_{j=1}^T[(\sum_{i \in I_j} g_i)w_j + \frac{1}{2}(\sum_{i \in I_j}h_i + \lambda)w_j^2]+\gamma T
 \end{align}
 $$
+最终目标函数为:
 $$
-w_j^* = -\frac{G_j}{H_j+\lambda} \\ Obj = -\frac{1}{2}\sum_{j=1}^T \frac{G_j^2}{H_j+\lambda}+ \gamma T
+w_j^* = -\frac{G_j}{H_j+\lambda} \\
+Obj^t = -\frac{1}{2}\sum_{j=1}^T \frac{G_j^2}{H_j+\lambda}+ \gamma T
 $$
 其中:
 $$
 G_j = \sum_{i \in I} g_i \\ H_j = \sum_{i \in I} h_i
 $$
+$Obj^t$是每一步的目标函数,我们要让$Obj^t$小,就需要让$ \frac{G_j^2}{H_j+\lambda}$大,因此我们在这个地方更改决策树的split方案:
+对于任意一个划分必能将数据划分为一个二叉树,则我们计算每一个可能的划分:
+$$
+Gain=\frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}-\frac{(G_L+G_R)^2}{H_L+H_R+\lambda} -\gamma
+$$
+>>前两项是划分后左右两个子树的得分,第三项是不划分的得分,现在需要计算所有可能的划分,然后选择最大的划分左右子树。
+
+#XGboost和GBDT对比
+1. 传统GBDT以CART作为基分类器，xgboost还支持线性分类器
+2. 传统GBDT在优化时只用到一阶导数信息，xgboost则对代价函数进行了二阶泰勒展开，同时用到了一阶和二阶导数
+3. xgboost在代价函数里加入了正则项，用于控制模型的复杂度
+
 #前向分布算法
 输入: 训练数据集$T=\{(x_1,y_1),(x_2,y_2),...,(x_N,y_N)\}$,损失函数$L(y_i,f(x_i))$,基函数集${b(x;\lambda)}$
 >>这里的基函数集应该指的是未知参数的某种分类器,而在前向分布算法中我们每一步都可以使用不同得分类器(虽然一般是相同得分类器),因此可以是基函数"集".
