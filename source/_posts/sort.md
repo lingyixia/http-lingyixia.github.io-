@@ -114,6 +114,149 @@ int Partition(vector<int>& array, int low, int high)
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 |快速排序|$O(nlogn)$|$O(nlogn)$|$O(n^2)$|栈的深度$O(log_2n)$|否|基本有序或者基本逆序，效果最差
 
+##二路快速排序
+>>目的是处理数组中重复数据多,容易使时间复杂度退化到$n^2$的问题
+
+```
+#include<iostream>
+#include<vector>
+#include<cstdlib>
+#include<ctime>
+#include<ctime>
+using namespace std;
+
+void swap(vector<int>& array, int p, int q);
+void Qsort(vector<int>& array, int low, int high);//二路快速排序+随机化
+int Partition2(vector<int>& array, int low, int high);
+int main()
+{
+	clock_t startTime, endTime;
+	srand((unsigned)time(NULL));
+	startTime = clock();//计时开始
+	vector<int> array = { 5, 1, 9, 3, 7, 4, 8, 6, 2 };
+	Qsort(array, 0, array.size() - 1);
+	endTime = clock();//计时结束
+	cout << "总计时长" << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
+	return 0;
+}
+void Qsort(vector<int>& array, int low, int high)
+{
+	int privot;
+	if (low<high)
+	{
+		privot = Partition2(array, low, high);
+		Qsort(array, low, privot - 1);
+		Qsort(array, privot + 1, high);
+	}
+}
+
+int Partition2(vector<int>& array, int low, int high)
+{
+	swap(array,low,low + rand()%(high-low+1));
+	int privotKey = array[low];
+	int lowP = low+1;
+	int highP = high;
+	while (true)
+	{
+		while (lowP<=highP&&array[lowP] < privotKey)
+		{
+			lowP++;
+		}
+		while (highP>= lowP+1&&array[highP] > privotKey)
+		{
+			highP--;
+		}
+		if (lowP > highP) break;
+		swap(array,lowP,highP);
+		highP--;
+		lowP++;
+	}
+	swap(array,low,highP);
+	return highP;
+}
+void swap(vector<int>& array, int p, int q)
+{
+	int temp = array[p];
+	array[p] = array[q];
+	array[q] = temp;
+}
+```
+
+##三路快速排序
+>>目的是处理数组中重复数据多,容易使时间复杂度退化到$n^2$的问题
+
+```
+#include<iostream>
+#include<vector>
+#include<cstdlib>
+#include<ctime>
+#include<ctime>
+using namespace std;
+
+void swap(vector<int>& array, int p, int q);
+void Qsort3(vector<int>& array, int low, int high);
+vector<int> Partition3(vector<int>& array, int low, int high);
+int main()
+{
+	clock_t startTime, endTime;
+	srand((unsigned)time(NULL));
+	startTime = clock();//计时开始
+	vector<int> array = { 5, 1, 9, 3, 7, 4, 8, 6, 2 };
+	Qsort3(array, 0, array.size() - 1);
+	endTime = clock();//计时结束
+	cout << "总计时长" << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
+	return 0;
+}
+void Qsort3(vector<int>& array, int low, int high)
+{
+	vector<int> privots;
+	if (low<high)
+	{
+		privots = Partition3(array, low, high);
+		Qsort3(array, low, privots[0]);
+		Qsort3(array, privots[1], high);
+	}
+}
+vector<int> Partition3(vector<int>& array, int low, int high)
+{
+	vector<int> privots;
+	swap(array, low, low + rand() % (high - low + 1));
+	int privotKey = array[low];
+	int lowP = low;
+	int highP = high+1;
+	int pos = low + 1;
+	while (pos<highP)
+	{
+		if (array[pos]<privotKey)
+		{
+			swap(array,lowP+1,pos);
+			pos++;
+			lowP++;
+		}
+		else if (array[pos] > privotKey)
+		{
+			swap(array,highP-1,pos);
+			highP--;
+		}
+		else
+		{
+			pos++;
+		}
+	}
+	swap(array, low, lowP);
+	privots.push_back(lowP-1);
+	privots.push_back(highP);
+	return privots;
+}
+
+void swap(vector<int>& array, int p, int q)
+{
+	int temp = array[p];
+	array[p] = array[q];
+	array[q] = temp;
+}
+```
+
 #插入排序
 ##直接插入排序
 >>前面的已经有序,把后面的插入到前面有序的元素中,不断增长有序序列。
