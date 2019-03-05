@@ -204,7 +204,7 @@ int main()
 	vector<int> array = { 5, 1, 9, 3, 7, 4, 8, 6, 2 };
 	Qsort3(array, 0, array.size() - 1);
 	endTime = clock();//计时结束
-	cout << "总计时长" << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
+	cout << "总计时长" << (double)(endTime - startTime); // CLOCKS_PER_SEC << "s" << endl;
 	return 0;
 }
 void Qsort3(vector<int>& array, int low, int high)
