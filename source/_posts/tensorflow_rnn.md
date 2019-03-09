@@ -27,15 +27,15 @@ mathjax: true
 ```
 公式如下:
 $$
-ht=tanh(W_k[x_t,h_{t-1}]+b)
+h_t=tanh(W_k[x_t,h_{t-1}]+b)
 $$
 或
 $$
-ht=tanh(W_x+Uh_{t-1}+b)
+h_t=tanh(W_x+Uh_{t-1}+b)
 $$
 但是我个人认为应该是:
 $$
-ht=tanh([x_t,h_{t-1}]*W+b) \tag{1}
+h_t=tanh([x_t,h_{t-1}]*W+b) \tag{1}
 $$
 我也不知道为啥会都写作上面那两种形式.  
 eg:
