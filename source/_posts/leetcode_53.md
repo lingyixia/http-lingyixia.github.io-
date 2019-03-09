@@ -24,3 +24,36 @@ int maxSubArray(vector<int>& nums)
 	return maxSum;
 }
 ```
+>>矩阵最大子矩阵和
+
+```
+int calclineSum(vector<int> array)//完全和上面一样
+{
+	int before=0;
+	int maxSum = INT_MIN;
+	for (int i = 0; i < array.size(); i++)
+	{
+		before = max(before+array[i],array[i]);
+		maxSum = max(maxSum,before);
+	}
+	return maxSum;
+}
+
+int maxSumMatrix(vector<vector<int>> matrix)
+{
+	int maxSum = INT_MIN;
+	for (int i = 0; i < matrix.size(); i++)
+	{
+		vector<int> lineSum(matrix[0].size());
+		for (int j = i; j < matrix.size(); j++)
+		{
+			for (int k = 0; k < matrix[0].size(); k++)
+			{
+				lineSum[k] += matrix[j][k];
+			}
+			maxSum = max(maxSum, calclineSum(lineSum));
+		}
+	}
+	return maxSum;
+}
+```
