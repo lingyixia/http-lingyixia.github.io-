@@ -11,25 +11,16 @@ description: 求连续数组最大和
 
 ```
 //动态规划
-//递推公式为DP[i] = max{DP[i-1] + A[i],DP[i-1]}
-int maxSubArray(vector<int>& nums)
+//递推公式为DP[i] = max{DP[i-1] + A[i],DP[i]},对于当前点i,要么与前面连起来组成和,要么自己组成和
+int maxSubArray(vector<int>& nums) 
 {
-	int currentMax = 0;//currentMax是i处以及之前的连续最大值
-	int max = INT_MIN;
-	for (int i = 0; i < nums.size(); i++)
+	int before = 0;//before就是Dp[i-1]
+	int maxSum = INT_MIN;
+	for (int i = 0; i <nums.size(); i++)
 	{
-		currentMax += nums[i];
-		max = currentMax>max?currentMax:max;
-		currentMax = currentMax<0?0:currentMax;
-		//if (currentMax>max)
-		//{
-		//	max = currentMax;
-		//}
-		//if (currentMax<0)//之所以不用else if是考虑譬如[-2,1]的情况
-		//{
-		//	currentMax = 0;
-		//}
+		before = max(before+nums[i],nums[i]);
+		maxSum = max(maxSum,before);
 	}
-	return max;
+	return maxSum;
 }
 ```
