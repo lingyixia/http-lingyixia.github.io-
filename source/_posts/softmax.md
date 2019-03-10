@@ -62,8 +62,12 @@ $$
 $$
 \begin{align}
 \frac{\partial Loss}{\partial w_{41}} &=-\frac{1}{a_4} \times a_4(1-a_4) \times o_1 \\
-&=(1-a_4) \times o_1
+&=(a_4-1) \times o_1
 \end{align}
+$$
+即:
+$$
+\frac{\partial Loss}{\partial z_4}=a_4-1
 $$
 >>形式非常简单，这说明我只要正向求一次得出结果，然后反向传梯度的时候，只需要将它结果减1即可。
 
@@ -86,6 +90,10 @@ $$
 \frac{\partial Loss}{\partial w_{z_51}} &=-\frac{1}{a_4} \times (-a_4a_5) \times o_1 \\
 &=a_5 \times o_1
 \end{align}
+$$
+即:
+$$
+\frac{\partial Loss}{\partial z_4}=a_5
 $$
 >>形式非常简单，这说明我只要正向求一次得出结果，然后反向传梯度的时候，只需要将它结果保存即可
 
