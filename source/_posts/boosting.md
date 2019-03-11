@@ -122,7 +122,7 @@ $$
 
 d. 更新模型:
 $$
-f_m(x) = f_{m-1}(x)-\gamma_m f(x)
+f_m(x) = f_{m-1}(x)+\gamma_m f(x)
 $$
 
 #GBDT
