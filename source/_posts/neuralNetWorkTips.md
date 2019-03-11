@@ -8,9 +8,7 @@ tags: [tips]
 # 加速训练
 
 1. SGD (训练集做手脚)
-
 2. momentum(在梯度上做手脚)
-
 假设在t步骤时$W$的**梯度**(为$dW$,$b$的梯度为$db$,t-1步计算得到的**速度**是$V_{dw}$和$V_{db}$,则:
 $$
 v_t=\lambda v_{t-1}+\eta_tg_t \\
@@ -19,7 +17,6 @@ $$
 >>其思想就是让参数更新方向不那么`硬`
 
 3. Adagard (学习率做手脚)
-
 本来应该:
 $$
 w^{t+1} \leftarrow w^t - \eta^t g^t
@@ -31,27 +28,24 @@ w_t=w_{t-1} - \frac{\eta}{\sqrt{s_t+\epsilon}} \times g_t
 $$
 
 4. RMSProp(2和3的结合)
-
 $$
 s_t=\lambda s_t+(1-\lambda)g_t^2 \\
 w_t=w_{t-1} - \frac{\eta}{\sqrt{s_t+\epsilon}} \times g_t
 $$
-
 5. Adadelta(没有学习率)
-
 $$
 s_t= \rho s_t+(1-\rho)g_t^2 \\
 g_t^{\prime}=\sqrt{\frac{\Delta w_{t-1}+\epsilon}{s_t+\epsilon}}*g_t \\
 w_t= w_{t-1}-g_t^{\prime} \\
 \Delta w_t=\rho \Delta w_{t-1}+(1-\rho)g_t^{\prime} * g_t
 $$
-其实就是维护了一个$\Delta w$用来代替Adagard中的学习率。
+>>其实就是维护了一个$\Delta w$用来代替Adagard中的学习率。
 
 6. Adam
 
 $$
 v_t=\beta_1 v_{t-1} +(1-\beta_1)g_t \\
-s_t=\beta_2 s_{t-1} + (1-\beta_2)g_t2\\
+s_t=\beta_2 s_{t-1} + (1-\beta_2)g_t^2\\
 \hat{v_t}=\frac{v_t}{1-\beta_t} \\
 \hat{s_t}=\frac{s_t}{1-\beta_t} \\
 g_t^{\prime} = \frac{\eta \hat{v_t}}{\sqrt{\hat{s_t}}+\eta} \\

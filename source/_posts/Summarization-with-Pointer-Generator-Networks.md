@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Summarization-with-Pointer-Generator-Networks
-date: 2018-12-26 19:30:48
+date: 2019-3-5 19:30:48
 category: 深度学习
 tags: [论文,tensorflow]
 description: Get To The Point:Summarization with Pointer-Generator Networks论文导读
