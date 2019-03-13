@@ -89,16 +89,15 @@ void Qsort(vector<int>& array, int low, int high)
 }
 int Partition(vector<int>& array, int low, int high)
 {
-	int privotKey = array[low];
-	int finalPos = low;
+    int privotKey = array[low];
 	while (low<high)
 	{
-		while (low<high&&array[high]>=privotKey)
+		while (low<high&&array[high]>=privotKey)//改为>则会使结果相同的数字在最终枢轴坐标左侧
 		{
 			high--;
 		}
 		array[low] = array[high];
-		while (low < high&&array[low] <= privotKey)
+		while (low < high&&array[low] <= privotKey)//改为<则会使结果相同的数字在最终枢轴坐标右侧
 		{
 			low++;
 		}
