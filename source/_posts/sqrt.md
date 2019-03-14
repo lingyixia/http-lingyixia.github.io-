@@ -85,5 +85,4 @@ $$
 $$
 x_{i+1}=\frac{(x_i+\frac{n}{x_i})}{2}
 $$
-其实就是**梯度下降**的前身。
 [详细见此](https://www.zhihu.com/question/20690553)
