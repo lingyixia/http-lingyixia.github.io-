@@ -28,7 +28,7 @@ $$
 
 4. RMSProp(2和3的结合)
 $$
-s_t=\lambda s_t+(1-\lambda)g_t^2 \\
+s_t=\lambda s_{t-1}+(1-\lambda)g_t^2 \\
 w_t=w_{t-1} - \frac{\eta}{\sqrt{s_t+\epsilon}} \times g_t
 $$
 5. Adadelta(没有学习率)
