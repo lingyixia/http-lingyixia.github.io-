@@ -50,7 +50,7 @@ s_t=\beta_2 s_{t-1} + (1-\beta_2)g_t^2\\
 g_t^{\prime} = \frac{\eta \hat{v_t}}{\sqrt{\hat{s_t}}+\eta} \\
 w_t=w_{t-1}-g_t^{\prime}
 $$
->>[好累,先干点别的,明天再继续](http://zh.gluon.ai/chapter_optimization/adam.html)
+>>其中3、4两步是参数修正,原因是如果不这样刚开始的时候有可能会使v和g,S和g相差太大.
 
 5. dropout(随机丢弃部分神经元)
 tensorflow中的实现方式就是对每个神经元维护一个概率值,每次训练都以该概率的概率将其所有权重置为零
