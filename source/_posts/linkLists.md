@@ -82,7 +82,7 @@ ListNode* FindKthToTail(ListNode* pListHead, unsigned int k)
 #判断有无环
 一般解法有两种
 ##解法一
->>将遍历过的节点及都加入哈希表,每次该点是否在哈希表中:
+>>将遍历过的节点都加入哈希表,每次该点是否在哈希表中:
 
 ```
 bool hasCycle(ListNode *head)
