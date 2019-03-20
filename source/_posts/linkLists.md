@@ -189,3 +189,76 @@ ListNode *detectCycle(ListNode *head) {
         return p;
     }
 ```
+#删除链表重复元素
+解法一:
+```
+struct ListNode
+{
+	int val;
+	ListNode* next;
+	ListNode(int x) :val(x), next(NULL) {}
+};
+void deleteOne(ListNode* head,ListNode* current)//注意删除单节点方式
+{
+	if (current->next)
+	{
+		current->val = current->next->val;
+		current->next = current->next->next;
+	}
+	else
+	{
+		ListNode* p = head;//如果删除的是尾节点则需要从头遍历
+		while (p->next!=current)
+		{
+			p = p->next;
+		}
+		p->next = NULL;
+	}
+}
+ListNode* deleteDuplicates(ListNode* pHead)
+{
+	ListNode* newHead = new ListNode(-100);
+	newHead->next = pHead;
+	ListNode* before = newHead;
+	ListNode* after = pHead;
+	bool flag = false;
+	while (after)
+	{
+		while (after &&( before->val == after->val))
+		{
+			flag = true;
+			deleteOne(newHead,after);
+			after = before->next;
+		}
+		if (flag)
+		{
+			deleteOne(newHead,before);
+			flag = false;
+		}
+		else
+		{
+			before = after;
+		}
+		after = before->next;
+	}
+	return newHead->next;
+}
+```
+
+解法二:
+```
+ ListNode* deleteDuplication(ListNode* pHead)
+    {
+       if(!pHead || !pHead->next) return pHead;
+       if(pHead->next->val == pHead->val)
+       {
+           while(pHead->next && pHead->next->val == pHead->val)
+           {
+               pHead=pHead->next;
+           }
+           return deleteDuplication(pHead->next);
+       }
+       pHead->next = deleteDuplication(pHead->next);
+       return pHead;
+    }
+```
