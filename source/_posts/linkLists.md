@@ -33,30 +33,6 @@ ListNode* FindKthToTail(ListNode* pListHead, unsigned int& k) //**注意引用�
 ##解法三
 ```
 //快慢指针1
-ListNode* FindKthToTail2(ListNode* pListHead, unsigned int k)
-{
-	if (!pListHead || k == 0) return NULL;
-	ListNode* behind = pListHead;
-	ListNode* front = pListHead;
-	for (int i = 0; i < k; i++)
-	{
-		if (front)
-		{
-			front = front->next;
-		}
-		else
-		{
-			return NULL;
-		}
-	}
-	while (front)
-	{
-		behind = behind->next;
-		front = front->next;
-	}
-	return behind;
-}
-//快慢指针2
 ListNode* FindKthToTail(ListNode* pListHead, unsigned int k)
 {
 	int count = k;
@@ -68,7 +44,7 @@ ListNode* FindKthToTail(ListNode* pListHead, unsigned int k)
 	{
 		if (count-- <= 0)
 		{
-			 = behind->next;behind
+			behind = behind->next;
 			flag = true;
 		}
 		front = front->next;
