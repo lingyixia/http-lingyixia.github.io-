@@ -29,6 +29,7 @@ ListNode* FindKthToTail(ListNode* pListHead, unsigned int& k) //**注意引用�
 	}
 	return NULL;
 }
+```
 
 ##解法三
 ```
@@ -51,8 +52,8 @@ ListNode* FindKthToTail(ListNode* pListHead, unsigned int k)
 	}
 	return flag || count == 0 ? behind : NULL;
 }
-其实是一个意思,只不过第二个用一个循环包含了。
 ```
+
 #判断有无环
 一般解法有两种
 ##解法一
