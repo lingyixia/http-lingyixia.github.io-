@@ -15,23 +15,21 @@ tags: [链表]
 ##解法二
 ```
 //递归,先递归到链表尾,然后往回走,每走一步K-1,如果K-1！=0则上抛NULL,反之就是找到了,上抛该节点即可
-int index = 0;
-ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) 
+ListNode* FindKthToTail(ListNode* pListHead, unsigned int& k) //**注意引用传递的方式**
 {
-	index = k;
 	if (!pListHead) return NULL;
 	ListNode* node = FindKthToTail(pListHead->next, k);
 	if (node)//找到了,不断上抛该节点
 	{
 		return node;
 	}
-	if (--index == 0)
+	if (--k == 0)
 	{
-		return pListHead;//第一次找到,开上上抛
+		return pListHead;//第一次找到,开始上抛
 	}
 	return NULL;
 }
-```
+
 ##解法三
 ```
 //快慢指针1
