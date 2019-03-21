@@ -137,7 +137,6 @@ $$
 eg:
 ![](\img\imgcyclelinkllist2.png)
 图中在节点5处相遇,此时$m+y$就是$1,2,3,4,5$,此时有$(m+y) \mod n=0$,现在把这个长度的前$m$放到后面,$3,4,5,6,3$,即$y+m$,此时同样有$(y+m)\mod n =0$,因此现在要做的就是一个指针放到头部,一个指针放到相遇的地方,依次next一步,当两者相遇的时候就是环的初始位置.
-
 ```
 ListNode *detectCycle(ListNode *head) {
         ListNode* slow=head;

@@ -10,7 +10,7 @@ mathjax: true
 
 >包含TensorFlow中BasicRNNCell,BasicLSTMCell等的实现
 
-1.BasicRNNCell   
+1.BasicRNNCell
 基本结构如图:   
 ![](/img/SimpleRNN.png)   
 >>在TensorFlow中，BasicRNNCellm每一步输出的state和output相同，源代码如下:
@@ -72,6 +72,19 @@ with tf.Session() as sess:
 (3, 4)
 ```
 >>分析: (kernel中是所有参数的list，此处是W和bias)根据公式(1),$output=([X,previous_state] \* W+bias),即([(3, 2);(3, 4)]*(6, 4)+(4,)) = (3,4)$，代码中也较容易看出.
+>>普通RNN梯度消失和梯度爆炸问题原因:
+![](/img/rnn.png)
+这是一个普通RNN图,其中$W_1$、$W_2$、$W_3$是不同时间步骤下的参数,我们要训练的就是这个参数,输出表达式为:
+$$
+f(w_1)=f_3(w_3f_2(w_2f_1(w_1)))
+$$
+求$W_1$的梯度:
+$$
+\frac{\partial f}{\partial W_1}=\frac{\partial f}{\partial  f_3} \times W_3 \times \frac{\partial f_3}{\partial f_2} \times W_2 \times \frac{\partial f_2}{\partial f_1}
+$$
+若使用sigmoid函数,则每一次偏导都是一个(0,1)的数
+1. 初始化W全都(0,1),那么上诉公式中每一个因式都是(0,1),因此连乘的多了就会**梯度消失**
+2. 初始化W很大,大到乘以sigmoid函数后还是大于1,那么连乘的多了就会**梯度爆炸**
 
 2.BasicLSTMCell  
 基本结构如图:
