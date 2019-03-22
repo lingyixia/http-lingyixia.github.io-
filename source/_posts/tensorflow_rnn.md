@@ -31,7 +31,7 @@ h_t=tanh(W_k[x_t,h_{t-1}]+b)
 $$
 或
 $$
-h_t=tanh(W_x+Uh_{t-1}+b)
+h_t=tanh(Wx_t+Uh_{t-1}+b)
 $$
 但是我个人认为应该是:
 $$

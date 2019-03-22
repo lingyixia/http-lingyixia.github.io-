@@ -48,7 +48,7 @@ v_t=\beta_1 v_{t-1} +(1-\beta_1)g_t \\
 s_t=\beta_2 s_{t-1} + (1-\beta_2)g_t^2\\
 \hat{v_t}=\frac{v_t}{1-\beta_1^t} \\
 \hat{s_t}=\frac{s_t}{1-\beta_2^t} \\
-g_t^{\prime} = \frac{\eta \hat{v_t}}{\sqrt{\hat{s_t}}+\eta} \\
+g_t^{\prime} = \frac{\eta \hat{v_t}}{\sqrt{\hat{s_t}}+\epsilon} \\
 w_t=w_{t-1}-g_t^{\prime}
 $$
 >>其中3、4两步是参数修正,原因是如果不这样刚开始的时候有可能会使v和g,S和g相差太大.
