@@ -82,6 +82,7 @@ $$
 $$
 \frac{\partial f}{\partial W_1}=\frac{\partial f}{\partial  f_3} \times W_3 \times \frac{\partial f_3}{\partial f_2} \times W_2 \times \frac{\partial f_2}{\partial f_1}
 $$
+[这个讲解的相当清楚](https://zhuanlan.zhihu.com/p/26892413)
 若使用sigmoid函数,则每一次偏导都是一个(0,1)的数
 1. 初始化W全都(0,1),那么上诉公式中每一个因式都是(0,1),因此连乘的多了就会**梯度消失**
 2. 初始化W很大,大到乘以sigmoid函数后还是大于1,那么连乘的多了就会**梯度爆炸**
