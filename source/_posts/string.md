@@ -6,7 +6,8 @@ tags: [string]
 ---
 
 #最长公共字串
->>[其实很简单](https://www.cnblogs.com/guolipa/p/10053551.html)
+>>[其实很简单](https://www.cnblogs.com/guolipa/p/10053551.html),动态规划
+
 ```
 string commonString(string s1, string s2)
 {
