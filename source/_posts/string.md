@@ -6,7 +6,7 @@ tags: [string]
 ---
 
 #最长公共字串
->>[其实很简单](https://www.cnblogs.com/guolipa/p/10053551.html),动态规划
+>>[其实很简单](https://www.cnblogs.com/guolipa/p/10053551.html),动态规划,记录矩阵record[i][j]表示以s[i]和t[j]结尾的最长公共字串,可以看出如果s[i]!=t[j]则record[i][j]一定是0,因为两者不相等,以他们为结尾不可能有公共字串,只有s[i]==t[j]的时候才不为0
 
 ```
 string commonString(string s1, string s2)
