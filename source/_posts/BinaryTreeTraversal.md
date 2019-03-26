@@ -64,6 +64,34 @@ vector<int> inorderTraversal(TreeNode* root)
 	return result;
 }
 ```
+
+```
+#中序简单
+vector<int> preorderTraversal(TreeNode* root) 
+{
+	vector<int> result;
+    if(!root) return result;
+    stack<TreeNode*> s;
+    TreeNode* cursor = root;
+    s.push(root);
+    while(!s.empty())
+    {
+        cursor=s.top();
+        result.push_back(cursor->val);
+        s.pop();
+        if(cursor->right)
+        {
+            s.push(cursor->right);
+        }
+        if(cursor->left)
+        {
+            s.push(cursor->left);
+        }
+    }
+    return result;
+}
+```
+
 >>只是简单的把先序遍历28行挪了一下
 
 ```
@@ -102,6 +130,7 @@ vector<int> postorderTraversal(TreeNode* root)
 	return result;
 }
 ```
+
 #postOrderTraversal
 ```
 struct TreeNode {
@@ -143,5 +172,38 @@ vector<int> postorderTraversal(TreeNode* root)
 		}
 	}
 	return result;
+}
+```
+
+```
+#后序拿offer算法
+struct TreeNode {
+     int val;
+     TreeNode *left;
+     TreeNode *right;
+     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ };
+ vector<int> postorderTraversal(TreeNode* root) 
+ {
+    stack<TreeNode*> s;
+    stack<TreeNode*> resultTemp;
+    vector<int> result;
+    if(!root) return result;
+    TreeNode* cursor = root;
+    s.push(cursor);
+    while(!s.empty())
+    {
+        cursor=s.top();
+        s.pop();
+        resultTemp.push(cursor);
+        if(cursor->left) s.push(cursor->left);
+        if(cursor->right) s.push(cursor->right);
+    }
+    while(!resultTemp.empty())
+    {
+        result.push_back(resultTemp.top()->val);
+        resultTemp.pop();
+    }
+    return result;
 }
 ```

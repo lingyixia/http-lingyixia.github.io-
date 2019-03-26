@@ -32,8 +32,19 @@ int main()
 
 #不可重复
 ```
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
 vector<char> record = { 'a','b','c' };
 vector<vector<char>> result;
+
+void swap(vector<char>& record,int i ,int j)
+{
+	int temp = record[i];
+	record[i] = record[j];
+	record[j] = record[i];
+}
 void Permutation2(vector<char>& current, int index)
 {
 	if (index == record.size())
@@ -47,6 +58,12 @@ void Permutation2(vector<char>& current, int index)
 		Permutation2(record, index + 1);
 		swap(record, i, index);
 	}
+}
+int main()
+{
+	vector<char> current;
+	Permutation2(current, 0);
+	return 0;
 }
 ```
 
