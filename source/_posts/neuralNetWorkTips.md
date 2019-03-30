@@ -27,7 +27,7 @@ w_t=w_{t-1} - \frac{\eta}{\sqrt{s_t+\epsilon}} \times g_t
 $$
 >>Adagard中对每个参数都有不同的学习率,比如一个参数$W_1$的梯度较大,则经过这个计算之后学习率就较小,反之$w_2$的梯度较小,计算之后学习率较大。
 
-4. RMSProp(2的改进)
+4. RMSProp(3的改进)
 $$
 s_t=\lambda s_{t-1}+(1-\lambda)g_t^2 \\
 w_t=w_{t-1} - \frac{\eta}{\sqrt{s_t+\epsilon}} \times g_t
