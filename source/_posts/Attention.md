@@ -10,6 +10,7 @@ tags: [Attention]
 * `s_t`:`decoder`阶段隐状态
 * `h_t`:`encoder`阶段隐状态
 * `N`:`encoder`步数
+
 #BahdanauAttention
 以`encoder-decoder`模型为例,假设当前是第`t`步:
 $$
@@ -21,7 +22,7 @@ $$
 
 #LuongAttention
 公式和上面基本一样,只有两点不同:
-1. BahdanauAttention在计算scores的时候是用上一个隐藏状态$s_{t-1}$,而LuongAttention使用当前隐藏状态$s_t$
+1. BahdanauAttention在计算scores的时候用上一个隐藏状态$s_{t-1}$,而LuongAttention使用当前隐藏状态$s_t$
 2. 在计算scores的时候BahdanauAttention使用的是`encoder`阶段各层的状态`contact`后计算,而LuongAttention仅计算最上层。
 
 #scores
