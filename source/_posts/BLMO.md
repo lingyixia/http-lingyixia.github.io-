@@ -57,3 +57,5 @@ tags: [词向量,预训练]
 输入是`[batch_size,n_token, max_char, char_dim]`,`batch_size`表示句子数量,`n_token`表示一个句子单词数,`max_char`表示一个单词字符数,`char_dim`表示字符向量维度。
 卷积核size为`[1, n_width, char_dim,char_dim]`,卷积得到的结果为`[batch_size,n_token-n_width+1,char_dim,m]`。上图是对`[1, n_width, char_dim]`卷积的结果,然后将m各卷积核得到的结果`contact`起来,然后下一步经过`highway`层和`project`层,这两层可选,且前后维度完全相同。
 #其他
+[ELMO模型](https://allennlp.org/elmo)
+[ELMO代码](https://github.com/lingyixia/textClassifier/tree/master/ELMo)
