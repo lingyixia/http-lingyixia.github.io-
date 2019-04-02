@@ -4,6 +4,30 @@ date: 2019-03-10 10:13:05
 catagory: 深度学习
 tags: [tips]
 ---
+# OverFitting
+1. early stop
+2. 正则化
+3. Dropout
+4. 增加数据量
+
+tip:为什么正则化防止过拟合?
+$$
+L=L_0+\frac{\lambda}{2n}\sum w^2 \\
+\frac{\partial L}{\partial w}=\frac{\partial L_0}{\partial w}+ \frac{\lambda}{n} w \\
+\frac{\partial L}{\partial b}=\frac{\partial L_0}{\partial b}
+$$
+可以看出,正则项对b没影响,对w有影响,即:
+$$
+w=(1-\frac{\eta \lambda}{n}) w -\eta \frac{\partial L_0}{\partial w}
+$$
+也即是说w**权重衰减**了,w更小了,为什么w更小了就能防止过拟合呢?因为过拟合的网络一般参数较大,w更小了网络就更简单了,所谓奥卡姆剃刀,所以过拟合减少了.
+
+# 数据预处理
+中心化\标准化
+
+#权重初始化
+1.随机初始化为小数据,如均值为0,方差为0.01的高斯分布,初始化小数据是为了打破对称性
+2.(1/sqrt(n))未完待续
 
 # 加速训练
 
@@ -53,6 +77,3 @@ g_t^{\prime} = \frac{\eta \hat{v_t}}{\sqrt{\hat{s_t}}+\epsilon} \\
 w_t=w_{t-1}-g_t^{\prime}
 $$
 >>初始化$v_0$=0,$s_0$=0其中3、4两步是参数修正,原因是如果不这样刚开始的时候有可能会使v和g,S和g相差太大.
-
-5. dropout(随机丢弃部分神经元)
-tensorflow中的实现方式就是对每个神经元维护一个概率值,每次训练都以该概率的概率将其所有权重置为零
