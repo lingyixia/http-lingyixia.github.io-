@@ -31,6 +31,13 @@ $$
 残差网络的作用见[参考博客2](https://zhuanlan.zhihu.com/p/47282410?utm_source=wechat_session&utm_medium=social&s_r=0),Norm的作用自然是加快收敛,防止梯度消失.
 #Feed-Forward
 这里其实没有什么特殊的东西,源码中用了两个`conv1`,先把特征维度放大,在把特征维度缩小,其实也就是特征提取的作用.
+#Positional Encoding
+由于在attention的时候仅仅计算了当前词与其他词的相关度,但是并没有其他词的位置信息,试想,输入一个待翻译的句子1,然后将该句中任意两个单词互换位置形成句子2,在当前结构中其实两个句子并没有什么不同,因此需要对每个单词引如其位置信息.在论文中使用的是这样的方式:
+$$
+PE_{(pos,2i)}=sin(pos/10000^{2i/d_{modle}}) \\
+PE_{(pos,2i+1)}=cos(pos/10000^{2i/d_{modle}})
+$$
+其中pos是当前单词在该句子中的位置,比如句子长20,则pos可以是1,2...20.i是在当前单词的第i个维度,比如每个单词有512个维度,则i可以是1,2...512.$d_{modle}$是单词维度,当前例子中即是20.
 #其他
 1.每一个`self-Attention`都维护一个自己的$W_Q$,$W_K$,$W_V$,也就是生成`Q`,`K`,`V`的全连接神经网络参数,即每个`cell`的这三个值是不同的.
 2.在`encoder`阶段的最后一个`encoder cell`会将生成的`K`和`V`传递给`decoder`阶段每个`decoder cell`的`encoder-decoder-Multi-Attention`使用.而`encoder-decoder-Multi-Attention`使用的`Q`是`Mask-self-Multi-Attention`输出的.
