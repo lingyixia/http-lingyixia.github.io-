@@ -26,9 +26,26 @@ $$
 中心化\标准化
 
 #权重初始化
-1.随机初始化为小数据,如均值为0,方差为0.01的高斯分布,初始化小数据是为了打破对称性
-2.(1/sqrt(n))未完待续
-
+1.随机初始化为小数据,如均值为0,方差为0.01的高斯分布,初始化小数据目的是使激活函数梯度尽量大,从而加速训练。
+2.Xavier initialization
+初始化$w$为:
+$$
+[-\sqrt{\frac{6}{m+n}},\sqrt{\frac{6}{m+n}}]
+$$
+>>m和n分别为数据的输入维度和输出维度。该方法的原理使使**每一层输出的方差应该尽量相等**,也就是**每一层的输入和输出方差尽量相等**。下面进行公式推导(假设线性激活函数(或者说没有激活函数)),假设任意一层输入为$X=(x_1,x_2,x_3...x_n)$,输出$y=(y_1,y_2,y_3...y_m)$
+前提:$W$,$X$独立同分布,$E(W)$和$E(X)都为0$。[参考](https://en.wikipedia.org/wiki/Variance#Product_of_independent_variables)
+$$
+Var(y_i)=Var(W_iX_i)=Var(W_i)Var(X_i)
+$$
+$$
+Var(Y)=Var(\sum_{i=1}^{n_{in}} W_iX_i)=n_{in}Var(W_i)Var(X_i)
+$$
+为使$Var(Y)=Var(X)$则$Var(W_i)=\frac{1}{n_{in}}$
+若考虑反向则:$Var(W_i)=\frac{1}{n_{out}}$
+综合两点:
+$$
+Var(W_i)=\frac{2}{n_{in}+n_{out}}
+$$
 # 加速训练
 
 1. SGD (训练集做手脚)
