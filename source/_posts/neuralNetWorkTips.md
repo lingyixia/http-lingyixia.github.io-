@@ -46,6 +46,18 @@ $$
 $$
 Var(W_i)=\frac{2}{n_{in}+n_{out}}
 $$
+
+# Batch Normalization
+[参考文章](https://blog.csdn.net/hjimce/article/details/50866313)
+其实就是对每一层的输入做一个Norm,但是直接Norm就损失了学到的特征,因此使用传导公式如下:
+$$
+\mu = \frac{1}{m}\sum_{i=1}^m x_i \\
+\sigma = \frac{1}{m}\sum_{i=1}^m(x_i-\mu)^2 \\
+\hat{x_i} = \frac{x_i-\mu}{\sigma+\epsilon} \\
+y_i = \gamma \hat{x_i}+\beta
+$$
+>>$\epsilon$是个超参数,m是min-batch的大小,$\gamma$和$\beta$是两个需要学习的超参数。可以看出,当$\gamma$=$\sigma$,$\epsilon$=0,$\beta$=$\mu$的时候就恢复了原特征.
+
 # 加速训练
 
 1. SGD (训练集做手脚)
