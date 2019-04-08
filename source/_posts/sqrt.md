@@ -88,13 +88,13 @@ $$
 [详细见此](https://www.zhihu.com/question/20690553)
 牛顿法编程一般步骤:
 ```
-    1.定义精度p
-	2.定义初始值current
-	3. 定义last保存上次current
-	while (fabs(current-last)>p)
-	{
-		last = current;
-		current = current - f(x)/f(x)的导数
-	}
-	cout<<current;
+1.定义精度p
+2.定义初始值current
+3. 定义last保存上次current
+while (fabs(current-last)>p)
+{
+	last = current;
+	current = current - f(x)/f'(x)的
+}
+cout<<current;
 ```
