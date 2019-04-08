@@ -236,3 +236,84 @@ ListNode* deleteDuplicates(ListNode* pHead)
        return pHead;
     }
 ```
+#两个排序链表合并
+解法一:
+```
+ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if(!l1) return l2;
+        if(!l2) return l1;
+        if(l1->val<l2->val)
+        {
+            l1->next = mergeTwoLists(l1->next,l2);
+            return l1;
+        }
+        else
+        {
+            l2->next = mergeTwoLists(l1,l2->next);
+            return l2;
+        }
+    }
+```
+
+解法二:
+```
+ ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if(!l1)return l2;
+        if(!l2) return l1;
+         if(l1->val<=l2->val)
+        {
+            l1->next =  mergeTwoLists(l1->next,l2);
+            return l1;
+        }
+        else
+        {
+           l2->next =  mergeTwoLists(l1,l2->next);
+            return l2;
+        }
+    }
+```
+
+#单链表排序
+归并
+```
+ ListNode* getMidNode(ListNode* head)
+    {
+        ListNode* slow=head;
+        ListNode* fast =head->next;
+        while(fast)
+        {
+            fast=fast->next;
+            if(fast)
+            {
+                fast=fast->next;
+                slow=slow->next;
+            }
+        }
+        return slow;
+    }
+    ListNode* mergeList(ListNode* l1,ListNode* l2)
+    {
+        if(!l1) return l2;
+        if(!l2) return l1;
+        if(l1->val<=l2->val)
+        {
+            l1->next = mergeList(l1->next,l2);
+            return l1;
+        }
+        l2->next = mergeList(l1,l2->next);
+        return l2;
+    }
+    ListNode* sortList(ListNode* head) {
+        if(head && head->next)
+        {
+            ListNode* mid=getMidNode(head);
+            ListNode* left = head;
+            ListNode* right = mid->next;
+            mid->next=NULL;
+            left = sortList(left);
+            right = sortList(right);
+            return mergeList(left,right);   
+        }
+        return head;
+    }
+```
