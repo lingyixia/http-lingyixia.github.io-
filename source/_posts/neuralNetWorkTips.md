@@ -40,8 +40,8 @@ $$
 $$
 Var(Y)=Var(\sum_{i=1}^{n_{in}} W_iX_i)=n_{in}Var(W_i)Var(X_i)
 $$
-为使$Var(Y)=Var(X)$则$Var(W_i)=\frac{1}{n_{in}}$
-若考虑反向则:$Var(W_i)=\frac{1}{n_{out}}$
+为使$Var(Y)=Var(X)$则$$Var(W_i)=\frac{1}{n_{in}}$$
+若考虑反向则:$$Var(W_i)=\frac{1}{n_{out}}$$
 综合两点:
 $$
 Var(W_i)=\frac{2}{n_{in}+n_{out}}

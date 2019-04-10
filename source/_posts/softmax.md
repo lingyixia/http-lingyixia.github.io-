@@ -38,7 +38,7 @@ $$
 Loss = \ln a_j
 $$
 也就是第一条优势:**损失函数简单**
-下面我们计算梯度,如我要求出$w_{41},w_{42},w_{43}$的偏导，就需要将Loss函数求偏导传到结点4，然后再利用链式法则继续求导即可.
+下面我们计算梯度,如我要求出$$w_{41},w_{42},w_{43}$$的偏导，就需要将Loss函数求偏导传到结点4，然后再利用链式法则继续求导即可.
 
 情况一:j=i,比如此时求$w_{41}$的偏导($a_4$对应的标签为1),则:
 $$
@@ -87,13 +87,13 @@ $$
 相乘得到最终公式:
 $$
 \begin{align}
-\frac{\partial Loss}{\partial w_{z_51}} &=-\frac{1}{a_4} \times (-a_4a_5) \times o_1 \\
+\frac{\partial Loss}{\partial w_{51}} &=-\frac{1}{a_4} \times (-a_4a_5) \times o_1 \\
 &=a_5 \times o_1
 \end{align}
 $$
 即:
 $$
-\frac{\partial Loss}{\partial z_4}=a_5
+\frac{\partial Loss}{\partial z_5}=a_5
 $$
 >>形式非常简单，这说明我只要正向求一次得出结果，然后反向传梯度的时候，只需要将它结果保存即可
 

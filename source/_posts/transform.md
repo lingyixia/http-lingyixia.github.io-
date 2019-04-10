@@ -29,7 +29,7 @@ Attention(Q,K,V)=\frac{softmax(Q \times K^T)}{\sqrt{d_k}} \times V
 $$
 这里都讲烂了,就不记录了.
 #ResNet And Norm
-残差网络的作用见[参考博客2](https://zhuanlan.zhihu.com/p/47282410?utm_source=wechat_session&utm_medium=social&s_r=0),Norm的作用自然是加快收敛,防止梯度消失.
+残差网络的作用见[残差网络](https://www.jianshu.com/p/e58437f39f65),Norm的作用自然是加快收敛,防止梯度消失.
 #Feed-Forward
 这里其实没有什么特殊的东西,源码中用了两个`conv1`,先把特征维度放大,在把特征维度缩小,其实也就是特征提取的作用.
 #Positional Encoding
