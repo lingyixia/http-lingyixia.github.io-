@@ -72,13 +72,13 @@ $$
 \frac{\partial L}{\partial w}&=-\sum_x[\frac{y}{\hat y}-\frac{(1-y)}{1-\hat y}] \frac{\partial \hat y}{\partial z}\frac{\partial z}{\partial w}\\
 &=-\sum_x[\frac{y}{\hat y}-\frac{(1-y)}{1-\hat y}]\sigma \prime(x)x\\
 &=-\sum_x[\frac{y- \sigma (x)}{\sigma(x)(1-\sigma(x))}] \sigma \prime(x) x \\
-&= -\sum_x[y-\sigma(x)]x
+&= -\sum_x[y-\hat y]x
 \end{align}
 $$
 
 $$
 \begin{align}
-\frac{\partial L}{\partial b}&=-\sum_x[y-\sigma(x)]
+\frac{\partial L}{\partial b}&=-\sum_x[y-\hat y]
 \end{align}
 $$
 
