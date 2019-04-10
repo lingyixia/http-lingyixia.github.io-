@@ -18,6 +18,7 @@ tags: [Attention]
 解释3: 一个`decoder cell`包含六层:`Mask-self-Multi-Attention`+`ResNet And Norm`+`encoder-decoder-Multi-Attention`+`ResNet And Norm`+`Feed-Forward`+`ResNet And Norm`,名字和图中不太一样,按照层数数下即可.
 解释4:`encoder`阶段的`self-Multi-Attention`和`decoder`阶段的`Mask-self-Multi-Attention`,`encoder-decoder-Multi-Attention`是同一段代码。
 解释5:以翻译任务为例,假设当前需要翻译t位置的词汇,`decoder`阶段的`mask-self-Attention`是对0~t-1,即对已经翻译出来部分的attention,故需要做`mask`,防止attention未翻译部分,`encoder-decoder-Attention`是对原文所有的attention。
+解释6:`encoder-decoder-Multi-Attention`并不是`self-Attention`,因为它的`Q`是原文状态,`K`和`V`是译文状态
 #self-Attention
 先上图:
 ![](/img/transform1.gif)

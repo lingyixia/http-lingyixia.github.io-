@@ -32,7 +32,7 @@ $$
 #总结
 其实所有的attention都归结为三个点:`Q`,`K`,`V`,所有的attention通用公式其实就是:
 $$
-Attention(Q,K,V)=f(softmax(scores(Q,K))V)
+context=softmax(scores(Q,K))V
 $$
 而且一般`K=V`
 在`encoder-decoder`翻译模型中,`Q`指的是译文,`K`和`V`指的是原文.
