@@ -29,6 +29,7 @@ int main()
 	return 0;
 }
 ```
+>>这里的index表示的是当前current中数据的个数
 
 #不可重复
 ```
@@ -66,4 +67,4 @@ int main()
 	return 0;
 }
 ```
-
+>>这里的index表示index之前的保持不变,交换index和他之后的字符
