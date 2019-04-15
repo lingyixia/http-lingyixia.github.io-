@@ -147,3 +147,11 @@ L(w,u,j)=(1-d_j^u)·log[\sigma(v_w)^T\theta_{j-1}^u]+d_j^u·log[1-\sigma(v_w)^T\
 $$
 求梯度同上
 ###基于Negative Sampling
+
+#个人想法
+对于cbow的hierarchical softmax伪代码:
+![](/img/CBOW_Softmax.png)
+Negative Sampling伪代码:
+![](/img/Negative_Softmax.png)
+
+我觉得大多数博客说的hierarchical softmax一次更新所有参数的说法简直误人子弟,看看伪代码即可,hierarchical softmax一次性更新的权重是该路径上所有非叶子节点的权值,因此如果huffman数很大,则更新的权值也就非常多,而Negative Sampling的方式只更新正样本对应的一个权值和负样本对应各自的权值,是固定个数的,所以它更新的权值少。
