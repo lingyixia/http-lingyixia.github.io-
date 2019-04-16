@@ -69,7 +69,7 @@ $$
 现在可以得到优化表达式:
 $$
 \max_{w,b} \quad  \gamma \\
-s.t. \quad  y_i(\frac{w}{||w||}x_i+\frac{b}{||b||})>=\gamma \quad i=1,2...N
+s.t. \quad  y_i(\frac{w}{||w||}x_i+\frac{b}{||w||})>=\gamma \quad i=1,2...N
 $$
 试想,其实$\gamma$无论是多少对最终值都没有任何影响,毕竟$w$和$b$是可以等比例变化的,现在我们假设$\gamma$=$\frac{1}{||w||}$得到:
 $$
