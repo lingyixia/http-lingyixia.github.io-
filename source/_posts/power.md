@@ -10,7 +10,6 @@ tags: [Tip]
 double unsignedPower(double base, unsigned int exponent)
 {
 	if (exponent == 0) return 1;
-	if (exponent == 1) return base;
 	double result = unsignedPower(base, exponent >> 1);
 	result *= result;
 	if ((exponent & 1) == 1)//无符号数判断奇数偶数,切记前面加括号,因为"=="比"&"优先级高
