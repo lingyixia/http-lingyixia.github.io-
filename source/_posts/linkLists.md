@@ -317,3 +317,54 @@ ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
         return head;
     }
 ```
+#单链表每k个一组反转
+百度面试
+```
+#include<iostream>
+using namespace std;
+struct ListNode
+{
+	ListNode* next;
+	int val;
+	ListNode(int val) :next(NULL), val(val) {};
+};
+
+ListNode* reverseKGroup(ListNode* head, int k) 
+{
+	ListNode* cursor = head;
+	for (int i = 1; i < k; i++)
+	{
+		if (!cursor->next) return head;
+		cursor = cursor->next;
+	}
+	ListNode* tempHead = head;
+	ListNode* tempLast = head;
+	head = cursor;
+	cursor = head;
+	while (tempLast->next != head)
+	{
+		cursor = tempLast->next;
+		tempLast->next = cursor->next;
+		cursor->next = tempHead;
+		tempHead = cursor;
+	}
+	tempLast->next = reverseKGroup(head->next, k);
+	head->next = tempHead;
+	return head;
+}
+
+int main()
+{
+	ListNode* head = new ListNode(1);
+	ListNode* p = head;
+	p->next = new ListNode(2);
+	p = p->next;
+	p->next = new ListNode(3);
+	p = p->next;
+	p->next = new ListNode(4);
+	p = p->next;
+	p->next = new ListNode(5);
+	ListNode* result = reverseKGroup(head,3);
+	return 0;
+}
+```
