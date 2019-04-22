@@ -175,5 +175,46 @@ void backPack(vector<Woods>& woods, int bag)
 	}
 }
 ```
+#变种
+##硬币问题
+leetcode322
+```
+int coinChange(vector<int>& coins, int amount) {
+	vector<vector<int>> values(coins.size() + 1, vector<int>(amount + 1,INT_MAX-1));
+	for (int i = 1; i <= coins.size(); i++)
+	{
+		values[i][0] = 0;
+		for (int j = 1; j <= amount; j++)
+		{
+			if (j < coins[i - 1])
+			{
+				values[i][j] = values[i - 1][j];
+			}
+			else
+			{
+				values[i][j] = min(values[i - 1][j], values[i][j - coins[i - 1]] + 1);
+			}
+		}
+	}
+	return values[coins.size()][amount]==INT_MAX-1?-1:values[coins.size()][amount];
+}
+```
+>>values[i][j]表示使用前i种硬币组成j至少需要多少个硬币
 
-二进制写法先不想了
+简化空间:
+
+```
+int coinChange(vector<int>& coins, int amount) 
+    {
+	    vector<int> values(amount + 1,INT_MAX-1);
+        values[0]=0;
+	    for (int i = 1; i <= coins.size(); i++)
+	    {
+		    for (int j = coins[i - 1]; j <= amount; j++)
+		    {
+			    values[j] = min(values[j], values[j - coins[i - 1]] + 1);
+		    }
+	    }
+	    return values[amount]==INT_MAX-1?-1:values[amount];
+    }
+```
