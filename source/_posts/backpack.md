@@ -176,8 +176,8 @@ void backPack(vector<Woods>& woods, int bag)
 }
 ```
 #变种
-##硬币问题
-leetcode322
+##硬币问题1
+leetcode322(最少硬币数量)
 ```
 int coinChange(vector<int>& coins, int amount) {
 	vector<vector<int>> values(coins.size() + 1, vector<int>(amount + 1,INT_MAX-1));
@@ -216,5 +216,50 @@ int coinChange(vector<int>& coins, int amount)
 		    }
 	    }
 	    return values[amount]==INT_MAX-1?-1:values[amount];
+    }
+```
+
+##硬币问题2
+leetcode518(硬币组成种类数)
+```
+int change(int amount, vector<int>& coins) 
+{
+        vector<vector<int>> dp(coins.size()+1,vector<int>(amount+1));
+        dp[0][0]=1;
+        for(int i =1;i<=coins.size();i++)
+        {
+            dp[i][0]=1;
+            for(int j=1;j<=amount;j++)
+            {
+                if(j<coins[i-1])
+                {
+                    dp[i][j]=dp[i-1][j];
+                }
+                else
+                {
+                    dp[i][j]=dp[i-1][j]+dp[i][j-coins[i-1]];
+                }
+            }
+        }
+        return dp[coins.size()][amount];
+    }
+```
+
+>>dp[i][j]表示使用前i种硬币组成j的组成数量
+
+简化空间:
+```
+ int change(int amount, vector<int>& coins) 
+ {
+        vector<int> dp(amount+1);
+        dp[0]=1;
+        for(int i =1;i<=coins.size();i++)
+        {
+            for(int j=coins[i-1];j<=amount;j++)
+            {
+                dp[j]=dp[j]+dp[j-coins[i-1]];
+            }
+        }
+        return dp[amount];
     }
 ```
