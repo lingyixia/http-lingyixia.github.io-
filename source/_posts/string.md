@@ -5,7 +5,7 @@ category: 算法
 tags: [string]
 ---
 
-#最长公共字串
+#最长公共子串
 >>[其实很简单](https://www.cnblogs.com/guolipa/p/10053551.html),动态规划,记录矩阵record[i][j]表示以s[i]和t[j]结尾的最长公共字串长度,可以看出如果s[i]!=t[j]则record[i][j]一定是0,因为两者不相等,以他们为结尾不可能有公共字串,只有s[i]==t[j]的时候才不为0
 
 ```
@@ -137,4 +137,26 @@ int longestPalindromeSubseq(string str)
 	}
 	return records[0][str.size()-1];
 }
+```
+#最长递增子序列
+>>dp解法一,dp[i]为以第i个元素结尾的最长递增子序列长度,$O(n^2)$
+```
+int lengthOfLIS(vector<int>& nums) 
+{
+        if(nums.empty()) return 0;
+        int result=1;
+        vector<int> dp(nums.size(),1);
+        for(int i =1;i<nums.size();i++)
+        {
+            for(int j =0;j<i;j++)//不断更新dp[i]的值
+            {
+                if(nums[i]>nums[j])
+                {
+                    dp[i]=max(dp[j]+1,dp[i]);
+                }
+            }
+            result=max(dp[i],result);
+        }
+        return result;
+    }
 ```
