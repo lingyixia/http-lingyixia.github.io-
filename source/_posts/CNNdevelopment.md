@@ -44,7 +44,7 @@ tags: [CNN]
 
 # [AlexNet](https://my.oschina.net/u/876354/blog/1633143)
 ![](\img\CNNdevelopment\AlexNet.jpg)
->>诞生:2012年ImageNet竞赛 作者:Hinton和他的学生Alex Krizhevsky 别称:CNN王者归来
+>>诞生:2012年ImageNet竞赛 作者:Hinton和他的学生Alex Krizhevsky 别称:CNN王者归来 本质:增加LeNet深度并使用一些小Tips.
 
 特点:
 * ReLU:收敛快,计算量少
@@ -103,15 +103,55 @@ tags: [CNN]
 
 # [VGGNet](https://my.oschina.net/u/876354/blog/1634322)
 ![](\img\CNNdevelopment\VggNet.png)
->>诞生:2014年ImageNet竞赛 作者:牛津大学Andrew Zisserman教授的组
+>>诞生:2014年ImageNet竞赛(定位任务第一名,分类任务第二名) 作者:牛津大学Andrew Zisserman教授的组 本质:比AlexNet使用更小的卷积核和更深的层级
 
 特点:
 * [小卷积核和多卷积子层](http://lingyixia.github.io/2019/02/09/kernel/)
 * 小池化核:相比AlexNet的3x3的池化核，VGG全部采用2x2的池化核。
 * 层数更深、特征图更宽:由于卷积核专注于扩大通道数、池化专注于缩小宽和高，使得模型架构上更深更宽的同时，控制了计算量的增加规模。
 * 全连接转卷积（测试阶段）
-网络结构见链接吧,不写了,但是这里要总结一下$1 \times 1$卷积核的作用:
-    * 全卷积其实就是全连接,$1 \times 1$卷积不是全连接
-    * $1 \times 1$卷积核前后size不变,通道数可以改变,因此可以用来降维或升维
-    * 增加非线性(没明白)
-    * 跨通道信息交互
+网络结构见链接吧,不写了.
+
+#[GoogLeNet](https://my.oschina.net/u/876354/blog/1637819)
+>>诞生:2014年ImageNet竞赛(分类任务第一名) 作者:Christian Szegedys
+
+特点:Inception
+##Inception V1
+>>诞生: 2014 创新点:使用$1 \times 1$卷积核: 1. 全卷积其实就是全连接,$1 \times 1$卷积不是全连接 2. $1 \times 1$卷积核前后size不变,通道数可以改变,因此可以用来降维或升维 3. 增加非线性(没明白)  4. 跨通道信息交互
+
+![](\img\CNNdevelopment\InceptionV1.png)
+##Inception V2
+>>诞生: 2015 创新点:1. 用两个$3 \times 3$卷积核代替$5 \times 5$卷积核 2. 提出BatchNormal
+
+![](\img\CNNdevelopment\InceptionV2.png)
+
+##Inception V3
+>>诞生: 2015 创新点:1.改进拆分卷积
+
+![](\img\CNNdevelopment\InceptionV3.png)
+##Inception V4
+>>诞生: 2016 创新点:增加ResNet
+
+![](\img\CNNdevelopment\InceptionV4.png)
+
+#[ResNet](https://my.oschina.net/u/876354/blog/1622896)
+>>诞生:2015 作者:何恺明 别称:里程碑 目的:解决网络太深导致的梯度消失或梯度爆炸,从而使网络退化问题(不是overfitting) 作用:将某些层的输入和输出映射成为恒等对
+
+公式推导[参考这里](https://blog.csdn.net/heyc861221/article/details/80132360):
+假设我们要更新第$l$层的某一个参数$w$,网络结构共$L$层,激活函数全部采用$relu$且大于$0$,则有:
+$$
+x_{l+1}=x_l+F(x_l) \\
+x_{l+2}=x_{l+1}+F(x_{l+1})\\
+.
+.
+.\\
+x_L=x_l+\sum_{i=l}^{L-1}F(x_i)
+$$
+则计算反响传播:
+$$
+\frac{\partial L}{\partial x_l}=\frac{\partial L}{\partial x_L} \times (1+\frac{\partial \sum_{i=l}^{L-1}F(x_i)}{\partial x_l})
+$$
+可以看出,此时的偏导数不再是连乘，而是连加,因此避免了梯度消失和梯度爆炸。
+
+#DenseNet
+先不写这个了

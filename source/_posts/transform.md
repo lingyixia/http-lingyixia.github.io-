@@ -8,7 +8,7 @@ tags: [Attention]
 [参考博客1](https://jalammar.github.io/illustrated-transformer/)
 [参考博客2](https://zhuanlan.zhihu.com/p/47282410?utm_source=wechat_session&utm_medium=social&s_r=0)
 [参考博客3](https://blog.csdn.net/yiyele/article/details/81913031)
-[残差网络](https://www.jianshu.com/p/e58437f39f65)
+[残差网络](https://lingyixia.github.io/2019/05/01/CNNdevelopment/#ResNet)
 
 #整体架构
 ![](/img/transform2.jpg)
