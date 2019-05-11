@@ -422,3 +422,57 @@ int change(int amount, vector<int>& coins)
         return dp[amount];
     }
 ```
+
+#矩阵中最大正方形
+>>dp[i][j]记录以matrix[i][j]结尾的边长(要包含matrix[i][j])
+```
+template <typename T>
+T min(T a, T b, T c)
+{
+	if (c>a)
+	{
+		c = a;
+	}
+	if (c>b)
+	{
+		c = b;
+	}
+	return c;
+}
+int maximalSquare(vector<vector<char>>& matrix)
+{
+	int maxResult = 0;
+	vector<vector<int>> dp(matrix.size(),vector<int>(matrix[0].size()));
+	for (int i = 0; i < matrix.size(); i++)
+	{
+		if (matrix[i][0]=='1')
+		{
+			dp[i][0] = 1;
+			maxResult = max(maxResult, 1);
+		}
+	}
+	for (int i = 0; i < matrix[0].size(); i++)
+	{
+		if (matrix[0][i] == '1')
+		{
+			dp[0][i] = 1;
+			maxResult = max(maxResult, 1);
+		}
+	}
+	for (int i = 1; i < dp.size(); i++)
+	{
+		for (int j = 1; j < dp[0].size(); j++)
+		{
+			if (matrix[i][j]=='0')
+			{
+				dp[i][j] = 0;
+			}
+			else
+			{
+				dp[i][j] = min(dp[i-1][j-1],dp[i][j-1],dp[i-1][j])+1;
+				maxResult= maxResult = max(maxResult, dp[i][j]* dp[i][j]);
+			}
+		}
+	}
+}
+```
