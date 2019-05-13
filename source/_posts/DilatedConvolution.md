@@ -51,3 +51,4 @@ $n-dilated convolution$,一般$n$是$2$的整数次幂
 
 [参考一](https://www.cnblogs.com/houjun/p/10275215.html)
 [参考二](https://kexue.fm/archives/5409)
+[参考三](https://blog.csdn.net/mao_xiao_feng/article/details/78003730)
