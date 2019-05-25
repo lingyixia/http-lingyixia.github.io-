@@ -84,23 +84,28 @@ int maxLengthSequence(string s1, string s2)
 ```
 
 ##最长回文子串
->>递推公式为:records[i][j]=records[i+1][j-1] if str[i][j],初始状态为records[i][i]=1,records[i][i+1]=2 if str[i]=str[i+1].
-records[i][j]是记录从i到j是不是回文串,如果是则records[i][j]=true,反之为false,因为每一次计算records[i][j]都需要用到records[i+1][j-1],而j-1>=i+1,即j-i>=2,即i到j的长度至少为3,也就是说间隔长度为1和2的更新不到,因此要先预处理records,先把间隔为1和2的提前处理
-
+>>dp[i][j]是记录从i到j是不是回文串,如果是则dp[i][j]=true,反之为false,因为每一次计算dp[i][j]都需要用到dp[i+1][j-1],而j-1>=i+1,即j-i>=2,即i到j的长度至少为3,也就是说间隔长度为1和2的更新不到,因此要先预处理records,先把间隔为1和2的提前处理
+递推公式为:
+$$
+dp[i][j] = \begin{cases}
+true & str[i]=str[j] and dp[i+1][j-1]=true\\
+false & others
+\end{cases}
+$$
 ```
 string longestPalindrome(string str)
 {
 	int index = 0;
 	int maxLength = 1;
-	vector<vector<bool>> records(str.size(), vector<bool>(str.size(), false));
+	vector<vector<bool>> dp(str.size(), vector<bool>(str.size(), false));
 	for (int i = 0; i <= str.size(); i++)
 	{
-		records[i][i] = true;
+		dp[i][i] = true;
 		if (i + 1 < str.size())
 		{
 			if (str[i] == str[i + 1])
 			{
-				records[i][i + 1] = true;
+				dp[i][i + 1] = true;
 				index = i;
 				maxLength = 2;
 			}
@@ -111,9 +116,9 @@ string longestPalindrome(string str)
 		for (int i = 0; i + l - 1 < str.size(); i++)
 		{
 			int j = i + l - 1;
-			if (str[i] == str[j] && records[i + 1][j - 1])
+			if (str[i] == str[j] && dp[i + 1][j - 1])
 			{
-				records[i][j] = true;
+				dp[i][j] = true;
 				if (l > maxLength)
 				{
 					index = i;
@@ -127,7 +132,13 @@ string longestPalindrome(string str)
 ```
 
 ##最长回文子序列
->>跟上诉差不多,公式为records[i][j] = records[i + 1][j - 1]+2 if str[i] = str[j],records[i][j] = max(records[i + 1][j], records[i][j - 1]) if str[i] != str[j]
+>>跟上诉差不多,公式为:
+$$
+dp[i][j] = \begin{cases}
+dp[i+1][j-1]+2 & str[i]=str[j] \\
+max(dp[i+1][j],dp[i][j-1]) & others
+\end{cases}
+$$
 
 ```
 int longestPalindromeSubseq(string str)
