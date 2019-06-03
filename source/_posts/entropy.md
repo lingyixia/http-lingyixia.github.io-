@@ -44,7 +44,7 @@ f(x)^\prime &= \lim_{\Delta x \to 0}\frac{f(x+\Delta x)-f(x)}{\Delta x} \\
 $$
 
 积分得:
-
+    
 $$
 f(x) = f(1)^\prime\ln|x|+C \qquad x\in[0,1]
 $$
