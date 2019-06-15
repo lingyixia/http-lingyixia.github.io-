@@ -44,3 +44,4 @@ $$
 $$
 \frac{\partial f}{\partial l}=gradf(x_0,y_0)· \overrightarrow{l}
 $$
+ss
