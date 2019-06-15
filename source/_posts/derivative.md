@@ -22,7 +22,7 @@ $$
 \begin{align}
 \frac{\partial f}{\partial l} &=\lim_{t\rightarrow0^+}\frac{f(x_0+t\cos \alpha,y_0+tcos \beta) - f(x_0,y_0)}{t} \\
 &=\lim_{t\rightarrow 0^+} \frac{f(x_0+t\cos \alpha,y_0+t\cos\beta)-f(x_0,y_0+t\cos \beta)}{t}+\frac{f(x_0,y_0+t\cos \beta) -f(x_0,y_0)}{t}\\
-&=\lim_{t\rightarrow 0^+}\frac{f_x(\xi_x,y_0+t\cos\beta)t\cos\alpha}{t} + \frac{f(x_0,\xi_y)t\cos\beta}{t} \qquad \xi_x\in[x_0,x_0+t\cos\alpha] \quad \xi_y\in[y_0,y_0+tcos\beta](拉格朗日中值定理) \\
+&=\lim_{t\rightarrow 0^+}\frac{f_x(\xi_x,y_0+t\cos\beta)t\cos\alpha}{t} + \frac{f_y(x_0,\xi_y)t\cos\beta}{t} \qquad \xi_x\in[x_0,x_0+t\cos\alpha] \quad \xi_y\in[y_0,y_0+tcos\beta](拉格朗日中值定理) \\
 &=\lim_{t\rightarrow 0 +}f_x(\xi_x,y_0+t\cos\beta) \cos\alpha + f_y(x_0,\xi_y)\cos\beta \\
 &=f_x(x_0,y_0)\cos\alpha+f_y(x_0,y_0)\cos\beta
 \end{align}
