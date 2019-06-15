@@ -5,6 +5,45 @@ category: 深度学习
 tags: [tensorflow]
 ---
 
+>[参考](https://www.cnblogs.com/wuliytTaotao/p/9479958.html)
+滑动平均(exponential moving average),或者叫做指数加权平均(exponentially weighted moving average)，目的是用历史值和当前值的加权来代替当前值,这样可以使值的变化更加平滑.
+
+# 用滑动平均估计局部均值
+假设变量$v_t$表示变量$v$在时间$t$处的值,不使用滑动平均模型时的值为$\theta_t$:
+$$
+v_t = \beta v_{t-1}+(1-\beta)\theta_t \quad \beta \in[0,1] \tag{1} \\
+$$
+eg:
+$$
+\begin{align}
+v_1 &= \theta_1 \\
+v_2 &=\beta \theta_1+(1-\beta)\theta_2 \\
+v_3 &= \beta v_2 + (1-\beta)\theta_3=\beta^2\theta_1+\beta(1-\beta)\theta_2+(1-\beta)\theta_3\\
+v_4 &=\beta^3\theta_1+ \beta^2(1-\beta)\theta_2+\beta(1-\beta)\theta_3+(1-\beta)\theta_4
+\end{align}
+$$
+即:
+$$
+v_t=(1-\beta)\theta_t+\beta(1-\beta)\theta_{t-1}+\beta^2(1-\beta)\theta_{t-2}+...+\beta^k(1-\beta)\theta_{t-k}+...+\beta^n\theta_1 \tag{2}
+$$
+上诉实例可以说明$v_t$是所有历史值的加权平均。
+现在我们要证明:**当$\beta \rightarrow 1$时,公式(1)计算$v_t$约等于前$\frac{1}{1-\beta}$个时间点的加权.**
+证明:  
+我们假设$k=\frac{1}{1-\beta}$,当$\beta \rightarrow 1$时,$k \rightarrow +\infty$.只要证明$\beta^k$足够小即可.  
+$$
+\because \beta^{\frac{1}{1-\beta}}=(1-\frac{1}{k})^k \\
+\therefore \lim_{k\rightarrow +\infty}(1-\frac{1}{k})^n=e^{-1}≈0.3679\\
+\therefore \beta^k ≈ 0.3679
+$$
+我们认为$e^{-1}$足够小,即**当$\beta \rightarrow 1$时$k=\frac{1}{1-\beta}$之后的项都可以忽略,即可以认为公式(1)是前$\frac{1}{1-\beta}$项的加权和.**
+
+公式(1)中,虽然可以得到上诉结论,但是当$t$比较小的时候,前面不足$\frac{1}{1-\beta}$项的时候用公式(1)得到的值和真实值差距较大,所以还要做一个调整:
+$$
+v_t = \frac{\beta v_{t-1}+(1-\beta)}{1-\beta^t} \qquad \beta \in[0,1] \tag{1} \\
+$$
+
+
+
 >学习率和滑动平均模型是两种神经网络的优化方式
 
 #学习率
