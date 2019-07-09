@@ -8,13 +8,13 @@ tags: [Attention]
 [参考博客1](https://jalammar.github.io/illustrated-transformer/)
 [参考博客2](https://zhuanlan.zhihu.com/p/47282410?utm_source=wechat_session&utm_medium=social&s_r=0)
 [参考博客3](https://blog.csdn.net/yiyele/article/details/81913031)
+[参考平博客(最佳)](https://medium.com/@mromerocalvo/dissecting-bert-part1-6dcf5360b07f)
 [残差网络](https://lingyixia.github.io/2019/05/01/CNNdevelopment/#ResNet)
 
 #整体架构
 ![](/img/transform2.jpg)
 解释1:左半部分是`encoder`,方框中是一个`encoder cell`,右半部分是`decoder`,方框中是一个`decoder cell`。
-解释2:一个`encoder cell`包含四层:`self-Multi-Attention`+`ResNet And Norm`+`Feed-Forward`+`ResNet And Norm`,名字和图中不太一
-样,按照层数数下即可.
+解释2:一个`encoder cell`包含四层:`self-Multi-Attention`+`ResNet And Norm`+`Feed-Forward`+`ResNet And Norm`,名字和图中不太一样,按照层数数下即可.
 解释3: 一个`decoder cell`包含六层:`Mask-self-Multi-Attention`+`ResNet And Norm`+`encoder-decoder-Multi-Attention`+`ResNet And Norm`+`Feed-Forward`+`ResNet And Norm`,名字和图中不太一样,按照层数数下即可.
 解释4:`encoder`阶段的`self-Multi-Attention`和`decoder`阶段的`Mask-self-Multi-Attention`,`encoder-decoder-Multi-Attention`是同一段代码。
 解释5:以翻译任务为例,假设当前需要翻译t位置的词汇,`decoder`阶段的`mask-self-Attention`是对0~t-1,即对已经翻译出来部分的attention,故需要做`mask`,防止attention未翻译部分,`encoder-decoder-Attention`是对原文所有的attention。

@@ -36,6 +36,33 @@ vector<int> preorderTraversal(TreeNode* root)
 }
 ```
 
+```
+#先序简单
+vector<int> preorderTraversal(TreeNode* root) 
+{
+	vector<int> result;
+    if(!root) return result;
+    stack<TreeNode*> s;
+    TreeNode* cursor = root;
+    s.push(root);
+    while(!s.empty())
+    {
+        cursor=s.top();
+        result.push_back(cursor->val);
+        s.pop();
+        if(cursor->right)
+        {
+            s.push(cursor->right);
+        }
+        if(cursor->left)
+        {
+            s.push(cursor->left);
+        }
+    }
+    return result;
+}
+```
+
 #inOrderTraversal
 ```
 struct TreeNode {
@@ -62,33 +89,6 @@ vector<int> inorderTraversal(TreeNode* root)
 		cursor = cursor->right;
 	}
 	return result;
-}
-```
-
-```
-#中序简单
-vector<int> preorderTraversal(TreeNode* root) 
-{
-	vector<int> result;
-    if(!root) return result;
-    stack<TreeNode*> s;
-    TreeNode* cursor = root;
-    s.push(root);
-    while(!s.empty())
-    {
-        cursor=s.top();
-        result.push_back(cursor->val);
-        s.pop();
-        if(cursor->right)
-        {
-            s.push(cursor->right);
-        }
-        if(cursor->left)
-        {
-            s.push(cursor->left);
-        }
-    }
-    return result;
 }
 ```
 

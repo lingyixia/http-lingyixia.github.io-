@@ -87,3 +87,6 @@ deploy:
   type: git
   repo: git@github.com:lingyixia/lingyixia.github.io.git
   branch: master
+# hexo-blog-encrypt
+encrypt:
+  enable: true
