@@ -140,7 +140,7 @@ string longestPalindrome(string str)
 }
 ```
 
-##最长回文子序列
+##[最长回文子序列](https://leetcode.com/problems/longest-palindromic-substring/)
 >>跟上诉差不多,公式为:
 $$
 dp[i][j] = \begin{cases}
@@ -172,7 +172,7 @@ int longestPalindromeSubseq(string str)
 	return records[0][str.size()-1];
 }
 ```
-##最长递增子序列
+##[最长递增子序列](https://leetcode.com/problems/longest-increasing-subsequence/)
 >>dp解法一,dp[i]为以第i个元素结尾的最长递增子序列长度,$O(n^2)$
 
 
@@ -369,8 +369,9 @@ void backPack(vector<Woods>& woods, int bag)
 ```
 
 #硬币问题
-##硬币问题1
-leetcode322(最少硬币数量)
+##[硬币问题1](https://leetcode.com/problems/coin-change/)
+最少硬币数量
+
 ```
 int coinChange(vector<int>& coins, int amount) 
 {
@@ -413,8 +414,9 @@ int coinChange(vector<int>& coins, int amount)
 }
 ```
 
-##硬币问题2
-leetcode518(硬币组成种类数)
+##[硬币问题2](https://leetcode.com/problems/coin-change-2/)
+能够组成该数量钱的情况数
+
 ```
 int change(int amount, vector<int>& coins) 
 {
@@ -458,7 +460,7 @@ int change(int amount, vector<int>& coins)
     }
 ```
 
-#矩阵中最大正方形
+#[矩阵中最大正方形](https://leetcode.com/problems/maximal-square/description/)
 >>dp[i][j]记录以matrix[i][j]结尾的边长(要包含matrix[i][j])
 
 ```
