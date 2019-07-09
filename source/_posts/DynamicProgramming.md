@@ -462,6 +462,62 @@ int change(int amount, vector<int>& coins)
         return dp[amount];
     }
 ```
+#数组分裂
+##[数组分裂一](https://leetcode.com/problems/partition-equal-subset-sum/)
+>>背包问题变种。其实就是数组中每个数字是一个物品,value=weight=数值,看能不能**恰好**装满背包的一半
+
+```
+ bool canPartition(vector<int>& nums) 
+ {
+        int sum = 0;
+        for(int i = 0;i<nums.size();i++)
+        {
+            sum+=nums[i];
+        }
+        if((sum&1)==1) return false;
+        int bag = sum/2;
+        vector<int> values(bag+1,INT_MIN);
+        values[0]=0;
+        for(int i =1;i<=nums.size();i++)
+        {
+            for(int j = bag;j>=nums[i-1];j--)
+            {
+                values[j]=max(values[j],values[j-nums[i-1]]+nums[i-1]); 
+                if(values[j]==bag) return true;
+            }
+        }
+        return false;
+    }
+```
+
+##数组分裂二
+>>背包问题变种。将数组分为两部分，求各自和的差的绝对值(两部分的和最接近)其实就是数组中每个数字是一个物品,value=weight=数值,target(bag)=sum/2,看这个target(bag)下最大的和是多少
+
+int splitArray(vector<int> nums)
+{
+	int sum = 0;
+	for (int i = 0; i < nums.size(); i++)
+	{
+		sum += nums[i];
+	}
+	int target = sum/2;
+	vector<vector<int>> dp(nums.size() + 1, vector<int>(target + 1));
+	for (int i = 1; i <=nums.size(); i++)
+	{
+		for (int j = 1; j <= target; j++)
+		{
+			if (nums[i-1]>j)
+			{
+				dp[i][j] = dp[i-1][j];
+			}
+			else
+			{
+				dp[i][j] = max(dp[i-1][j],dp[i-1][j-nums[i-1]]+nums[i-1]);
+			}
+		}
+	}
+	return ( sum- target) - dp[nums.size()][target];
+}
 
 #[编辑距离](https://leetcode.com/problems/edit-distance/description/)
 >>dp[i][j]表示将word1[1:i]转为word2[1:j]所需要的最少次数
