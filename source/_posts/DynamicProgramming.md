@@ -92,7 +92,15 @@ true & str[i]=str[j] and dp[i+1][j-1]=true\\
 false & others
 \end{cases}
 $$
+或
+$$
+dp[i][j] = \begin{cases}
+str[i-1][j-1] & str[i]=str[j]\\
+false & others
+\end{cases}
+$$
 ```
+
 string longestPalindrome(string str)
 {
 	int index = 0;
