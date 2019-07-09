@@ -493,6 +493,7 @@ int change(int amount, vector<int>& coins)
 ##数组分裂二
 >>背包问题变种。将数组分为两部分，求各自和的差的绝对值(两部分的和最接近)其实就是数组中每个数字是一个物品,value=weight=数值,target(bag)=sum/2,看这个target(bag)下最大的和是多少
 
+```
 int splitArray(vector<int> nums)
 {
 	int sum = 0;
@@ -518,6 +519,82 @@ int splitArray(vector<int> nums)
 	}
 	return ( sum- target) - dp[nums.size()][target];
 }
+```
+
+空间优化:
+
+```
+int splitArray(vector<int> nums)
+{
+	int sum = 0;
+	for (int i = 0; i < nums.size(); i++)
+	{
+		sum += nums[i];
+	}
+	int target = sum/2;
+	vector<int> dp(target + 1);
+	for (int i = 1; i <=nums.size(); i++)
+	{
+		for (int j = target; j >= nums[i - 1]; j--)
+		{
+			dp[j] = max(dp[j],dp[j-nums[i-1]]+nums[i-1]);
+		}
+	}
+	return ( sum- target) - dp[target];
+}
+```
+
+#[零和问题](https://leetcode.com/problems/ones-and-zeroes/)
+>>背包问题变种，难点在于分清**资源**和**目标**,此题有两个**目标**
+
+```
+int findMaxForm(vector<string> strs, int m, int n) 
+{
+	vector<vector<vector<int>>> dp(strs.size() + 1, vector<vector<int>>(m + 1, vector<int>(n + 1)));
+	for(int k = 1;k<=strs.size();k++)
+	{
+		int zeros = count(strs[k-1].begin(), strs[k-1].end(), '0');
+		int ones = count(strs[k-1].begin(), strs[k-1].end(), '1');
+		for (int i = 0; i <= m; i++)//注意从零开始
+		{
+			for (int j = 0; j <= n; j++)//注意从零开始
+			{
+				if (i< zeros || j<ones)
+				{
+					dp[k][i][j] = dp[k-1][i][j];
+				}
+				else
+				{
+					dp[k][i][j] = max(dp[k-1][i][j], dp[k-1][i - zeros][j - ones] + 1);
+				}
+			}
+		}
+	}
+	return dp[strs.size()][m][n];
+}
+```
+
+空间优化:
+
+```
+int findMaxForm(vector<string>& strs, int m, int n) 
+{
+    vector<vector<int>> dp(m+1,vector<int>(n+1));
+    for(string str:strs)
+    {
+        int ones = count(str.begin(),str.end(),'1');
+        int zeros = count(str.begin(),str.end(),'0');
+        for(int i = m;i>=zeros;i--)
+        {
+            for(int j = n;j>=ones;j--)
+            {
+                dp[i][j]=max(dp[i][j],dp[i-zeros][j-ones]+1);
+            }
+        }
+    }
+    return dp[m][n];
+}
+```
 
 #[编辑距离](https://leetcode.com/problems/edit-distance/description/)
 >>dp[i][j]表示将word1[1:i]转为word2[1:j]所需要的最少次数

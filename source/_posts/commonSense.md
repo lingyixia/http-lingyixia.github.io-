@@ -1,7 +1,10 @@
 ---
 title: 生活常识
 date: 2019-01-15 15:36:17
-catgory: 生活
+catgory: 个人
+tags: [生活常识]
+password: yu63258741
+message: Nothing Valuable
 ---
 >发现自己太没生活了,读书读傻了都,特此记录一些生活常识
 

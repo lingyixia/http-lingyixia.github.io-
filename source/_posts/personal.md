@@ -1,6 +1,8 @@
 ---
 title: 繁琐记录
 date: 2019-06-22 22:06:41
+category: 个人
+tags: [繁琐记录]
 password: yu63258741
 message: Nothing Valuable
 ---
