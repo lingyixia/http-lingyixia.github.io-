@@ -83,7 +83,7 @@ int maxLengthSequence(string s1, string s2)
 }
 ```
 
-##最长回文子串
+##[最长回文子串](https://leetcode.com/problems/longest-palindromic-substring/)
 >>dp[i][j]是记录从i到j是不是回文串,如果是则dp[i][j]=true,反之为false,因为每一次计算dp[i][j]都需要用到dp[i+1][j-1],而j-1>=i+1,即j-i>=2,即i到j的长度至少为3,也就是说间隔长度为1和2的更新不到,因此要先预处理records,先把间隔为1和2的提前处理
 递推公式为:
 $$
@@ -140,7 +140,7 @@ string longestPalindrome(string str)
 }
 ```
 
-##[最长回文子序列](https://leetcode.com/problems/longest-palindromic-substring/)
+##[最长回文子序列](https://leetcode.com/problems/longest-palindromic-subsequence/)
 >>跟上诉差不多,公式为:
 $$
 dp[i][j] = \begin{cases}
@@ -369,6 +369,9 @@ void backPack(vector<Woods>& woods, int bag)
 ```
 
 #硬币问题
+>>背包问题变种
+
+
 ##[硬币问题1](https://leetcode.com/problems/coin-change/)
 最少硬币数量
 
@@ -460,9 +463,64 @@ int change(int amount, vector<int>& coins)
     }
 ```
 
-#[矩阵中最大正方形](https://leetcode.com/problems/maximal-square/description/)
->>dp[i][j]记录以matrix[i][j]结尾的边长(要包含matrix[i][j])
+#[编辑距离](https://leetcode.com/problems/edit-distance/description/)
+>>dp[i][j]表示将word1[1:i]转为word2[1:j]所需要的最少次数
+$$
+dp[i][j] = \begin{cases}
+dp[i-1][j-1] & word1[i]==word2[j] \\
+min(dp[i-1][j],dp[i][j],dp[i][j-1]) & word1[i]!=word2[j]
+\end{cases}
+$$
+dp[i-1][j]、dp[i][j]、dp[i][j-1]表示三种转换方式，取其最小.
+dp[i-1][j]+1表示把word1[1:i-1]转为word2[1:j],然后删除words[i]
+dp[i-1][j-1]+1表示把word1[1:i-1]转为word2[1:j-1]然后把word1[i]替换为word2[j]
+dp[i][j-1]+1表示把word1[1:i]转为dp[1:j-1]然后把word2[j]插入到末尾
 
+```
+template <typename T>
+T min(T a,T b,T c)
+{
+    if(c>b) c=b;
+    if(c>a) c=a;
+    return c;
+}
+int minDistance(string word1, string word2) 
+{
+    vector<vector<int>> dp(word1.size()+1,vector<int>(word2.size()+1));
+    for(int i=1;i<=word1.size();i++)
+    {
+        dp[i][0]=i;
+    }
+    for(int i=1;i<=word2.size();i++)
+    {
+        dp[0][i]=i;
+    }
+    for(int i =1;i<=word1.size();i++)
+    {
+        for(int j =1;j<=word2.size();j++)
+        {
+            if(word1[i-1]==word2[j-1])
+            {
+                dp[i][j]=dp[i-1][j-1];
+            }
+            else
+            {
+                dp[i][j]=min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1])+1;
+            }
+        }
+    }
+    return dp[word1.size()][word2.size()];
+}
+```
+
+#[矩阵中最大正方形](https://leetcode.com/problems/maximal-square/description/)
+>>同编辑距离.dp[i][j]记录以matrix[i][j]结尾的边长(要包含matrix[i][j])
+$$
+dp[i][j] = \begin{cases}
+dp[i+1][j-1]+2 & str[i]=str[j] \\
+max(dp[i+1][j],dp[i][j-1]) & others
+\end{cases}
+$$
 ```
 template <typename T>
 T min(T a, T b, T c)
@@ -508,7 +566,7 @@ int maximalSquare(vector<vector<char>>& matrix)
 			else
 			{
 				dp[i][j] = min(dp[i-1][j-1],dp[i][j-1],dp[i-1][j])+1;
-				maxResult= maxResult = max(maxResult, dp[i][j]* dp[i][j]);
+				maxResult= max(maxResult, dp[i][j]* dp[i][j]);
 			}
 		}
 	}
