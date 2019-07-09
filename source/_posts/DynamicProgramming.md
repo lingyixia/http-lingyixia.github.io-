@@ -173,6 +173,7 @@ int longestPalindromeSubseq(string str)
 ```
 ##最长递增子序列
 >>dp解法一,dp[i]为以第i个元素结尾的最长递增子序列长度,$O(n^2)$
+
 ```
 int lengthOfLIS(vector<int>& nums) 
 {
