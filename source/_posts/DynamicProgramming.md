@@ -399,7 +399,7 @@ int coinChange(vector<int>& coins, int amount)
 
 ```
 int coinChange(vector<int>& coins, int amount) 
-    {
+{
 	    vector<int> values(amount + 1,INT_MAX-1);
         values[0]=0;
 	    for (int i = 1; i <= coins.size(); i++)
@@ -410,7 +410,7 @@ int coinChange(vector<int>& coins, int amount)
 		    }
 	    }
 	    return values[amount]==INT_MAX-1?-1:values[amount];
-    }
+}
 ```
 
 ##硬币问题2
@@ -460,6 +460,7 @@ int change(int amount, vector<int>& coins)
 
 #矩阵中最大正方形
 >>dp[i][j]记录以matrix[i][j]结尾的边长(要包含matrix[i][j])
+
 ```
 template <typename T>
 T min(T a, T b, T c)
