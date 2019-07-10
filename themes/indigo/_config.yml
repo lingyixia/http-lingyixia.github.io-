@@ -20,6 +20,9 @@ menu:
   th-list:
     text: 类别
     url: /categories
+  link:
+    text: 友情链接
+    url: /links
   user:
     url: /about
     text: 关于我
@@ -163,3 +166,18 @@ lightbox: true
 
 # icp备案号  ICP_license: 京ICP备1234556号-1
 ICP_license: false
+
+#友情链接条目
+#友链
+#links:
+#  - name: 名称
+#  - url: 链接
+links:
+  - name: "科学空间"
+    url: "https://kexue.fm/"
+  - name: "程序员小吴"
+    url: "https://www.cxyxiaowu.com/"
+  - name: "Sp4ce"
+    url: "https://0x20h.com"
+  - name: "zlearning"
+    url: "https://zlearning.netlify.com/"
