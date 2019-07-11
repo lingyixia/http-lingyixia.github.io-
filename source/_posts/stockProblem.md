@@ -4,7 +4,8 @@ date: 2019-06-22 18:50:47
 category: 算法
 tags: [leetcode,动态规划]
 ---
->>LeetCode中的股票问题
+LeetCode中的股票问题
+<!--more-->
 
 #一次买卖
 >>[Leetcode121](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/

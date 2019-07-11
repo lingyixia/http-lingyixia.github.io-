@@ -90,3 +90,35 @@ deploy:
 # hexo-blog-encrypt
 encrypt:
   enable: true
+
+live2d:
+  enable: true
+  scriptFrom: local
+  pluginRootPath: live2dw/
+  pluginJsPath: lib/
+  pluginModelPath: assets/
+  tagMode: false
+  debug: false
+  model:
+    use: live2d-widget-model-koharu 
+  display:
+    position: right
+    width: 150
+    height: 300
+  mobile:
+    show: true
+
+#douban
+douban:
+  user: 159702753
+  builtin: false
+  book:
+    title: 'Winter is coming'
+    quote: "雪诺:你读那么多书干嘛?小恶魔:呵,我兄弟有他的宝剑,而我有我的头脑,头脑需要书就想宝剑需要磨刀石一样,这就是我为什么读个不停,琼恩雪诺."
+  movie:
+    title: '让子弹飞一会'
+    quote: '人生就是一列开往坟墓的列车,路途上会有很多站,很难有人可以自始至终陪着走完.当陪你的人要下车时,即使不舍也该心存感激,然后挥手道别.'
+  game:
+    title: '暗夜才是密探的主场'
+    quote: '哎，小本本上八卦羞答答，人生太复杂'
+  timeout: 10000 

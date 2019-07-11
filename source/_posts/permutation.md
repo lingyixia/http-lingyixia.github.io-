@@ -4,6 +4,9 @@ date: 2019-03-15 20:54:52
 category: 算法
 tags: [递归]
 ---
+两种排列对比
+<!--more-->
+
 #可重复
 ```
 vector<char> record = { 'a','b','c' };

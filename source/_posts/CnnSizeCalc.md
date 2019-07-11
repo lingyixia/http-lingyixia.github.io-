@@ -4,8 +4,8 @@ date: 2019-03-13 14:01:28
 catrgory: 深度学习
 tags: [CNN]
 ---
->>记录Same和Valid两种Padding方式卷积或pooling后的大小
-
+记录Same和Valid两种Padding方式卷积或pooling后的大小
+<!--more-->
 #计算公式
 $$
 (W+padding-K)/stride+1

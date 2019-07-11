@@ -7,7 +7,8 @@ date: 2019-1-20 10:11:08
 description: 简单记录搭建github page的坑
 ---
 
->简单记录自己github page搭建的过程，只是为了记录自己踩一些坑，不是新手教程
+简单记录自己github page搭建的过程，只是为了记录自己踩一些坑，不是新手教程
+<!--more-->
 
 本博客使用了jekyll+github page,要使用到jekyll的主题，可以先把主题下载下来，本地预览调试，在传到github上托管。也可以直接fork到自己的github中，改名字，在下载下来。我是直接fork的[作者大大的博客](http://BladeMasterCoder.github.io)，然后改名字即可。 
 

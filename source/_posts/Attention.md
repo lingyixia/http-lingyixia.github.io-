@@ -4,7 +4,8 @@ date: 2019-04-02 16:20:15
 category: 深度学习
 tags: [Attention]
 ---
-
+Attention小结
+<!--more-->
 符号说明:
 * 当前是第`t`步
 * `s_t`:`decoder`阶段隐状态

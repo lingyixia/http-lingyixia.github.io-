@@ -4,8 +4,8 @@ date: 2019-05-01 18:10:28
 category: [深度学习]
 tags: [CNN]
 ---
->简单记录一下CNN发展历程
-
+简单记录一下CNN发展历程
+<!--more-->
 # [LeNet](https://my.oschina.net/u/876354/blog/1632862)
 ![](\img\CNNdevelopment\LeNet.jpg)
 >>诞生:1998 作者:LeCun 别称:CNN鼻祖

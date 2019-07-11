@@ -4,8 +4,8 @@ date: 2019-01-14 16:30:32
 category: 基础
 tags: [C++]
 ---
->C++输出数字二进制、十进制、八进制、十六进制
-
+C++输出数字二进制、十进制、八进制、十六进制
+<!--more-->
 ```
 #include<iostream>
 #include <bitset>

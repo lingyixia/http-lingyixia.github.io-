@@ -1,0 +1,69 @@
+<%- partial('_partial/header', {
+    title: locals.title || theme.links_title,
+    hdClass: 'links-header'
+}) %>
+<div class="container body-wrap fade" style="text-align:center;">
+    <% if (theme.links_blogs && theme.links_blogs.length) { %>
+    <h1 class="archive-separator">
+        <%=theme.links_blog_title%>
+    </h1>
+    <hr style="height:1px;border:none;border-top:2px solid #dadada;" />
+    <div class="waterfall">
+        <% theme.links_blogs.forEach(function(links_blogs) { %>
+        <div class="waterfall-item">
+            <article class="article-card archive-article">
+                <h3 class="post-title" itemprop="name">
+                    <a class="post-title-link" href="<%- links_blogs.url %>" target="_blank" itemprop="url">
+                        <%- links_blogs.name %></a>
+                </h3>
+            </article>
+        </div>
+        <%})%>
+    </div>
+    <% }%>
+    <%- partial('_partial/paginator') %>
+</div>
+<!-- 块分割线 -->
+<div class="container body-wrap fade" style="text-align:center;">
+    <% if (theme.links_site && theme.links_site.length) { %>
+    <h1 class="archive-separator">
+        <%=theme.links_site_title%>
+    </h1>
+     <hr style="height:1px;border:none;border-top:2px solid #dadada;" />
+    <div class="waterfall">
+        <% theme.links_site.forEach(function(links_site) { %>
+        <div class="waterfall-item">
+            <article class="article-card archive-article">
+                <h3 class="post-title" itemprop="name">
+                    <a class="post-title-link" href="<%- links_site.url %>" target="_blank" itemprop="url">
+                        <%- links_site.name %></a>
+                </h3>
+            </article>
+        </div>
+        <%})%>
+    </div>
+    <% }%>
+    <%- partial('_partial/paginator') %>
+</div>
+<!-- 块分割线 -->
+<div class="container body-wrap fade" style="text-align:center;">
+    <% if (theme.links_interest && theme.links_interest.length) { %>
+    <h1 class="archive-separator">
+        <%=theme.links_interest_title%>
+    </h1>
+     <hr style="height:1px;border:none;border-top:2px solid #dadada;" />
+    <div class="waterfall">
+        <% theme.links_interest.forEach(function(links_interest) { %>
+        <div class="waterfall-item">
+            <article class="article-card archive-article">
+                <h3 class="post-title" itemprop="name">
+                    <a class="post-title-link" href="<%- links_interest.url %>" target="_blank" itemprop="url">
+                        <%- links_interest.name %></a>
+                </h3>
+            </article>
+        </div>
+        <%})%>
+    </div>
+    <% }%>
+    <%- partial('_partial/paginator') %>
+</div>

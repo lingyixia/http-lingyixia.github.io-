@@ -4,8 +4,8 @@ date: 2019-02-07 14:33:14
 category: 深度学习
 tags: [tensorflow]
 ---
->本文用于记录`tensorflow`的`tf.train.Saver()`函数
-
+本文用于记录`tensorflow`的`tf.train.Saver()`函数
+<!--more-->
 一个模型保存后会有四个文件:
 1. `model.ckpt.meta`文件: 图结构信息
 2. `model.ckpt.data-*+model.ckpt.index`:保存变量取值

@@ -4,8 +4,8 @@ date: 2019-02-28 10:26:21
 category: 预处理
 tags: [数据]
 ---
->数据标准化及其作用
-
+数据标准化及其作用
+<!--more-->
 #标准化作用
 1. 消除量纲影响:[这篇博客](https://blog.csdn.net/liangjiubujiu/article/details/80977502)
 2. 激活函数对数据在[0,1]之间最为敏感
