@@ -3,10 +3,13 @@ title: machineProblem
 date: 2019-06-23 19:14:33
 category: 数学
 tags: 题
+src: /img/66image.jpg
 ---
 
 概率问题
 <!--more-->
+
+<iframe type="music" frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=464607112&auto=1&height=66"></iframe>
 
 #问题1
 >>一枚均匀硬币，平均抛多少次才能连续两次正面向上?

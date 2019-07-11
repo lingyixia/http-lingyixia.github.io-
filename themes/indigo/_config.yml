@@ -29,12 +29,15 @@ menu:
   gamepad:
     text: 游戏
     url: /games
+  leaf:
+    text: 随笔
+    url: /meditations
   link:
     text: 友情链接
     url: /links
   user:
-    url: /about
     text: 关于我
+    url: /about
   github:
     url: https://github.com/lingyixia
     target: _blank
@@ -164,7 +167,7 @@ visit_counter:
 # 动态定义title
 title_change:
   normal: (つェ⊂)咦!又好了!
-  leave: 死鬼去哪里了！
+  leave: 哎哎哎，网呢？？？
 
 # 设置为 true 发布后将使用 unpkg cdn 最新的主题样式
 # 如果想让你的自定义样式生效，把此项设为 false
