@@ -5,8 +5,8 @@ category: 爬虫
 tags: [scrapy,python]
 ---
 
-scrapy爬虫小记
-<!--more-->
+>scrapy爬虫小记
+
 #setting文件常用配置
 默认seeting文件位置:`Lib\site-packages\scrapy\settings\default_settings.py`
 1. `ROBOTSTXT_OBEY = False`:默认为True,一般都需要改为False,谁会无聊到爬虫还遵循网站协议？

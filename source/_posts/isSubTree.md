@@ -3,8 +3,7 @@ title: isSubTree
 date: 2019-02-01 18:56:15
 category: 算法
 ---
-输入两棵二叉树A，B，判断B是不是A的子结构。(ps：我们约定空树不是任意一个树的子结构)
-<!--more-->
+>输入两棵二叉树A，B，判断B是不是A的子结构。(ps：我们约定空树不是任意一个树的子结构)
 
 ```
  bool HasSubtree(TreeNode* pRoot1, TreeNode* pRoot2)

@@ -8,8 +8,8 @@ description: tensorflow中各种rnn的实现
 mathjax: true
 ---
 
-包含TensorFlow中BasicRNNCell,BasicLSTMCell等的实现
-<!--more-->
+>包含TensorFlow中BasicRNNCell,BasicLSTMCell等的实现
+
 1.BasicRNNCell
 基本结构如图:   
 ![](/img/SimpleRNN.png)   

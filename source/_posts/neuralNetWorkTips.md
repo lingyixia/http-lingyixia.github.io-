@@ -4,9 +4,6 @@ date: 2019-03-10 10:13:05
 catagory: 深度学习
 tags: [tips]
 ---
-神经网络调优
-<!--more-->
-
 # OverFitting
 1. early stop
 2. 正则化

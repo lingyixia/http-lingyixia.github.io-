@@ -4,8 +4,7 @@ date: 2019-01-19 11:01:04
 category: 算法
 tags: [tree,遍历]
 ---
-二叉树的先序、中序、后序非递归遍历
-<!--more-->
+>二叉树的先序、中序、后序非递归遍历
 
 #preOrderTraversal
 

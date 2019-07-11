@@ -7,8 +7,8 @@ tags: [javascript,jquery]
 mathjax: true
 description: Tampermonkey编程小记
 ---
-Tampermonkey编程小记
-<!--more-->
+>Tampermonkey编程小记
+
 eg:(针对知音漫客付费漫画)
 ```
 // ==UserScript==

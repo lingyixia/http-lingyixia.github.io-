@@ -7,8 +7,7 @@ tags: [CNN]
 description: CNN的卷积层和普通神经网络全连接层对比
 ---
 
-CNN的卷积层和普通神经网络全连接层对比
-<!--more-->
+>CNN的卷积层和普通神经网络全连接层对比
 
 为了过渡，首先看一下[这篇笔记](https://app.yinxiang.com/Home.action?login=true#n=c3ac6a3d-1140-4dca-9149-95539535fb93&s=s32&b=35353f67-3554-4bbc-9e1f-cad110a0c1ef&ses=4&sh=1&sds=5&)   
 

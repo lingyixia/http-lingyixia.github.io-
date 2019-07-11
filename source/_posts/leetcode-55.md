@@ -5,11 +5,10 @@ category: 算法
 tags: [贪心算法,动态规划]
 ---
 
-Given an array of non-negative integers, you are initially positioned at the first index of the array.
+>Given an array of non-negative integers, you are initially positioned at the first index of the array.
 Each element in the array represents your maximum jump length at that position.
 Determine if you are able to reach the last index.
 (可以不是正好最后一个坐标,能到最后就行)
-<!--more-->
 
 贪心一:
 ```

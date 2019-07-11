@@ -4,8 +4,7 @@ date: 2019-03-15 16:17:38
 category: 算法
 tags: [Tip]
 ---
-给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。
-<!--more-->
+>给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。
 
 ```
 double unsignedPower(double base, unsigned int exponent)

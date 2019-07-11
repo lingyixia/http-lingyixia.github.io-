@@ -4,8 +4,7 @@ date: 2019-01-17 15:03:43
 cagetory: 爬虫
 tags: [requests,python]
 ---
-requests库的一些记录
-<!--more-->
+>requests库的一些记录
 
 1.重试次数和超时,加headers
 ```

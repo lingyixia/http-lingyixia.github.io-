@@ -5,9 +5,8 @@ category: 深度学习
 tags: [tensorflow]
 ---
 
-[参考](https://www.cnblogs.com/wuliytTaotao/p/9479958.html)
+>[参考](https://www.cnblogs.com/wuliytTaotao/p/9479958.html)
 滑动平均(exponential moving average),或者叫做指数加权平均(exponentially weighted moving average)，目的是用历史值和当前值的加权来代替当前值,这样可以使值的变化更加平滑.
-<!--more-->
 
 # 用滑动平均估计局部均值
 >>只用在验证或测试阶段，训练时并不是使用

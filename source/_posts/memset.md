@@ -4,8 +4,8 @@ date: 2019-02-10 17:11:57
 category: 基础
 tags: [C++]
 ---
-原型为:void *memset(void *s, int ch, size_t n).解释:将以s为起始位置,n字节大小的区域,按字节填充,**每个字节填充ch**。注意,ch指的是Ascii码的第ch个,也就是说它最大也就是256.一般用来填充0
-<!--more-->
+>原型为:void *memset(void *s, int ch, size_t n).解释:将以s为起始位置,n字节大小的区域,按字节填充,**每个字节填充ch**。注意,ch指的是Ascii码的第ch个,也就是说它最大也就是256.一般用来填充0
+
 eg1:
 ```
 int main()

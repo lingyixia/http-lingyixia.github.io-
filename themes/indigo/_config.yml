@@ -20,18 +20,6 @@ menu:
   th-list:
     text: 类别
     url: /categories
-  book:
-    text: 读书
-    url: /books
-  film:
-    text: 影视
-    url: /movies
-  gamepad:
-    text: 游戏
-    url: /games
-  link:
-    text: 友情链接
-    url: /links
   user:
     url: /about
     text: 关于我
@@ -44,7 +32,7 @@ avatar: /img/avatar.png
 # avatar link
 avatar_link: /about/
 # 头像背景图
-brand: /img/brand_background.jpeg
+brand: /img/brand.jpg
 # favicon
 favicon: /img/Favicon.png
 
@@ -60,9 +48,9 @@ archives_title: Archives
 categories_title: Categories
 
 # 文章截断
-excerpt_render: true
+excerpt_render: false
 excerpt_length: 50
-excerpt_link: 阅读全文... ...
+excerpt_link: 阅读全文...
 mathjax: true
 archive_yearly: true
 
@@ -175,41 +163,3 @@ lightbox: true
 
 # icp备案号  ICP_license: 京ICP备1234556号-1
 ICP_license: false
-
-#友情链接条目
-#links:
-#  - name: 名称
-#  - url: 链接
-links_title: 友情链接
-links_blog_title: 博客
-links_blogs:
-  - name: "科学空间"
-    url: "https://kexue.fm/"
-  - name: "程序员小吴"
-    url: "https://www.cxyxiaowu.com/"
-  - name: "Sp4ce"
-    url: "https://0x20h.com"
-  - name: "zlearning"
-    url: "https://zlearning.netlify.com/"
-  - name: "马同学高等数学"
-    url: "https://www.matongxue.com/"
-
-links_site_title: 网站
-links_site:
-  - name: "我爱计算机视觉"
-    url: "https://www.52cv.net/"
-  - name: "我爱自然语言处理"
-    url: "http://www.52nlp.cn/"
-  - name: "码农场"
-    url: "http://www.hankcs.com/"
-  - name: "V2EX"
-    url: "https://www.v2ex.com/"
-
-links_interest_title: 码外之地
-links_interest:
-  - name: "飞极速在线"
-    url: "http://www.fjisu.net/tv/"
-  - name: "蓝铅笔"
-    url: "https://www.lanqb.com/course"
-  - name: "Textures"
-    url: "https://www.textures.com/"

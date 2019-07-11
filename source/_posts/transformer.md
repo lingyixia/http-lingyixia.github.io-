@@ -4,13 +4,13 @@ date: 2019-04-05 13:31:37
 category: 深度学习
 tags: [Attention]
 ---
-本文章只用于自己记录,详细内容好多博客已经讲的很清楚了。
+>>本文章只用于自己记录,详细内容好多博客已经讲的很清楚了。
 [参考博客1](https://jalammar.github.io/illustrated-transformer/)
 [参考博客2](https://zhuanlan.zhihu.com/p/47282410?utm_source=wechat_session&utm_medium=social&s_r=0)
 [参考博客3](https://blog.csdn.net/yiyele/article/details/81913031)
 [参考平博客(最佳)](https://medium.com/@mromerocalvo/dissecting-bert-part1-6dcf5360b07f)
 [残差网络](https://lingyixia.github.io/2019/05/01/CNNdevelopment/#ResNet)
-<!--more-->
+
 #整体架构
 ![](/img/transform2.jpg)
 解释1:左半部分是`encoder`,方框中是一个`encoder cell`,右半部分是`decoder`,方框中是一个`decoder cell`。

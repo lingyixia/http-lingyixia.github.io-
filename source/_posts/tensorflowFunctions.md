@@ -6,8 +6,8 @@ tags: [tensorflow]
 date: 2018-12-25 18:17:37
 description: tensorflow中常用函数小记
 ---
-tensorflow中常用函数小记(先暂记,以后整理)
-<!--more-->
+>tensorflow中常用函数小记(先暂记,以后整理)
+
 #tf.tile()
 用于向量扩张，参数说明:
 ```

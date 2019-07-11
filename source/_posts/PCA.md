@@ -4,11 +4,10 @@ date: 2019-04-09 11:27:13
 category: 机器学习
 tags: [线性代数]
 ---
-[参考1](http://blog.codinglabs.org/articles/pca-tutorial.html)
+>[参考1](http://blog.codinglabs.org/articles/pca-tutorial.html)
 [参考2](https://applenob.github.io/pca.html)
 [参考3](https://blog.csdn.net/hjq376247328/article/details/80640544)
 原理就是一句话,把原来的A个维度映射到(B<A)个维度。
-<!--more-->
 
 现在我尝试用最简答的方式回答PCA的原理,假设原始数据为$X$,$shape$=$n \times m$,它代表了$n$维,$m$个数据。
 假设有一个由正交基安行组成的矩阵$P$,则令$Y=PX$,意义也就是将$X$的每一列映射到以$P$的每一行代表的基(坐标轴)上.如果现在$YY^T$是对角矩阵,那么也就是说$Y$数据的协方差为0,则正好是我们所需要的矩阵(不同维度不相关),现在我们就要找到$P$使得$YY^T$是对角矩阵:

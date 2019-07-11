@@ -4,8 +4,6 @@ date: 2019-02-23 09:51:14
 category: Tip
 tags: [插件,破解]
 ---
-ViEmu
-<!--more-->
 
 #目标
 删除Viemu在本机上的时间记录文件

@@ -4,9 +4,6 @@ date: 2019-04-08 14:25:07
 category: 机器学习
 tags: 
 ---
-svm总结
-<!--more-->
-
 # 拉格朗日对偶性
 $$
 \min_x \quad f(x)\\

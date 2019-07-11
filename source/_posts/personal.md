@@ -6,8 +6,6 @@ tags: [繁琐记录]
 password: yu63258741
 message: Nothing Valuable
 ---
-个人信息记录
-<!--more-->
 #衣服
 ##半袖
 * 肩宽:44cm

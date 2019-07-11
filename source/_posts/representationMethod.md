@@ -6,8 +6,8 @@ tags: [表征]
 mathjax: true
 ---
 
-词表征(word representation)和句子表征(sentence representation)方式总结
-<!--more-->
+>词表征(word representation)和句子表征(sentence representation)方式总结
+
 # 词表征(word representation)
 ## one-hot encoding
 不解释

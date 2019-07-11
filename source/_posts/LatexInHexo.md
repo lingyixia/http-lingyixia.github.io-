@@ -7,8 +7,8 @@ tags: [Latex,Markdown,Hexo]
 mathjax: true
 description: Hexo中Latex公式显示问题解决
 ---
-Hexo中Latex公式显示问题解决
-<!--more-->
+>Hexo中Latex公式显示问题解决
+
 1. 卸载:
 >>npm uninstall hexo-renderer-marked --save
 
