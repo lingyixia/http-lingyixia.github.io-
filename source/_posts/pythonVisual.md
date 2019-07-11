@@ -5,8 +5,8 @@ category: 数据科学
 tags: 
 ---
 
->常用数据可视化方式[参考](https://blog.csdn.net/weixin_39739342/article/details/80008469)
-
+常用数据可视化方式[参考](https://blog.csdn.net/weixin_39739342/article/details/80008469)
+<!--more-->
 #折线图 Line Chart
 >>用于观察数据和比较走势，比如横坐标时月份，纵坐标是销售额
 

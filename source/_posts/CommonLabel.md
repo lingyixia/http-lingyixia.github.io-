@@ -3,6 +3,9 @@ title: 序列标注常用方式
 date: 2018-08-28 15:11:55
 tags: [Ner]
 ---
+常用序列标注方式
+<!--more-->
+
 #BIO
 >>基本标注方式为:$(B-begin,I-inside,O-other)$.
 

@@ -4,7 +4,8 @@ date: 2019-05-26 16:38:13
 category: 自然语言处理
 tags: [转载]
 ---
->>转载自这里: https://www.cnblogs.com/weiyinfu/p/9853769.html
+转载自这里: https://www.cnblogs.com/weiyinfu/p/9853769.html
+<!--more-->
 
 #理解bleu
 bleu全称为Bilingual Evaluation Understudy(双语评估替换),是2002年提出的用于评估机器翻译效果的一种方法，这种方法简单朴素、短平快、易于理解。因为其效果还算说得过去，因此被广泛迁移到自然语言处理的各种评估任务中。这种方法可以说是：山上无老虎，猴子称大王。时无英雄遂使竖子成名。蜀中无大将，廖化做先锋。

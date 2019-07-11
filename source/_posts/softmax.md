@@ -4,8 +4,8 @@ date: 2019-02-26 14:48:03
 category: 神经网络
 tags: [损失函数]
 ---
->[参考原文](https://zhuanlan.zhihu.com/p/25723112)
-
+[参考原文](https://zhuanlan.zhihu.com/p/25723112)
+<!--more-->
 #softmax优势
 1. 计算loss公式方便
 2. 反向传播容易计算

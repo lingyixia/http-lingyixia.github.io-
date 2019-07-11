@@ -7,8 +7,8 @@ tags: [熵,损失函数]
 description: 为什么使用交叉熵损失函数而不是二次代价函数
 ---
 
->为什么使用交叉熵损失函数而不是二次代价函数
-
+为什么使用交叉熵损失函数而不是二次代价函数
+<!--more-->
 本文基本转自[这篇文章](https://blog.csdn.net/yuanjunliang/article/details/79394805)，感谢作者
 
 ## 前奏

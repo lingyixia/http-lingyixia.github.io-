@@ -4,6 +4,9 @@ date: 2019-06-23 15:03:04
 category: 数学
 tags: 概率
 ---
+<!-- <img src="/img/commondistribution/show.jpeg" width = "auto" height = "300" > -->
+常用分布
+<!--more-->
 
 #伯努利分布
 >>进行一次实验,实验的结果只有两种:成功的概率是$p$,则失败的概率是$1-p$。eg:一个硬币抛一次人结果。

@@ -7,7 +7,8 @@ date: 2019-1-10 10:11:08
 description: 求连续数组最大和
 ---
 
->Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+<!--more-->
 
 ```
 //动态规划
