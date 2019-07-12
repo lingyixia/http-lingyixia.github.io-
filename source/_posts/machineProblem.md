@@ -1,21 +1,18 @@
 ---
-title: machineProblem
+title: 概率计算问题
 date: 2019-06-23 19:14:33
 category: 数学
-tags: 题
-src: /img/66image.jpg
+tags: [概率论]
 ---
 
-概率问题
+若干有趣的有关概率计算的小问题
 <!--more-->
 
-<iframe type="music" frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=464607112&auto=1&height=66"></iframe>
-
-#问题1
+# 问题1
 >>一枚均匀硬币，平均抛多少次才能连续两次正面向上?
 
-答:设$N_k$表示连续$k$次正面向上的随机变量,则$E(N_k)$表示连续$k$面朝上需要抛硬币次数的均值,则:
-$N_k=N_{k-1}+p+(1-p)[1+N_k]$
+答:设$$N_k$$表示连续$k$次正面向上的随机变量,则$$E(N_k)$$表示连续$k$面朝上需要抛硬币次数的均值,则:
+$$N_k=N_{k-1}+p+(1-p)[1+N_k]$$
 下面解释这个式子.
 要想得到$N_k$次正面向上之前必须有$N{k-1}$次正面向上,因此第一项的$N_{k-1}$就是这个意思,第二项的意思是达到$N_{k-1}$之的下一个伯努利实验如果成功,则实验到此为止。第三项的意思是如果不成功,则一切从头开始.
 $$E(N_k)=E(N_{k-1})+p+(1-p)[1+E(N_k)]$$

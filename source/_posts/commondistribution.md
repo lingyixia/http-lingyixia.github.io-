@@ -2,10 +2,10 @@
 title: 常用分布
 date: 2019-06-23 15:03:04
 category: 数学
-tags: 概率
+tags: [概率论]
 ---
-<!-- <img src="/img/commondistribution/show.jpeg" width = "auto" height = "300" > -->
-常用分布
+
+常用分布若干知识点记录
 <!--more-->
 
 #伯努利分布

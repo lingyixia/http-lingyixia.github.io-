@@ -4,7 +4,8 @@ date: 2019-06-22 18:50:47
 category: 算法
 tags: [leetcode,动态规划]
 ---
-LeetCode中的股票问题
+
+动态规划中的股票问题汇总记录
 <!--more-->
 
 #一次买卖
