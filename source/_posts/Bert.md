@@ -10,14 +10,19 @@ tags: [论文]
 
 ## 组织结构
 >> [这是Bert Github地址](https://github.com/google-research/bert),打开后会看到这样的结构:
-![](img/Bert/bert.jpeg)
+![](/img/Bert/bert.jpeg)
 下面我将逐个分析上诉图片中加框的文件,其他的文件不是源码,不用分析.
 
 ## modeling.py
 >>该文件是整个Bert模型源码,包含两个类:
 * BertConfig:Bert配置类
 * BertModel:Bert模型类
-* embedding_lookup:用来返回词向量函数
+* embedding_lookup:用来返回函数token embedding词向量
+* embedding_postprocessor:得到token embedding+segment embedding+position embedding
+* create_attention_mask_from_input_mask得到mask,用来attention该attention的部分
+* transformer_model和attention_layer:Transform的ender部分,也就是self-attention,不解释了，看太多遍了.
+
+**注意上面的顺序,不是乱写的,是按照BertModel调用顺序组织的.**
 
 ### BertConfig
 
@@ -258,7 +263,7 @@ def embedding_postprocessor(input_tensor,
 return :token embedding+segment embedding+position_embeddings
 
 ### create_attention_mask_from_input_mask
->>目的是将本来shape为[batch_size, seq_length]转为[batch_size, seq_length,seq_length]
+>>目的是将本来shape为[batch_size, seq_length]转为[batch_size, seq_length,seq_length],为什么要这样的维度呢?因为.....算了麻烦不写了，去我的另一篇[Transform](等会在写)中看吧
 
 ```
 def create_attention_mask_from_input_mask(from_tensor, to_mask):
@@ -276,3 +281,181 @@ def create_attention_mask_from_input_mask(from_tensor, to_mask):
 * from_tensor:[batch_size, seq_length].
 * to_mask:[batch_size, seq_length]
 注:`Transform`中的`mask`和平常用的不太一样,这里的`mask`是为了在计算`attention`的时候"看不到不应该看到的内容",计算方式为该看到的`mask`为0，不该看到的`mask`为一个负的很大的数字,然后两者相加(平常使用`mask`是看到的为1，看不到的为0，然后两者做点乘)，这样在计算`softmax`的时候那些负数的`attention`会非常非常小,也就基本看不到了.
+
+### transformer_model
+>>这一部分是`Transform`部分,但是只有`encoder`部分,从`BertModel`中的` with tf.variable_scope("encoder"):`这一部分也可以看出来
+
+```
+def transformer_model(input_tensor,
+                      attention_mask=None,
+                      hidden_size=768,
+                      num_hidden_layers=12,
+                      num_attention_heads=12,
+                      intermediate_size=3072,
+                      intermediate_act_fn=gelu,
+                      hidden_dropout_prob=0.1,
+                      attention_probs_dropout_prob=0.1,
+                      initializer_range=0.02,
+                      do_return_all_layers=False):
+    if hidden_size % num_attention_heads != 0:
+        raise ValueError(
+            "The hidden size (%d) is not a multiple of the number of attention "
+            "heads (%d)" % (hidden_size, num_attention_heads))
+    attention_head_size = int(hidden_size / num_attention_heads)
+    input_shape = get_shape_list(input_tensor, expected_rank=3)
+    batch_size = input_shape[0]
+    seq_length = input_shape[1]
+    input_width = input_shape[2]
+    if input_width != hidden_size:
+        raise ValueError("The width of the input tensor (%d) != hidden size (%d)" %
+                         (input_width, hidden_size))
+    prev_output = reshape_to_matrix(input_tensor)#这个不单独写了,就是将[batch_size, seq_length, embedding_size]的input 给reahpe为[batch_size*seq_length,embedding_size]
+    all_layer_outputs = []
+    for layer_idx in range(num_hidden_layers):
+        with tf.variable_scope("layer_%d" % layer_idx):
+            layer_input = prev_output
+            with tf.variable_scope("attention"):
+                attention_heads = []
+                with tf.variable_scope("self"):
+                    attention_head = attention_layer(from_tensor=layer_input,
+                                                     to_tensor=layer_input,
+                                                     attention_mask=attention_mask,
+                                                     num_attention_heads=num_attention_heads,
+                                                     size_per_head=attention_head_size,
+                                                     attention_probs_dropout_prob=attention_probs_dropout_prob,
+                                                     initializer_range=initializer_range,
+                                                     do_return_2d_tensor=True,
+                                                     batch_size=batch_size,
+                                                     from_seq_length=seq_length,
+                                                     to_seq_length=seq_length)
+                    attention_heads.append(attention_head)
+                attention_output = None
+                if len(attention_heads) == 1:
+                    attention_output = attention_heads[0]
+                else:
+                    attention_output = tf.concat(attention_heads, axis=-1)
+                with tf.variable_scope("output"):
+                    attention_output = tf.layers.dense(attention_output,
+                                                       hidden_size,
+                                                       kernel_initializer=create_initializer(initializer_range))
+                    attention_output = dropout(attention_output, hidden_dropout_prob)
+                    attention_output = layer_norm(attention_output + layer_input)
+            with tf.variable_scope("intermediate"):#feed-forword部分
+                intermediate_output = tf.layers.dense(attention_output,
+                                                      intermediate_size,
+                                                      activation=intermediate_act_fn,
+                                                      kernel_initializer=create_initializer(initializer_range))
+            with tf.variable_scope("output"):
+                layer_output = tf.layers.dense(intermediate_output,
+                                               hidden_size,
+                                               kernel_initializer=create_initializer(initializer_range))
+                layer_output = dropout(layer_output, hidden_dropout_prob)
+                layer_output = layer_norm(layer_output + attention_output)
+                prev_output = layer_output
+                all_layer_outputs.append(layer_output)
+    if do_return_all_layers:
+        final_outputs = []
+        for layer_output in all_layer_outputs:
+            final_output = reshape_from_matrix(layer_output, input_shape)
+            final_outputs.append(final_output)
+        return final_outputs
+    else:
+        final_output = reshape_from_matrix(prev_output, input_shape)
+        return final_output
+```
+>>参数说明:
+* input_tensor:token embedding+segment embedding+position embedding [batch_size, seq_length, embedding_size]
+* attention_mask:[batch_size, seq_length,seq_length]
+* hidden_size:不解释
+* num_hidden_layers:多少个`ecncoder block`
+* num_attention_heads:多少个`head`
+* intermediate_size:`feed forward`隐藏层维度
+* intermediate_act_fn:`feed forward`激活函数
+其他的不解释了
+return [batch_size, seq_length, hidden_size],
+
+### attention_layer
+>>其实就是`self-attention`,但是在计算的时候全都转换为了二维矩阵，按注释的意思是避免反复reshape,因为reshape在CPU/GPU上易于实现，但是在TPU上不易实现,这样可以加速训练.
+
+```
+def attention_layer(from_tensor,
+                    to_tensor,
+                    attention_mask=None,
+                    num_attention_heads=1,
+                    size_per_head=512,
+                    query_act=None,
+                    key_act=None,
+                    value_act=None,
+                    attention_probs_dropout_prob=0.0,
+                    initializer_range=0.02,
+                    do_return_2d_tensor=False,
+                    batch_size=None,
+                    from_seq_length=None,
+                    to_seq_length=None):
+    def transpose_for_scores(input_tensor, batch_size, num_attention_heads, seq_length, width):
+        output_tensor = tf.reshape(input_tensor, [batch_size, seq_length, num_attention_heads, width])
+        output_tensor = tf.transpose(output_tensor, [0, 2, 1, 3])
+        return output_tensor
+
+    from_shape = get_shape_list(from_tensor, expected_rank=[2, 3])
+    to_shape = get_shape_list(to_tensor, expected_rank=[2, 3])
+    if len(from_shape) != len(to_shape):
+        raise ValueError("The rank of `from_tensor` must match the rank of `to_tensor`.")
+    if len(from_shape) == 3:
+        batch_size = from_shape[0]
+        from_seq_length = from_shape[1]
+        to_seq_length = to_shape[1]
+    elif len(from_shape) == 2:
+        if (batch_size is None or from_seq_length is None or to_seq_length is None):
+            raise ValueError(
+                "When passing in rank 2 tensors to attention_layer, the values "
+                "for `batch_size`, `from_seq_length`, and `to_seq_length` "
+                "must all be specified.")
+    from_tensor_2d = reshape_to_matrix(from_tensor)
+    to_tensor_2d = reshape_to_matrix(to_tensor)
+    query_layer = tf.layers.dense(from_tensor_2d,
+                                  num_attention_heads * size_per_head,
+                                  activation=query_act,
+                                  name="query",
+                                  kernel_initializer=create_initializer(initializer_range))
+    key_layer = tf.layers.dense(to_tensor_2d,
+                                num_attention_heads * size_per_head,
+                                activation=key_act,
+                                name="key",
+                                kernel_initializer=create_initializer(initializer_range))
+    value_layer = tf.layers.dense(to_tensor_2d,
+                                  num_attention_heads * size_per_head,
+                                  activation=value_act,
+                                  name="value",
+                                  kernel_initializer=create_initializer(initializer_range))
+    query_layer = transpose_for_scores(query_layer, batch_size, num_attention_heads, from_seq_length, size_per_head)
+    key_layer = transpose_for_scores(key_layer, batch_size, num_attention_heads, to_seq_length, size_per_head)
+    attention_scores = tf.matmul(query_layer, key_layer, transpose_b=True)
+    attention_scores = tf.multiply(attention_scores, 1.0 / math.sqrt(float(size_per_head)))
+    if attention_mask is not None:
+        attention_mask = tf.expand_dims(attention_mask, axis=[1])
+        adder = (1.0 - tf.cast(attention_mask, tf.float32)) * -10000.0
+        attention_scores += adder#这里就是使用mask来attention该attention的部分
+    attention_probs = tf.nn.softmax(attention_scores)
+    attention_probs = dropout(attention_probs, attention_probs_dropout_prob)
+    value_layer = tf.reshape(value_layer, [batch_size, to_seq_length, num_attention_heads, size_per_head])
+    value_layer = tf.transpose(value_layer, [0, 2, 1, 3])
+    context_layer = tf.matmul(attention_probs, value_layer)
+    context_layer = tf.transpose(context_layer, [0, 2, 1, 3])
+    if do_return_2d_tensor:
+        context_layer = tf.reshape(context_layer, [batch_size * from_seq_length, num_attention_heads * size_per_head])
+    else:
+        context_layer = tf.reshape(context_layer, [batch_size, from_seq_length, num_attention_heads * size_per_head])
+    return context_layer
+```
+>>参数说明:
+* from_tensor在Transform中被转为二维[batch_size*seq_length, embedding_size]
+* to_shape:传过来的参数跟from_tensor一毛一样,在这里没什么卵用其实,因为q和k的length是一样的
+* attention_mask:[batch_size, seq_length,seq_length]
+* num_attention_heads:head数量
+* size_per_head:每一个head维度,代码中是用总维度除以head数量得到的:attention_head_size = int(hidden_size / num_attention_heads)
+return: return :[batch_size, from_seq_length,num_attention_heads * size_per_head].
+
+
+##总结一:
+看完感觉真特么简单这模型,似乎除了self-attention就啥都没有了.Bert的创新点其实在于训练任务,继续看... ...
