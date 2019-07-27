@@ -457,5 +457,432 @@ def attention_layer(from_tensor,
 return: return :[batch_size, from_seq_length,num_attention_heads * size_per_head].
 
 
-##总结一:
-看完感觉真特么简单这模型,似乎除了self-attention就啥都没有了.Bert的创新点其实在于训练任务,继续看... ...
+### 总结一:
+看完模型感觉真特么简单这模型,似乎除了self-attention就啥都没有了,但是先别着急,一般情况下模型是重点，但是对于Bert而言，模型却仅仅是开始，真正的创新点还在下面.
+
+## create_pretraining_data.py
+>>这部分代码用来生成训练样本,我们从`main`函数开始看起,首先进入`tokenization.py`
+
+### def main
+```
+def main(_):
+    tf.logging.set_verbosity(tf.logging.INFO)
+    tokenizer = tokenization.FullTokenizer(vocab_file=FLAGS.vocab_file, do_lower_case=FLAGS.do_lower_case)
+    input_files = []
+    for input_pattern in FLAGS.input_file.split(","):
+        input_files.extend(tf.gfile.Glob(input_pattern))
+    tf.logging.info("*** Reading from input files ***")
+    for input_file in input_files:
+        tf.logging.info("  %s", input_file)
+    rng = random.Random(FLAGS.random_seed)
+    instances = create_training_instances(input_files,
+                                          tokenizer,
+                                          FLAGS.max_seq_length,
+                                          FLAGS.dupe_factor,
+                                          FLAGS.short_seq_prob,
+                                          FLAGS.masked_lm_prob,
+                                          FLAGS.max_predictions_per_seq,
+                                          rng)
+
+    output_files = FLAGS.output_file.split(",")
+    tf.logging.info("*** Writing to output files ***")
+    for output_file in output_files:
+        tf.logging.info("  %s", output_file)
+    write_instance_to_example_files(instances,
+                                    tokenizer, 
+                                    FLAGS.max_seq_length,
+                                    FLAGS.max_predictions_per_seq, 
+                                    output_files)
+```
+###class TrainingInstance
+>>单个训练样本类,看`__init__`就能看出来，没什么其他东西
+```
+class TrainingInstance(object):
+    def __init__(self, tokens, segment_ids, masked_lm_positions, masked_lm_labels,
+                 is_random_next):
+        self.tokens = tokens
+        self.segment_ids = segment_ids
+        self.is_random_next = is_random_next
+        self.masked_lm_positions = masked_lm_positions
+        self.masked_lm_labels = masked_lm_labels
+
+    def __str__(self):
+        s = ""
+        s += "tokens: %s\n" % (" ".join(
+            [tokenization.printable_text(x) for x in self.tokens]))
+        s += "segment_ids: %s\n" % (" ".join([str(x) for x in self.segment_ids]))
+        s += "is_random_next: %s\n" % self.is_random_next
+        s += "masked_lm_positions: %s\n" % (" ".join(
+            [str(x) for x in self.masked_lm_positions]))
+        s += "masked_lm_labels: %s\n" % (" ".join(
+            [tokenization.printable_text(x) for x in self.masked_lm_labels]))
+        s += "\n"
+        return s
+
+```
+
+### def create_training_instances
+>>这个函数是重中之重，用来生成
+```
+def create_training_instances(input_files, tokenizer, max_seq_length,
+                              dupe_factor, short_seq_prob, masked_lm_prob,
+                              max_predictions_per_seq, rng):
+    all_documents = [[]]#外层是文档，内层是文档中的每个句子
+    for input_file in input_files:
+        with tf.gfile.GFile(input_file, "r") as reader:
+            while True:
+                line = tokenization.convert_to_unicode(reader.readline())
+                if not line:
+                    break
+                line = line.strip()
+                if not line:# 空行表示文档分割
+                    all_documents.append([])
+                tokens = tokenizer.tokenize(line)
+                if tokens:
+                    all_documents[-1].append(tokens)
+    all_documents = [x for x in all_documents if x]
+    rng.shuffle(all_documents)
+    vocab_words = list(tokenizer.vocab.keys())
+    instances = []
+    for _ in range(dupe_factor):
+        for document_index in range(len(all_documents)):
+            instances.extend(
+                create_instances_from_document(all_documents,
+                                               document_index,
+                                               max_seq_length,
+                                               short_seq_prob,
+                                               masked_lm_prob,
+                                               max_predictions_per_seq,
+                                               vocab_words,
+                                               rng))
+    rng.shuffle(instances)
+    return instances
+```
+>>参数说明:
+dupe_factor:每一个句子用几次:因为如果一个句子只用一次的话那么mask的位置就是固定的，这样我们把每个句子在训练中都多用几次,而且没次的mask位置都不相同,就可以防止某些词永远看不到
+short_seq_prob:长度小于“max_seq_length”的样本比例。因为在fine-tune过程里面输入的target_seq_length是可变的（小于等于max_seq_length），那么为了防止过拟合也需要在pre-train的过程当中构造一些短的样本
+max_predictions_per_seq:一个句子里最多有多少个[MASK]标记
+masked_lm_prob:多少比例的Token被MASK掉
+rng:随机率
+
+###def create_instances_from_document
+>>一个文档中抽取训练样本,重中之重
+
+```
+def create_instances_from_document(all_documents, document_index, max_seq_length, short_seq_prob,
+                                   masked_lm_prob, max_predictions_per_seq, vocab_words, rng):
+    document = all_documents[document_index]
+    # 为[CLS], [SEP], [SEP]预留三个空位
+    max_num_tokens = max_seq_length - 3
+    target_seq_length = max_num_tokens  # 以short_seq_prob的概率随机生成（2~max_num_tokens）的长度
+    if rng.random() < short_seq_prob:
+        target_seq_length = rng.randint(2, max_num_tokens)
+    instances = []
+    current_chunk = []
+    current_length = 0
+    i = 0
+    while i < len(document):
+        segment = document[i]
+        current_chunk.append(segment)
+        current_length += len(segment)
+        # 将句子依次加入current_chunk中，直到加完或者达到限制的最大长度
+        if i == len(document) - 1 or current_length >= target_seq_length:
+            if current_chunk:
+                # `a_end`是第一个句子A结束的下标
+                a_end = 1
+                if len(current_chunk) >= 2:
+                    a_end = rng.randint(1, len(current_chunk) - 1)
+                tokens_a = []
+                for j in range(a_end):
+                    tokens_a.extend(current_chunk[j])
+                tokens_b = []
+                is_random_next = False
+                # `a_end`是第一个句子A结束的下标
+                if len(current_chunk) == 1 or rng.random() < 0.5:
+                    is_random_next = True
+                    target_b_length = target_seq_length - len(tokens_a)
+                    # 随机的挑选另外一篇文档的随机开始的句子
+                    # 但是理论上有可能随机到的文档就是当前文档，因此需要一个while循环
+                    # 这里只while循环10次，理论上还是有重复的可能性，但是我们忽略
+                    for _ in range(10):
+                        random_document_index = rng.randint(0, len(all_documents) - 1)
+                        if random_document_index != document_index:
+                            break
+                    random_document = all_documents[random_document_index]
+                    random_start = rng.randint(0, len(random_document) - 1)
+                    for j in range(random_start, len(random_document)):
+                        tokens_b.extend(random_document[j])
+                        if len(tokens_b) >= target_b_length:
+                            break
+                    # 对于上述构建的随机下一句，我们并没有真正地使用它们
+                    # 所以为了避免数据浪费，我们将其“放回”
+                    num_unused_segments = len(current_chunk) - a_end
+                    i -= num_unused_segments
+                else:
+                    is_random_next = False
+                    for j in range(a_end, len(current_chunk)):
+                        tokens_b.extend(current_chunk[j])
+                # 如果太多了，随机去掉一些
+                truncate_seq_pair(tokens_a, tokens_b, max_num_tokens, rng)
+                assert len(tokens_a) >= 1
+                assert len(tokens_b) >= 1
+                tokens = []
+                segment_ids = []
+                # 处理句子A
+                tokens.append("[CLS]")
+                segment_ids.append(0)
+                for token in tokens_a:
+                    tokens.append(token)
+                    segment_ids.append(0)
+                # 句子A结束，加上【SEP】
+                tokens.append("[SEP]")
+                segment_ids.append(0)
+                # 处理句子B
+                for token in tokens_b:
+                    tokens.append(token)
+                    segment_ids.append(1)
+                # 句子B结束，加上【SEP】
+                tokens.append("[SEP]")
+                segment_ids.append(1)
+                # 调用 create_masked_lm_predictions来随机对某些Token进行mask
+                (tokens, masked_lm_positions,
+                 masked_lm_labels) = create_masked_lm_predictions(tokens,
+                                                                  masked_lm_prob,
+                                                                  max_predictions_per_seq,
+                                                                  vocab_words, rng)
+                instance = TrainingInstance(tokens=tokens,
+                                            segment_ids=segment_ids,
+                                            is_random_next=is_random_next,
+                                            masked_lm_positions=masked_lm_positions,
+                                            masked_lm_labels=masked_lm_labels)
+                instances.append(instance)
+            current_chunk = []
+            current_length = 0
+        i += 1
+    return instances
+```
+###def create_masked_lm_predictions
+>>真正的mask在这里实现
+```
+def create_masked_lm_predictions(tokens, masked_lm_prob, max_predictions_per_seq, vocab_words, rng):
+    cand_indexes = [] # [CLS]和[SEP]不能用于MASK
+    for (i, token) in enumerate(tokens):
+        if token == "[CLS]" or token == "[SEP]":
+            continue
+        if (FLAGS.do_whole_word_mask and len(cand_indexes) >= 1 and
+                token.startswith("##")):
+            cand_indexes[-1].append(i)
+        else:
+            cand_indexes.append([i])
+    rng.shuffle(cand_indexes)
+    output_tokens = list(tokens)
+    num_to_predict = min(max_predictions_per_seq, max(1, int(round(len(tokens) * masked_lm_prob))))
+    masked_lms = []
+    covered_indexes = set()
+    for index_set in cand_indexes:
+        if len(masked_lms) >= num_to_predict:
+            break
+        if len(masked_lms) + len(index_set) > num_to_predict:
+            continue
+        is_any_index_covered = False
+        for index in index_set:
+            if index in covered_indexes:
+                is_any_index_covered = True
+                break
+        if is_any_index_covered:
+            continue
+        for index in index_set:
+            covered_indexes.add(index)
+            masked_token = None
+            # 80% of the time, replace with [MASK]
+            if rng.random() < 0.8:
+                masked_token = "[MASK]"
+            else:
+            # 10% of the time, keep original
+                if rng.random() < 0.5:
+                    masked_token = tokens[index]
+            # 10% of the time, replace with random word
+                else:
+                    masked_token = vocab_words[rng.randint(0, len(vocab_words) - 1)]
+            output_tokens[index] = masked_token
+            masked_lms.append(MaskedLmInstance(index=index, label=tokens[index]))
+    assert len(masked_lms) <= num_to_predict
+     # 按照下标重排，保证是原来句子中出现的顺序
+    masked_lms = sorted(masked_lms, key=lambda x: x.index)
+    masked_lm_positions = []
+    masked_lm_labels = []
+    for p in masked_lms:
+        masked_lm_positions.append(p.index)
+        masked_lm_labels.append(p.label)
+    return (output_tokens, masked_lm_positions, masked_lm_labels)
+```
+>>代码流程是这样的:首先嫁给你一个句子随机打乱,并确定一个句子的15%是多少个token，设num_to_predict,然后对于[0,是多少个token，设num_to_predict]token，以80%的概率替换为[mask],10%的概率替换，10%的概率保持,这样就做到了对于15%的toke80% [mask],10%替换,10%保持。而预测的不是那15%的80（标注问题），而是全部15%。为什么要mask呢？你想啊，我们的目的是得到这样一个模型:输入一个句子，输出一个能够尽可能表示该句子的向量(用最容易理解的语言就是我们不知道输入的是什么玩意，但是我们需要知道输出的向量是什么),如果不mask直接训练那不就相当于用1来推导1？而如果我们mask一部分就意味着并不知道输入(至少不知道全部),至于为什么要把15不全部mask，我觉得这个解释很不错，但是过于专业化:
+* 如果把 100% 的输入替换为 [MASK]：模型会偏向为 [MASK] 输入建模，而不会学习到 non-masked 输入的表征。
+* 如果把 90% 的输入替换为 [MASK]、10% 的输入替换为随机 token：模型会偏向认为 non-masked 输入是错的。
+* 如果把 90% 的输入替换为 [MASK]、维持 10% 的输入不变：模型会偏向直接复制 non-masked 输入的上下文无关表征。
+所以，为了使模型可以学习到相对有效的上下文相关表征，需要以 1:1 的比例使用两种策略处理 non-masked 输入。论文提及，随机替换的输入只占整体的 1.5%，似乎不会对最终效果有影响（模型有足够的容错余量）。
+通俗点说就是全部mask的话就意味着用mask来预测真正的单词,学习的仅仅是mask(而且mask的每个词都不一样，学到的mask表示也不一样，很显然不合理)，加入10%的替换就意味着用错的词预测对的词，而10%保持不变意味着用1来推导1，因此后两个10%的作用其实是为了学到没有mask的部分。
+或者还有一种解释方式: 因为每次都是要学习这15%的token，其他的学不到(认识到这一点很重要)倘若某一个词在训练模型的时候被mask了，而微调的时候出现了咋办？因此不管怎样，都必须让模型好歹"认识一下"这个词.
+## tokenization.py
+>>按照`create_pretraining_data.py`中`main`的调用顺序，先看`FullTokenizer`类
+
+###FullTokenizer
+```
+class FullTokenizer(object):
+    def __init__(self, vocab_file, do_lower_case=True):
+        self.vocab = load_vocab(vocab_file)
+        self.inv_vocab = {v: k for k, v in self.vocab.items()}
+        self.basic_tokenizer = BasicTokenizer(do_lower_case=do_lower_case)
+        self.wordpiece_tokenizer = WordpieceTokenizer(vocab=self.vocab)
+
+    def tokenize(self, text):
+        split_tokens = []
+        for token in self.basic_tokenizer.tokenize(text):
+            for sub_token in self.wordpiece_tokenizer.tokenize(token):
+                split_tokens.append(sub_token)
+        return split_tokens
+
+    def convert_tokens_to_ids(self, tokens):
+        return convert_by_vocab(self.vocab, tokens)
+
+    def convert_ids_to_tokens(self, ids):
+        return convert_by_vocab(self.inv_vocab, ids)
+```
+>>在`__init__`中可以看到，又得先分析`BasicTokenizer`类和`WordpieceTokenizer`类(哎呀真烦，最后在回来做超链接吧),除此之外就是调用了几个小函数,`load_vocab`它的输入参数是bert模型的词典,返回的是一个`OrdereDict`:{词:词号}.其他的不说了，没啥意思。
+
+###class BasicTokenizer
+>>目的是根据空格，标点进行普通的分词，最后返回的是关于词的列表，对于中文而言是关于字的列表。
+
+```
+class BasicTokenizer(object):
+  def __init__(self, do_lower_case=True):
+    self.do_lower_case = do_lower_case
+
+  def tokenize(self, text):
+  ##其实就是把字符串转为了list，分英文单词和中文单词处理
+  ##eg:Mr. Cassius crossed the highway, and stopped suddenly.转为['mr', '.', 'cassius', 'crossed', 'the', 'highway', ',', 'and', 'stopped', 'suddenly', '.']
+    text = convert_to_unicode(text)
+    text = self._clean_text(text)
+    text = self._tokenize_chinese_chars(text)
+    orig_tokens = whitespace_tokenize(text)#无需细说，就是把string按照空格切分为list
+    split_tokens = []
+    for token in orig_tokens:
+      if self.do_lower_case:
+        token = token.lower()
+        token = self._run_strip_accents(token)#这个函数干了什么我也没看明白,但是对正题流程不重要,略过吧
+      split_tokens.extend(self._run_split_on_punc(token))
+    output_tokens = whitespace_tokenize(" ".join(split_tokens))
+    return output_tokens
+
+  def _run_strip_accents(self, text):
+    text = unicodedata.normalize("NFD", text)
+    output = []
+    for char in text:
+      cat = unicodedata.category(char)
+      if cat == "Mn":
+        continue
+      output.append(char)
+    return "".join(output)
+
+  def _run_split_on_punc(self, text):
+    chars = list(text)
+    i = 0
+    start_new_word = True
+    output = []
+    while i < len(chars):
+      char = chars[i]
+      if _is_punctuation(char):
+        output.append([char])
+        start_new_word = True
+      else:
+        if start_new_word:
+          output.append([])
+        start_new_word = False
+        output[-1].append(char)
+      i += 1
+    return ["".join(x) for x in output]
+
+  def _tokenize_chinese_chars(self, text):
+    # 按字切分中文，其实就是英文单词不变,中文在字两侧添加空格
+    output = []
+    for char in text:
+      cp = ord(char)
+      if self._is_chinese_char(cp):
+        output.append(" ")
+        output.append(char)
+        output.append(" ")
+      else:
+        output.append(char)
+    return "".join(output)
+
+  def _is_chinese_char(self, cp):
+    # 判断是否是汉字,这个函数很有意义，值得借鉴
+    # refer：https://www.cnblogs.com/straybirds/p/6392306.html
+    if ((cp >= 0x4E00 and cp <= 0x9FFF) or  #
+        (cp >= 0x3400 and cp <= 0x4DBF) or  #
+        (cp >= 0x20000 and cp <= 0x2A6DF) or  #
+        (cp >= 0x2A700 and cp <= 0x2B73F) or  #
+        (cp >= 0x2B740 and cp <= 0x2B81F) or  #
+        (cp >= 0x2B820 and cp <= 0x2CEAF) or
+        (cp >= 0xF900 and cp <= 0xFAFF) or  #
+        (cp >= 0x2F800 and cp <= 0x2FA1F)):  #
+      return True
+    return False
+
+  def _clean_text(self, text): # 去除无意义字符以及空格
+    output = []
+    for char in text:
+      cp = ord(char)
+      if cp == 0 or cp == 0xfffd or _is_control(char):
+        continue
+      if _is_whitespace(char):
+        output.append(" ")
+      else:
+        output.append(char)
+    return "".join(output)
+```
+
+###class WordpieceTokenizer
+>>这个才是重点,跑test的时候出现的那些##都是从这里拿来的，其实就是把未登录词在词表中匹配相应的前缀.
+```
+class WordpieceTokenizer(object):
+  def __init__(self, vocab, unk_token="[UNK]", max_input_chars_per_word=200):
+    self.vocab = vocab
+    self.unk_token = unk_token
+    self.max_input_chars_per_word = max_input_chars_per_word
+
+  def tokenize(self, text):
+    text = convert_to_unicode(text)
+    output_tokens = []
+    for token in whitespace_tokenize(text):
+      chars = list(token)
+      if len(chars) > self.max_input_chars_per_word:
+        output_tokens.append(self.unk_token)
+        continue
+      is_bad = False
+      start = 0
+      sub_tokens = []
+      while start < len(chars):
+        end = len(chars)
+        cur_substr = None
+        while start < end:
+          substr = "".join(chars[start:end])
+          if start > 0:
+            substr = "##" + substr
+          if substr in self.vocab:
+            cur_substr = substr
+            break
+          end -= 1
+        if cur_substr is None:
+          is_bad = True
+          break
+        sub_tokens.append(cur_substr)
+        start = end
+      if is_bad:
+        output_tokens.append(self.unk_token)
+      else:
+        output_tokens.extend(sub_tokens)
+    return output_tokens
+```
+>>tokenize说明: 使用贪心的最大正向匹配算法
+  eg:input = "unaffable" output = ["un", "##aff", "##able"],首先看"unaffable"在不在词表中，在的话就当做一个词，也就是WordPiece，不在的话在看"unaffabl"在不在，也就是`while`中的`end-=1`,最终发现"un"在词表中,算是一个WordPiece,然后start=2,也就是代码中的`start=end`,看"##affable"在不在词表中,在看"##affabl"(##表示接着前面)，最终返回["un", "##aff", "##able"].注意，这样切分是可逆的，也就是可以根据词表重载"攒回"原词，以此便解决了oov问题.
