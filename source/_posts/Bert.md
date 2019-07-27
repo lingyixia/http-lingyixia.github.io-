@@ -496,6 +496,7 @@ def main(_):
 ```
 ###class TrainingInstance
 >>单个训练样本类,看`__init__`就能看出来，没什么其他东西
+
 ```
 class TrainingInstance(object):
     def __init__(self, tokens, segment_ids, masked_lm_positions, masked_lm_labels,
@@ -663,6 +664,7 @@ def create_instances_from_document(all_documents, document_index, max_seq_length
 ```
 ###def create_masked_lm_predictions
 >>真正的mask在这里实现
+
 ```
 def create_masked_lm_predictions(tokens, masked_lm_prob, max_predictions_per_seq, vocab_words, rng):
     cand_indexes = [] # [CLS]和[SEP]不能用于MASK
@@ -844,6 +846,7 @@ class BasicTokenizer(object):
 
 ###class WordpieceTokenizer
 >>这个才是重点,跑test的时候出现的那些##都是从这里拿来的，其实就是把未登录词在词表中匹配相应的前缀.
+
 ```
 class WordpieceTokenizer(object):
   def __init__(self, vocab, unk_token="[UNK]", max_input_chars_per_word=200):
