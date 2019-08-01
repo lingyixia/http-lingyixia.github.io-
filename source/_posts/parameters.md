@@ -1,6 +1,6 @@
 ---
 title: 请叫我调参工程师
-date: 2019-08-01 19:50:42
+date: 2019-07-11 19:50:42
 category: 深度学习
 tags:
 ---
@@ -49,7 +49,7 @@ learning_rate = tf.train.polynomial_decay(
 它也是先让学习率快速增大，当step达到warmup_steps时，在安装多项式方式衰减 顺便提一下，`learning_rate = ((1.0 - is_warmup) * learning_rate + is_warmup * warmup_learning_rate)`这行代码值得学习
 
 #模型参数
-首先需要知道的是，对于隐藏层和层数刚开始的设置要紧盯训练样本的量，要保证模型的参数量不高于样本量的一半，有权威称$\frac{1}{10}$最好.下面给出个统计模型参数的tf代码:
+首先需要知道的是，对于隐藏层和层数刚开始的设置要紧盯训练样本的量，要保证模型的参数量不高于样本量的一半，有权威称$\frac{1}{10}$最好.反正你不要写完模型后参数太大,你想想用一千条数据去训练好几百万的参数能学到点啥？下面给出个统计模型参数的tf代码:
 ```
  def __get_parametres(self):
         total_parameters = 0
