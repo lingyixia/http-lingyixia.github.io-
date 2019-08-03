@@ -456,6 +456,29 @@ def attention_layer(from_tensor,
 * size_per_head:每一个head维度,代码中是用总维度除以head数量得到的:attention_head_size = int(hidden_size / num_attention_heads)
 return: return :[batch_size, from_seq_length,num_attention_heads * size_per_head].
 
+###激活函数
+```
+def gelu(x):
+  cdf = 0.5 * (1.0 + tf.tanh(
+      (np.sqrt(2 / np.pi) * (x + 0.044715 * tf.pow(x, 3)))))
+  return x * cdf
+```
+>>这个激活函数很有特色，其实这个公式就是$x \times \Phi(x)$,后一项是正态函数,也就是说,gelu中后面那一大堆其实近似等于$\int_{-\infty}^{x}\frac{1}{\sqrt(2\pi)}e^{-\frac{x^2}{2}}dx$,至于咋来的这个近似值，还不清楚。
+测试函数:
+```
+from scipy import stats
+import math
+a = stats.norm.cdf(2, 0, 1)
+
+def gelu(x):
+    return 0.5 * (1.0 + math.tanh((math.sqrt(2 / math.pi) * (x + 0.044715 * math.pow(x, 3)))))
+
+print(a)
+print(gelu(2))
+#结果:
+#0.9772498680518208
+#0.9772988470438875
+```
 
 ### 总结一:
 看完模型感觉真特么简单这模型,似乎除了self-attention就啥都没有了,但是先别着急,一般情况下模型是重点，但是对于Bert而言，模型却仅仅是开始，真正的创新点还在下面.

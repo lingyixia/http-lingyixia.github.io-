@@ -1,0 +1,30 @@
+---
+title: NLPInterview
+date: 2019-05-02 14:20:23
+tags:
+---
+>>总结一些NLP面试必备知识点
+链接总结:
+1.https://mp.weixin.qq.com/s/MCIhRmbq2N0HM_0v-nld_w
+
+# [CNN](https://lingyixia.github.io/2019/01/23/CNN/)
+##[发展史](https://lingyixia.github.io/2019/05/01/CNNdevelopment/)
+##[感受野](https://lingyixia.github.io/2019/05/13/DilatedConvolution/)
+##[SameAndValid](https://lingyixia.github.io/2019/03/13/CnnSizeCalc/)
+##Pooling的作用
+##[卷积和池化的区别](https://mp.weixin.qq.com/s/MCIhRmbq2N0HM_0v-nld_w)
+##参数计算方法
+##输出层维度计算
+##[1*1卷积的作用](https://mp.weixin.qq.com/s/MCIhRmbq2N0HM_0v-nld_w)
+##反卷积和空洞卷积
+##(残差网络)[https://lingyixia.github.io/2019/04/05/transformer/]
+
+# RNN
+##RNN梯度消失和爆炸
+##LSTM公式、结构，s和h的作用
+##参数计算
+
+#[overfitting](https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/)
+#[BN的作用](https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/)
+#[优化方式](https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/)
+##激活函数(注意bert的gleu)
