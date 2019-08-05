@@ -263,7 +263,7 @@ def embedding_postprocessor(input_tensor,
 return :token embedding+segment embedding+position_embeddings
 
 ### create_attention_mask_from_input_mask
->>目的是将本来shape为[batch_size, seq_length]转为[batch_size, seq_length,seq_length],为什么要这样的维度呢?因为.....算了麻烦不写了，去我的另一篇[Transform](等会在写)中看吧
+>>目的是将本来shape为[batch_size, seq_length]转为[batch_size, seq_length,seq_length],为什么要这样的维度呢?因为.....算了麻烦不写了，去我的另一篇[Transform](https://lingyixia.github.io/2019/04/05/transformer/)中看吧
 
 ```
 def create_attention_mask_from_input_mask(from_tensor, to_mask):
