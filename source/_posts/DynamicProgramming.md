@@ -87,7 +87,7 @@ int maxLengthSequence(string s1, string s2)
 ```
 
 ##[最长回文子串](https://leetcode.com/problems/longest-palindromic-substring/)
->>dp[i][j]是记录从i到j是不是回文串,如果是则dp[i][j]=true,反之为false,因为每一次计算dp[i][j]都需要用到dp[i+1][j-1],而j-1>=i+1,即j-i>=2,即i到j的长度至少为3,也就是说间隔长度为1和2的更新不到,因此要先预处理records,先把间隔为1和2的提前处理
+>>dp[i][j]是记录从i到j是不是回文串,如果是则dp[i][j]=true,反之为false,因为每一次计算dp[i][j]都需要用到dp[i+1][j-1],而j-1>=i+1,即j-i>=2,即i到j的长度至少为3,也就是说间隔长度为1和2的更新不到,因此要先预处理dp,先把间隔为1和2的提前处理
 递推公式为:
 $$
 dp[i][j] = \begin{cases}
@@ -98,7 +98,7 @@ $$
 或
 $$
 dp[i][j] = \begin{cases}
-str[i-1][j-1] & str[i]=str[j]\\
+str[i+1][j-1] & str[i]=str[j]\\
 false & others
 \end{cases}
 $$
@@ -155,10 +155,10 @@ $$
 ```
 int longestPalindromeSubseq(string str)
 {
-	vector<vector<int>> records(str.size(), vector<int>(str.size(), 1));
+	vector<vector<int>> dp(str.size(), vector<int>(str.size(), 1));
 	for (int i = 0; i < str.size()-1; i++)
 	{
-		if (str[i + 1] == str[i]) records[i][i + 1]++;
+		if (str[i + 1] == str[i]) dp[i][i + 1]++;
 	}
 	for (int l = 3; l <= str.size(); l++)
 	{
@@ -167,12 +167,12 @@ int longestPalindromeSubseq(string str)
 			int j = i + l - 1;
 			if (str[i] == str[j])
 			{
-				records[i][j] = records[i + 1][j - 1]+2;
+				dp[i][j] = dp[i + 1][j - 1]+2;
 			}
-			else records[i][j] = max(records[i + 1][j], records[i][j - 1]);
+			else dp[i][j] = max(dp[i + 1][j], dp[i][j - 1]);
 		}
 	}
-	return records[0][str.size()-1];
+	return dp[0][str.size()-1];
 }
 ```
 ##[最长递增子序列](https://leetcode.com/problems/longest-increasing-subsequence/)
@@ -706,5 +706,45 @@ int maximalSquare(vector<vector<char>>& matrix)
 			}
 		}
 	}
+}
+```
+#[鹰蛋问题](https://leetcode.com/problems/super-egg-drop/)
+>>问题大概就是一栋楼N层,你有K个一模一样的鸡蛋,问如何找到一个最高层,这个层扔下去刚好鸡蛋不碎,在上一层就碎了。
+此题变种较多,在编程角度是一个动态规划，在数学角度是一个趣味问答题，下面具体分析.
+数学角度:
+比如我们只有两枚蛋,让你给出一个方案，这个方案测试的次数最少，而且一定能找到这个楼层.
+难度在于思维转换,比如我们现在已经找到了这个次数X，不可能有某个方案的测试次数比X更小，那么X是多少呢?
+首先我们要转换的思维是:某个楼层,X是它最少的测试次数,意味着这个楼层是X能测试得到的最高楼层.所以我们把题转为这个最高楼层是多少。
+现在我们想一下,两个鸡蛋最少得有两次测试机会吧，那么如果X是2，这个最高楼层是多少呢?
+想想方案,如果第一个蛋测试的是5楼，咔，破了,这时候你只剩下一个蛋,只有一次机会了,但是这次机会你只能测试第一层啊,如果没破，机会没了,没测出来.也就是说,只有两次机会,你第一次不能测的太高,最高只能测试第2层.那最低呢?不需要最低，要得到最高楼层只需要考虑每个蛋放的最高楼层是多少才能得到最大效益，也就是说，如果最少次数是X，那第一次放置的最高楼层只能是X,这样才能保证在第一次破的时候剩下的蛋在X-1次内完成测试。那第二次呢?还剩X-1次机会那就在向上走X-1层呗，，，以此类推直到最顶层。
+也就是说，如果楼层是$F$，那最少次数只需要解方程:
+$$
+X+(X-1)+(X-2)+...+1=\frac{X(X-1)}{2}≤F
+$$
+也就是说两个鸡蛋,X次机会最多可测试的楼层数是$\frac{X(X-1)}{2}$
+那么三个鸡蛋X次的最大楼层是多少呢?那么同样，第一次首先要确定一个最高楼层，这个楼层下如果破了，剩下的2个蛋和X-1次机会能恰好测完.那么就可以这么想，第一次放在第f层，那剩下的2个蛋和X-1次机会最高到$\frac{X(X-1)}{2}$,所以f就是$\frac{(X-1)(X-2)}{2}$+1，至于为什么加1稍微想想就知道了，剩下的就一样了.(看到没，这题还可以改成如果n个蛋，X次机会，能测试的最高楼层是多少.)
+动态规划角度:同样利用上诉思维转换dp[i][j]表示j个鸡蛋i次机会能确定的最高楼层
+dp[l][i] = dp[l - 1][i - 1] + dp[l - 1][i] + 1这个地推公式的含义
+dp[l][i]:i个鸡蛋l次机会所能确定的最高楼层
+dp[l-1][i-1]:第一枚鸡蛋的最高位置
+dp[l - 1][i]:剩下鸡蛋能在此基础上累加的高度。
+其实上面这个公式是这个:
+dp[l][i] = max(dp[l - 1][i - 1], dp[l - 1][i - 1]+ dp[l - 1][i] + 1)
+前面代表第一个碎了，后面代表第一个没碎，因为前面肯定小于等于后面，所以就不写了.
+
+```
+ int superEggDrop(int K, int N)
+ {
+	vector<vector<int>> dp(N+1,vector<int>(K+1));//dp[i][j]表示j个鸡蛋i次机会能够确定的最高楼层
+	int l = 0;
+	while (dp[l][K] < N)
+	{
+		l++;
+		for (int i = 1; i <= K; i++)
+		{
+			dp[l][i] = dp[l - 1][i - 1] + dp[l - 1][i] + 1;
+		}
+	}
+	return l;
 }
 ```
