@@ -748,3 +748,55 @@ dp[l][i] = max(dp[l - 1][i - 1], dp[l - 1][i - 1]+ dp[l - 1][i] + 1)
 	return l;
 }
 ```
+#连续数组最大和
+>>给出一个数组，求连续数组最大和.
+//递推公式为DP[i] = max{DP[i-1] + A[i],DP[i]},对于当前点i,要么与前面连起来组成和,要么自己组成和
+
+```
+int maxSubArray(vector<int>& nums) 
+{
+	int before = 0;//before就是Dp[i-1]
+	int maxSum = INT_MIN;
+	for (int i = 0; i <nums.size(); i++)
+	{
+		before = max(before+nums[i],nums[i]);
+		maxSum = max(maxSum,before);
+	}
+	return maxSum;
+}
+```
+
+#最大子矩阵和
+>>和上面基本一样
+
+```
+int calclineSum(vector<int> array)//完全和上面一样
+{
+	int before=0;
+	int maxSum = INT_MIN;
+	for (int i = 0; i < array.size(); i++)
+	{
+		before = max(before+array[i],array[i]);
+		maxSum = max(maxSum,before);
+	}
+	return maxSum;
+}
+
+int maxSumMatrix(vector<vector<int>> matrix)
+{
+	int maxSum = INT_MIN;
+	for (int i = 0; i < matrix.size(); i++)
+	{
+		vector<int> lineSum(matrix[0].size());
+		for (int j = i; j < matrix.size(); j++)
+		{
+			for (int k = 0; k < matrix[0].size(); k++)
+			{
+				lineSum[k] += matrix[j][k];
+			}
+			maxSum = max(maxSum, calclineSum(lineSum));
+		}
+	}
+	return maxSum;
+}
+```

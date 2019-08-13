@@ -256,6 +256,77 @@ void swap(vector<int>& array, int p, int q)
 }
 ```
 
+##单链表快速排序
+
+```
+#include <iostream>
+
+using namespace std;
+
+struct ListNode
+{
+    ListNode *next;
+    int val;
+
+    ListNode(int val) : val(val), next(nullptr)
+    {}
+};
+//个函数很重要需要特别主意，它可以用一次遍历把一个单链表分为{小于key}key{大于key}三部分
+ListNode *partition(ListNode *start, ListNode *end)
+{
+    int key = start->val;
+    ListNode *slow = start;
+    ListNode *fast = slow->next;
+    while (fast != end)
+    {
+        if (fast->val <= key)
+        {
+            slow=slow->next;
+            swap(fast->val, slow->val);
+        }
+        fast = fast->next;
+    }
+    swap(start->val, slow->val);
+    return slow;
+}
+
+void quickSort(ListNode *start, ListNode *end)
+{
+    if (start != end)
+    {
+        ListNode *index = partition(start, end);
+        quickSort(start, index);
+        quickSort(index->next, end);
+    }
+}
+
+
+int main()
+{
+    ListNode *head = new ListNode(3);
+    ListNode *work = head;
+    ListNode *p = new ListNode(1);
+    work->next = p;
+    work = work->next;
+    p = new ListNode(3);
+    work->next = p;
+    work = work->next;
+    p = new ListNode(5);
+    work->next = p;
+    work = work->next;
+    p = new ListNode(4);
+    work->next = p;
+    work = work->next;
+    quickSort(head,NULL);
+    while (head)
+    {
+        cout<<head->val<<" ";
+        head=head->next;
+    }
+    return 0;
+}
+```
+
 #插入排序
 ##直接插入排序
 >>前面的已经有序,把后面的插入到前面有序的元素中,不断增长有序序列。
@@ -574,9 +645,268 @@ void merge_groups(vector<int>& array, int gap)
 	}
 }
 ```
+##单链表归并排序
+
+```
+#include <iostream>
+
+using namespace std;
+
+struct ListNode
+{
+    ListNode *next;
+    int val;
+
+    ListNode(int val) : val(val), next(nullptr)
+    {}
+};
+
+ListNode *getMidNode(ListNode *head)
+{
+    ListNode *slow = head;
+    ListNode *fast = head->next;
+    while (fast)
+    {
+        fast = fast->next;
+        if (fast)
+        {
+            fast = fast->next;
+            slow = slow->next;
+        }
+    }
+    return slow;
+}
+//归并方式合并两个单链表需要记住
+ListNode *mergeList(ListNode *l1, ListNode *l2)
+{
+    if (!l1) return l2;
+    if (!l2) return l1;
+    if (l1->val <= l2->val)
+    {
+        l1->next = mergeList(l1->next, l2);
+        return l1;
+    }
+    l2->next = mergeList(l1, l2->next);
+    return l2;
+}
+
+ListNode *sortList(ListNode *head)
+{
+    if (head && head->next)
+    {
+        ListNode *mid = getMidNode(head);
+        ListNode *left = head;
+        ListNode *right = mid->next;
+        mid->next = NULL;
+        left = sortList(left);
+        right = sortList(right);
+        return mergeList(left, right);
+    }
+    return head;
+}
+
+int main()
+{
+    ListNode *head = new ListNode(3);
+    ListNode *work = head;
+    ListNode *p = new ListNode(1);
+    work->next = p;
+    work = work->next;
+    p = new ListNode(3);
+    work->next = p;
+    work = work->next;
+    p = new ListNode(5);
+    work->next = p;
+    work = work->next;
+    p = new ListNode(4);
+    work->next = p;
+    work = work->next;
+    head = sortList(head);
+    while (head)
+    {
+        cout << head->val << " ";
+        head = head->next;
+    }
+    return 0;
+}
+```
 
 分析总结:
 
 |名称|时间|最好|最坏|空间|稳定|备注|
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 |归并排序|$O(nlogn)$|$O(nlogn)$|$O(nlogn)$|$O(n)$|是| |
+#计数排序
+>>其实就是计算待排序数组中每个数字的个数,用下标来代替原数，因此只适用于整型,计算max-min是为了减少countArray的size
+
+```
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void countingSort(vector<int> &array)
+{
+    int max = INT_MIN;
+    int min = INT_MAX;
+    for (auto num:array)
+    {
+        if (num > max)
+        {
+            max = num;
+        }
+        if (num < min)
+        {
+            min = max;
+        }
+    }
+    vector<int> countArray(max - min + 1, 0);
+    for (auto num:array)
+    {
+        countArray[num - min]++;
+    }
+    for (int i = 0; i < countArray.size(); ++i)
+    {
+        for (int j = 0; j < countArray[i]; ++j)
+        {
+            cout << min + i << " ";
+        }
+    }
+}
+
+int main()
+{
+    vector<int> array = {1, 5, 3, 7, 6, 2, 8, 9, 4, 3, 3};
+    countingSort(array);
+    return 0;
+}
+```
+
+分析总结:
+
+|名称|时间|最好|最坏|空间|稳定|备注|
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+|计数排序|$O(n+d)$|$O(n+d)$|$O(n+d)$|$O(k)$|是| |
+
+#桶排序
+
+```
+#include <iostream>
+#include <vector>
+#include <list>
+using namespace std;
+void insert(list<int>& bucket,int val)
+{
+    auto iter = bucket.begin();
+    while(iter != bucket.end() && val >= *iter) ++iter;
+    //insert会在iter之前插入数据，这样可以稳定排序
+    bucket.insert(iter,val);
+}
+
+void bucketSort(vector<int>& arr)
+{
+    int len = arr.size();
+    if(len <= 1)
+        return;
+    int min = arr[0],max = min;
+    for(int i=1;i<len;++i)
+    {
+        if(min>arr[i]) min = arr[i];
+        if(max<arr[i]) max = arr[i];
+    }
+    int k = 10;//k为数字之间的间隔
+    //向上取整，例如[0,9]有10个数，(9 - 0)/k + 1 = 1;
+    int bucketsNum = (max - min)/k + 1;
+    vector<list<int>> buckets(bucketsNum);
+    for(int i=0;i<len;++i)
+    {
+        int value = arr[i];
+        //(value-min)/k就是在哪个桶里面
+        insert(buckets[(value-min)/k],value);
+    }
+    int index = 0;
+    for(int i=0;i<bucketsNum;++i)
+    {
+        if(buckets[i].size())
+        {
+            for(auto& value:buckets[i])
+                arr[index++] = value;
+        }
+    }
+}
+int main()
+{
+    vector<int> A={-100,13,14,94,33,82,25,59,94,65,23,45,27,43,25,39,10,35,54,90,-200,58};
+    for(auto value:A)
+        cout<<value<<" ";
+    cout<<endl;
+    bucketSort(A);
+    return 0;
+}
+```
+分析总结:
+
+|名称|时间|最好|最坏|空间|稳定|备注|
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+|桶排序|$O(n+d)$|$O(n+d)$|$O(n*n)$|$O(n+k)$|是| |
+
+#基数排序
+
+```
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+void countSort(vector<int>& array, int exp)
+{
+    vector<int> range(10, 0);
+    int length = array.size();
+    vector<int> tmpVec(length, 0);
+    for (int i = 0; i < length; ++i)
+    {
+        range[(array[i] / exp) % 10]++;
+    }
+    for (int i = 1; i < range.size(); ++i)
+    {
+        range[i] += range[i - 1];//统计本应该出现的位置
+    }
+    for (int i = length - 1; i >= 0; --i)
+    {
+        tmpVec[range[(array[i] / exp) % 10] - 1] = array[i];
+        range[(array[i] / exp) % 10]--;
+    }
+    array = tmpVec;
+}
+
+void radixSort(vector<int> &array)
+{
+    int length = array.size();
+    int max = -1;
+    for (int i = 0; i < length; ++i)
+    {
+        if (array[i] > max)
+            max = array[i];
+    }
+    //提取每一位并进行比较，位数不足的高位补0
+    for (int exp = 1; max / exp > 0; exp *= 10)
+        countSort(array, exp);
+}
+
+int main()
+{
+    vector<int> array{53, 3, 542, 748, 14, 214, 154, 63, 616, 589};
+    radixSort(array);
+    for (int i = 0; i < array.size(); ++i)
+    {
+        cout << array[i] << " ";
+    }
+    cout << endl;
+    return 0;
+}
+```
+分析总结:
+
+|名称|时间|最好|最坏|空间|稳定|备注|
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+|桶排序|$O(n+d)$|$O(n+d)$|$O(n*n)$|$O(n+k)$|是| |
