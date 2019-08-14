@@ -5,7 +5,6 @@ category: 算法
 tags:
 ---
 滑动窗口
-<!--more-->
 
 #最长连续不重复字串
 >>[leetcode3](https://leetcode.com/problems/longest-substring-without-repeating-characters/)其实思想就是用一个窗口[left,right]表示该窗口中没有重复数字,那么下一步要窗口右移,即第right+1个,如果第right+1个在[left,right]中,那么就找出其坐标,使left更新为该坐标,否则加入窗口即可,这是法二的思维,法一的思维是如果在窗口中就不断右移left,直到该坐标位置,其实思想是一样的.

@@ -486,3 +486,58 @@ bool IsBalanced_Solution(TreeNode* pRoot)
     return ifBalance;
 }
 ```
+#next指针
+>>完全二叉树增加next指针指向右侧节点
+
+>>只适用于完全二叉树
+```
+Node *connectCore(Node *root)
+{
+    if (!root->left && !root->right) return NULL;
+    root->left->next = root->right;
+    connectCore(root->left);
+    if (root->next)
+    {
+        root->right->next = root->next->left;
+    }
+    connectCore(root->right);
+    return root;
+}
+
+Node *connect(Node *root)
+{
+    if (!root || (!root->left && !root->right))
+        return root;
+    return connectCore(root);
+}
+```
+
+>>层序遍历，适用于任何形式的二叉树
+
+```
+Node *connect(Node *root)
+{
+    if(!root ||(!root->left && !root->right)) return root;
+    Node *cursor = root;
+    queue<Node *> q;
+    q.push(cursor);
+    while (!q.empty())
+    {
+        int size = q.size();
+        for (int i = 0; i < size; ++i)
+        {
+            cursor = q.front();
+            q.pop();
+            cursor->next = (i==size-1)? nullptr:q.front();
+            if(cursor->left)
+            {
+                q.push(cursor->left);
+            }
+            if(cursor->right)
+            {
+                q.push(cursor->right);
+            } 
+        }
+    }
+    return root;
+```
