@@ -1,6 +1,6 @@
 ---
 title: stackAndqueue
-date: 2019-08-13 17:04:58
+date: 2019-07-13 17:04:58
 tags:
 ---
 #弹栈压栈
