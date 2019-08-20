@@ -651,6 +651,7 @@ int minDistance(string word1, string word2)
 
 #[矩阵中最大正方形](https://leetcode.com/problems/maximal-square/description/)
 >>同编辑距离.dp[i][j]记录以matrix[i][j]结尾的边长(要包含matrix[i][j])
+
 $$
 dp[i][j] = \begin{cases}
 dp[i+1][j-1]+2 & str[i]=str[j] \\
@@ -748,7 +749,9 @@ dp[l][i] = max(dp[l - 1][i - 1], dp[l - 1][i - 1]+ dp[l - 1][i] + 1)
 	return l;
 }
 ```
-#连续数组最大和
+
+#其他DP
+##连续数组最大和
 >>给出一个数组，求连续数组最大和.
 //递推公式为DP[i] = max{DP[i-1] + A[i],DP[i]},对于当前点i,要么与前面连起来组成和,要么自己组成和
 
@@ -766,7 +769,7 @@ int maxSubArray(vector<int>& nums)
 }
 ```
 
-#最大子矩阵和
+##最大子矩阵和
 >>和上面基本一样
 
 ```
@@ -798,5 +801,87 @@ int maxSumMatrix(vector<vector<int>> matrix)
 		}
 	}
 	return maxSum;
+}
+```
+
+##[小偷](https://leetcode.com/problems/house-robber)
+
+```
+int rob(vector<int> &nums)
+{
+    if (nums.size() == 0)
+    {
+        return 0;
+    } else if (nums.size() == 1)
+    {
+        return nums.back();
+    } else if (nums.size() == 2)
+    {
+        return max(nums.front(), nums.back());
+    } else
+    {
+        vector<int> dp(nums.size());
+        dp[0] = nums[0];
+        dp[1] = max(nums[0], nums[1]);
+        for (int i = 2; i < nums.size(); ++i)
+        {
+            dp[i] = max(dp[i - 2] + nums[i], dp[i - 1]);
+        }
+        return dp.back();
+    }
+}
+```
+
+##[Jump Game](https://leetcode.com/problems/jump-game/)
+
+贪心一:
+>>每到一个i,如果i<=reach意味着[0,i-1]的坐标能达到reach,如果i>reach,则意味着根本就到不了这里,无需继续。
+
+```
+bool canJump(vector<int>& nums) 
+{
+	int reach = 0;
+	for (int i =0; i < nums.size(); i++)
+	{
+		if (i > reach || i >= nums.size() - 1) break;
+		else
+		{
+			reach = max(reach, i + nums[i]);
+		}
+	}
+	return reach >= nums.size() - 1;
+}
+```
+贪心二:
+>>和上诉形式不一样,思想差不多
+
+```
+bool canJump(vector<int>& nums) 
+{
+	int len = nums.size();
+	int curMax = nums[0];
+
+	for (int i = 0; i <= curMax; i++)
+	{
+		if (nums[i] + i >= len - 1) return true;
+		curMax = max(curMax, nums[i] + i);
+	}
+	return false;
+}
+```
+
+动态规划:
+>>dp[i]表示到达i时候最多还剩下多少步
+
+```
+bool canJump(vector<int>& nums) 
+{
+	vector<int> dp(nums.size(), 0);
+	for (int i = 1; i < nums.size(); ++i) 
+	{
+		dp[i] = max(dp[i - 1], nums[i - 1]) - 1;
+		if (dp[i] < 0) return false;
+	}
+	return true;
 }
 ```

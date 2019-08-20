@@ -38,7 +38,7 @@ int search(vector<int>& nums,int target)
 ```
 
 #查找插入位置
->>给出一个升序数组,一个数字，从数组中找出该数字的插入位置
+>>给出一个升序数组,一个数字，从数组中找出该数字的插入位置,可以这样想:循环结束的条件(假设插入的数字数组中没有)是low=high+1,此时target必然array[high] < target < array[low],因此插入位置一定是low处
 
 ```
  int searchInsert(vector<int>& nums, int target) {
