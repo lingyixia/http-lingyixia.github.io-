@@ -138,8 +138,10 @@ $$
 eg:
 ![](\img\imgcyclelinkllist2.png)
 图中在节点5处相遇,此时$m+y$就是$1,2,3,4,5$,此时有$(m+y) \mod n=0$,现在把这个长度的前$m$放到后面,$3,4,5,6,3$,即$y+m$,此时同样有$(y+m)\mod n =0$,因此现在要做的就是一个指针放到头部,一个指针放到相遇的地方,依次next一步,当两者相遇的时候就是环的初始位置.
+
 ```
-ListNode *detectCycle(ListNode *head) {
+ListNode *detectCycle(ListNode *head) 
+{
         ListNode* slow=head;
         ListNode* fast = head;
         while(fast)
@@ -165,6 +167,24 @@ ListNode *detectCycle(ListNode *head) {
     }
 ```
 #删除链表重复元素
+##重复保留一个
+```
+ListNode *deleteDuplicates(ListNode *head)
+{
+    if (!head || !head->next)
+    {
+        return head;
+    }
+    while (head->next && head->next->val == head->val)
+    {
+        head = head->next;
+    }
+    head->next = deleteDuplicates(head->next);
+    return head;
+}
+```
+
+##重复全删
 解法一:
 ```
 struct ListNode
@@ -222,21 +242,26 @@ ListNode* deleteDuplicates(ListNode* pHead)
 
 解法二:
 ```
- ListNode* deleteDuplication(ListNode* pHead)
+ListNode *deleteDuplication(ListNode *pHead)
+{
+    if (!pHead || !pHead->next) return pHead;
+    if (pHead->next->val == pHead->val)
     {
-       if(!pHead || !pHead->next) return pHead;
-       if(pHead->next->val == pHead->val)
-       {
-           while(pHead->next && pHead->next->val == pHead->val)
-           {
-               pHead=pHead->next;
-           }
-           return deleteDuplication(pHead->next);
-       }
-       pHead->next = deleteDuplication(pHead->next);
-       return pHead;
+        while (pHead->next && pHead->next->val == pHead->val)
+        {
+            pHead = pHead->next;
+        }
+        return deleteDuplication(pHead->next);
+    } 
+    else
+    {
+        pHead->next = deleteDuplication(pHead->next);
+        return pHead;
     }
+}
 ```
+
+
 #两个排序链表合并
 
 ```
