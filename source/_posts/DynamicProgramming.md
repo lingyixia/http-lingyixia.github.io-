@@ -768,6 +768,45 @@ int maxSubArray(vector<int>& nums)
 	return maxSum;
 }
 ```
+##连续数组最大积
+>>与最大和不同点在于数组中的负数会对积有影响，最大和只需要记录当前最大和即可，但是最大积需要记录最大积和最小积,举例说明:当前数字是-1，之前最大积是5,最小积是-6,那么到此时最大积应当是-1 * -6=6而不是-1.
+
+```
+int maxProduct(vector<int> &nums)
+{
+    int result = INT_MIN;
+    int beforeMaxProduct = 1;
+    int beforeMinProduct = 1;
+    for (int i = 0; i < nums.size(); ++i)
+    {
+        int tempMax = beforeMaxProduct * nums[i];
+        int tempMin = beforeMinProduct * nums[i];
+        beforeMaxProduct = max(max(tempMax, tempMin), nums[i]);
+        beforeMinProduct = min(min(tempMax, tempMin), nums[i]);
+        result = max(beforeMaxProduct, result);
+    }
+    return result;
+}
+```
+##数组最大积(不一定连续)
+
+```
+int maxProduct(vector<int> &nums)
+{
+    int result = INT_MIN;
+    int beforeMaxProduct = 1;
+    int beforeMinProduct = 1;
+    for (int i = 0; i < nums.size(); ++i)
+    {
+        int tempMax = beforeMaxProduct * nums[i];
+        int tempMin = beforeMinProduct * nums[i];
+        beforeMaxProduct = max(max(tempMax, tempMin), beforeMaxProduct);
+        beforeMinProduct = min(min(tempMax, tempMin), beforeMinProduct);
+        result = max(beforeMaxProduct, result);
+    }
+    return result;
+}
+```
 
 ##最大子矩阵和
 >>和上面基本一样
