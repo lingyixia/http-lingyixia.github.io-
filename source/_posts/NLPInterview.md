@@ -30,3 +30,7 @@ LSTM和普通的RNN相比,多了三个门结构，用来解决当序列过长造
 #[BN的作用](https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/)
 #[优化方式](https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/)
 ##激活函数(注意bert的gleu)
+
+#指标介绍
+本来很简单的东西解释的一踏糊涂，，还是准备一下措辞吧:
+语言介绍:精确度率指的是预测为正例中预测正确的比重 准确率指的是所有样本中预测正确的比重,前者针对正例，后者针对预测正确(包括正例预测正确和负例预测正确)

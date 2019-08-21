@@ -407,28 +407,31 @@ bool isSymmetrical(TreeNode* pRoot)
 ```
 
 
-#树的子结构
->>给定两棵二叉树A和B，判断A是不是B的子结构
+#树的子结构(或子树)
+>>给定两棵二叉树A和B，判断A是不是B的子结构或子树，子结构要求A是B的一部分即可，但是子树要求叶子结点也得相同.
 
 ```
- bool HasSubtree(TreeNode* pRoot1, TreeNode* pRoot2)
+bool judgeSubTree(TreeNode *pRoot1, TreeNode *pRoot2)
 {
-    if(!pRoot1 || !pRoot2) return false;
-    bool result = false;
-    if(pRoot1->val==pRoot2->val) result = isSubTree(pRoot1,pRoot2);
-    if(!result)  result = HasSubtree(pRoot1->left,pRoot2);
-    if(!result)  result = HasSubtree(pRoot1->right,pRoot2);
-    return result;
+    //判断子结构
+    if (!pRoot2) return true;
+    if (!pRoot1) return false;
+    //判断子树
+    //if (!pRoot1 && !pRoot2) return true;
+    //if (!(pRoot1 && pRoot2)) return false;
+    bool judge = pRoot1->val == pRoot2->val;
+    if (judge) judge = judgeSubTree(pRoot1->left, pRoot2->left);
+    if (judge) judge = judgeSubTree(pRoot1->right, pRoot2->right);
+    return judge;
 }
-bool isSubTree(TreeNode* pRoot1,TreeNode* pRoot2)
+
+bool isSubtree(TreeNode *pRoot1, TreeNode *pRoot2)
 {
-    if(!pRoot2) return true;
-    if(!pRoot1) return false;
-    bool result = false;
-    if(pRoot1->val==pRoot2->val) result = true;
-    if(result) result = isSubTree(pRoot1->left,pRoot2->left);
-    if(result) result = isSubTree(pRoot1->right,pRoot2->right);
-    return result;
+    if (!pRoot1 || !pRoot2) return false;
+    bool judge = judgeSubTree(pRoot1, pRoot2);
+    if (!judge) judge = isSubtree(pRoot1->left, pRoot2);
+    if (!judge) judge = isSubtree(pRoot1->right, pRoot2);
+    return judge;
 }
 ```
 
@@ -464,6 +467,32 @@ vector<vector<int> > FindPath(TreeNode* root,int expectNumber)
     return result;
 }
 ```
+#[二叉树所有路径中和最大](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/
+>>这里的路径指的是树上所有能联通的两个节点之间的路径
+
+```
+int maxSumResult = 0;
+
+int maxPathSum(TreeNode *root)
+{
+    if (!root)
+        return 0;
+    int left = maxPathSum(root->left);
+    int right = maxPathSum(root->right);
+    int temp = root->val;
+    if (left > 0)
+    {
+        temp += left;
+    }
+    if (right > 0)
+    {
+        temp += right;
+    }
+    maxSumResult = max(maxSumResult, temp);
+    return max(root->val, max(root->val + left, root->val + right));
+}
+```
+>>调用maxPathSum后maxSumResult得到的就是最大路径和
 
 #判断是不是平衡二叉树
 
