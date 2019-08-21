@@ -48,7 +48,7 @@ $n-dilated convolution$,一般$n$是$2$的整数次幂
 
 一般情况下第一层先用普通卷积,然后下几层用n-dilated convolution
 ![](\img\cnnAndDilated.png)
->>可以看出,两者红色部分感受野分别为5和7
+>>可以看出,两者蓝色部分感受野分别为5和7
 
 [参考一](https://www.cnblogs.com/houjun/p/10275215.html)
 [参考二](https://kexue.fm/archives/5409)
