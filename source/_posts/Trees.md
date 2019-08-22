@@ -519,6 +519,7 @@ bool IsBalanced_Solution(TreeNode* pRoot)
 >>完全二叉树增加next指针指向右侧节点
 
 >>只适用于完全二叉树
+
 ```
 Node *connectCore(Node *root)
 {
@@ -570,3 +571,28 @@ Node *connect(Node *root)
     }
     return root;
 ```
+
+#[二叉树从右向左看](https://leetcode.com/problems/binary-tree-right-side-view/submissions/)
+
+```
+void fromRight(TreeNode* root,vector<int>& result,int deep)
+    {
+        if(!root)
+        {
+            return;
+        }
+        if(deep==result.size())
+        {
+            result.push_back(root->val);
+        }
+        fromRight(root->right,result,deep+1);
+        fromRight(root->left,result,deep+1);
+    }
+    vector<int> rightSideView(TreeNode* root) {
+        vector<int> result;
+        fromRight(root,result,0);
+        return result;
+    }
+```
+
+>>这是用中右左的方式遍历,若从左向右看可以中左右的方式遍历
