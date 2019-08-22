@@ -467,7 +467,7 @@ vector<vector<int> > FindPath(TreeNode* root,int expectNumber)
     return result;
 }
 ```
-#[二叉树所有路径中和最大](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/
+#[二叉树所有路径中和最大](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/)
 >>这里的路径指的是树上所有能联通的两个节点之间的路径
 
 ```
