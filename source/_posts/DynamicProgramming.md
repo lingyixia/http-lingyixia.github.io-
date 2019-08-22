@@ -447,7 +447,7 @@ int change(int amount, vector<int>& coins)
     }
 ```
 
->>dp[i][j]表示使用前i种硬币组成j的组成数量
+>>dp[i][j]表示使用前i种硬币组成j的组成数量,dp[i][j]=dp[i-1][j]+dp[i][j-coins[i-1]]的意思，第一项表示不使用币种i组成j的种类数量，第二项表示至少使用一个币种i组成j的种类数，j-coins[i-1]就确保了至少使用一个币种i
 
 简化空间:
 ```

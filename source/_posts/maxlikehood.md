@@ -55,12 +55,12 @@ $$
 H(Y|X) &= \sum_{x \in X} \widetilde{P}(x)H(Y|X=x)) \\
 &=-\sum_{x \in X}\widetilde P(x)\sum_{y \in Y}P(y|X=x) \log P(Y|X=x)\\
 &= -\sum_{x \in X}\sum_{y \in Y}\widetilde P(x)P(y|X=x) \log P(Y|X=x)\\
-&=-\sum_{x \in X y\in Y}\widetilde{P}(x,y)\log(y|x)
+&=-\sum_{x \in X y\in Y}\widetilde{P}(x,y)\log P(y|x)
 \end{align}
 $$
 所以最终公式为:
 $$
-\max \quad \quad \quad -\sum_{x \in X y\in Y}\widetilde{P}(x,y)\log(y|x) \\
+\max \quad \quad \quad -\sum_{x \in X y\in Y}\widetilde{P}(x,y)\log P(y|x) \\
 s.t. \quad \quad \quad \quad \quad \quad \quad E_{\widetilde p}(f)=E_{p}(f)  \\
 \quad \quad \quad \quad \sum_{y}P(y|x)=1(隐含条件)
 $$
