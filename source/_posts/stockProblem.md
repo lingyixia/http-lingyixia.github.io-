@@ -6,11 +6,8 @@ tags: [leetcode,动态规划]
 ---
 
 动态规划中的股票问题汇总记录
-<!--more-->
 
-#一次买卖
->>[Leetcode121](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
-)
+#[一次买卖](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
 
 ```
 //第一种方法：记录到i-1为止，最小下标，然后比较prices[i]-prices[currintMinIndex]
@@ -31,6 +28,23 @@ int maxProfit(vector<int>& prices)
 	return maxSum;
 }
 ```
+>>容易理解的写法
+
+```
+int maxProfit(vector<int> &prices)
+{
+    if(prices.empty()) return 0;
+    int maxProfits = INT_MIN;
+    int currentMinPirce = prices[0];
+    for (int i = 1; i < prices.size(); ++i)
+    {
+        maxProfits = max(maxProfits, prices[i] - currentMinPirce);
+        currentMinPirce = min(currentMinPirce, prices[i]);
+    }
+    return maxProfits>0?maxProfits:0;
+}
+```
+
 ```
 //第二种方法：计算prices[i]-price[i-1],然后题目就可以转为连续数组最大值问题
 int maxProfit(vector<int>& prices) 
@@ -49,8 +63,7 @@ int maxProfit(vector<int>& prices)
 }
 ```
 
-#不限次数
->>[Leetcode122](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)
+#不限次数(https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)
 
 ```
  int maxProfit(vector<int>& prices) 

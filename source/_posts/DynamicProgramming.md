@@ -924,3 +924,21 @@ bool canJump(vector<int>& nums)
 	return true;
 }
 ```
+
+#[染色问题](https://blog.csdn.net/u012175043/article/details/50050379)
+
+```
+int numWays(int n, int k)
+{
+    if (n == 0) return 0;
+    int same = 0;
+    int different = k;
+    for (int i = 2; i <= n; ++i)
+    {
+        int temp = different;
+        different = (same + different) * (k - 1);
+        same = temp;
+    }
+    return same + different;
+}
+```
