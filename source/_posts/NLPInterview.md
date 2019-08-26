@@ -18,6 +18,7 @@ tags:
 ##[1*1卷积的作用](https://mp.weixin.qq.com/s/MCIhRmbq2N0HM_0v-nld_w)
 ##反卷积和空洞卷积
 ##(残差网络)[https://lingyixia.github.io/2019/04/05/transformer/]
+##CNN复杂度分析
 
 # RNN
 ##[RNN梯度消失和爆炸](https://www.zhihu.com/question/34878706)

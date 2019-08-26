@@ -55,11 +55,33 @@ $$
 其实就是对每一层的输入做一个Norm,但是直接Norm就损失了学到的特征,因此使用传导公式如下:
 $$
 \mu = \frac{1}{m}\sum_{i=1}^m x_i \\
-\sigma = \frac{1}{m}\sum_{i=1}^m(x_i-\mu)^2 \\
-\hat{x_i} = \frac{x_i-\mu}{\sigma+\epsilon} \\
+\sigma^2 = \frac{1}{m}\sum_{i=1}^m(x_i-\mu)^2 \\
+\hat{x_i} = \frac{x_i-\mu}{\sigma^2+\epsilon} \\
 y_i = \gamma \hat{x_i}+\beta
 $$
->>$\epsilon$是个超参数,m是min-batch的大小,$\gamma$和$\beta$是两个需要学习的超参数。可以看出,当$\gamma$=$\sigma$,$\epsilon$=0,$\beta$=$\mu$的时候就恢复了原特征.
+>>$\epsilon$是个超参数,m是min-batch的大小,$\gamma$和$\beta$是两个需要学习的超参数。可以看出,当$\gamma$=$\sigma^2$,$\epsilon$=0,$\beta$=$\mu$的时候就恢复了原特征.
+
+详细解释:
+已知对于任何一个参数$W$，它在神经网络中的梯度为:
+$$
+\begin{align}
+\frac{\partial L}{\partial W}&=\frac{\partial L}{\partial O} \times W_l \times \sigma^{'} \times W_{l-1} \times \sigma^{'}....\times {x} \\
+&=\frac{\partial L}{\partial O} \times \prod_{i=l}^{1}\sigma^{'}W_{i}
+\end{align}
+$$
+如果没有激活函数的话，则原式等于:
+$$
+\frac{\partial L}{\partial W}=\frac{\partial L}{\partial O} \times \prod_{i=l}^{1}W_{i}
+$$
+如果在初始化的时候$W$非常小，那么各层的$W$连乘后也肯定非常小，那上式得到的梯度也一定非常小.但是如果按照BN的方式操作一下，其实按照上诉公式:
+$$
+\hat{x_i} = \frac{x_i-\mu}{\sigma^2+\epsilon}
+$$
+即:
+$$
+\frac{\partial L}{\partial W}=\frac{\partial L}{\partial O} \times \prod_{i=l}^{1}\frac{W_i}{\sigma^2}
+$$
+也就是说，梯度不在仅仅和$W$有关，而是和$\frac{W}{\sigma^2}$有关，$W$大的时候一般$\sigma^2$也大，$W$小的时候一般$\sigma^2$也小。
 
 # 加速训练
 
