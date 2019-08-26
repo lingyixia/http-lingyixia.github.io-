@@ -596,3 +596,16 @@ void fromRight(TreeNode* root,vector<int>& result,int deep)
 ```
 
 >>这是用中右左的方式遍历,若从左向右看可以中左右的方式遍历
+
+#[找到最近公共祖先](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/)
+
+```
+TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
+{
+    if (root == NULL || root == p || root == q) return root;
+    TreeNode *left = lowestCommonAncestor(root->left, p, q);
+    TreeNode *right = lowestCommonAncestor(root->right, p, q);
+    if (left != NULL && right != NULL) return root;
+    return left == NULL ? right : left;
+}
+```
