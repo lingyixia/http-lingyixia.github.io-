@@ -35,3 +35,29 @@ int computeMinimumDistanceB(vector<int> a, vector<int> b)
     return min;
 }
 ```
+
+#[找到所有数组中消失的数字](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/)
+>>要我说这就是个'伪'O(n)
+
+```
+vector<int> findDisappearedNumbers(vector<int> &nums)
+{
+    vector<int> result;
+    for (int i = 0; i < nums.size(); ++i)
+    {
+        if (nums[nums[i] - 1] != nums[i])
+        {
+            swap(nums[nums[i] - 1], nums[i]);
+            i--;
+        }
+    }
+    for (int i = 0; i < nums.size(); ++i)
+    {
+        if (nums[i] != i + 1)
+        {
+            result.push_back(i + 1);
+        }
+    }
+    return result;
+}
+```

@@ -1,17 +1,17 @@
 ---
-title: 神经网调优
+title: 神经网络调优
 date: 2019-03-10 10:13:05
 catagory: 深度学习
 tags: [tips]
 ---
 神经网络调优
-<!--more-->
 
 # OverFitting
 1. early stop
 2. 正则化
 3. Dropout
 4. 增加数据量
+5. 减少模型参数
 
 tip:为什么正则化防止过拟合?
 $$

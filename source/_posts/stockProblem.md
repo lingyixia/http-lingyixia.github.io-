@@ -81,9 +81,28 @@ int maxProfit(vector<int>& prices)
     }
 ```
 
-#K次买卖
->>[Leetcode123](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/)
-动态规划:global[i][j]的意义是第i天以及之前最多进行j次交易所能获得的最大利润,local[i][j]的意义是在第i天以及之前最多进行j次交易且在第i天卖出股票所能得到的最大利润(如果global[i][j]是在第i天卖出,则global[i][j]=local[i][j]),地推公式为:
+#[两次买卖](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/)
+>>最多两次买卖
+
+```
+int maxProfit(vector<int> &prices)
+{
+    if (prices.empty()) return 0;
+    int sell1=0, sell2=0, buy1 = INT_MIN, buy2 = INT_MIN;
+    for (int i = 0; i < prices.size(); ++i)
+    {
+        buy1 = max(buy1, -prices[i]);
+        sell1 = max(sell1, prices[i] + buy1);
+        buy2 = max(buy2, sell1 - prices[i]);//如果sell1=prices[i] + buy1,在此处减去prices[i]就相当于改点没卖，提现了"最多两次"
+        sell2 = max(sell2, prices[i] + buy2);
+    }
+    return sell2;
+}
+```
+
+
+#[K次买卖](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/)
+>>动态规划:global[i][j]的意义是第i天以及之前最多进行j次交易所能获得的最大利润,local[i][j]的意义是在第i天以及之前最多进行j次交易且在第i天卖出股票所能得到的最大利润(如果global[i][j]是在第i天卖出,则global[i][j]=local[i][j]),地推公式为:
 $$
 \begin{align}
 diff &= prices[i] - prices[i - 1] \\
