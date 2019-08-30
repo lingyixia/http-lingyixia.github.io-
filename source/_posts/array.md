@@ -61,3 +61,60 @@ vector<int> findDisappearedNumbers(vector<int> &nums)
     return result;
 }
 ```
+
+#[Ksum](https://blog.csdn.net/Gease_Gg/article/details/82055295)
+>>数组中K个数相加为target(不定几个用背包)
+
+```
+class Solution {
+public:
+    vector<vector<int>> result;
+
+void kSum(vector<int> &nums, int k, int start, int end, int target, vector<int> current)
+{
+    if (k == 2)
+    {
+        int low = start;
+        int high = end;
+        while (low < high)
+        {
+            if (nums[low] + nums[high] == target)
+            {
+                current.push_back(nums[low]);
+                current.push_back(nums[high]);
+                result.push_back(current);
+                while (low < end && nums[low + 1] == nums[low]) low++;
+                while (low < end && nums[high - 1] == nums[high]) high--;
+                low++;
+                high--;
+                current.pop_back();
+                current.pop_back();
+            } else if (nums[low] + nums[high] < target)
+            {
+                low++;
+            } else
+            {
+                high--;
+            }
+        }
+    } else
+    {
+        for (int i = start; i <= end - (k - 1); ++i)
+        {
+            if (i > start && nums[i] == nums[i - 1])continue;
+            current.push_back(nums[i]);
+            kSum(nums, k - 1, i + 1, end, target - nums[i], current);
+            current.pop_back();
+        }
+    }
+}
+
+vector<vector<int>> fourSum(vector<int> &nums, int target)
+{
+    vector<int> current;
+    sort(nums.begin(), nums.end());
+    kSum(nums, 4, 0, nums.size() - 1, target, current);
+    return result;
+}
+};
+```

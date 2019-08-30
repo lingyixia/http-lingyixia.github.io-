@@ -609,3 +609,69 @@ TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
     return left == NULL ? right : left;
 }
 ```
+
+#[二叉树最大宽度](https://leetcode.com/problems/maximum-width-of-binary-tree/submissions/)
+>>还不知道咋解决溢出问题...先这样
+
+>>BFS
+
+```
+int widthOfBinaryTree(TreeNode *root)
+{
+    if (!root) return 0;
+    queue<TreeNode *> q;
+    q.push(root);
+    unordered_map<TreeNode *, int> record;
+    record[root] = 1;
+    int result = 1;
+    while (!q.empty())
+    {
+        TreeNode *leftNode = q.front();
+        int leftEdge = record[leftNode];
+        int size = q.size();
+        for (int i = 0; i < size; ++i)
+        {
+            TreeNode *currentNode = q.front();
+            q.pop();
+            result = max(result, record[currentNode] - leftEdge + 1);
+            if (currentNode->left)
+            {
+                q.push(currentNode->left);
+                record[currentNode->left] = 2 * record[currentNode];
+            }
+            if (currentNode->right)
+            {
+                q.push(currentNode->right);
+                record[currentNode->right] = 2 * record[currentNode] + 1;
+            }
+        }
+    }
+    return result;
+}
+```
+
+>>DFS
+
+```
+int result = 0;
+
+void DFS(TreeNode *root, int level, int order, unordered_map<int, int> record)
+{
+    if (!root) return;
+    if (record.find(level) == record.end())
+    {
+        record[level] = order;
+    }
+    result = max(result, order - record[level] + 1);
+    DFS(root->left, level + 1, order * 2, record);
+    DFS(root->right, level + 1, order * 2 + 1, record);
+}
+
+int widthOfBinaryTree(TreeNode *root)
+{
+    if (!root) return 0;
+    unordered_map<int, int> record;
+    DFS(root, 0, 1, record);
+    return result;
+}
+```
