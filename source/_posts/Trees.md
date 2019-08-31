@@ -675,3 +675,26 @@ int widthOfBinaryTree(TreeNode *root)
     return result;
 }
 ```
+#判断二叉搜索树
+
+```
+   bool isValidDFS(TreeNode *root, long low, long high)
+{
+    if (!root) return true;
+    if (root->val > low && root->val < high)
+    {
+        bool result = isValidDFS(root->left, low, root->val);
+        if (result)
+        {
+            result = isValidDFS(root->right, root->val, high);
+        }
+        return result;
+    }
+    return false;
+}
+
+bool isValidBST(TreeNode *root)
+{
+    return isValidDFS(root, LONG_MIN, LONG_MAX);
+}
+```
