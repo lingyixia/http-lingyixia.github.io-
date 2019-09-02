@@ -698,3 +698,26 @@ bool isValidBST(TreeNode *root)
     return isValidDFS(root, LONG_MIN, LONG_MAX);
 }
 ```
+
+#[更大的二茬搜索](https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/submissions/)
+
+```
+int currVal = 0;
+
+void helper(TreeNode *root)
+{
+    if (root)
+    {
+        helper(root->right);
+        root->val += currVal;
+        currVal = root->val;
+        helper(root->left);
+    }
+}
+
+TreeNode *bstToGst(TreeNode *root)
+{
+    helper(root);
+    return root;
+}
+```
