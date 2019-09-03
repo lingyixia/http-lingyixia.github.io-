@@ -721,3 +721,41 @@ TreeNode *bstToGst(TreeNode *root)
     return root;
 }
 ```
+
+#判断完全二叉树
+```
+ bool isCompleteTree(TreeNode *root)
+{
+    if (!root)
+        return true;
+    queue<TreeNode *> record;
+    record.push(root);
+    bool flag = true;
+    while (!record.empty())
+    {
+        TreeNode *front = record.front();
+        record.pop();
+        if (!flag && (front->left || front->right))
+        {
+            return false;
+        }
+        if(front->left && front->right)
+        {
+            record.push(front->left);
+            record.push(front->right);
+        } else if (front->right)
+        {
+            return false;
+        } 
+        else if (front->left)
+        {
+            flag = false;
+            record.push(front->left);
+        } else
+        {
+            flag = false;
+        }
+    }
+    return true;
+}
+```
