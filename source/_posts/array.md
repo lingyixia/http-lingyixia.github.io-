@@ -35,6 +35,71 @@ int computeMinimumDistanceB(vector<int> a, vector<int> b)
     return min;
 }
 ```
+#有序数组并集交集
+
+```
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+vector<int> aggregate(vector<int> A, vector<int> B)
+{
+    vector<int> result;
+    int pointA = 0;
+    int pointB = 0;
+    while (pointA < A.size() && pointB < B.size())
+    {
+        if (A[pointA] < B[pointB])
+        {
+            result.push_back(A[pointA++]);
+        } else if (A[pointA] > B[pointB])
+        {
+            result.push_back(B[pointB++]);
+        } else
+        {
+            result.push_back(A[pointA++]);
+            pointB++;
+        }
+    }
+    return result;
+}
+
+vector<int> intersection(vector<int> A, vector<int> B)
+{
+    vector<int> result;
+    int pointA = 0;
+    int pointB = 0;
+    while (pointA < A.size() && pointB < B.size())
+    {
+        if (A[pointA] < B[pointB])
+        {
+            pointA++;
+        } else if (A[pointA] > B[pointB])
+        {
+            pointB++;
+        } else
+        {
+            result.push_back(A[pointA]);
+            pointA++;
+            pointB++;
+        }
+    }
+    return result;
+}
+
+int main()
+{
+    vector<int> A = {1, 3, 4, 5, 7};
+    vector<int> B = {2, 3, 5, 8, 9};
+    vector<int> result = aggregate(A, B);
+    for (auto r:result)
+    {
+        cout << r << endl;
+    }
+    return 0;
+}
+```
 
 #[找到所有数组中消失的数字](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/)
 >>要我说这就是个'伪'O(n)
