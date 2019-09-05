@@ -118,3 +118,32 @@ vector<vector<int>> fourSum(vector<int> &nums, int target)
 }
 };
 ```
+
+#[数组中右面第一个比它大的距离](https://leetcode.com/problems/daily-temperatures/submissions/)
+
+```
+ vector<int> dailyTemperatures(vector<int> T)
+{
+    vector<int> result(T.size());
+    stack<int> record;
+    int pos = 0;
+    while (pos < T.size())
+    {
+        if (record.empty())
+        {
+            record.push(pos++);
+        } else
+        {
+            if (T[pos] <= T[record.top()])
+            {
+                record.push(pos++);
+            } else
+            {
+                result[record.top()] = pos-record.top();
+                record.pop();
+            }
+        }
+    }
+    return result;
+}
+```

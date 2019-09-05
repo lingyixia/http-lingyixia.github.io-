@@ -52,6 +52,7 @@ $$
 
 # Batch Normalization
 [参考文章](https://blog.csdn.net/hjimce/article/details/50866313)
+>>目的是解决[特征分布偏移问题](https://zhuanlan.zhihu.com/p/34879333),会造成梯度消失
 其实就是对每一层的输入做一个Norm,但是直接Norm就损失了学到的特征,因此使用传导公式如下:
 $$
 \mu = \frac{1}{m}\sum_{i=1}^m x_i \\

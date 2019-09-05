@@ -18,6 +18,27 @@ tags:
 ##[1*1卷积的作用](https://mp.weixin.qq.com/s/MCIhRmbq2N0HM_0v-nld_w)
 ##反卷积和空洞卷积
 ##(残差网络)[https://lingyixia.github.io/2019/04/05/transformer/]
+>>batch normalization解决的是梯度消失问题,残差解决的是网络增加深度带来的退化问题
+目的是学习F(x)=x，但是神经网络学习这个不容易，但是学习F(x)=0更容易(一般初始化的时候都是以0为均值).
+在假设现在的目的是把5学到5.1，不加残差网络的参数变化是F(5)->5.1,加残差网络的参数变化是H(5)=F'(5)+5=5.1,也就是F'(5)=0.1，也就是学习的过程变成了学习残差,而残差一般数值较小,神经网络对小数更敏感。
+平常的前向公式:
+$$
+x_L = \sum_{i=1}^LF(x_i,w)
+$$
+反向传播公式:
+$$
+\frac{\partial L}{\partial x_l}=\frac{\partial L}{\partial O} \prod_l \frac{\partial O}{\partial x_l} 
+$$
+残差网络的前向公式:
+$$
+x_L = x_l+\sum_{i=1}^LF(x_i,w)
+$$
+反向传播公式:
+$$
+\frac{\partial L}{\partial x}=\frac{\partial L}{\partial O}(1+ \prod_l \frac{\partial O}{\partial x_l})
+$$
+[残差网络名字由来](https://zhuanlan.zhihu.com/p/42706477)
+
 ##[CNN复杂度分析](https://zhuanlan.zhihu.com/p/31575074)
 
 # RNN

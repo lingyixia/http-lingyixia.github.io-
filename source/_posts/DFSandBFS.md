@@ -51,6 +51,7 @@ int main()
 
 ##BFS
 >>其实就是层序遍历 
+
 ```
 #include<iostream>
 #include<vector>
@@ -147,6 +148,7 @@ int main()
 ```
 
 ##bfs
+
 ```
 #include <iostream>
 #include <queue>
@@ -169,32 +171,35 @@ vector<vector<int>> directions = {{0,  1},
                                   {0,  -1},
                                   {1,  0},
                                   {-1, 0}};
-vector<vector<int>> finalPath;
 
-void findShortPath_BFS(vector<vector<int>> &maze, vector<vector<Point>> &pre, int startX, int startY, int endX,
+void findShortPath_BFS(vector<vector<int>> &maze,
+                       vector<vector<Point>> &pre,
+                       int startX,
+                       int startY,
+                       int endX,
                        int endY)
 {
-    queue<vector<int>> q;
-    q.push(vector<int>{startX, startY});
+    queue<Point> q;
+    q.push(Point(startX, startY));
     maze[startX][startY] = 1;
     while (!q.empty())
     {
-        vector<int> current = q.front();
+        Point current = q.front();
         q.pop();
-        if (current[0] == endX && current[1] == endY)
+        if (current.x == endX && current.y == endY)
         {
             break;
         }
         for (auto direction:directions)
         {
-            int currentX = current[0] + direction[0];
-            int currentY = current[1] + direction[1];
+            int currentX = current.x + direction[0];
+            int currentY = current.y + direction[1];
             if (currentX >= 0 && currentX < maze.size() && currentY >= 0 && currentY < maze[0].size() &&
                 maze[currentX][currentY] == 0)
             {
-                q.push(vector<int>{currentX, currentY});
+                q.push(Point(currentX, currentY));
                 maze[currentX][currentY] = 1;
-                pre[currentX][currentY] = Point(current[0], current[1]);
+                pre[currentX][currentY] = current;
             }
         }
     }
@@ -224,10 +229,6 @@ int main()
     int endX = 4;
     int endY = 4;
     findShortPath_BFS(maze, pre, startX, startY, endX, endY);
-    for (auto pos:finalPath)
-    {
-        cout << pos[0] << " " << pos[1] << endl;
-    }
     print(Point(endX, endY), pre);
     return 0;
 }

@@ -28,17 +28,18 @@ for(int i =n;i>=1;i--)
 #  切分句子
 在NLP中经常会有这样的需求,对于训练数据有少部分会特别长,远远超出平均长度,那么我们就需要对句子进行拆分,但是不能直接安长度切，这样很可能会切断关键词,切分方法一般是在无用的地方切分,比如标点符号,现在给出一个算法实现这个功能:
 ```
-def data_cut(sentence, cut_chars,cut_length,min_length):
+def data_cut(sentence, cut_chars, cut_length, min_length):
     if len(sentence) <= cut_length:
         return [sentence]
     else:
         for char in cut_chars:
-            start = min_length#防止直接从头几个就找到了，这样切的太短
-            end = len(sentence) - (min_length-1)#防止从最后几个找到了,这样切的也太短
+            start = min_length  # 防止直接从头几个就找到了，这样切的太短
+            end = len(sentence) - (min_length - 1)  # 防止从最后几个找到了,这样切的也太短
             if char in sentence[start:end]:
                 index = sentence[start:end].index(char)
-                return data_cut(sentence[:start + index], cut_chars) + data_cut(sentence[start + index:], cut_chars)
-    return [sentence]#如果没有找到切分点那就不管句子长度直接返回
+                return data_cut(sentence[:start + index], cut_chars, cut_length, min_length) + \
+                       data_cut(sentence[start + index:], cut_chars, cut_length, min_length)
+    return [sentence]  # 如果没有找到切分点那就不管句子长度直接返回
 ```
 >>
 参数说明:sentence是一个list,内容是sentence每个字符
