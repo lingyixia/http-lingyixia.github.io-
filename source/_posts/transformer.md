@@ -40,6 +40,13 @@ PE_{(pos,2i)}=sin(pos/10000^{2i/d_{modle}}) \\
 PE_{(pos,2i+1)}=cos(pos/10000^{2i/d_{modle}})
 $$
 其中pos是当前单词在该句子中的位置,比如句子长20,则pos可以是1,2...20.i是在当前单词的第i个维度,比如每个单词有512个维度,则i可以是1,2...512.$d_{modle}$是单词维度,当前例子中即是512.
+为什么要用三角函数呢?首先，这种方式能保证各个位置的位置信息各不相同。即**绝对位置**,其次，由
+
+$$
+sin(\alpha+\beta)=sin\alpha cos\beta + cos\alpha\beta \\
+cos(\alpha+\beta)=cos\alpha cos\beta-sin\alpha sin\beta
+$$
+也就是说，如果单用sin和cos交替使用可以保证PE(pos+k)能用PE(pos)和PE(k)表示出来，也就是相对**相对位置**,如果仅仅使用sin或cos就没有了**相对信息**
 #其他
 1.每一个`self-Attention`都维护一个自己的$W_Q$,$W_K$,$W_V$,也就是生成`Q`,`K`,`V`的全连接神经网络参数,即每个`cell`的这三个值是不同的.
 2.在`encoder`阶段的最后一个`encoder cell`会将生成的`K`和`V`传递给`decoder`阶段每个`decoder cell`的`encoder-decoder-Multi-Attention`使用.而`encoder-decoder-Multi-Attention`使用的`Q`是`Mask-self-Multi-Attention`输出的.
