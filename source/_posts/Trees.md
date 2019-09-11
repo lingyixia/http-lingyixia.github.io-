@@ -759,3 +759,58 @@ TreeNode *bstToGst(TreeNode *root)
     return true;
 }
 ```
+
+#二叉树中序遍历的前驱和后继
+
+##前驱:
+>>1.如果当前节点有左子树则找左子树的最右
+2.如果当前节点没有左子树则找其父节点，直到某节点是父节点的右子树，返回该父节点
+
+```
+struct TreeLinkNode {
+    int val;
+    struct TreeLinkNode *left;
+    struct TreeLinkNode *right;
+    struct TreeLinkNode *next;
+    TreeLinkNode(int x) :val(x), left(NULL), right(NULL), next(NULL) {
+        
+    }
+};
+
+
+```
+
+##后继
+>>1.如果当前节点右右子树则找右子树的最左
+2.如果当前节点没有右子树则找其父节点，直到该某节点是父节点的左子树，返回该父节点.
+
+```
+struct TreeLinkNode
+{
+    int val;
+    struct TreeLinkNode *left;
+    struct TreeLinkNode *right;
+    struct TreeLinkNode *next;
+    TreeLinkNode(int x) :val(x), left(NULL), right(NULL), next(NULL) {  }
+}
+    TreeLinkNode* GetNext(TreeLinkNode* pNode)
+    {
+        if(pNode ==nullptr)
+            return nullptr;
+        // 假如有右子树，就去找右子树的最左节点
+        if(pNode->right){   
+            TreeLinkNode * res=pNode->right;
+            while(res->left)
+                res=res->left;
+            return res;
+        }
+        //没有右子树时，就一直向上找，找到当前节点是父节点的左孩子为止
+        TreeLinkNode *father=pNode->next;
+        TreeLinkNode * cur=pNode;
+        while(father != nullptr && father->left != cur){
+            cur=father;
+            father=father->next;
+        }
+        return father;
+    }
+```
