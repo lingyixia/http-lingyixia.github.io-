@@ -11,6 +11,9 @@ tags:
 ##[发展史](https://lingyixia.github.io/2019/05/01/CNNdevelopment/)
 ##[感受野](https://lingyixia.github.io/2019/05/13/DilatedConvolution/)
 ##[SameAndValid](https://lingyixia.github.io/2019/03/13/CnnSizeCalc/)
+##CNN感受野为什么都是奇数:
+1.从SameAndValid](https://lingyixia.github.io/2019/03/13/CnnSizeCalc/),Padding = Kernel_size-1,当Kernel_size为奇数的时候可以平均到两边
+2.方便确定卷积核的位置，中心点就可以代表卷积核的位置，但是偶数的话就不方便
 ##Pooling的作用
 ##[卷积和池化的区别](https://mp.weixin.qq.com/s/MCIhRmbq2N0HM_0v-nld_w)
 ##参数计算方法
@@ -18,6 +21,11 @@ tags:
 ##[1*1卷积的作用](https://mp.weixin.qq.com/s/MCIhRmbq2N0HM_0v-nld_w)
 ##反卷积和空洞卷积
 ##(残差网络)[https://lingyixia.github.io/2019/04/05/transformer/]
+##transformer
+两个问题:
+1,为什么用多头:多个attention便于模型学习不同子空间位置的特征表示，然后最终组合起来这些特征，而单头attention直接把这些特征平均，就减少了一些特征的表示可能。 
+2.为什么self-attention要除以一个根号维度:假设Q和K都是独立的随机变量，满足均值为0，方差为1，则点乘后结果均值为0，方差为dk。也即方差会随维度dk的增大而增大，而大的方差导致极小的梯度(我认为大方差导致有的输出单元a（a是softmax的一个输出）很小，softmax反向传播梯度就很小（梯度和a有关））。为了避免这种大方差带来的训练问题，论文中用内积除以维度的开方，使之变为均值为0，方差为1。
+
 >>batch normalization解决的是梯度消失问题,残差解决的是网络增加深度带来的退化问题
 目的是学习F(x)=x，但是神经网络学习这个不容易，但是学习F(x)=0更容易(一般初始化的时候都是以0为均值).
 在假设现在的目的是把5学到5.1，不加残差网络的参数变化是F(5)->5.1,加残差网络的参数变化是H(5)=F'(5)+5=5.1,也就是F'(5)=0.1，也就是学习的过程变成了学习残差,而残差一般数值较小,神经网络对小数更敏感。
