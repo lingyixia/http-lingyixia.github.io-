@@ -55,17 +55,92 @@ $$
 H(Y|X) &= \sum_{x \in X} \widetilde{P}(x)H(Y|X=x)) \\
 &=-\sum_{x \in X}\widetilde P(x)\sum_{y \in Y}P(y|X=x) \log P(Y|X=x)\\
 &= -\sum_{x \in X}\sum_{y \in Y}\widetilde P(x)P(y|X=x) \log P(Y|X=x)\\
-&=-\sum_{x \in X y\in Y}\widetilde{P}(x,y)\log P(y|x)
+&=-\sum_{x ,y}\widetilde P(x)P(y|x) \log P(y|x)
 \end{align}
 $$
 所以最终公式为:
 $$
-\max \quad \quad \quad -\sum_{x \in X y\in Y}\widetilde{P}(x,y)\log P(y|x) \\
-s.t. \quad \quad \quad \quad \quad \quad \quad E_{\widetilde p}(f)=E_{p}(f)  \\
+\max \quad \quad \quad -\sum_{x ,y}\widetilde P(x)P(y|x) \log P(y|x) \\
+s.t. \quad \quad \quad \quad E_{\widetilde p}(f_i)=E_{p}(f_i)  \quad i=1,2,3... \\ 
 \quad \quad \quad \quad \sum_{y}P(y|x)=1(隐含条件)
 $$
+其中i代表第i个特征函数
 完毕散花!!!!卧槽写完后发现写的好清楚...不信你看了还不明白！
-至于后面的求解，，,歇歇在写吧.
+#最大熵模型求解
+1.首先引入拉格朗日乘子$w_0,w_1...$
+$$
+\begin{align}
+L(P(y|x),w)&=-\sum_{x ,y}\widetilde P(x)P(y|x) \log P(y|x)+w_0(1-\sum_{y}P(y|x))+\sum_{i=0}^{n}w_i(E_{\widetilde p}(f_i)-E_{p}(f_i))\\
+&=\sum_{x ,y}\widetilde P(x)P(y|x) \log P(y|x)+w_0(1-\sum_{y}P(y|x))+\sum_{i=1}^n w_i(\sum_{x,y} w_i\widetilde P(x,y)f_i(x,y)-\sum_{x,y}\widetilde P(y|x)f_i(x,y))
+\end{align}
+$$
+原始问题是:
+$$
+\min_{P(y|x)} \max_wL(P(y|x),w)
+$$
+对偶问题是:
+$$
+\max_{w} \min_{P(y|x)}L(P(y|x),w)
+$$
+令:
+$$
+\Psi(w)=\min_{P(y|x)}L(P(y|x),w)
+$$
+首先求内部:
+$$
+\begin{align}
+\frac{\partial P(y|x,w)}{\partial P(y|x)}&=\sum_{x,y}\widetilde P(x)(\log P(y|x)+1)-\sum_y w_0 - \sum_{x,y}(\widetilde P(x)\sum_{i=1}^n w_if_i(x,y)) \\
+&=\sum_{x,y}\widetilde P(x)(\log P(y|x)+1-w_0-\sum_{i=1}^n w_if_i(x,y))
+\end{align}
+$$
+令偏导数为0，得:
+$$
+P(y|x)=e^{\sum_{i=1}^nw_if_i(x,y)+w_0-1}=\frac{e^{\sum_{i=1}^nw_if_i(x,y)}}{e^{1-w_0}}
+$$
+因为有:
+$$
+\sum_{y}P(y|x)=1
+$$
+因此:
+$$
+e^{1-w_0}=\sum_y e^{sum_{i=1}^n w_if_i(x,y)}=Z_w(x)
+$$
+因此，最终求得:
+$$
+P(y|x,\theta)=e^{\sum_{i=1}^nw_if_i(x,y)+w_0-1}=\frac{e^{\sum_{i=1}^nw_if_i(x,y)}}{\sum_y e^{sum_{i=1}^n w_if_i(x,y)}}
+$$
+**注意看这里，这不就是Softmax么!!!!!!!!!!!!!!!!!!**
+最后一步在求
+$$\max_w$$即可.
+#最大似然估计
+最大似然估计的一般公式为:
+$$
+L(P_w)=log \prod_{x,y}P(y|x)^{\widetilde P(x,y)}=\sum_{x,y}\widetilde P(x,y)logP(x|y)
+$$
+我们求得的最大熵模型为:
+$$
+\Psi(w)=\sum_{x ,y}\widetilde P(x)P(y|x) \log P(y|x)+w_0(1-\sum_{y}P(y|x))+\sum_{i=1}^n w_i(\sum_{x,y} w_i\widetilde P(x,y)f_i(x,y)-\sum_{x,y}\widetilde P(y|x)f_i(x,y))
+$$
+我们要证明这两个式子求得得结果是相同的,即:
+$$
+P(y|x)=\frac{e^{\sum_{i=1}^nw_if_i(x,y)}}{e^{1-w_0}}
+$$
+带入得:
+$$
+\begin{align}
+L(P_w)&=\sum_{x,y}\widetilde P(x,y)\sum_{i=1}^nw_if_i(x,y)-\sum_{x,y}\widetilde P(x,y)\log Z_w(x) \\
+&=\sum_{x,y}\widetilde P(x,y)\sum_{i=1}^nw_if_i(x,y)-\sum_x \widetilde P(x)\log Z_w(x) 
+\end{align}
+$$
+得:
+$$
+\begin{align}
+\Psi(w)&=\sum_{x,y}^n\widetilde P(x,y)\sum_{i=1}^nw_if_i(x,y)+\sum_{x,y}\widetilde P(x)P(y|x)(\log P(y|x)-\sum_{i=1}w_if_i(x,y))\\
+&=\sum_{x,y}^n\widetilde P(x,y)\sum_{i=1}^nw_if_i(x,y)-\sum_{x,y}\widetilde P(x)P_w(y|x)\log Z_w(x)\\
+&=\sum_{x,y}^n\widetilde P(x,y)\sum_{i=1}^nw_if_i(x,y)-\sum_{x}\widetilde P(x)\log Z_w(x)
+\end{align}
+$$
+因此，当带入$P(y|x,\theta)$时，得到得公式是相同得，因此求得的$\max_w$也一定相同.
 #从最大熵模型到逻辑回归
 二元逻辑回归的似然函数为:
 $$
