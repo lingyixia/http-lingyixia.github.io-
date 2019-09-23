@@ -160,4 +160,5 @@ word embedding层后、pooling层后、FC层（全联接层）后
  # [维比特算法](https://wulc.me/2017/03/02/%E7%BB%B4%E7%89%B9%E6%AF%94%E7%AE%97%E6%B3%95/)
  假设序列长度为,隐含状态数量为m，穷举法的时间复杂度为$O(n^m)$
  维比特算法时间复杂度为$O(m*n^2)$
- >>解释，比如从t=1到t=2，需要计算n*n次才能计算的到t=2的每个概率值，要进行m个步骤，因此是$O(m*n^2)$
+
+ #[各种normilization](https://blog.csdn.net/liuxiao214/article/details/81037416)
