@@ -1,5 +1,5 @@
 ---
-title: Transform
+title: Transformer
 date: 2019-04-05 13:31:37
 category: 深度学习
 tags: [Attention]
@@ -28,7 +28,12 @@ tags: [Attention]
 $$
 Attention(Q,K,V)=\frac{softmax(Q \times K^T)}{\sqrt{d_k}} \times V
 $$
-这里都讲烂了,就不记录了.
+这里只解释为啥要除以$\sqrt{d_k}$:
+已知:$E(Q_{n\times dk})=0,E(Q_{n\times dk})=1,E(K_{n\times dk})=0,E(K_{n\times dk})=1$,注意，此时的期望和方差都是指的$d_k$维向量的每个分量，且假设这$d_k$个分量独立同分布。
+目的是保持点积后期望方差不变。如果直接计算点积:$Q \times K^T$为$n \times n$维矩阵,**注意，后面计算的期望和方差都是按照行或者列，不要想成整个矩阵的期望方差**。以某个单词$q$为例:
+$E(qK^T)=E(\sum_0^{d_k}q_iK^T)=\sum_0^{d_k}E(K^T)=d_k \times 0=0$。其实把$Q$的每个分量看作一个常数即可
+$D(qK^T)=D(\sum_0^{d_k}q_iK^T)=\sum_0^{d_k}D(K^T)=d_k \times d_k=d_k$
+而$D(\frac{qK^T}{\sqrt{d_k}})=D((qKT)^2)\times D((\frac{1}{d_k)}^2)=d_k/d_k=1$
 #ResNet And Norm
 残差网络的作用见[残差网络](https://www.jianshu.com/p/e58437f39f65),Norm的作用自然是加快收敛,防止梯度消失.
 #Feed-Forward

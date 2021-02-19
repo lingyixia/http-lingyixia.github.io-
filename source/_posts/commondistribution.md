@@ -24,18 +24,20 @@ P(X=k)=C_n^kp^{k}(1-p)^{n-k}
 $$
 期望:
 $$
-\begin{align}
+\begin{aligned}
 E(X) &=\sum_{k=0}^nk C_n^kp^{k}(1-p)^{n-k} \\
 &=\sum_{k=0}^nk \frac{n!}{k!(n-k)!} p^{k}(1-p)^{n-k} \\
 &=n\sum_{k=0}^n \frac{(n-1)!}{(k-1)!(n-k)!} p^{k}(1-p)^{n-k} \\
 &= np\sum_{k=0}^n C_{n-1}^{k-1}p^{k-1}(1-p)^{(n-1)-(k-1)} \\
 &=np(p+(1-p))^{n-1} \\
 &=np
-\end{align}
+\end{aligned}
 $$
 $$
 D(X)=np(1-p)
 $$
+
+
 
 >>过两天在证明
 
@@ -50,10 +52,10 @@ $$
 
 #补充:
 $$
-\begin{align}
+\begin{aligned}
 D(X) &= E(X-E(X)^2) \\
 &=E(X^2-2XE(X)+E(X)^2) \\
 &=E(X^2)-2E(x)^2+E(X)^2 \\
 &=E(X^2)-E(X)^2
-\end{align}
+\end{aligned}
 $$
