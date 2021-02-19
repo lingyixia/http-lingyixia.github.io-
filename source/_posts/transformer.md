@@ -28,7 +28,7 @@ tags: [Attention]
 $$
 Attention(Q,K,V)=\frac{softmax(Q \times K^T)}{\sqrt{d_k}} \times V
 $$
-这里只解释为啥要除以$\sqrt{d_k}$:
+这里只解释为啥要除以 $\sqrt{d_k}$ :
 已知:$E(Q_{n\times dk})=0,E(Q_{n\times dk})=1,E(K_{n\times dk})=0,E(K_{n\times dk})=1$,注意，此时的期望和方差都是指的$d_k$维向量的每个分量，且假设这$d_k$个分量独立同分布。
 目的是保持点积后期望方差不变。如果直接计算点积:$Q \times K^T$为$n \times n$维矩阵,**注意，后面计算的期望和方差都是按照行或者列，不要想成整个矩阵的期望方差**。以某个单词$q$为例:
 $E(qK^T)=E(\sum_0^{d_k}q_iK^T)=\sum_0^{d_k}E(K^T)=d_k \times 0=0$。其实把$Q$的每个分量看作一个常数即可
