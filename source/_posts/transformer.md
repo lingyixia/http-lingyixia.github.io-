@@ -52,6 +52,30 @@ sin(\alpha+\beta)=sin\alpha cos\beta + cos\alpha\beta \\
 cos(\alpha+\beta)=cos\alpha cos\beta-sin\alpha sin\beta
 $$
 也就是说，如果单用sin和cos交替使用可以保证PE(pos+k)能用PE(pos)和PE(k)表示出来，也就是相对**相对位置**,如果仅仅使用sin或cos就没有了**相对信息**
+##进一步解释
+对于一个序列，第$i$个单词和第$j$个单词的$Attention$ $score$为:
+$$
+A_{i,j}=(W_q(E_i+U_i))^T(W_k(E_j+U_j))
+$$
+其中，$W_q$和$W_k$分别是$Q$和$K$的对齐权重,$E_i$和$E_j$分别是第$i$和$j$个单词的词向量,$U_i$和$U_j$分别是第$i$和$j$个单词的位置向量。
+分解上式:
+$$
+A_{i,j}=\underbrace{E_i^TW_qW_kE_j}_a+\underbrace{E_i^TW_qW_kU_j}_b+ \underbrace{U_i^TW_qW_kE_j}_c+\underbrace{U_i^TW_qW_kU_j}_d
+$$
+其中，只有$d$包含$i$和$j$的位置相对信息,我们知道:
+$$
+U_t=\left[ sin(f(0,t)),cos(f(0,t)),sin(f(1,t)),cos(f(1,t))...sin(f(d_{model}/2,t)),cos(f(d_{model}/2,t)) \right]^T
+$$
+如果没有$W_q$和$W_k$,假设$j-k=i$则有:
+$$
+\begin{aligned}
+d&=U_i^TU_{i+k}\\
+&=\sum_{j=0}^{d_{model}-1}[sin(f(j,i))sin(f(j,i+k))]+[cos(f(j,i))cos(f(j,i+k))] \\
+&=\sum_{j=0}^{d_{model}-1}cos(f(j,(t-(t+k))))\\
+&=\sum_{j=0}^{d_{model}-1}cos(f(j,-k))
+\end{aligned}
+$$
+发现如果没有$W_q$和$W_k$,位置距离为$k$的两个单词的同一维度只和相对位置有关，即包含了相对位置信息，但是加上这两个矩阵之后这种相对信息不复存在，但是在学习的过程中可以学出来，比如学到$W_qW_k=E$，这种相对位置信息就完全恢复了。
 #其他
 1.每一个`self-Attention`都维护一个自己的$W_Q$,$W_K$,$W_V$,也就是生成`Q`,`K`,`V`的全连接神经网络参数,即每个`cell`的这三个值是不同的.
 2.在`encoder`阶段的最后一个`encoder cell`会将生成的`K`和`V`传递给`decoder`阶段每个`decoder cell`的`encoder-decoder-Multi-Attention`使用.而`encoder-decoder-Multi-Attention`使用的`Q`是`Mask-self-Multi-Attention`输出的.
