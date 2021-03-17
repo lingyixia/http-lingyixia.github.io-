@@ -76,6 +76,54 @@ d&=U_i^TU_{i+k}\\
 \end{aligned}
 $$
 发现如果没有$W_q$和$W_k$,位置距离为$k$的两个单词的同一维度只和相对位置有关，即包含了相对位置信息，但是加上这两个矩阵之后这种相对信息不复存在，但是在学习的过程中可以学出来，比如学到$W_qW_k=E$，这种相对位置信息就完全恢复了。
+```
+import pandas as pd
+import numpy as np
+import math
+
+import matplotlib.pyplot as plt
+
+flag = 0
+
+
+def attention_scores(d_model, t, k):
+    def get_angle(pos, i):
+        return pos / math.pow(10000, 2 * i / d_model)
+
+    angles1 = map(lambda x: get_angle(t, x), range(d_model // 2))
+    angles2 = map(lambda x: get_angle(t + k, x), range(d_model // 2))
+    result1 = list()
+    for angle in list(angles1):
+        result1.append(math.sin(angle))
+        result1.append(math.cos(angle))
+    result2 = list()
+    for angle in list(angles2):
+        result2.append(math.sin(angle))
+        result2.append(math.cos(angle))
+    result1 = np.asarray(result1)
+    result2 = np.asarray(result2)
+    if flag == 0:
+        return sum(result1 * result2)
+    elif flag == 1:
+        W1 = np.random.normal(size=(128, 256))
+        W2 = np.random.normal(size=(256, 128))
+        W = np.dot(W1, W2)
+        return sum(np.dot(result1.T, W) * result2)
+    else:
+        W = np.identity(128)
+        return sum(np.dot(result1.T, W) * result2)
+
+
+if __name__ == '__main__':
+    result = list()
+    for pos in range(-50, 50):
+        result.append(attention_scores(d_model=128, t=64, k=pos))
+    data = pd.Series(result)
+    data.plot()
+    plt.show()
+```
+>>上诉代码表示第$64$个数据的位置响亮和他前后各50个数据范围内的位置向量$attention$值 ,flag=0表示$U_t^T U_{t+k}$,flag=1表示$U_t^TWU_{t+k}$,flag=2表示$U_t^T E U_{t+k}$,$E$表示单位向量,运行代码可以看出flag=0/2图形对称有规律，flag=1图形毫无规律。
+
 #其他
 1.每一个`self-Attention`都维护一个自己的$W_Q$,$W_K$,$W_V$,也就是生成`Q`,`K`,`V`的全连接神经网络参数,即每个`cell`的这三个值是不同的.
 2.在`encoder`阶段的最后一个`encoder cell`会将生成的`K`和`V`传递给`decoder`阶段每个`decoder cell`的`encoder-decoder-Multi-Attention`使用.而`encoder-decoder-Multi-Attention`使用的`Q`是`Mask-self-Multi-Attention`输出的.
