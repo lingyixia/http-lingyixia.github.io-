@@ -29,11 +29,15 @@ $$
 Attention(Q,K,V)=\frac{softmax(Q \times K^T)}{\sqrt{d_k}} \times V
 $$
 这里只解释为啥要除以$\sqrt{dk}$:
-已知:$E(Q{n \times dk})=0,E(Q{n\times dk})=1,E(K{n\times dk})=0,E(K{n\times dk})=1$,注意，此时的期望和方差都是指的$d_k$维向量的每个分量，且假设这$d_k$个分量独立同分布。
+## 解释一
+已知:$E(Q\_n \times d\_k)=0,D(Q\_n \times d\_k)=1,E(K\_n \times d_k)=0,D(K\_n \times d\_k)=1$,注意，此时的期望和方差都是指的$d\_k$维向量的每个分量，且假设这$d_k$个分量独立同分布。
 目的是保持点积后期望方差不变。如果直接计算点积:$Q \times K^T$为$n \times n$维矩阵,**注意，后面计算的期望和方差都是按照行或者列，不要想成整个矩阵的期望方差**。以某个单词$q$为例:
 $E(qK^T)=E(\sum_0^{d_k}q_iK^T)=\sum_0^{d_k}E(K^T)=d_k \times 0=0$。其实把$Q$的每个分量看作一个常数即可
-$D(qK^T)=D(\sum_0^{d_k}q_iK^T)=\sum_0^{d_k}D(K^T)=d_k \times d_k=d_k$
-而$D(\frac{qK^T}{\sqrt{d_k}})=D((qKT)^2)\times D((\frac{1}{d_k)}^2)=d_k/d_k=1$
+$D(qK^T)=D(\sum_0^{d_k}q_iK^T)=\sum_0^{d_k}D(K^T)=d_k \times 1=d_k$
+而$D(\frac{qK^T}{\sqrt{d_k}})=D((qKT)^2)\times D((\frac{1}{d_k})^2)=d_k/d_k=1$
+
+##解释二
+很简单的方法，一个$d\_k$维的向量$q\_i$，去乘以$d\_k \times n$维度的向量，同时这个$d\_k \times n$的向量在$d\_k$的每个维度上(设第$i$个维度的随机变量为$X\_i$)均值为零，方差为1，现在要求相乘后得到的向量,即一个$n$维向量的均值和方差，其实这和乘不乘$q\_i$没关系，只和相乘的时候的加法有关系，最后$n$维度向量的均值$E=E(\sum\_{i=0}^{d\_k}X\_i)=d\_kE(X)=0$,同理$D(\sum\_{i=0}^{d\_k}X\_i)=\sum\_{i=0}^{d\_k}D(X)=d\_k$,因此要除以$\sqrt d\_k$.
 #ResNet And Norm
 残差网络的作用见[残差网络](https://www.jianshu.com/p/e58437f39f65),Norm的作用自然是加快收敛,防止梯度消失.
 #Feed-Forward
