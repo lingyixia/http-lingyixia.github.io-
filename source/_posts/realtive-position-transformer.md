@@ -1,26 +1,26 @@
 ---
-title: transformer相对编码
+title: 相对编码
 date: 2021-04-04 23:16:54
 category: 深度学习
 tags: [Attention,Transformer]
 ---
+# Relative Position Embedding
 [论文地址](https://arxiv.org/pdf/1803.02155.pdf)
 [参考博客1](https://wyydsb.xin/other/relativepositionembed.html)
 [参考博客1](https://blog.csdn.net/weixin_41089007/article/details/91477253)
 
-#原理
-该论文的考虑出发点为原始的编码方式仅仅考虑了位置的**距离**关系，没有考虑位置的**先后**关系，本论文增加了这种关系。
+该论文的考虑出发点为原始的编码方式仅仅考虑了位置的**距离**关系，没有考虑位置的**先后**关系，本抛弃了`vanilla transformer`中静态位置编码，使用一个可训练的相对位置矩阵来表示位置信息。
 公示很简单：
 原始Attention：
 $$
-e_ij=\frac{x_iW_q x_iW_k^T}{\sqrt{d_{model}}}  \\
-a_ij = softmax(w_ij) \\
+e_{ij}=\frac{x_iW_q x_iW_k^T}{\sqrt{d_{model}}}  \\
+a_{ij} = softmax(w_ij) \\
 z_i = \sum_{j=1}^n a_{ij}x_jW_v
 $$
 Relative Position Attention:
 $$
-e_ij=\frac{x_iW_q (x_iW_k+a_{ij}^k)^T}{\sqrt{d_{model}}}  \\
-a_ij = softmax(w_{ij}) \\
+e_{ij}=\frac{x_iW_q (x_iW_k+a_{ij}^k)^T}{\sqrt{d_{model}}}  \\
+a_{ij} = softmax(w_{ij}) \\
 z_i = \sum_{j=1}^n a_{ij}(x_jW_v+a_{ij}^v)
 $$
 >其中，$a\_{ij}^k$和$a\_{ij}^v$分别表示两个可学习的位置信息,至于为什么加在这两个地方，自然是因为这两个地方计算了相对位置。
@@ -129,3 +129,36 @@ if __name__ == '__main__':
     # print(torch.einsum('bhqe,qke->bhqk', [x, y]))
 
 ```
+
+## TENER
+>本来应该先写Transformer_xl,但还没完全懂，用这个做过度。
+
+[论文地址](https://arxiv.org/pdf/1911.04474.pdf)
+[参考博客1](https://blog.csdn.net/Rock_y/article/details/109123472)
+[参考博客2](https://www.cnblogs.com/shiyublog/p/11236212.html)
+该论文用在`NER`任务中，同样的，主要目的也是解决普通`Transformer`只有**距离**没有**先后**的问题，主要思路是回归了`vanilla transformer`的编码方式，但是将静态**相对位置**信息加入其中，其实是一个不可训练的相对位置矩阵(具体可看代码，其实表示思路和第一篇相似)。
+相对位置矩阵为：
+$$
+R_{t-j}=[...,sin(\frac{t-j}{10000^{2i/d_{model}}}),cos(\frac{t-j}{10000^{2i/d_{model}}})]
+$$
+>可以看到，对于sin而言，正负号是有影响的，但是cos无影响。
+
+原始`Transformer`中`Attention score`计算公示为:
+$$
+A_{i,j}=\underbrace{E_i^TW_qW_kE_j}_a+\underbrace{E_i^TW_qW_kU_j}_b+ \underbrace{U_i^TW_qW_kE_j}_c+\underbrace{U_i^TW_qW_kU_j}_d
+$$
+>>解释：
+a:第i个单词**内容**对第j个单词**内容**的score
+b:第i个单词**内容**对第j个单词**位置**的score
+c:第i个单词**位置**对第j个单词**内容**的score
+d:第i个单词**位置**对第j个单词**位置**的score
+
+更改后`Attention score`计算公示为：
+$$
+A_{i,j}=Q_tK_j^T+Q_tR_{i-j}^T+uK_j^T+vR_{i-j}
+$$
+这个看着不方便，其实就是Transformer_xl的公示，应该为：
+$$
+A_{i,j}=\underbrace{E_i^TW_qW_{k,E}E_j}_a+\underbrace{E_i^TW_qW_{k,R}R_{i-j}}_b+ \underbrace{u^TW_kE_j}_c+\underbrace{v^TW_kU_j}_d
+$$
+>>不同于之前，这里的四项是分开计算的，其中a不变，b其实就是第一篇论文的$e\_{ij}$计算部分，很显然，第一篇论文少了c和d
