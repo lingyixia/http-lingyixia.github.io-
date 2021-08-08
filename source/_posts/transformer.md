@@ -38,6 +38,14 @@ $D(qK^T)=D(\sum_0^{d_k}q_iK^T)=\sum_0^{d_k}D(K^T)=d_k \times 1=d_k$
 
 ##解释二
 很简单的方法，一个$d\_k$维的向量$q\_i$，去乘以$d\_k \times n$维度的向量，同时这个$d\_k \times n$的向量在$d\_k$的每个维度上(设第$i$个维度的随机变量为$X\_i$)均值为零，方差为1，现在要求相乘后得到的向量,即一个$n$维向量的均值和方差，其实这和乘不乘$q\_i$没关系，只和相乘的时候的加法有关系，最后$n$维度向量的均值$E=E(\sum\_{i=0}^{d\_k}X\_i)=d\_kE(X)=0$,同理$D(\sum\_{i=0}^{d\_k}X\_i)=\sum\_{i=0}^{d\_k}D(X)=d\_k$,因此要除以$\sqrt d\_k$.
+
+##解释三：复杂度$O(n^2)$(n为序列)
+三个步骤：
+1.$Q \times K^T$，其实就是$n \times d\_k$矩阵乘以$d\_k \times n$维矩阵，复杂度是$O(d\_kn^2)$
+2.$softmax(Q \times K^T)$,没什么好说的，复杂度$O(n^2)$
+3.$\frac{softmax(Q \times K^T)}{\sqrt{d_k}}$,就是一个$n\times d\_k$矩阵乘以$d\_k\times n$矩阵,复杂度$O(d\_k^2 \times n)$
+因此，去除常数$d\_k$,复杂度就是$O(n^2)$
+
 #ResNet And Norm
 残差网络的作用见[残差网络](https://www.jianshu.com/p/e58437f39f65),Norm的作用自然是加快收敛,防止梯度消失.
 #Feed-Forward

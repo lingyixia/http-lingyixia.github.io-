@@ -154,4 +154,8 @@ $$
 可以看出,此时的偏导数不再是连乘，而是连加,因此避免了梯度消失和梯度爆炸。
 
 #DenseNet
-先不写这个了
+一张图：
+![](\img\CNNdevelopment\densenet.jpg)
+两句话：
+* 每一层输入都是前面所有层输出的`contact`
+* 和`resnet`唯一的不同就是`restnet`是`add`,而`densenet`用的是`contact`

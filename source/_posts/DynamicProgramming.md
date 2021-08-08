@@ -21,25 +21,26 @@ $$
 ```
 string maxLengthSubstr(string s1, string s2)
 {
-	int maxLength = 0;
-	int index;
-	vector<vector<int>> dp(s1.size()+1, vector<int>(s2.size()+1));
-	for (int i = 1; i <= s1.size(); i++)
-	{
-		for (int j = 1; j <= s2.size(); j++)
-		{
-			if (s1[i-1] == s2[j-1])
-			{
-				dp[i][j] = dp[i - 1][j - 1] + 1;
-			}
-			if (dp[i][j] > maxLength)
-			{
-				maxLength = dp[i][j];
-				index = i;
-			}
-		}
-	}
-	return s1.substr(index - maxLength, maxLength);
+    int maxLength = 0;
+    int index;
+    vector<vector<int>> dp(s1.size() + 1, vector<int>(s2.size() + 1));
+    for(int i = 0; i < s1.size(); i++)
+    {
+        for(int j = 0; j < s2.size(); j++)
+        {
+            int left_up = i > 0 && j > 0 ? dp[i - 1][j - 1] : 0;
+            if(s1[i] == s2[j])
+            {
+                dp[i][j] = left_up + 1;
+            }
+            if(dp[i][j] > maxLength)
+            {
+                maxLength = dp[i][j];
+                index = i;
+            }
+        }
+    }
+    return s1.substr(index - maxLength, maxLength);
 }
 ```
 
@@ -54,35 +55,41 @@ dp[i-1][j-1]+1 & s1[i]=s2[j] \\
 $$
 
 ```
-int maxLengthSequence(string s1, string s2)
+string maxLengthSequence(string s1, string s2)
 {
-	vector<vector<int>> dp(s1.size()+1, vector<int>(s2.size()+1));
-	for (int i = 1; i <= s1.size(); i++)
-	{
-		for (int j = 1; j <= s2.size(); j++)
-		{
-			if (s1[i-1] == s2[j-1])
-			{
-				dp[i][j] = dp[i - 1][j - 1]+1;
-			}
-			else
-			{
-				dp[i][j] = max(dp[i - 1][j],dp[i][j - 1]);
-			}
-		}
-	}
-	for (int i =s1.size(),j=s2.size(); i>=1 && j>=1;)
-	{
-		if (s1[i - 1] == s2[j - 1])
-		{
-			cout << s1[i - 1]<<" ";
-			i--;
-			j--;
-		}
-		else if (dp[i][j-1] >= dp[i-1][j]) j--;
-		else i--;
-	}
-	return dp[s1.size()][s2.size()];
+    vector<vector<int>> dp(s1.size(), vector<int>(s2.size()));
+    string result = "";
+    for(int i = 0; i < s1.size(); ++i)
+    {
+        for(int j = 0; j < s2.size(); ++j)
+        {
+            int left_up = i > 0 && j > 0 ? dp[i - 1][j - 1] : 0;
+            int left = j > 0 ? dp[i][j - 1] : 0;
+            int up = i > 0 ? dp[i - 1][j] : 0;
+            if(s1[i] == s2[j])
+            {
+                dp[i][j] = left_up + 1;
+                //                dp[i][j] = max(left_up + 1, max(left, up));//本来应该是 这行代码，但是dp[i-1][j]和dp[i][j-1]最多比dp[i][j]大1，因此没必要这样写
+            }
+            else
+            {
+                dp[i][j] = max(left, up);
+            }
+        }
+    }
+    for(int i = s1.size() - 1, j = s2.size() - 1; i >= 0 && j >= 0;)
+    {
+        if(s1[i] == s2[j])
+        {
+            result.push_back(s1[i]);
+            i--;
+            j--;
+        }
+        else if(dp[i][j - 1] >= dp[i - 1][j]) j--;
+        else i--;
+    }
+    std::reverse(result.begin(), result.end());
+    return result;
 }
 ```
 
