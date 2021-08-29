@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>蓄水池采样算法 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="采样">
+    <meta name="description" content="蓄水池采样算法">
+<meta name="keywords" content="采样">
+<meta property="og:type" content="article">
+<meta property="og:title" content="蓄水池采样算法">
+<meta property="og:url" content="https://lingyixia.github.io/2019/04/14/PoolSampling/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="蓄水池采样算法">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-04T17:05:50.330Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="蓄水池采样算法">
+<meta name="twitter:description" content="蓄水池采样算法">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">蓄水池采样算法</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">蓄水池采样算法</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-14T11:25:54.000Z" itemprop="datePublished" class="page-time">
+  2019-04-14
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#问题叙述"><span class="post-toc-number">1.</span> <span class="post-toc-text">问题叙述</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#蓄水池采样算法"><span class="post-toc-number">2.</span> <span class="post-toc-text">蓄水池采样算法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#算法证明"><span class="post-toc-number">3.</span> <span class="post-toc-text">算法证明</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-PoolSampling"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">蓄水池采样算法</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-04-14 19:25:54" datetime="2019-04-14T11:25:54.000Z"  itemprop="datePublished">2019-04-14</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>蓄水池采样算法<br><a id="more"></a></p>
+<h1 id="问题叙述"><a href="#问题叙述" class="headerlink" title="问题叙述"></a>问题叙述</h1><p>常见采样方式有三种:</p>
+<ol>
+<li>从 100000 份调查报告中抽取 1000 份进行统计。</li>
+<li>从一本很厚的电话簿中抽取 1000 人进行姓氏统计。</li>
+<li>从 Google 搜索 “Ken Thompson”，从中抽取 100 个结果查看哪些是今年的。<br>对于第一种方式我们可以采用从[0,100000-1]中随机采样的方式,如果遇到已经采样的就重新采样,这样的方式如果遇到采样比例很高可能会遇到重新采样次数过多的情况.<br>对于第二种表述的是我们不知道总体是多少,也就无法确定随机范围.<br>对于第三种表述的是总体数据过于庞大,无法直接放到内存中.</li>
+</ol>
+<h1 id="蓄水池采样算法"><a href="#蓄水池采样算法" class="headerlink" title="蓄水池采样算法"></a>蓄水池采样算法</h1><p>为此我们引入蓄水池采样算法,该算法能够保证在$n$个数据中取$k$个,每个数据被采样的概率都是$\frac{k}{n}$。<br>算法语言描述:</p>
+<ol>
+<li>先选取$n$个元素中的前$k$个元素，保存在集合$A$中</li>
+<li>从第$i(k+1&lt;=i&lt;=n)$个元素开始，每次先以概率$\frac{k}{i}$选择是否让第个元素留下。若第$i$个元素存活，则从$A$中随机选择一个元素$j$并用该元素替换它;否则直接淘汰该元素;</li>
+<li>重复1和2<br>伪代码:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 取前k个数放到用来初始化数组池</span><br><span class="line">2. for i= k+1~n:</span><br><span class="line">3.     j = random(1,i)</span><br><span class="line">4.     if j&lt;=k:</span><br><span class="line">5.        swap(j,i)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>就这么简答！！！！</p>
+<h1 id="算法证明"><a href="#算法证明" class="headerlink" title="算法证明"></a>算法证明</h1><p>证明目标:对于这$n$个元素,我们要证明算法结束之后每个元素留下的概率都是$\frac{k}{n}$,现在把数据分为两部分,$k$之前和$k$之后。<br>证明:<br>对于第$I(I&lt;=k)$个元素,初始状态被留下的概率是1,到了第$k+1$步时,此时第$k+1$个数被留下的概率是$\frac{k}{k+1}$(代码第3、4行,也就是从(1,k+1)中取到的j是前k个),我们从当前数组池A中随机取一个用来替换第$j$个元素,正好取到$I$的概率是$\frac{1}{k}$,也就是说,该步中第$j$个数正好替换第$I$个数的概率是$\frac{k}{k+1} \times \frac{1}{k}=\frac{1}{k+1}$,其实说简单点也就是从(1,k+1)个数中正好取到第$I$个的概率.谨记我们的目标,我们要让第$I$个数留下,也就说第$k+1$步它留下的概率是$1-\frac{1}{k+1}=\frac{k}{k+1}$,同理,第$k+2$步它留下的概率是$\frac{k+1}{k+2}$,则到了第$n$步,它仍然留下的概率是:</p>
+<script type="math/tex; mode=display">
+1 \times \frac{k}{k+1} \times \frac{k+1}{k+2} \times \frac{k+2}{k+3} \times ... \times \frac{n-1}{n}=\frac{k}{n}</script><p>也就是说第$1$到$k$个元素留下的概率是$\frac{k}{n}$,下面再看第$k+1~n$个元素<br>对于第$J(k+1,n)$个元素,在第$J$步被选中留下的概率是$\frac{k}{J}$,下面我们要在剩下的步骤中让他不被替换,不被替换的概率在上面我们已经计算过了,则在$J+1$步不被替换的概率是$\frac{j}{J+1}$,则最终到第$n$步,第$J$个元素留下的概率是:</p>
+<script type="math/tex; mode=display">
+\frac{k}{j} \times \frac{j}{j+1} \times \frac{j+1}{j+2}... \times \frac{n-1}{n}=\frac{k}{n}</script><p>也就是说第$k+1$到$n$个元素留下的概率仍然是$\frac{k}{n}$<br>证毕!!!!!</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-04T17:05:50.330Z" itemprop="dateUpdated">2021-04-05 01:05:50</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/04/14/PoolSampling/" target="_blank" rel="external">https://lingyixia.github.io/2019/04/14/PoolSampling/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/采样/">采样</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/04/14/PoolSampling/&title=《蓄水池采样算法》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/14/PoolSampling/&title=《蓄水池采样算法》 — 灵翼俠的个人博客&source=蓄水池采样算法" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/04/14/PoolSampling/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《蓄水池采样算法》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/04/14/PoolSampling/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/04/14/PoolSampling/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/04/22/API/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">各种API收集</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/04/11/DynamicProgramming/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">动态规划系列</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/04/14/PoolSampling/&title=《蓄水池采样算法》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/14/PoolSampling/&title=《蓄水池采样算法》 — 灵翼俠的个人博客&source=蓄水池采样算法" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/04/14/PoolSampling/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《蓄水池采样算法》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/04/14/PoolSampling/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/04/14/PoolSampling/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3ay06EQBAFUP//p3FrooP3VjOT0JxeGUTgbMp6fX3F5/hxfl/P7391Z/tXw4OBgXFbxnF6Xt1zzjj/xPPryW//eC8GBsYDGMlH5J8+C9D5uzAwMDCSx0VBsA2aGBgYGG8OuEnimCeCGBgYGLMidtZiuwp2WS2OgYFxQ0bedf/8z2+Zb2BgYNyKcZRnZZzwxq/CwMDYmpEHuFmz7Px6MuAslj8wMDA2ZbRlZ9sma8eZ7eBzWD1jYGDclpEEu5Uk8tpWXZThYmBgbM24dni5klZGBTAGBsYDGPkjZsPIJAW8bFsEAwNjU0YbcNuw2Ba9+XsxMDCewMiLyc9sO6y0BTEwMHZltAsTeUDMw2W70rHUbsPAwLgho21yHaOzMmcs/iVgYGBszZi12JJPTFLMWZGMgYGBMRtSzjpgUdo36yNiYGBswciL1WSg2Iba9SdgYGA8gZGvNbRrEOuJYz1IwMDA2JrRNtRWlirWk8KiiMXAwNiIkQ8p87J2Rs1HmC9TQwwMjK0Z7WBgRs2RyTIHBgbG0xjvwCwtTJTDCQwMjF0ZswWvZC7aYvIRxbDyxsDAuC1jFuxmgTIPte0iGgYGxhMYSZCdrXMl+LbFVnQNMTAwtmPMlidmAXol7Xv5ZAwMDIy4yMwD66wl909FjoGBgREHzXbla9baWwq4GBgYN2QkRWwegtu0Mgdc0G7DwMC4IaNt7q+Xqe2YoR2OYmBgbMT4BvMSslABnqNfAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

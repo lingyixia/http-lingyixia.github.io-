@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>softmax | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="损失函数">
+    <meta name="description" content="参考原文">
+<meta name="keywords" content="损失函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="softmax">
+<meta property="og:url" content="https://lingyixia.github.io/2019/02/26/softmax/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="参考原文">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lingyixia.github.io/img/softmax1.jpg">
+<meta property="og:image" content="https://lingyixia.github.io/img/softmax2.jpg">
+<meta property="og:image" content="https://lingyixia.github.io/img/softmax3.jpg">
+<meta property="og:updated_time" content="2021-04-04T17:05:50.340Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="softmax">
+<meta name="twitter:description" content="参考原文">
+<meta name="twitter:image" content="https://lingyixia.github.io/img/softmax1.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">softmax</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">softmax</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-02-26T06:48:03.000Z" itemprop="datePublished" class="page-time">
+  2019-02-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/神经网络/">神经网络</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#softmax优势"><span class="post-toc-number">1.</span> <span class="post-toc-text">softmax优势</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#计算说明"><span class="post-toc-number">2.</span> <span class="post-toc-text">计算说明</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#举例说明"><span class="post-toc-number">3.</span> <span class="post-toc-text">举例说明</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-softmax"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">softmax</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-02-26 14:48:03" datetime="2019-02-26T06:48:03.000Z"  itemprop="datePublished">2019-02-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/神经网络/">神经网络</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><a href="https://zhuanlan.zhihu.com/p/25723112" target="_blank" rel="noopener">参考原文</a><br><a id="more"></a></p>
+<h1 id="softmax优势"><a href="#softmax优势" class="headerlink" title="softmax优势"></a>softmax优势</h1><ol>
+<li>计算loss公式方便</li>
+<li>反向传播容易计算</li>
+</ol>
+<h1 id="计算说明"><a href="#计算说明" class="headerlink" title="计算说明"></a>计算说明</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/softmax1.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<script type="math/tex; mode=display">
+z_4 = w_{41}*o_1+w_{42}*o_2+w_{43}*o_3 \\
+z_5 = w_{51}*o_1+w_{52}*o_2+w_{53}*o_3 \\
+z_6 = w_{61}*o_1+w_{62}*o_2+w_{63}*o_3</script><p>$z_4,z_5,z_6$分别代表结点4,5,6的输出<br>计算<code>softmax</code></p>
+<script type="math/tex; mode=display">
+a_4=\frac{e^{z_4}}{e^{z_4}+e^{z_5}+e^{z_6}} \\
+a_5=\frac{e^{z_5}}{e^{z_4}+e^{z_5}+e^{z_6}} \\
+a_6=\frac{e^{z_6}}{e^{z_4}+e^{z_5}+e^{z_6}}</script><p>要求梯度,首先需要定义<code>loss</code>,计算交叉熵损失函数为:</p>
+<script type="math/tex; mode=display">
+Loss= -\sum_i y_i\ln a_i</script><p>其中,$y_i$是上诉$z_4,z_5,z_6$,$a_i$是标签。<br>看起来很复杂,其实实际情况下的$a_i$一般只是一个为1,其他都为0,故:</p>
+<script type="math/tex; mode=display">
+Loss = y_j \ln a_j</script><p>当标签为1的时候:</p>
+<script type="math/tex; mode=display">
+Loss = \ln a_j</script><p>也就是第一条优势:<strong>损失函数简单</strong><br>下面我们计算梯度,如我要求出<script type="math/tex">w_{41},w_{42},w_{43}</script>的偏导，就需要将Loss函数求偏导传到结点4，然后再利用链式法则继续求导即可.</p>
+<p>情况一:j=i,比如此时求$w_{41}$的偏导($a_4$对应的标签为1),则:</p>
+<script type="math/tex; mode=display">
+\frac{\partial Loss}{\partial w_{41}}=\frac{\partial Loss}{\partial a_4} \times \frac{\partial a_4}{\partial z_4} \times \frac{\partial z_4}{\partial w_{41}}</script><p>易知:</p>
+<script type="math/tex; mode=display">
+\frac{\partial Loss}{\partial a_4}=-\frac{1}{a_4} \\
+\frac{\partial z_4}{\partial w_{41}} =o_1</script><p>关键点在于求$\frac{\partial a_4}{\partial z_4}$</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial a_4}{\partial z_4} &= \frac{e^{z_4}(e^{z_5}+e^{z_6})}{e^{z_4}+e^{z_5}+e^{z_6}} \\
+&= a_4(1-a_4)
+\end{align}</script><p>如图所示:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/softmax2.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>相乘得到最终公式:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial Loss}{\partial w_{41}} &=-\frac{1}{a_4} \times a_4(1-a_4) \times o_1 \\
+&=(a_4-1) \times o_1
+\end{align}</script><p>即:</p>
+<script type="math/tex; mode=display">
+\frac{\partial Loss}{\partial z_4}=a_4-1</script><blockquote>
+<blockquote>
+<p>形式非常简单，这说明我只要正向求一次得出结果，然后反向传梯度的时候，只需要将它结果减1即可。</p>
+</blockquote>
+</blockquote>
+<p>情况二:j!=i,比如此时求$w_{51}$的偏导,$a_4$对应的标签为1,则:</p>
+<script type="math/tex; mode=display">
+\frac{\partial Loss}{\partial w_{51}}=\frac{\partial Loss}{\partial a_4} \times \frac{\partial a_4}{\partial z_5} \times \frac{\partial z_5}{\partial w_{51}}</script><p>关键点在于求$\frac{\partial a_4}{\partial z_5}$</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial a_4}{\partial a_5} &=-\frac{e^{z_4}e^{z_5}}{(e^{z_4}+e^{z_5}+e^{z_6})^2} \\
+&= -a_4a_5
+\end{align}</script><p>如图所示:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/softmax3.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>相乘得到最终公式:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial Loss}{\partial w_{51}} &=-\frac{1}{a_4} \times (-a_4a_5) \times o_1 \\
+&=a_5 \times o_1
+\end{align}</script><p>即:</p>
+<script type="math/tex; mode=display">
+\frac{\partial Loss}{\partial z_5}=a_5</script><blockquote>
+<blockquote>
+<p>形式非常简单，这说明我只要正向求一次得出结果，然后反向传梯度的时候，只需要将它结果保存即可</p>
+</blockquote>
+</blockquote>
+<h1 id="举例说明"><a href="#举例说明" class="headerlink" title="举例说明"></a>举例说明</h1><p>举个例子，通过若干层的计算，最后得到的某个训练样本的向量的分数是[ 2, 3, 4 ],<br>那么经过softmax函数作用后概率分别就是$[\frac{e^{2} }{e^{2}+e^{3}+e^{4}}<br>,\frac{e^{3} }{e^{2}+e^{3}+e^{4}} ,\frac{e^{4} }{e^{2}+e^{3}+e^{4}} ]$,[0.0903,0.2447,0.665],如果这个样本正确的分类是第二个的话，那么计算出来的偏导就是[0.0903,0.2447-1,0.665]=[0.0903,-0.7553,0.665]，是不是非常简单！！然后再根据这个进行back propagation就可以了</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-04T17:05:50.340Z" itemprop="dateUpdated">2021-04-05 01:05:50</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/02/26/softmax/" target="_blank" rel="external">https://lingyixia.github.io/2019/02/26/softmax/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/损失函数/">损失函数</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/02/26/softmax/&title=《softmax》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/02/26/softmax/&title=《softmax》 — 灵翼俠的个人博客&source=参考原文" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/02/26/softmax/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《softmax》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/02/26/softmax/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/02/26/softmax/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/02/27/optimize/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">优化问题</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/02/23/ViEmu/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">ViEmu免费30天破解</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/02/26/softmax/&title=《softmax》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/02/26/softmax/&title=《softmax》 — 灵翼俠的个人博客&source=参考原文" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/02/26/softmax/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《softmax》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/02/26/softmax/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/02/26/softmax/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIUlEQVR42u3a0W7DIAwF0P7/T3evm7ZU15hMijl5qpo0cKhkGePXK77eH6/vz1w9//nNv3/1uuPCwMB4LCOf4t3f5Hf/oGJgYBzASEJhgi8P/3Gs5HkMDAyMPIFbC6/V5cPAwMCoBsHqZjUP4hgYGBj9UtpavStZiNv34hgYGA9k5FX3//98y/kGBgbGoxjv4vU5HUyC9a6Z/BgFAwNjNKM/TLUYl3xTnQ8GBsYJjP4h4lrhLGcUkkUMDIxxjLVkLgmveYisFub+eBsGBsZoRjXtyw8+87vVoLwhe8XAwHgsYy1xzCfXCbXRbDEwMIYyNjdmBYBOcC/8DxgYGIMY1eHzhagG1mrQj4IvBgbGIMZaQ2oyfKd1I6n5Y2BgnMColreqdztJYSFNxMDAGM1Itq/VpDAPyvmIheXGwMAYx9jbClY9VOi0wF6mhhgYGEMZ1e1lvjXtF9Si5zEwMI5k5JvMtUPKftiNWlcxMDBGMHaV2HadUeRTx8DAOJmRb2vXJtRPHC9nhYGBcRij2iRRDo5x+C5QMTAwDmMkG9fFrWaDGrVZYGBgjGO8i1dnCdbCa/RODAyM0YzqYeHeSXeWJt/6YmBgzGCsNU/kZbhqqpdQL8ttGBgYoxl54FsLzZ2D0giJgYGB0WiSWCu0bWsLw8DAOJhxXyKYN3ZsCLgYGBiPYqy1VuxKE3PAhnIbBgbGAxn5hKqvyxvOOqNjYGCMZnwBVG6TYcH3TzkAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

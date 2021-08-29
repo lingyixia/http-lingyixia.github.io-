@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>排序算法 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="排序">
+    <meta name="description" content="各种排序算法总结">
+<meta name="keywords" content="排序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序算法">
+<meta property="og:url" content="https://lingyixia.github.io/2018/11/20/sort/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="各种排序算法总结">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-04T17:05:50.340Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="排序算法">
+<meta name="twitter:description" content="各种排序算法总结">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">排序算法</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">排序算法</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-11-20T02:11:08.000Z" itemprop="datePublished" class="page-time">
+  2018-11-20
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#交换类排序"><span class="post-toc-number">1.</span> <span class="post-toc-text">交换类排序:</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#冒泡排序"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">冒泡排序</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#快速排序"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">快速排序</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#二路快速排序"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">二路快速排序</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#三路快速排序"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">三路快速排序</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#单链表快速排序"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">单链表快速排序</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#插入排序"><span class="post-toc-number">2.</span> <span class="post-toc-text">插入排序</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#直接插入排序"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">直接插入排序</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#希尔排序"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">希尔排序</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#选择类排序"><span class="post-toc-number">3.</span> <span class="post-toc-text">选择类排序</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#简单选择排序"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">简单选择排序</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#堆排序"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">堆排序</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#归并排序-二路"><span class="post-toc-number">4.</span> <span class="post-toc-text">归并排序(二路)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#由上向下-递归"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">由上向下-递归</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#单链表归并排序"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">单链表归并排序</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#计数排序"><span class="post-toc-number">5.</span> <span class="post-toc-text">计数排序</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#桶排序"><span class="post-toc-number">6.</span> <span class="post-toc-text">桶排序</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#基数排序"><span class="post-toc-number">7.</span> <span class="post-toc-text">基数排序</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-sort"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">排序算法</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-11-20 10:11:08" datetime="2018-11-20T02:11:08.000Z"  itemprop="datePublished">2018-11-20</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>排序算法大概分为:交换类(快速排序和冒泡排序),插入类(简单插入排序和希尔排序),选择类(简单选择排序和堆排序),归并类(二路归并排序和多路归并排序),以下算法全部以增序为例<br><a id="more"></a></p>
+<h1 id="交换类排序"><a href="#交换类排序" class="headerlink" title="交换类排序:"></a>交换类排序:</h1><h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><blockquote>
+<blockquote>
+<p>一共进行$n-1$轮次(最后一轮没必要,因为就剩一个了顺序已经排好),每一轮把第$[0,1,2,3…,i]$小的上浮。</p>
+</blockquote>
+</blockquote>
+<p>实例代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line">#include&lt;ctime&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">void bubbleSort(vector&lt;int&gt;&amp; array);</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	clock_t startTime, endTime;</span><br><span class="line">	startTime = clock();//计时开始</span><br><span class="line">	vector&lt;int&gt; array = &#123;5, 1, 9, 3, 7, 4, 8, 6, 2 &#125;;</span><br><span class="line">	bubbleSort(arrray);</span><br><span class="line">	endTime = clock();//计时结束</span><br><span class="line">	cout &lt;&lt; &quot;总计时长&quot; &lt;&lt; (double)(endTime - startTime) / CLOCKS_PER_SEC &lt;&lt; &quot;s&quot; &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">void bubbleSort(vector&lt;int&gt;&amp; array)</span><br><span class="line">&#123;</span><br><span class="line">	bool flag = true;//flag为false的意义为i之后的已经不需要排序了</span><br><span class="line">	for (int i = 0; i &lt; array.size() &amp;&amp; flag; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		flag = false;</span><br><span class="line">		for (int j = array.size() - 2; j &gt;= i; j--)</span><br><span class="line">		&#123;</span><br><span class="line">			if (array[j] &gt; array[j + 1])</span><br><span class="line">			&#123;</span><br><span class="line">				swap(array[j], array[j + 1]);</span><br><span class="line">				flag = true;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>总结分析:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">时间</th>
+<th style="text-align:center">最好</th>
+<th style="text-align:center">最坏</th>
+<th style="text-align:center">空间</th>
+<th style="text-align:center">稳定</th>
+<th style="text-align:center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">冒泡排序</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(n)$</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(1)$</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">每一轮都有一个元素到最终位置上</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><blockquote>
+<blockquote>
+<p>把一个序列,选一个数(第一个数)进行划分。左边小于x,中间x,右边大于x。再依次递归划分左右两边。</p>
+</blockquote>
+</blockquote>
+<p>实例代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line">#include&lt;ctime&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">void Qsort(vector&lt;int&gt;&amp; array,int low,int high);//快速排序</span><br><span class="line">int Partition(vector&lt;int&gt;&amp; array, int low, int high);</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	clock_t startTime, endTime;</span><br><span class="line">	startTime = clock();//计时开始</span><br><span class="line">	vector&lt;int&gt; array = &#123;5, 1, 9, 3, 7, 4, 8, 6, 2 &#125;;</span><br><span class="line">	Qsort(array,0,array.size()-1);</span><br><span class="line">	endTime = clock();//计时结束</span><br><span class="line">	cout &lt;&lt; &quot;总计时长&quot; &lt;&lt; (double)(endTime - startTime) / CLOCKS_PER_SEC &lt;&lt; &quot;s&quot; &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">void Qsort(vector&lt;int&gt;&amp; array, int low, int high)</span><br><span class="line">&#123;</span><br><span class="line">	int privot;</span><br><span class="line">	if (low&lt;high)</span><br><span class="line">	&#123;</span><br><span class="line">		privot = Partition(array, low, high);</span><br><span class="line">		Qsort(array,low,privot-1);</span><br><span class="line">		Qsort(array, privot + 1, high);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">int Partition(vector&lt;int&gt;&amp; array, int low, int high)</span><br><span class="line">&#123;</span><br><span class="line">    int privotKey = array[low];</span><br><span class="line">	while (low&lt;high)</span><br><span class="line">	&#123;</span><br><span class="line">		while (low&lt;high&amp;&amp;array[high]&gt;=privotKey)//改为&gt;则会使结果相同的数字在最终枢轴坐标左侧</span><br><span class="line">		&#123;</span><br><span class="line">			high--;</span><br><span class="line">		&#125;</span><br><span class="line">		array[low] = array[high];</span><br><span class="line">		while (low &lt; high&amp;&amp;array[low] &lt;= privotKey)//改为&lt;则会使结果相同的数字在最终枢轴坐标右侧</span><br><span class="line">		&#123;</span><br><span class="line">			low++;</span><br><span class="line">		&#125;</span><br><span class="line">		array[high] = array[low];</span><br><span class="line">	&#125;</span><br><span class="line">	array[low] = privotKey;</span><br><span class="line">	return low;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>总结分析:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">时间</th>
+<th style="text-align:center">最好</th>
+<th style="text-align:center">最坏</th>
+<th style="text-align:center">空间</th>
+<th style="text-align:center">稳定</th>
+<th style="text-align:center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">快速排序</td>
+<td style="text-align:center">$O(nlogn)$</td>
+<td style="text-align:center">$O(nlogn)$</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">栈的深度$O(log_2n)$</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">基本有序或者基本逆序，效果最差</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="二路快速排序"><a href="#二路快速排序" class="headerlink" title="二路快速排序"></a>二路快速排序</h2><blockquote>
+<blockquote>
+<p>目的是处理数组中重复数据多,容易使时间复杂度退化到$n^2$的问题</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;ctime&gt;</span><br><span class="line">#include&lt;ctime&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">void swap(vector&lt;int&gt;&amp; array, int p, int q);</span><br><span class="line">void Qsort(vector&lt;int&gt;&amp; array, int low, int high);//二路快速排序+随机化</span><br><span class="line">int Partition2(vector&lt;int&gt;&amp; array, int low, int high);</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	clock_t startTime, endTime;</span><br><span class="line">	srand((unsigned)time(NULL));</span><br><span class="line">	startTime = clock();//计时开始</span><br><span class="line">	vector&lt;int&gt; array = &#123; 5, 1, 9, 3, 7, 4, 8, 6, 2 &#125;;</span><br><span class="line">	Qsort(array, 0, array.size() - 1);</span><br><span class="line">	endTime = clock();//计时结束</span><br><span class="line">	cout &lt;&lt; &quot;总计时长&quot; &lt;&lt; (double)(endTime - startTime) / CLOCKS_PER_SEC &lt;&lt; &quot;s&quot; &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">void Qsort(vector&lt;int&gt;&amp; array, int low, int high)</span><br><span class="line">&#123;</span><br><span class="line">	int privot;</span><br><span class="line">	if (low&lt;high)</span><br><span class="line">	&#123;</span><br><span class="line">		privot = Partition2(array, low, high);</span><br><span class="line">		Qsort(array, low, privot - 1);</span><br><span class="line">		Qsort(array, privot + 1, high);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int Partition2(vector&lt;int&gt;&amp; array, int low, int high)</span><br><span class="line">&#123;</span><br><span class="line">	swap(array,low,low + rand()%(high-low+1));</span><br><span class="line">	int privotKey = array[low];</span><br><span class="line">	int lowP = low+1;</span><br><span class="line">	int highP = high;</span><br><span class="line">	while (true)</span><br><span class="line">	&#123;</span><br><span class="line">		while (lowP&lt;=highP&amp;&amp;array[lowP] &lt; privotKey)</span><br><span class="line">		&#123;</span><br><span class="line">			lowP++;</span><br><span class="line">		&#125;</span><br><span class="line">		while (highP&gt;= lowP+1&amp;&amp;array[highP] &gt; privotKey)</span><br><span class="line">		&#123;</span><br><span class="line">			highP--;</span><br><span class="line">		&#125;</span><br><span class="line">		if (lowP &gt; highP) break;</span><br><span class="line">		swap(array,lowP,highP);</span><br><span class="line">		highP--;</span><br><span class="line">		lowP++;</span><br><span class="line">	&#125;</span><br><span class="line">	swap(array,low,highP);</span><br><span class="line">	return highP;</span><br><span class="line">&#125;</span><br><span class="line">void swap(vector&lt;int&gt;&amp; array, int p, int q)</span><br><span class="line">&#123;</span><br><span class="line">	int temp = array[p];</span><br><span class="line">	array[p] = array[q];</span><br><span class="line">	array[q] = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="三路快速排序"><a href="#三路快速排序" class="headerlink" title="三路快速排序"></a>三路快速排序</h2><blockquote>
+<blockquote>
+<p>目的是处理数组中重复数据多,容易使时间复杂度退化到$n^2$的问题</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;cstdlib&gt;</span><br><span class="line">#include&lt;ctime&gt;</span><br><span class="line">#include&lt;ctime&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">void swap(vector&lt;int&gt;&amp; array, int p, int q);</span><br><span class="line">void Qsort3(vector&lt;int&gt;&amp; array, int low, int high);</span><br><span class="line">vector&lt;int&gt; Partition3(vector&lt;int&gt;&amp; array, int low, int high);</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	clock_t startTime, endTime;</span><br><span class="line">	srand((unsigned)time(NULL));</span><br><span class="line">	startTime = clock();//计时开始</span><br><span class="line">	vector&lt;int&gt; array = &#123; 5, 1, 9, 3, 7, 4, 8, 6, 2 &#125;;</span><br><span class="line">	Qsort3(array, 0, array.size() - 1);</span><br><span class="line">	endTime = clock();//计时结束</span><br><span class="line">	cout &lt;&lt; &quot;总计时长&quot; &lt;&lt; (double)(endTime - startTime); // CLOCKS_PER_SEC &lt;&lt; &quot;s&quot; &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">void Qsort3(vector&lt;int&gt;&amp; array, int low, int high)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; privots;</span><br><span class="line">	if (low&lt;high)</span><br><span class="line">	&#123;</span><br><span class="line">		privots = Partition3(array, low, high);</span><br><span class="line">		Qsort3(array, low, privots[0]);</span><br><span class="line">		Qsort3(array, privots[1], high);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">vector&lt;int&gt; Partition3(vector&lt;int&gt;&amp; array, int low, int high)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; privots;</span><br><span class="line">	swap(array, low, low + rand() % (high - low + 1));</span><br><span class="line">	int privotKey = array[low];</span><br><span class="line">	int lowP = low;</span><br><span class="line">	int highP = high+1;</span><br><span class="line">	int pos = low + 1;</span><br><span class="line">	while (pos&lt;highP)</span><br><span class="line">	&#123;</span><br><span class="line">		if (array[pos]&lt;privotKey)</span><br><span class="line">		&#123;</span><br><span class="line">			swap(array,lowP+1,pos);</span><br><span class="line">			pos++;</span><br><span class="line">			lowP++;</span><br><span class="line">		&#125;</span><br><span class="line">		else if (array[pos] &gt; privotKey)</span><br><span class="line">		&#123;</span><br><span class="line">			swap(array,highP-1,pos);</span><br><span class="line">			highP--;</span><br><span class="line">		&#125;</span><br><span class="line">		else</span><br><span class="line">		&#123;</span><br><span class="line">			pos++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	swap(array, low, lowP);</span><br><span class="line">	privots.push_back(lowP-1);</span><br><span class="line">	privots.push_back(highP);</span><br><span class="line">	return privots;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void swap(vector&lt;int&gt;&amp; array, int p, int q)</span><br><span class="line">&#123;</span><br><span class="line">	int temp = array[p];</span><br><span class="line">	array[p] = array[q];</span><br><span class="line">	array[q] = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="单链表快速排序"><a href="#单链表快速排序" class="headerlink" title="单链表快速排序"></a>单链表快速排序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">struct ListNode</span><br><span class="line">&#123;</span><br><span class="line">    ListNode *next;</span><br><span class="line">    int val;</span><br><span class="line"></span><br><span class="line">    ListNode(int val) : val(val), next(nullptr)</span><br><span class="line">    &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">//个函数很重要需要特别主意，它可以用一次遍历把一个单链表分为&#123;小于key&#125;key&#123;大于key&#125;三部分</span><br><span class="line">ListNode *partition(ListNode *start, ListNode *end)</span><br><span class="line">&#123;</span><br><span class="line">    int key = start-&gt;val;</span><br><span class="line">    ListNode *slow = start;</span><br><span class="line">    ListNode *fast = slow-&gt;next;</span><br><span class="line">    while (fast != end)</span><br><span class="line">    &#123;</span><br><span class="line">        if (fast-&gt;val &lt;= key)</span><br><span class="line">        &#123;</span><br><span class="line">            slow=slow-&gt;next;</span><br><span class="line">            swap(fast-&gt;val, slow-&gt;val);</span><br><span class="line">        &#125;</span><br><span class="line">        fast = fast-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    swap(start-&gt;val, slow-&gt;val);</span><br><span class="line">    return slow;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void quickSort(ListNode *start, ListNode *end)</span><br><span class="line">&#123;</span><br><span class="line">    if (start != end)</span><br><span class="line">    &#123;</span><br><span class="line">        ListNode *index = partition(start, end);</span><br><span class="line">        quickSort(start, index);</span><br><span class="line">        quickSort(index-&gt;next, end);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    ListNode *head = new ListNode(3);</span><br><span class="line">    ListNode *work = head;</span><br><span class="line">    ListNode *p = new ListNode(1);</span><br><span class="line">    work-&gt;next = p;</span><br><span class="line">    work = work-&gt;next;</span><br><span class="line">    p = new ListNode(3);</span><br><span class="line">    work-&gt;next = p;</span><br><span class="line">    work = work-&gt;next;</span><br><span class="line">    p = new ListNode(5);</span><br><span class="line">    work-&gt;next = p;</span><br><span class="line">    work = work-&gt;next;</span><br><span class="line">    p = new ListNode(4);</span><br><span class="line">    work-&gt;next = p;</span><br><span class="line">    work = work-&gt;next;</span><br><span class="line">    quickSort(head,NULL);</span><br><span class="line">    while (head)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;head-&gt;val&lt;&lt;&quot; &quot;;</span><br><span class="line">        head=head-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h1><h2 id="直接插入排序"><a href="#直接插入排序" class="headerlink" title="直接插入排序"></a>直接插入排序</h2><blockquote>
+<blockquote>
+<p>前面的已经有序,把后面的插入到前面有序的元素中,不断增长有序序列。<br>1.找到待插入位置<br>2.给插入元素腾出空间,边比较边移动</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line">#include&lt;ctime&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">void directInsertSort(vector&lt;int&gt;&amp; array);</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	clock_t startTime, endTime;</span><br><span class="line">	startTime = clock();//计时开始</span><br><span class="line">	vector&lt;int&gt; array = &#123;5, 1, 9, 3, 7, 4, 8, 6, 2 &#125;;</span><br><span class="line">	directInsertSort(array);</span><br><span class="line">	endTime = clock();//计时结束</span><br><span class="line">	cout &lt;&lt; &quot;总计时长&quot; &lt;&lt; (double)(endTime - startTime) / CLOCKS_PER_SEC &lt;&lt; &quot;s&quot; &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">void directInsertSort(vector&lt;int&gt;&amp; array)</span><br><span class="line">&#123;</span><br><span class="line">	for (int i = 1; i &lt; array.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		int temp = array[i];</span><br><span class="line">		int j = i - 1;</span><br><span class="line">		while (j &gt;= 0 &amp;&amp; temp &lt; array[j])</span><br><span class="line">		&#123;</span><br><span class="line">			array[j + 1] = array[j];</span><br><span class="line">			j--;</span><br><span class="line">		&#125;</span><br><span class="line">		array[j + 1] = temp;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总结分析:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">时间</th>
+<th style="text-align:center">最好</th>
+<th style="text-align:center">最坏</th>
+<th style="text-align:center">空间</th>
+<th style="text-align:center">稳定</th>
+<th style="text-align:center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">直接插入排序</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(n)$</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(1)$</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">适用于顺序存储</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h2><blockquote>
+<blockquote>
+<p>希尔排序又称为<code>缩小增量</code>排序,把整个列表分成多个$L[i,i+d,i+2d…i+kd]$<br>这样的列表，每个进行直接插入排序。每一轮不断缩小d的值,直到全部有序(最后的d是1)。</p>
+</blockquote>
+</blockquote>
+<p>实例代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line">#include&lt;ctime&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">void shellSort(vector&lt;int&gt;&amp; array);//其实就相当于直接插入排序</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	clock_t startTime, endTime;</span><br><span class="line">	startTime = clock();//计时开始</span><br><span class="line">	vector&lt;int&gt; array = &#123;5, 1, 9, 3, 7, 4, 8, 6, 2 &#125;;</span><br><span class="line">	shellSort(array);</span><br><span class="line">	endTime = clock();//计时结束</span><br><span class="line">	cout &lt;&lt; &quot;总计时长&quot; &lt;&lt; (double)(endTime - startTime) / CLOCKS_PER_SEC &lt;&lt; &quot;s&quot; &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">void shellSort(vector&lt;int&gt;&amp; array)</span><br><span class="line">&#123;</span><br><span class="line">	int increment = array.size();</span><br><span class="line">	do</span><br><span class="line">	&#123;</span><br><span class="line">		increment = increment / 3 + 1;</span><br><span class="line">		for (int i = increment; i&lt;array.size(); i++)</span><br><span class="line">		&#123;</span><br><span class="line">			int temp = array[i];</span><br><span class="line">			int j = i - increment;</span><br><span class="line">			while (j&gt;=0 &amp;&amp; temp&lt;array[j])</span><br><span class="line">			&#123;</span><br><span class="line">				array[j + increment] = array[j];</span><br><span class="line">				j -= increment;</span><br><span class="line">			&#125;</span><br><span class="line">			array[j + increment] = temp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; while (increment&gt;1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>总结分析:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">时间</th>
+<th style="text-align:center">最好</th>
+<th style="text-align:center">最坏</th>
+<th style="text-align:center">空间</th>
+<th style="text-align:center">稳定</th>
+<th style="text-align:center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">希尔排序</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">$O(n^{1.3})$</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(1)$</td>
+<td style="text-align:center">否</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="选择类排序"><a href="#选择类排序" class="headerlink" title="选择类排序"></a>选择类排序</h1><h2 id="简单选择排序"><a href="#简单选择排序" class="headerlink" title="简单选择排序"></a>简单选择排序</h2><blockquote>
+<blockquote>
+<p>前面已经有序,后面选择最小的与前面交换,从有序序列尾不断增长有序序列</p>
+</blockquote>
+</blockquote>
+<p>实例代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line">#include&lt;ctime&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">void easySelectSort(vector&lt;int&gt;&amp; array);//简单选择排序(适用于数组，链表涉及到交换)</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	clock_t startTime, endTime;</span><br><span class="line">	startTime = clock();//计时开始</span><br><span class="line">	vector&lt;int&gt; array = &#123;5, 1, 9, 3, 7, 4, 8, 6, 2 &#125;;</span><br><span class="line">	easySelectSort(array);</span><br><span class="line">	endTime = clock();//计时结束</span><br><span class="line">	cout &lt;&lt; &quot;总计时长&quot; &lt;&lt; (double)(endTime - startTime) / CLOCKS_PER_SEC &lt;&lt; &quot;s&quot; &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>总结分析:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">时间</th>
+<th style="text-align:center">最好</th>
+<th style="text-align:center">最坏</th>
+<th style="text-align:center">空间</th>
+<th style="text-align:center">稳定</th>
+<th style="text-align:center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">简单选择排序</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(n^2)$</td>
+<td style="text-align:center">$O(1)$</td>
+<td style="text-align:center">否</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><blockquote>
+<blockquote>
+<p>最好索引从1开始!!!!设当前节点是号是n,当索引从1开始时2*n正处于子树中,而索引从0开始时不然。</p>
+</blockquote>
+</blockquote>
+<p>实例代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line">#include&lt;ctime&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">void heapSort(vector&lt;int&gt;&amp; array);//堆排序必须从1开始，因为若是从0开始当前下标乘以2后的位置就不是当前节点的孩子节点了</span><br><span class="line">void heapAdjust(vector&lt;int&gt;&amp; array, int start, int end);</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	clock_t startTime, endTime;</span><br><span class="line">	startTime = clock();//计时开始</span><br><span class="line">	vector&lt;int&gt; array = &#123;5, 1, 9, 3, 7, 4, 8, 6, 2 &#125;;</span><br><span class="line">	heapSort(array);</span><br><span class="line">	endTime = clock();//计时结束</span><br><span class="line">	cout &lt;&lt; &quot;总计时长&quot; &lt;&lt; (double)(endTime - startTime) / CLOCKS_PER_SEC &lt;&lt; &quot;s&quot; &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">void heapSort(vector&lt;int&gt;&amp; array)</span><br><span class="line">&#123;</span><br><span class="line">	for (int i = (array.size()-1)/2; i &gt;=1; i--)</span><br><span class="line">	&#123;</span><br><span class="line">		heapAdjust(array, i, array.size()-1);</span><br><span class="line">	&#125;</span><br><span class="line">	for (int i = array.size()-1; i &gt; 1; i--)//之所以是&gt;1而不是&gt;=1是因为只剩一个没必要了</span><br><span class="line">	&#123;</span><br><span class="line">		swap(array[1],array[i]);</span><br><span class="line">		heapAdjust(array,1,i-1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">void heapAdjust(vector&lt;int&gt;&amp; array,int start,int end)</span><br><span class="line">&#123;</span><br><span class="line">	int temp = array[start];</span><br><span class="line">	for (int i = start*2; i &lt;= end ; i*=2)</span><br><span class="line">	&#123;</span><br><span class="line">		if (i+1&lt;=end &amp;&amp; array[i]&lt;array[i+1])//判断+1后是否越界</span><br><span class="line">		&#123;</span><br><span class="line">			i++;</span><br><span class="line">		&#125;</span><br><span class="line">		if (temp&gt;=array[i])</span><br><span class="line">		&#123;</span><br><span class="line">			break;//注意！！！！！无需continue,因为开始建堆的时候就是从下向上调整的，上面不变动下面就肯定不需要变动</span><br><span class="line">		&#125;</span><br><span class="line">		array[start] = array[i];</span><br><span class="line">		start = i;</span><br><span class="line">	&#125;</span><br><span class="line">	array[start] = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>分析总结:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">时间</th>
+<th style="text-align:center">最好</th>
+<th style="text-align:center">最坏</th>
+<th style="text-align:center">空间</th>
+<th style="text-align:center">稳定</th>
+<th style="text-align:center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">堆排序</td>
+<td style="text-align:center">$O(nlogn)$</td>
+<td style="text-align:center">$O(nlogn)$</td>
+<td style="text-align:center">$O(nlogn)$</td>
+<td style="text-align:center">$O(1)$</td>
+<td style="text-align:center">否</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="归并排序-二路"><a href="#归并排序-二路" class="headerlink" title="归并排序(二路)"></a>归并排序(二路)</h1><h2 id="由上向下-递归"><a href="#由上向下-递归" class="headerlink" title="由上向下-递归"></a>由上向下-递归</h2><blockquote>
+<blockquote>
+<p>归并排序的形式是一颗二叉树，遍历的次数就是二叉树的深度$O(logn)$,一共n个数</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line">递归:</span><br><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line">#include&lt;ctime&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">void mergeSort(vector&lt;int&gt;&amp; array, int left, int right);//归并排序</span><br><span class="line">void merge(vector&lt;int&gt;&amp; array, int left, int mid, int right);</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	clock_t startTime, endTime;</span><br><span class="line">	startTime = clock();//计时开始</span><br><span class="line">	vector&lt;int&gt; array = &#123;5, 1, 9, 3, 7, 4, 8, 6, 2 &#125;;</span><br><span class="line">	mergeSort(array,0,array.size()-1);</span><br><span class="line">	endTime = clock();//计时结束</span><br><span class="line">	cout &lt;&lt; &quot;总计时长&quot; &lt;&lt; (double)(endTime - startTime) / CLOCKS_PER_SEC &lt;&lt; &quot;s&quot; &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">void mergeSort(vector&lt;int&gt;&amp; array,int left,int right)</span><br><span class="line">&#123;</span><br><span class="line">	if (left&lt;right)</span><br><span class="line">	&#123;</span><br><span class="line">		int mid = (left + right) / 2;</span><br><span class="line">		mergeSort(array,left,mid);</span><br><span class="line">		mergeSort(array, mid+1, right);</span><br><span class="line">		merge(array,left,mid,right);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">void merge(vector&lt;int&gt;&amp; array,int left,int mid,int right)</span><br><span class="line">&#123;</span><br><span class="line">	int i = left;</span><br><span class="line">	int j = mid + 1;</span><br><span class="line">	vector&lt;int&gt; temp;</span><br><span class="line">	while (i&lt;=mid &amp;&amp; j&lt;=right)</span><br><span class="line">	&#123;</span><br><span class="line">		if (array[i]&lt;array[j])</span><br><span class="line">		&#123;</span><br><span class="line">			temp.push_back(array[i++]);</span><br><span class="line">		&#125;</span><br><span class="line">		else</span><br><span class="line">		&#123;</span><br><span class="line">			temp.push_back(array[j++]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	while (i&lt;=mid)</span><br><span class="line">	&#123;</span><br><span class="line">		temp.push_back(array[i++]);</span><br><span class="line">	&#125;</span><br><span class="line">	while (j&lt;=right)</span><br><span class="line">	&#123;</span><br><span class="line">		temp.push_back(array[j++]);</span><br><span class="line">	&#125;</span><br><span class="line">	for (int i = 0; i &lt; temp.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		array[left+i] = temp[i];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">非递归:</span><br><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line">#include&lt;ctime&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">void merge(vector&lt;int&gt;&amp; array, int left, int mid, int right);</span><br><span class="line">void merge_sort_down2up(vector&lt;int&gt; &amp;array);</span><br><span class="line">void merge_groups(vector&lt;int&gt;&amp; array, int gap);</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	clock_t startTime, endTime;</span><br><span class="line">	startTime = clock();//计时开始</span><br><span class="line">	vector&lt;int&gt; array = &#123;5, 1, 9, 3, 7, 4, 8, 6, 2 &#125;;</span><br><span class="line">	merge_sort_down2up(array);</span><br><span class="line">	endTime = clock();//计时结束</span><br><span class="line">	cout &lt;&lt; &quot;总计时长&quot; &lt;&lt; (double)(endTime - startTime) / CLOCKS_PER_SEC &lt;&lt; &quot;s&quot; &lt;&lt; endl;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">void merge(vector&lt;int&gt;&amp; array,int left,int mid,int right)</span><br><span class="line">&#123;</span><br><span class="line">	int i = left;</span><br><span class="line">	int j = mid + 1;</span><br><span class="line">	vector&lt;int&gt; temp;</span><br><span class="line">	while (i&lt;=mid &amp;&amp; j&lt;=right)</span><br><span class="line">	&#123;</span><br><span class="line">		if (array[i]&lt;array[j])</span><br><span class="line">		&#123;</span><br><span class="line">			temp.push_back(array[i++]);</span><br><span class="line">		&#125;</span><br><span class="line">		else</span><br><span class="line">		&#123;</span><br><span class="line">			temp.push_back(array[j++]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	while (i&lt;=mid)</span><br><span class="line">	&#123;</span><br><span class="line">		temp.push_back(array[i++]);</span><br><span class="line">	&#125;</span><br><span class="line">	while (j&lt;=right)</span><br><span class="line">	&#123;</span><br><span class="line">		temp.push_back(array[j++]);</span><br><span class="line">	&#125;</span><br><span class="line">	for (int i = 0; i &lt; temp.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		array[left+i] = temp[i];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">void merge_sort_down2up(vector&lt;int&gt;&amp; array) </span><br><span class="line">&#123;</span><br><span class="line">	for (int i = 1; i &lt; array.size(); i = i * 2)</span><br><span class="line">	&#123;</span><br><span class="line">		merge_groups(array, i);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">void merge_groups(vector&lt;int&gt;&amp; array, int gap)</span><br><span class="line">&#123;</span><br><span class="line">	int twolen = 2 * gap;</span><br><span class="line">	int i;</span><br><span class="line">	for (i = 0; i + twolen - 1 &lt; array.size(); i += twolen) &#123;</span><br><span class="line">		int start = i;</span><br><span class="line">		int mid = i + gap - 1;</span><br><span class="line">		int end = i + twolen - 1;</span><br><span class="line">		merge(array, start, mid, end);</span><br><span class="line">	&#125;</span><br><span class="line">	// 最后还有一个gap</span><br><span class="line">	if (i + gap - 1 &lt; array.size() - 1) &#123;</span><br><span class="line">		merge(array, i, i + gap - 1, array.size() - 1);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="单链表归并排序"><a href="#单链表归并排序" class="headerlink" title="单链表归并排序"></a>单链表归并排序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">struct ListNode</span><br><span class="line">&#123;</span><br><span class="line">    ListNode *next;</span><br><span class="line">    int val;</span><br><span class="line"></span><br><span class="line">    ListNode(int val) : val(val), next(nullptr)</span><br><span class="line">    &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ListNode *getMidNode(ListNode *head)</span><br><span class="line">&#123;</span><br><span class="line">    ListNode *slow = head;</span><br><span class="line">    ListNode *fast = head-&gt;next;</span><br><span class="line">    while (fast)</span><br><span class="line">    &#123;</span><br><span class="line">        fast = fast-&gt;next;</span><br><span class="line">        if (fast)</span><br><span class="line">        &#123;</span><br><span class="line">            fast = fast-&gt;next;</span><br><span class="line">            slow = slow-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return slow;</span><br><span class="line">&#125;</span><br><span class="line">//归并方式合并两个单链表需要记住</span><br><span class="line">ListNode *mergeList(ListNode *l1, ListNode *l2)</span><br><span class="line">&#123;</span><br><span class="line">    if (!l1) return l2;</span><br><span class="line">    if (!l2) return l1;</span><br><span class="line">    if (l1-&gt;val &lt;= l2-&gt;val)</span><br><span class="line">    &#123;</span><br><span class="line">        l1-&gt;next = mergeList(l1-&gt;next, l2);</span><br><span class="line">        return l1;</span><br><span class="line">    &#125;</span><br><span class="line">    l2-&gt;next = mergeList(l1, l2-&gt;next);</span><br><span class="line">    return l2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ListNode *sortList(ListNode *head)</span><br><span class="line">&#123;</span><br><span class="line">    if (head &amp;&amp; head-&gt;next)</span><br><span class="line">    &#123;</span><br><span class="line">        ListNode *mid = getMidNode(head);</span><br><span class="line">        ListNode *left = head;</span><br><span class="line">        ListNode *right = mid-&gt;next;</span><br><span class="line">        mid-&gt;next = NULL;</span><br><span class="line">        left = sortList(left);</span><br><span class="line">        right = sortList(right);</span><br><span class="line">        return mergeList(left, right);</span><br><span class="line">    &#125;</span><br><span class="line">    return head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    ListNode *head = new ListNode(3);</span><br><span class="line">    ListNode *work = head;</span><br><span class="line">    ListNode *p = new ListNode(1);</span><br><span class="line">    work-&gt;next = p;</span><br><span class="line">    work = work-&gt;next;</span><br><span class="line">    p = new ListNode(3);</span><br><span class="line">    work-&gt;next = p;</span><br><span class="line">    work = work-&gt;next;</span><br><span class="line">    p = new ListNode(5);</span><br><span class="line">    work-&gt;next = p;</span><br><span class="line">    work = work-&gt;next;</span><br><span class="line">    p = new ListNode(4);</span><br><span class="line">    work-&gt;next = p;</span><br><span class="line">    work = work-&gt;next;</span><br><span class="line">    head = sortList(head);</span><br><span class="line">    while (head)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; head-&gt;val &lt;&lt; &quot; &quot;;</span><br><span class="line">        head = head-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分析总结:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">时间</th>
+<th style="text-align:center">最好</th>
+<th style="text-align:center">最坏</th>
+<th style="text-align:center">空间</th>
+<th style="text-align:center">稳定</th>
+<th style="text-align:center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">归并排序</td>
+<td style="text-align:center">$O(nlogn)$</td>
+<td style="text-align:center">$O(nlogn)$</td>
+<td style="text-align:center">$O(nlogn)$</td>
+<td style="text-align:center">$O(n)$</td>
+<td style="text-align:center">是</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="计数排序"><a href="#计数排序" class="headerlink" title="计数排序"></a>计数排序</h1><blockquote>
+<blockquote>
+<p>其实就是计算待排序数组中每个数字的个数,用下标来代替原数，因此只适用于整型,计算max-min是为了减少countArray的size</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">void countingSort(vector&lt;int&gt; &amp;array)</span><br><span class="line">&#123;</span><br><span class="line">    int max = INT_MIN;</span><br><span class="line">    int min = INT_MAX;</span><br><span class="line">    for (auto num:array)</span><br><span class="line">    &#123;</span><br><span class="line">        if (num &gt; max)</span><br><span class="line">        &#123;</span><br><span class="line">            max = num;</span><br><span class="line">        &#125;</span><br><span class="line">        if (num &lt; min)</span><br><span class="line">        &#123;</span><br><span class="line">            min = max;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;int&gt; countArray(max - min + 1, 0);</span><br><span class="line">    for (auto num:array)</span><br><span class="line">    &#123;</span><br><span class="line">        countArray[num - min]++;</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i = 0; i &lt; countArray.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        for (int j = 0; j &lt; countArray[i]; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; min + i &lt;&lt; &quot; &quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;int&gt; array = &#123;1, 5, 3, 7, 6, 2, 8, 9, 4, 3, 3&#125;;</span><br><span class="line">    countingSort(array);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分析总结:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">时间</th>
+<th style="text-align:center">最好</th>
+<th style="text-align:center">最坏</th>
+<th style="text-align:center">空间</th>
+<th style="text-align:center">稳定</th>
+<th style="text-align:center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">计数排序</td>
+<td style="text-align:center">$O(n+d)$</td>
+<td style="text-align:center">$O(n+d)$</td>
+<td style="text-align:center">$O(n+d)$</td>
+<td style="text-align:center">$O(k)$</td>
+<td style="text-align:center">是</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="桶排序"><a href="#桶排序" class="headerlink" title="桶排序"></a>桶排序</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;list&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">void insert(list&lt;int&gt;&amp; bucket,int val)</span><br><span class="line">&#123;</span><br><span class="line">    auto iter = bucket.begin();</span><br><span class="line">    while(iter != bucket.end() &amp;&amp; val &gt;= *iter) ++iter;</span><br><span class="line">    //insert会在iter之前插入数据，这样可以稳定排序</span><br><span class="line">    bucket.insert(iter,val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void bucketSort(vector&lt;int&gt;&amp; arr)</span><br><span class="line">&#123;</span><br><span class="line">    int len = arr.size();</span><br><span class="line">    if(len &lt;= 1)</span><br><span class="line">        return;</span><br><span class="line">    int min = arr[0],max = min;</span><br><span class="line">    for(int i=1;i&lt;len;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        if(min&gt;arr[i]) min = arr[i];</span><br><span class="line">        if(max&lt;arr[i]) max = arr[i];</span><br><span class="line">    &#125;</span><br><span class="line">    int k = 10;//k为数字之间的间隔</span><br><span class="line">    //向上取整，例如[0,9]有10个数，(9 - 0)/k + 1 = 1;</span><br><span class="line">    int bucketsNum = (max - min)/k + 1;</span><br><span class="line">    vector&lt;list&lt;int&gt;&gt; buckets(bucketsNum);</span><br><span class="line">    for(int i=0;i&lt;len;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        int value = arr[i];</span><br><span class="line">        //(value-min)/k就是在哪个桶里面</span><br><span class="line">        insert(buckets[(value-min)/k],value);</span><br><span class="line">    &#125;</span><br><span class="line">    int index = 0;</span><br><span class="line">    for(int i=0;i&lt;bucketsNum;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        if(buckets[i].size())</span><br><span class="line">        &#123;</span><br><span class="line">            for(auto&amp; value:buckets[i])</span><br><span class="line">                arr[index++] = value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;int&gt; A=&#123;-100,13,14,94,33,82,25,59,94,65,23,45,27,43,25,39,10,35,54,90,-200,58&#125;;</span><br><span class="line">    for(auto value:A)</span><br><span class="line">        cout&lt;&lt;value&lt;&lt;&quot; &quot;;</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">    bucketSort(A);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分析总结:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">时间</th>
+<th style="text-align:center">最好</th>
+<th style="text-align:center">最坏</th>
+<th style="text-align:center">空间</th>
+<th style="text-align:center">稳定</th>
+<th style="text-align:center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">桶排序</td>
+<td style="text-align:center">$O(n+d)$</td>
+<td style="text-align:center">$O(n+d)$</td>
+<td style="text-align:center">$O(n*n)$</td>
+<td style="text-align:center">$O(n+k)$</td>
+<td style="text-align:center">是</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="基数排序"><a href="#基数排序" class="headerlink" title="基数排序"></a>基数排序</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">void countSort(vector&lt;int&gt;&amp; array, int exp)</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;int&gt; range(10, 0);</span><br><span class="line">    int length = array.size();</span><br><span class="line">    vector&lt;int&gt; tmpVec(length, 0);</span><br><span class="line">    for (int i = 0; i &lt; length; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        range[(array[i] / exp) % 10]++;</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i = 1; i &lt; range.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        range[i] += range[i - 1];//统计本应该出现的位置</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i = length - 1; i &gt;= 0; --i)</span><br><span class="line">    &#123;</span><br><span class="line">        tmpVec[range[(array[i] / exp) % 10] - 1] = array[i];</span><br><span class="line">        range[(array[i] / exp) % 10]--;</span><br><span class="line">    &#125;</span><br><span class="line">    array = tmpVec;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void radixSort(vector&lt;int&gt; &amp;array)</span><br><span class="line">&#123;</span><br><span class="line">    int length = array.size();</span><br><span class="line">    int max = -1;</span><br><span class="line">    for (int i = 0; i &lt; length; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        if (array[i] &gt; max)</span><br><span class="line">            max = array[i];</span><br><span class="line">    &#125;</span><br><span class="line">    //提取每一位并进行比较，位数不足的高位补0</span><br><span class="line">    for (int exp = 1; max / exp &gt; 0; exp *= 10)</span><br><span class="line">        countSort(array, exp);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;int&gt; array&#123;53, 3, 542, 748, 14, 214, 154, 63, 616, 589&#125;;</span><br><span class="line">    radixSort(array);</span><br><span class="line">    for (int i = 0; i &lt; array.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; array[i] &lt;&lt; &quot; &quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>分析总结:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">时间</th>
+<th style="text-align:center">最好</th>
+<th style="text-align:center">最坏</th>
+<th style="text-align:center">空间</th>
+<th style="text-align:center">稳定</th>
+<th style="text-align:center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">桶排序</td>
+<td style="text-align:center">$O(n+d)$</td>
+<td style="text-align:center">$O(n+d)$</td>
+<td style="text-align:center">$O(n*n)$</td>
+<td style="text-align:center">$O(n+k)$</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-04T17:05:50.340Z" itemprop="dateUpdated">2021-04-05 01:05:50</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2018/11/20/sort/" target="_blank" rel="external">https://lingyixia.github.io/2018/11/20/sort/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/排序/">排序</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2018/11/20/sort/&title=《排序算法》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2018/11/20/sort/&title=《排序算法》 — 灵翼俠的个人博客&source=排序算法大概分为:交换类(快速排序和冒泡排序),插入类(简单插入排序和希尔排序),选择类(简单选择排序和堆排序),归并类(二路归并排序和多路归并排序),以..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2018/11/20/sort/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《排序算法》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2018/11/20/sort/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2018/11/20/sort/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/12/20/NaiveBayes/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">朴素贝叶斯</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/08/28/CommonLabel/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">序列标注常用方式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2018/11/20/sort/&title=《排序算法》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2018/11/20/sort/&title=《排序算法》 — 灵翼俠的个人博客&source=排序算法大概分为:交换类(快速排序和冒泡排序),插入类(简单插入排序和希尔排序),选择类(简单选择排序和堆排序),归并类(二路归并排序和多路归并排序),以..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2018/11/20/sort/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《排序算法》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2018/11/20/sort/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2018/11/20/sort/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3aO3LDMAwFQN//0krrxvIDIGeG5LLKKInMTYHg93rF53o7k+f3P5P81uhgYGAsy7huT3Ld+zfff8qn7+Z3w8DAOIeRXOIef/88gSWf+/E5BgYGRhBq79+Tp30YGBgYc0Y14euloRgYGBiTV/daclXYD2txDAyMBRl51/3/v/7JfAMDA2MpxlU8eZrYG1JerYOBgbE346m0Ly878zSxfB8MDIytGZNVrV4bblIGl5NFDAyMxRl5ayy50FPttup9MDAwTmD0Css87cuDb/M/BgYGxvGMPPjm48Yk9RytWWBgYGzHeHZ4mcfDvMKOmmsYGBibMvKELE8He0PQPNx/fI6BgXEMI7lcnjj2Fiya4woMDIytGb2WWW8UWl28eGzNAgMDY1lGMlDMRwLVBYs8jH55goGBsTWj2qbPS9NeCK4ubRQyXAwMjMUZOSBv9M/Tx+aoAAMD4zBGL+xOCuBq6G/+bTAwMBZkTC6Ul7j3b+gFfQwMjNMYhbWG3tpWvLSRny+1OAYGxqaM3oJFfsWnBgbNQSYGBsbijHkRW4XN23Ov3qsxMDCWYlzF84sr9gYPGBgY5zCq5WJ18Stp9ycNvsKyBQYGxqaM6srXPARX/2SFdhsGBsbWjCRQVtnVsegIiYGBgTFYuZhft9B0w8DAwCi2z6rlaG81DQMD4xxGnuolAbTX0K+23jAwMM5hTD4gD515iftU6MfAwNiC8QcsUWqYdIsidgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

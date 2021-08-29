@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>boosting | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="分类,回归">
+    <meta name="description" content="boosting 是一种特殊的集成学习方法。所有的‘基’分类器都是弱学习器，但通过采用特定的方式迭代，每次根据训练过的学习器的预测效果来更新样本权值,用于新的一轮学习,最终提高联合后的学习效果boosting。">
+<meta name="keywords" content="分类,回归">
+<meta property="og:type" content="article">
+<meta property="og:title" content="boosting">
+<meta property="og:url" content="https://lingyixia.github.io/2019/02/22/boosting/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="boosting 是一种特殊的集成学习方法。所有的‘基’分类器都是弱学习器，但通过采用特定的方式迭代，每次根据训练过的学习器的预测效果来更新样本权值,用于新的一轮学习,最终提高联合后的学习效果boosting。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lingyixia.github.io/img/GBDT.png">
+<meta property="og:updated_time" content="2021-04-04T17:05:50.333Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="boosting">
+<meta name="twitter:description" content="boosting 是一种特殊的集成学习方法。所有的‘基’分类器都是弱学习器，但通过采用特定的方式迭代，每次根据训练过的学习器的预测效果来更新样本权值,用于新的一轮学习,最终提高联合后的学习效果boosting。">
+<meta name="twitter:image" content="https://lingyixia.github.io/img/GBDT.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">boosting</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">boosting</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-02-22T11:04:20.000Z" itemprop="datePublished" class="page-time">
+  2019-02-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/机器学习/">机器学习</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#AdaBoost"><span class="post-toc-number">1.</span> <span class="post-toc-text">AdaBoost</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#步骤"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">步骤:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#流程"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">流程</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Boosting-Tree-提升树算法"><span class="post-toc-number">2.</span> <span class="post-toc-text">Boosting Tree(提升树算法)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#模型"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">模型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#学习过程"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">学习过程</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#梯度提升"><span class="post-toc-number">3.</span> <span class="post-toc-text">梯度提升</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#GBDT"><span class="post-toc-number">4.</span> <span class="post-toc-text">GBDT</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#XGboost"><span class="post-toc-number">5.</span> <span class="post-toc-text">XGboost</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#XGboost和GBDT对比"><span class="post-toc-number">6.</span> <span class="post-toc-text">XGboost和GBDT对比</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前向分布算法"><span class="post-toc-number">7.</span> <span class="post-toc-text">前向分布算法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#从前向分布算法到Adaboost"><span class="post-toc-number">8.</span> <span class="post-toc-text">从前向分布算法到Adaboost</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-boosting"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">boosting</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-02-22 19:04:20" datetime="2019-02-22T11:04:20.000Z"  itemprop="datePublished">2019-02-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/机器学习/">机器学习</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>boosting 是一种特殊的集成学习方法。所有的‘基’分类器都是弱学习器，但通过采用特定的方式迭代，每次根据训练过的学习器的预测效果来更新样本权值,用于新的一轮学习,最终提高联合后的学习效果boosting。<br><a id="more"></a></p>
+<h1 id="AdaBoost"><a href="#AdaBoost" class="headerlink" title="AdaBoost"></a>AdaBoost</h1><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤:"></a>步骤:</h2><ol>
+<li>首先，是初始化训练数据的权值分布D1。假设有N个训练样本数据，则每一个训练样本最开始时，都被赋予相同的权值:w1=1/N。</li>
+<li>然后，训练弱分类器$G_i$.具体训练过程中是:如果某个训练样本点，被弱分类器$G_i$准确地分类,那么在构造下一个训练集中,它对应的权值要减小;相反,如果某个训练样本点被错误分类,那么它的权值就应该增大。权值更新过的样本集被用于训练下一个分类器，整个训练过程如此迭代地进行下去。</li>
+<li>最后，将各个训练得到的弱分类器组合成一个强分类器。各个弱分类器的训练过程结束后，加大分类误差率小的弱分类器的权重，使其在最终的分类函数中起着较大的决定作用，而降低分类误差率大的弱分类器的权重，使其在最终的分类函数中起着较小的决定作用。<br>换而言之,误差率低的弱分类器在最终分类器中占的权重较大,否则较小。</li>
+</ol>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2><p>输入:训练数据集$T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$<br>输出:分类器G(x)</p>
+<ol>
+<li>每个训练样本初始化相同权值,即$w_i=1/N,得到$:<script type="math/tex; mode=display">
+D_1=(w_{11},w_{12},...,w_{1N}),w_{1i}=\frac{1}{N}</script></li>
+<li>开始迭代$m=1$~$M$<br>a. 选取当前权值分布下误差率最低的分类器G为第m个基本分类器$G_m$,并计算误差:<script type="math/tex; mode=display">
+e_m=\sum_{t=1}^NP(G_m(x_i)≠y_i)=\sum_{i=1}^Nw_{mi}I(G_m(x_i)≠y_i)</script>b. 计算分类器权重:<script type="math/tex; mode=display">
+\alpha_m=\frac{1}{2}\ln \frac{1-e_m}{e_m}</script><strong>此处需要备注</strong>:当$e_m$<1 2时,$\alpha_m$>0,且$\alpha_m$随着$e_m$的增大而减少,即分类误差越小该弱分类器权值越大,意味着在最终的全国分类器中该弱分类器的权值大。</1></li>
+</ol>
+<p>c. 更新样本权值分布$D_{t+1}$:</p>
+<script type="math/tex; mode=display">
+\begin{gather}
+D_{m+1}=(w_{m+1,1},w_{m+1,2},...,w_{m+1,N}) \\
+w_{m+1,i}=\frac{w_{mi}}{Z_m} e^{-\alpha y_iG_m(x_i)}
+\end{gather}</script><p>其中,$Z_m$是规范化因子:</p>
+<script type="math/tex; mode=display">
+Z_m=\sum_i^N w_{mi}e^{-\alpha_m y_i G_m(x_i)}=2 \sqrt{e_m(1-e_m)}(可证)</script><p><strong>此处需要备注</strong>:可以看出:</p>
+<script type="math/tex; mode=display">
+w_{m+1,i} = \begin{cases}
+\frac{w_{mi}}{Z_m}e^{-alpha_m} &  G_m(x_i) = y_i( G_m(x_i) \times y_i =1) \\
+\frac{w_{mi}}{Z_m}e^{alpha_m} &  G_m(x_i) ≠ y_i(G_m(x_i) \times y_i = -1) \\
+\end{cases}</script><p>意味着某样本分类错误时候该样本权值扩大,即所谓的更加关注该样本.</p>
+<ol>
+<li>组合分类器 <script type="math/tex; mode=display">
+f(x) = \sum_{m=1}^M \alpha_m G_m(x_i)</script>得到最终分类器:<script type="math/tex; mode=display">
+G(x) = sign(f(x))=sign(\sum_{m=1}^M \alpha_m G_m(x_i))</script><script type="math/tex; mode=display">
+\begin{align}
+f(x) &=sign(F(x)) \\
+  &=\sum_{k=1}^K \alpha_kT_k(x;\beta_k)
+\end{align}</script><h1 id="Boosting-Tree-提升树算法"><a href="#Boosting-Tree-提升树算法" class="headerlink" title="Boosting Tree(提升树算法)"></a>Boosting Tree(提升树算法)</h1><h2 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h2>采用加法模型,利用前向分布算法,第m步得到的模型为:<script type="math/tex; mode=display">
+f_m(x)=f_{m-1}(x)+T(x;\Theta_m)</script>其中$T(x;\Theta_m)$表示第m部要得到的决策树,$\Theta_m$表示其参数,并通过经验风险极小化来确定$\Theta_m$:<script type="math/tex; mode=display">
+\hat{\Theta}_m=\arg \min_{\Theta_m} \sum_{i=1}^NL(y_i,f_{m-1}(x_i)+T(x_i;\Theta_m))</script><h2 id="学习过程"><a href="#学习过程" class="headerlink" title="学习过程"></a>学习过程</h2><script type="math/tex; mode=display">
+\begin{align}
+f_0(x)&=0 \\
+f_m(x)&=f_{m-1}(x)+T(x;\Theta_m) \\
+f_m(x)&=\sum_{m=1}^M T(x;\Theta_m)
+\end{align}</script>当使用平方误差损失函数时:<script type="math/tex; mode=display">
+L(y,f(x))=(y-f(x))^2</script>即:<script type="math/tex; mode=display">
+\begin{align}
+L(y,f_{m-1}(x)+T(x;\Theta_m))&=(y-f_{m-1}(x)-T(x;\Theta_m))^2 \\
+&=(r-T(x;\Theta_m))^2
+\end{align}</script>其中$r=y-f_{m-1}(x)$,即第m-1论求得的树还剩下的<strong>残差</strong>,现在第m轮的目标是减少这个<strong>残差</strong>.</li>
+</ol>
+<h1 id="梯度提升"><a href="#梯度提升" class="headerlink" title="梯度提升"></a>梯度提升</h1><blockquote>
+<blockquote>
+<p>主要思想和上诉算法相同,不同点在于使用负梯度(伪残差)代替残差</p>
+</blockquote>
+</blockquote>
+<ol>
+<li>初始化<script type="math/tex; mode=display">
+f_0(x) = \arg \min_c \sum_{i=1}^N L(y_i,c)</script><blockquote>
+<blockquote>
+<p>也就是说$f_0(x)$其实是一个常数函数</p>
+</blockquote>
+</blockquote>
+</li>
+<li>对m=1,2,3…,M<br>a. 对i=1,2,3…,N,计算伪残差:<script type="math/tex; mode=display">
+r_{mi}=-[\frac{\partial L(y,f(x_i))}{\partial f(x_i)}]_{f(x)=f_{m-1}(x)}</script></li>
+</ol>
+<p>b. 使用该残差列表<script type="math/tex">(x_i,r_{mi})</script>计算新的分类器<script type="math/tex">f_m(x)</script>(即基函数,可能是决策树、逻辑回归、SVM等)</p>
+<p>c. 计算步长(也就是所谓的学习率,在Boosting中称为权重)</p>
+<script type="math/tex; mode=display">
+\gamma _m=\arg \min_{\gamma} \sum_{i=1}^N L(y_i,f_{m-1}-\gamma f_m(x))</script><blockquote>
+<blockquote>
+<p>计算步长可以用线性搜索的方式</p>
+</blockquote>
+</blockquote>
+<p>d. 更新模型:</p>
+<script type="math/tex; mode=display">
+f_m(x) = f_{m-1}(x)+\gamma_m f(x)</script><h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><blockquote>
+<blockquote>
+<p>当上诉梯度提升使用的是基函数是CART的时候就是GBDT,且无论GBDT用来回归还是分类CART均用回归树</p>
+</blockquote>
+</blockquote>
+<p>伪代码为:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/GBDT.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h1 id="XGboost"><a href="#XGboost" class="headerlink" title="XGboost"></a>XGboost</h1><blockquote>
+<blockquote>
+<p>补充:损失函数：计算的是一个样本的误差代价函数：是整个训练集上所有样本误差的平均目标函数：代价函数 + 正则化项</p>
+</blockquote>
+</blockquote>
+<p>目标函数为:</p>
+<script type="math/tex; mode=display">
+Obj=\sum_{i=1}^n l(y_i,\hat{y_i})+\sum_t^K \Omega(f_t)</script><p>第一项是loss,第二项是正则项:</p>
+<script type="math/tex; mode=display">
+\Omega(f_t) = \gamma T + \frac{1}{2}\lambda\sum_{j=1}^T w_j^2</script><p>其中$w_j^2$是叶子节点j的权重.<br>由于新生成的树要拟合上次预测的损失,因此有:</p>
+<script type="math/tex; mode=display">
+\hat{y_i} = \hat{y_i}^{(t-1)} + f_t(x_i)</script><p>同时,可以将目标函数改写为:</p>
+<script type="math/tex; mode=display">
+Obj^t=\sum_{i=1}^n l(y_i,\hat{y_i}^{(t-1)}+f_t(x_i))+\Omega(f_t)</script><p>二阶泰勒展开:</p>
+<script type="math/tex; mode=display">
+Obj^t≈ \sum_{i=1}^n[l(y_i,\hat{y}^{(t-1)})+g_if_t(x_i)+\frac{1}{2} h_i f_t^2(x_i)]+\Omega(f_t)</script><p>其中$g_i$和$h_i$分别是一阶和二阶导数.可以直接去掉t-1棵树的残差:</p>
+<script type="math/tex; mode=display">
+g_i = \frac{\partial ^ \prime l(y_i,\hat{y}^{(t-1)})}{\partial \hat{y}^{(t-1)}} \\
+h_i = \frac{\partial ^2 l(y_i,\hat{y}^{(t-1)})}{\partial \hat{y}^{(t-1)}} \\
+Obj^t≈ \sum_{i=1}^n[g_if_t(x_i)+\frac{1}{2}f_t^2(x_i))]+\Omega(f_t)</script><p>将目标函数按照叶子节点展开:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+Obj^t &≈ \sum_{i=1}^n[l(y_i,\hat{y}^{(t-1)})+g_if_t(x_i)+\frac{1}{2}f_t^2(x_i)]+\Omega(f_t) \\
+&=\sum_{i=1}^n[l(y_i,\hat{y}^{(t-1)})+g_if_t(x_i)+\frac{1}{2}f_t^2(x_i)]+\gamma T + \frac{1}{2}\lambda\sum_{j=1}^T w_j^2 \\
+&=\sum_{j=1}^T[(\sum_{i \in I_j} g_i)w_j + \frac{1}{2}(\sum_{i \in I_j}h_i + \lambda)w_j^2]+\gamma T
+\end{align}</script><p>最终目标函数为:</p>
+<script type="math/tex; mode=display">
+w_j^* = -\frac{G_j}{H_j+\lambda} \\
+Obj^t = -\frac{1}{2}\sum_{j=1}^T \frac{G_j^2}{H_j+\lambda}+ \gamma T</script><p>其中:</p>
+<script type="math/tex; mode=display">
+G_j = \sum_{i \in I} g_i \\ H_j = \sum_{i \in I} h_i</script><p>$Obj^t$是每一步的目标函数,我们要让$Obj^t$小,就需要让$ \frac{G_j^2}{H_j+\lambda}$大,因此我们在这个地方更改决策树的split方案:<br>对于任意一个划分必能将数据划分为一个二叉树,则我们计算每一个可能的划分:</p>
+<script type="math/tex; mode=display">
+Gain=\frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}-\frac{(G_L+G_R)^2}{H_L+H_R+\lambda} -\gamma</script><blockquote>
+<blockquote>
+<p>前两项是划分后左右两个子树的得分,第三项是不划分的得分,现在需要计算所有可能的划分,然后选择最大的划分左右子树。</p>
+</blockquote>
+</blockquote>
+<h1 id="XGboost和GBDT对比"><a href="#XGboost和GBDT对比" class="headerlink" title="XGboost和GBDT对比"></a>XGboost和GBDT对比</h1><ol>
+<li>传统GBDT以CART作为基分类器，xgboost还支持线性分类器</li>
+<li>传统GBDT在优化时只用到一阶导数信息，xgboost则对代价函数进行了二阶泰勒展开，同时用到了一阶和二阶导数</li>
+<li>xgboost在代价函数里加入了正则项，用于控制模型的复杂度</li>
+</ol>
+<h1 id="前向分布算法"><a href="#前向分布算法" class="headerlink" title="前向分布算法"></a>前向分布算法</h1><p>输入: 训练数据集$T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}$,损失函数$L(y_i,f(x_i))$,基函数集${b(x;\lambda)}$</p>
+<blockquote>
+<blockquote>
+<p>这里的基函数集应该指的是未知参数的某种分类器,而在前向分布算法中我们每一步都可以使用不同得分类器(虽然一般是相同得分类器),因此可以是基函数”集”.</p>
+</blockquote>
+</blockquote>
+<p>输出: 加法模型$f(x)$<br>步骤:</p>
+<ol>
+<li>初始化$f_0(x)$</li>
+<li>对$m=1,2,…,M$<br>a. <script type="math/tex">(\beta_M,\lambda_m)=arg\min_{\beta,\lambda}\sum_{i=1}^NL(y_i,f_{m-1}(x_i)+\beta b(x_i;\lambda))</script><br>b. 更新<script type="math/tex">f_m(x)=f_{m-1}(x)+\beta_m b(x;\lambda_m)</script></li>
+<li>得到最终加法模型:<script type="math/tex">f(x)=f_M(x)=\sum_{m=1}^M \beta_mb(x;\lambda_m)</script></li>
+</ol>
+<h1 id="从前向分布算法到Adaboost"><a href="#从前向分布算法到Adaboost" class="headerlink" title="从前向分布算法到Adaboost"></a>从前向分布算法到Adaboost</h1><blockquote>
+<blockquote>
+<p>简单来说,Adaboost就是当损失函数为<strong>指数损失函数</strong>时的前向分布算法,得到的是二分类模型</p>
+</blockquote>
+</blockquote>
+<p>对于Adaboost最终分类器是:</p>
+<script type="math/tex; mode=display">
+f(x)=\sum_{m=1}^M \alpha_mG_m(x) \tag{5.1}</script><p>假设在Adaboost步骤第2步中,已经进行m-1轮迭代,得到:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+f_{m-1}(x)&=f_{m-2}(x)+\alpha_{m-1}G_{m-1} \\
+&=\alpha_1G_1(x)+...+\alpha_{m-1}G_{m-1}(x) \tag{5.2}
+\end{align}</script><p>在第m轮我们得到:</p>
+<script type="math/tex; mode=display">
+f_m(x)=f_{m-1}(x)+\alpha_mG_m(x) \tag{5.3}</script><p>目标是使前向分布算得到的$\alpha$和$G_m(x)$在训练数据集$T$上的损失函数最小,即:</p>
+<script type="math/tex; mode=display">
+(\alpha_m,G_m(x))=arg\min_{\alpha,G}\sum_{i=1}^Ne^{-y_i(f_{m-1}+\alpha G(x_i))} \tag{5.4}</script><p>令其为:</p>
+<script type="math/tex; mode=display">
+(\alpha_m,G_m(x))=arg\min_{\alpha,G}\sum_{i=1}^N \overline w_{mi}  e^{-y_i\alpha G(x_i))} \tag{5.5}</script><p>其中<script type="math/tex">\overline w_{mi}=e^{-y_if_{m-1}}</script>,可以看出<script type="math/tex">\overline w_{mi}</script>与<script type="math/tex">\alpha</script>和<script type="math/tex">G(x)</script>无关,故与最小化无关,但是和<script type="math/tex">f_{m-1}</script>有关,故每一轮都有变化。<br>现在要证明的是使式5.5达到最小的<script type="math/tex">\alpha^*</script>和<script type="math/tex">G^*(x)</script>就是Adaboost算法所得到的<script type="math/tex">\alpha_m</script>和<script type="math/tex">G_m(x)</script>现在对两者分别求值:<br>首先,对于<script type="math/tex">G_m^*(x)</script>,对任意$\alpha$&gt;0有:</p>
+<script type="math/tex; mode=display">
+G_m(x)^*=arg\min_G\sum_{i=1}^N\overline w_{mi}I(y_i≠G(x_i)) \tag{5.6}</script><p>该分类器<script type="math/tex">G_m^*(x)</script>就是式第m轮分类误差最小的分类器.然后求<script type="math/tex">\alpha^*_m</script>,参照式5.4和5.5:<br>首先需要知道:</p>
+<script type="math/tex; mode=display">
+\sum_{y_i=G_m(x_i)}\overline w_{mi}e^{-\alpha}=\sum_i^N \overline w_{mi}I(y_i=G(x_i)) tag{5.7} \\
+\sum_{y_i≠G_m(x_i)}\overline w_{mi}e^{\alpha}≠\sum_i^N \overline w_{mi}I(y_i≠G(x_i) tag{5.8}</script><p>因此有:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\sum_{i=1}^N \overline w_{mi}  e^{-y_i\alpha G(x_i))}&=\sum_{y_i=G_m(x_i)}\overline w_{mi}e^{-\alpha} +\sum_{y_i≠G_m(x_i)}\overline w_{mi}e^{-\alpha} \\
+&=(e^\alpha-e^{-\alpha}) \sum_{i=1}^N \overline w_{mi}I(y_i≠G(x_i))+e^{-\alpha}\sum_{i=1}^N \overline w_{mi} \tag{5.9}
+\end{align}</script><p>将5.6带入5.9中,并对$\alpha$求导使导数为0,得到:</p>
+<script type="math/tex; mode=display">
+\alpha^*_m=\frac{1}{2}\log\frac{1-e_m}{e_m} \tag{5.10}</script><p>其中$e_m$使分类误差率:</p>
+<script type="math/tex; mode=display">
+e_m=\frac{\sum_i^N \overline w_{mi}I(y_i≠G_m(x_i))}{\sum_{i=1}^N \overline w_{mi}}=\sum_{i=1}^Nw_{mi}I(y_i≠G_m(x_i))</script><p>可以看出$\alpha_m$的更新和adaboost完全一致,最后再看样本权值的更新:</p>
+<script type="math/tex; mode=display">
+f_m(x)=f_{m-1}(x)+\alpha_mG_m(x) \tag{5.11}</script><script type="math/tex; mode=display">
+\overline w_{m+1i}=e^{-y_if_m(x_i)} \tag{5.12}</script><p>将5.11带入5.12中得:</p>
+<script type="math/tex; mode=display">
+w_{m+1i}=\overline w_{mi}e^{-y_i\alpha_mG_m(x)}</script><p>与adaboost相比,只少了个规范化因子。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-04T17:05:50.333Z" itemprop="dateUpdated">2021-04-05 01:05:50</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/02/22/boosting/" target="_blank" rel="external">https://lingyixia.github.io/2019/02/22/boosting/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分类/">分类</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/回归/">回归</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/02/22/boosting/&title=《boosting》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/02/22/boosting/&title=《boosting》 — 灵翼俠的个人博客&source=boosting 是一种特殊的集成学习方法。所有的‘基’分类器都是弱学习器，但通过采用特定的方式迭代，每次根据训练过的学习器的预测效果来更新样本权值,用于..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/02/22/boosting/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《boosting》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/02/22/boosting/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/02/22/boosting/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/02/23/ViEmu/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">ViEmu免费30天破解</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/02/22/cart/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">CART算法</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/02/22/boosting/&title=《boosting》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/02/22/boosting/&title=《boosting》 — 灵翼俠的个人博客&source=boosting 是一种特殊的集成学习方法。所有的‘基’分类器都是弱学习器，但通过采用特定的方式迭代，每次根据训练过的学习器的预测效果来更新样本权值,用于..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/02/22/boosting/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《boosting》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/02/22/boosting/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/02/22/boosting/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNklEQVR42u3aQXKDMAwF0Nz/0nTdSWO+JJoZzPOqkxDMY6FKll6veB1v6/3zT9cn98x/NVoYGBi3ZRzLtb4muXP+IvJv/9gdAwPjAYzkIdbXrx/32r0wMDAwqrdbh+B1MJ3si4GBgbG+XVK4rq9JilgMDAyMahGbl6nV17FODS+uxTEwMG7IyE/dv//3v/Q3MDAwbsU4iivZvvpJ70l+3QcDA2NrRh7g8qGK5NAtb3AWngcDA2NTRlJw5gVkdTgjHyY7gWFgYGzNqB6cJQE0P26b//aky4GBgbEFIw+Ck0ZCryQuhFoMDIytGXl4zYcz8qTwsjELDAyMBzB6RWy1uL2qbTAqZTEwMG7I6B3358VtL3EsJ7IYGBhbM3qHaPnARBIuew3UcgjGwMC4OSMJi5OEMmkD5MH0pLOBgYGxHaPaRMyHJKoDXqNnwMDAeAxj3sisBsr54MXHYQsMDIyNGHkq1mtevorrgmYqBgbGpoxeEdsbpMhL2XI7EwMD4zGMa9uQ+Z0nUxMYGBhPY+SH9b1EMC+Gq2UwBgbGExi90YpJmpgUw+VhCwwMjK0ZvQ16PcTekdzJoR4GBsamjKO4ktbjpJ3QPP7DwMDYmjEPdtURrjy49wYyMDAwdmXMg2wvocxfWXPYAgMDYztGL/D1RsQm/wFOanEMDAyM6gBEPEY2vx4DAwMjT9EmyWU1QF8QcDEwMG7FSIrYCSxP+PL0FAMD4zmMvHRMtswDbv4ovXIaAwNjC8YPo/hqmLWC4hoAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

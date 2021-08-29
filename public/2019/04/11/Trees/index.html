@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>树的常见算法 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Tree">
+    <meta name="description" content="二叉树的遍历preOrderTraversal12345678910111213141516171819202122232425struct TreeNode &amp;#123;     int val;     TreeNode *left;     TreeNode *right;     TreeNode(int x) : val(x), left(NULL), right(NULL) &amp;#123">
+<meta name="keywords" content="Tree">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树的常见算法">
+<meta property="og:url" content="https://lingyixia.github.io/2019/04/11/Trees/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="二叉树的遍历preOrderTraversal12345678910111213141516171819202122232425struct TreeNode &amp;#123;     int val;     TreeNode *left;     TreeNode *right;     TreeNode(int x) : val(x), left(NULL), right(NULL) &amp;#123">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-04T17:05:50.331Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="树的常见算法">
+<meta name="twitter:description" content="二叉树的遍历preOrderTraversal12345678910111213141516171819202122232425struct TreeNode &amp;#123;     int val;     TreeNode *left;     TreeNode *right;     TreeNode(int x) : val(x), left(NULL), right(NULL) &amp;#123">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">树的常见算法</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">树的常见算法</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-11T04:20:03.000Z" itemprop="datePublished" class="page-time">
+  2019-04-11
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#二叉树的遍历"><span class="post-toc-number">1.</span> <span class="post-toc-text">二叉树的遍历</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#preOrderTraversal"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">preOrderTraversal</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#inOrderTraversal"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">inOrderTraversal</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#postOrderTraversal"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">postOrderTraversal</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#多叉树层序遍历"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">多叉树层序遍历</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#判断子树"><span class="post-toc-number">2.</span> <span class="post-toc-text">判断子树</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#多叉树最大深度"><span class="post-toc-number">3.</span> <span class="post-toc-text">多叉树最大深度</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#递归"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">递归</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#非递归"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">非递归</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#二叉树镜像"><span class="post-toc-number">4.</span> <span class="post-toc-text">二叉树镜像</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#对称二叉树"><span class="post-toc-number">5.</span> <span class="post-toc-text">对称二叉树</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#树的子结构-或子树"><span class="post-toc-number">6.</span> <span class="post-toc-text">树的子结构(或子树)</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#二叉树中路径和"><span class="post-toc-number">7.</span> <span class="post-toc-text">二叉树中路径和</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#二叉树所有路径中和最大"><span class="post-toc-number">8.</span> <span class="post-toc-text">二叉树所有路径中和最大</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#判断是不是平衡二叉树"><span class="post-toc-number">9.</span> <span class="post-toc-text">判断是不是平衡二叉树</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#next指针"><span class="post-toc-number">10.</span> <span class="post-toc-text">next指针</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#二叉树从右向左看"><span class="post-toc-number">11.</span> <span class="post-toc-text">二叉树从右向左看</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#找到最近公共祖先"><span class="post-toc-number">12.</span> <span class="post-toc-text">找到最近公共祖先</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#二叉树最大宽度"><span class="post-toc-number">13.</span> <span class="post-toc-text">二叉树最大宽度</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#判断二叉搜索树"><span class="post-toc-number">14.</span> <span class="post-toc-text">判断二叉搜索树</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#更大的二茬搜索"><span class="post-toc-number">15.</span> <span class="post-toc-text">更大的二茬搜索</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#判断完全二叉树"><span class="post-toc-number">16.</span> <span class="post-toc-text">判断完全二叉树</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#二叉树中序遍历的前驱和后继"><span class="post-toc-number">17.</span> <span class="post-toc-text">二叉树中序遍历的前驱和后继</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前驱"><span class="post-toc-number">17.1.</span> <span class="post-toc-text">前驱:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#后继"><span class="post-toc-number">17.2.</span> <span class="post-toc-text">后继</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Trees"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">树的常见算法</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-04-11 12:20:03" datetime="2019-04-11T04:20:03.000Z"  itemprop="datePublished">2019-04-11</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="二叉树的遍历"><a href="#二叉树的遍历" class="headerlink" title="二叉树的遍历"></a>二叉树的遍历</h1><h2 id="preOrderTraversal"><a href="#preOrderTraversal" class="headerlink" title="preOrderTraversal"></a>preOrderTraversal</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">struct TreeNode &#123;</span><br><span class="line">     int val;</span><br><span class="line">     TreeNode *left;</span><br><span class="line">     TreeNode *right;</span><br><span class="line">     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span><br><span class="line"> &#125;;</span><br><span class="line">vector&lt;int&gt; preorderTraversal(TreeNode* root)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; result;</span><br><span class="line">	stack&lt;TreeNode*&gt; treeNodeStack;</span><br><span class="line">	TreeNode* cursor = root;</span><br><span class="line">	while (cursor || treeNodeStack.size()&gt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		while (cursor)</span><br><span class="line">		&#123;</span><br><span class="line">			result.push_back(cursor-&gt;val);</span><br><span class="line">			treeNodeStack.push(cursor);</span><br><span class="line">			cursor = cursor-&gt;left;</span><br><span class="line">		&#125;</span><br><span class="line">		cursor = treeNodeStack.top();</span><br><span class="line">		treeNodeStack.pop();</span><br><span class="line">		cursor = cursor-&gt;right;</span><br><span class="line">	&#125;</span><br><span class="line">	return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#先序简单</span><br><span class="line">vector&lt;int&gt; preorderTraversal(TreeNode* root) </span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; result;</span><br><span class="line">    if(!root) return result;</span><br><span class="line">    stack&lt;TreeNode*&gt; s;</span><br><span class="line">    TreeNode* cursor = root;</span><br><span class="line">    s.push(root);</span><br><span class="line">    while(!s.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        cursor=s.top();</span><br><span class="line">        result.push_back(cursor-&gt;val);</span><br><span class="line">        s.pop();</span><br><span class="line">        if(cursor-&gt;right)</span><br><span class="line">        &#123;</span><br><span class="line">            s.push(cursor-&gt;right);</span><br><span class="line">        &#125;</span><br><span class="line">        if(cursor-&gt;left)</span><br><span class="line">        &#123;</span><br><span class="line">            s.push(cursor-&gt;left);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="inOrderTraversal"><a href="#inOrderTraversal" class="headerlink" title="inOrderTraversal"></a>inOrderTraversal</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">struct TreeNode &#123;</span><br><span class="line">     int val;</span><br><span class="line">     TreeNode *left;</span><br><span class="line">     TreeNode *right;</span><br><span class="line">     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span><br><span class="line"> &#125;;</span><br><span class="line">vector&lt;int&gt; inorderTraversal(TreeNode* root)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; result;</span><br><span class="line">	stack&lt;TreeNode*&gt; treeNodeStack;</span><br><span class="line">	TreeNode* cursor = root;</span><br><span class="line">	while (cursor || treeNodeStack.size()&gt;0)</span><br><span class="line">	&#123;</span><br><span class="line">		while (cursor)</span><br><span class="line">		&#123;</span><br><span class="line">			treeNodeStack.push(cursor);</span><br><span class="line">			cursor = cursor-&gt;left;</span><br><span class="line">		&#125;</span><br><span class="line">		cursor = treeNodeStack.top();</span><br><span class="line">		result.push_back(cursor-&gt;val);</span><br><span class="line">		treeNodeStack.pop();</span><br><span class="line">		cursor = cursor-&gt;right;</span><br><span class="line">	&#125;</span><br><span class="line">	return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>只是简单的把先序遍历28行挪了一下</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; postorderTraversal(TreeNode* root)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; result;</span><br><span class="line">      if(!root)</span><br><span class="line">      &#123;</span><br><span class="line">         return result;</span><br><span class="line">      &#125;</span><br><span class="line">	stack&lt;TreeNode*&gt; treeNodeStack;</span><br><span class="line">	TreeNode* preNode = NULL;</span><br><span class="line">	TreeNode* cursor = root;</span><br><span class="line">	treeNodeStack.push(cursor);</span><br><span class="line">	while (treeNodeStack.size() &gt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		cursor = treeNodeStack.top();</span><br><span class="line">		if ((!cursor-&gt;left &amp;&amp; !cursor-&gt;right) || (preNode &amp;&amp; preNode == cursor-&gt;left) ||  (preNode &amp;&amp; preNode == cursor-&gt;right))</span><br><span class="line">		&#123;</span><br><span class="line">			result.push_back(cursor-&gt;val);</span><br><span class="line">			preNode = cursor;</span><br><span class="line">			treeNodeStack.pop();</span><br><span class="line">		&#125;</span><br><span class="line">		else</span><br><span class="line">		&#123;</span><br><span class="line">			if (cursor-&gt;right)</span><br><span class="line">			&#123;</span><br><span class="line">				treeNodeStack.push(cursor-&gt;right);</span><br><span class="line">			&#125;</span><br><span class="line">			if (cursor-&gt;left)</span><br><span class="line">            &#123;</span><br><span class="line">				treeNodeStack.push(cursor-&gt;left);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="postOrderTraversal"><a href="#postOrderTraversal" class="headerlink" title="postOrderTraversal"></a>postOrderTraversal</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">struct TreeNode &#123;</span><br><span class="line">     int val;</span><br><span class="line">     TreeNode *left;</span><br><span class="line">     TreeNode *right;</span><br><span class="line">     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span><br><span class="line"> &#125;;</span><br><span class="line">vector&lt;int&gt; postorderTraversal(TreeNode* root)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; result;</span><br><span class="line">      if(!root)</span><br><span class="line">      &#123;</span><br><span class="line">         return result;</span><br><span class="line">      &#125;</span><br><span class="line">	stack&lt;TreeNode*&gt; treeNodeStack;</span><br><span class="line">	TreeNode* preNode = NULL;</span><br><span class="line">	TreeNode* cursor = root;</span><br><span class="line">	treeNodeStack.push(cursor);</span><br><span class="line">	while (treeNodeStack.size() &gt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		cursor = treeNodeStack.top();</span><br><span class="line">		if ((!cursor-&gt;left &amp;&amp; !cursor-&gt;right) || (preNode &amp;&amp; preNode == cursor-&gt;left) ||  (preNode &amp;&amp; preNode == cursor-&gt;right))</span><br><span class="line">		&#123;</span><br><span class="line">			result.push_back(cursor-&gt;val);</span><br><span class="line">			preNode = cursor;</span><br><span class="line">			treeNodeStack.pop();</span><br><span class="line">		&#125;</span><br><span class="line">		else</span><br><span class="line">		&#123;</span><br><span class="line">			if (cursor-&gt;right)</span><br><span class="line">			&#123;</span><br><span class="line">				treeNodeStack.push(cursor-&gt;right);</span><br><span class="line">			&#125;</span><br><span class="line">			if (cursor-&gt;left)</span><br><span class="line">            &#123;</span><br><span class="line">				treeNodeStack.push(cursor-&gt;left);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">#后序拿offer算法</span><br><span class="line">struct TreeNode &#123;</span><br><span class="line">     int val;</span><br><span class="line">     TreeNode *left;</span><br><span class="line">     TreeNode *right;</span><br><span class="line">     TreeNode(int x) : val(x), left(NULL), right(NULL) &#123;&#125;</span><br><span class="line"> &#125;;</span><br><span class="line"> vector&lt;int&gt; postorderTraversal(TreeNode* root) </span><br><span class="line"> &#123;</span><br><span class="line">    stack&lt;TreeNode*&gt; s;</span><br><span class="line">    stack&lt;TreeNode*&gt; resultTemp;</span><br><span class="line">    vector&lt;int&gt; result;</span><br><span class="line">    if(!root) return result;</span><br><span class="line">    TreeNode* cursor = root;</span><br><span class="line">    s.push(cursor);</span><br><span class="line">    while(!s.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        cursor=s.top();</span><br><span class="line">        s.pop();</span><br><span class="line">        resultTemp.push(cursor);</span><br><span class="line">        if(cursor-&gt;left) s.push(cursor-&gt;left);</span><br><span class="line">        if(cursor-&gt;right) s.push(cursor-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line">    while(!resultTemp.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        result.push_back(resultTemp.top()-&gt;val);</span><br><span class="line">        resultTemp.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="多叉树层序遍历"><a href="#多叉树层序遍历" class="headerlink" title="多叉树层序遍历"></a>多叉树层序遍历</h2><blockquote>
+<blockquote>
+<p>这个和多叉树的非递归深度重复</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">class Node &#123;</span><br><span class="line">public:</span><br><span class="line">    int val;</span><br><span class="line">    vector&lt;Node*&gt; children;</span><br><span class="line">    Node() &#123;&#125;</span><br><span class="line">    Node(int _val, vector&lt;Node*&gt; _children) &#123;</span><br><span class="line">        val = _val;</span><br><span class="line">        children = _children;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">class Solution</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    vector &lt;vector&lt;int&gt;&gt; levelOrder(Node *root)</span><br><span class="line">    &#123;</span><br><span class="line">        vector &lt;vector&lt;int&gt;&gt; result;</span><br><span class="line">        if (!root)</span><br><span class="line">        &#123;</span><br><span class="line">            return result;</span><br><span class="line">        &#125;</span><br><span class="line">        queue &lt; Node * &gt; q;</span><br><span class="line">        q.push(root);</span><br><span class="line">        Node *cursor = root;</span><br><span class="line">        vector&lt;int&gt; temp;</span><br><span class="line">        while (!q.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            temp.clear();</span><br><span class="line">            int size = q.size();</span><br><span class="line">            for (int i = 0; i &lt; size; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                cursor = q.front();</span><br><span class="line">                temp.push_back(cursor-&gt;val);</span><br><span class="line">                q.pop();</span><br><span class="line">                for (int j = 0; j &lt; cursor-&gt;children.size(); j++)</span><br><span class="line">                &#123;</span><br><span class="line">                    q.push(cursor-&gt;children[j]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            result.push_back(temp);</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>如果是二叉树只需要两个循环就可以了，因为最内层循环只需要改成左右子树即可</p>
+</blockquote>
+</blockquote>
+<h1 id="判断子树"><a href="#判断子树" class="headerlink" title="判断子树"></a>判断子树</h1><blockquote>
+<blockquote>
+<p>输入两棵二叉树A，B，判断B是不是A的子结构。(ps：我们约定空树不是任意一个树的子结构)</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">bool HasSubtree(TreeNode* pRoot1, TreeNode* pRoot2)</span><br><span class="line">&#123;</span><br><span class="line">    if(!pRoot1 || !pRoot2) return false;</span><br><span class="line">    bool result = false;</span><br><span class="line">    if(pRoot1-&gt;val==pRoot2-&gt;val) result = isSubTree(pRoot1,pRoot2);</span><br><span class="line">    if(!result)  result = HasSubtree(pRoot1-&gt;left,pRoot2);</span><br><span class="line">    if(!result)  result = HasSubtree(pRoot1-&gt;right,pRoot2);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line">bool isSubTree(TreeNode* pRoot1,TreeNode* pRoot2)</span><br><span class="line">&#123;</span><br><span class="line">    if(!pRoot2) return true;</span><br><span class="line">    if(!pRoot1) return false; </span><br><span class="line">    bool result = false;</span><br><span class="line">    if(pRoot1-&gt;val==pRoot2-&gt;val) result = true;</span><br><span class="line">    if(result) result = isSubTree(pRoot1-&gt;left,pRoot2-&gt;left);</span><br><span class="line">    if(result) result = isSubTree(pRoot1-&gt;right,pRoot2-&gt;right);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意得地方是返回bool判断左树右树的逻辑</p>
+<h1 id="多叉树最大深度"><a href="#多叉树最大深度" class="headerlink" title="多叉树最大深度"></a>多叉树最大深度</h1><blockquote>
+<blockquote>
+<p>题意为输出多叉树最大深度,最容易想到的方式是递归,该题记录重点为第二种非递归方式,其实也相当于多叉树的<strong>层序遍历</strong>。</p>
+</blockquote>
+</blockquote>
+<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;queue&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">class Node &#123;</span><br><span class="line">public:</span><br><span class="line">	int val;</span><br><span class="line">	vector&lt;Node*&gt; children;</span><br><span class="line">	Node() &#123;&#125;</span><br><span class="line">	Node(int _val, vector&lt;Node*&gt; _children) &#123;</span><br><span class="line">		val = _val;</span><br><span class="line">		children = _children;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">int maxDepth(Node* root);</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int maxDepth(Node* root);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">int maxDepth(Node* root) </span><br><span class="line">&#123;</span><br><span class="line">    if(!root)//出口条件</span><br><span class="line">    &#123;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line">    int maxDep=0;</span><br><span class="line">    for(int i =0;i&lt;root-&gt;children.size();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        maxDep=max(maxDep,maxDepth(root-&gt;children[i]));</span><br><span class="line">    &#125;</span><br><span class="line">    return maxDep+1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="非递归"><a href="#非递归" class="headerlink" title="非递归"></a>非递归</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;queue&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">class Node &#123;</span><br><span class="line">public:</span><br><span class="line">	int val;</span><br><span class="line">	vector&lt;Node*&gt; children;</span><br><span class="line">	Node() &#123;&#125;</span><br><span class="line">	Node(int _val, vector&lt;Node*&gt; _children) &#123;</span><br><span class="line">		val = _val;</span><br><span class="line">		children = _children;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">int maxDepth(Node* root);</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int maxDepth(Node* root);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">int maxDepth(Node* root)</span><br><span class="line">&#123;</span><br><span class="line">    if(!root)//只是当root为空时候的一个判断</span><br><span class="line">    &#123;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line">	int depth = 0;</span><br><span class="line">	queue&lt;Node*&gt; q;</span><br><span class="line">	q.push(root);</span><br><span class="line">	Node* cursor = NULL;</span><br><span class="line">	while (!q.empty())//这里的三层循环第二层目的是将每一层都组成一个数组,并计算层序,如果单纯为了输出层序遍历的结果完全可以使用两层循环</span><br><span class="line">	&#123;</span><br><span class="line">	    int size = q.size();</span><br><span class="line">	    for (int i = 0; i &lt; size;i++)//注意该队列其实是一层一层从做到右入队列的,切不可用while(!q.empty())</span><br><span class="line">	    &#123;</span><br><span class="line">		    cursor = q.front();</span><br><span class="line">		    q.pop();</span><br><span class="line">		    for (int j = 0; j &lt; cursor-&gt;children.size(); j++)</span><br><span class="line">		    &#123;</span><br><span class="line">			    q.push(cursor-&gt;children[j]);</span><br><span class="line">		    &#125;</span><br><span class="line">		&#125;</span><br><span class="line">                depth++;//每层加1</span><br><span class="line">	&#125;</span><br><span class="line">    return depth;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>注意，两个方法中的<code>if(!root)</code>作用并不一样，对于递归而言是跳出条件，而对于非递归而言只是一种情况</p>
+</blockquote>
+</blockquote>
+<h1 id="二叉树镜像"><a href="#二叉树镜像" class="headerlink" title="二叉树镜像"></a>二叉树镜像</h1><blockquote>
+<blockquote>
+<p>把一个二叉树变为镜像</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void Mirror(TreeNode *pRoot) </span><br><span class="line">&#123;</span><br><span class="line">    if(pRoot)</span><br><span class="line">    &#123;</span><br><span class="line">        TreeNode* node = pRoot-&gt;left;</span><br><span class="line">        pRoot-&gt;left=pRoot-&gt;right;</span><br><span class="line">        pRoot-&gt;right=node;</span><br><span class="line">        Mirror(pRoot-&gt;left);</span><br><span class="line">        Mirror(pRoot-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="对称二叉树"><a href="#对称二叉树" class="headerlink" title="对称二叉树"></a>对称二叉树</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">bool judge(TreeNode* p,TreeNode* q)</span><br><span class="line">&#123;</span><br><span class="line">    if(!p &amp;&amp; !q) return true;</span><br><span class="line">    if(!p || !q) return false;</span><br><span class="line">    if(p-&gt;val != q-&gt;val) return false;</span><br><span class="line">    return judge(p-&gt;left,q-&gt;right) &amp;&amp; judge(p-&gt;right,q-&gt;left);</span><br><span class="line">&#125;</span><br><span class="line">bool isSymmetrical(TreeNode* pRoot)</span><br><span class="line">&#123;</span><br><span class="line">    return judge(pRoot,pRoot);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="树的子结构-或子树"><a href="#树的子结构-或子树" class="headerlink" title="树的子结构(或子树)"></a>树的子结构(或子树)</h1><blockquote>
+<blockquote>
+<p>给定两棵二叉树A和B，判断A是不是B的子结构或子树，子结构要求A是B的一部分即可，但是子树要求叶子结点也得相同.</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">bool judgeSubTree(TreeNode *pRoot1, TreeNode *pRoot2)</span><br><span class="line">&#123;</span><br><span class="line">    //判断子结构</span><br><span class="line">    if (!pRoot2) return true;</span><br><span class="line">    if (!pRoot1) return false;</span><br><span class="line">    //判断子树</span><br><span class="line">    //if (!pRoot1 &amp;&amp; !pRoot2) return true;</span><br><span class="line">    //if (!(pRoot1 &amp;&amp; pRoot2)) return false;</span><br><span class="line">    bool judge = pRoot1-&gt;val == pRoot2-&gt;val;</span><br><span class="line">    if (judge) judge = judgeSubTree(pRoot1-&gt;left, pRoot2-&gt;left);</span><br><span class="line">    if (judge) judge = judgeSubTree(pRoot1-&gt;right, pRoot2-&gt;right);</span><br><span class="line">    return judge;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool isSubtree(TreeNode *pRoot1, TreeNode *pRoot2)</span><br><span class="line">&#123;</span><br><span class="line">    if (!pRoot1 || !pRoot2) return false;</span><br><span class="line">    bool judge = judgeSubTree(pRoot1, pRoot2);</span><br><span class="line">    if (!judge) judge = isSubtree(pRoot1-&gt;left, pRoot2);</span><br><span class="line">    if (!judge) judge = isSubtree(pRoot1-&gt;right, pRoot2);</span><br><span class="line">    return judge;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="二叉树中路径和"><a href="#二叉树中路径和" class="headerlink" title="二叉树中路径和"></a>二叉树中路径和</h1><blockquote>
+<blockquote>
+<p>输入一颗二叉树的根节点和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。(注意: 在返回值的list中，数组长度大的数组靠前)</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;int&gt;&gt; result;</span><br><span class="line">void FindPath(TreeNode* root,int expectNumber,vector&lt;int&gt;&amp; path)</span><br><span class="line">&#123;</span><br><span class="line">    if(!root) return;</span><br><span class="line">    path.push_back(root-&gt;val);</span><br><span class="line">    expectNumber-=root-&gt;val;</span><br><span class="line">    if(!root-&gt;left &amp;&amp; !root-&gt;right &amp;&amp; !expectNumber)</span><br><span class="line">    &#123;</span><br><span class="line">        result.push_back(path);</span><br><span class="line">    &#125;</span><br><span class="line">    if(root-&gt;left)</span><br><span class="line">    &#123;</span><br><span class="line">        FindPath(root-&gt;left,expectNumber,path);   </span><br><span class="line">    &#125;</span><br><span class="line">    if(root-&gt;right)</span><br><span class="line">    &#123;</span><br><span class="line">        FindPath(root-&gt;right,expectNumber,path);   </span><br><span class="line">    &#125;</span><br><span class="line">    path.pop_back();</span><br><span class="line">&#125;</span><br><span class="line">vector&lt;vector&lt;int&gt; &gt; FindPath(TreeNode* root,int expectNumber) </span><br><span class="line">&#123;</span><br><span class="line">    if(!root) return result;</span><br><span class="line">    vector&lt;int&gt; path;</span><br><span class="line">    FindPath(root,expectNumber,path);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="二叉树所有路径中和最大"><a href="#二叉树所有路径中和最大" class="headerlink" title="二叉树所有路径中和最大"></a><a href="https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/" target="_blank" rel="noopener">二叉树所有路径中和最大</a></h1><blockquote>
+<blockquote>
+<p>这里的路径指的是树上所有能联通的两个节点之间的路径</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">int maxSumResult = 0;</span><br><span class="line"></span><br><span class="line">int maxPathSum(TreeNode *root)</span><br><span class="line">&#123;</span><br><span class="line">    if (!root)</span><br><span class="line">        return 0;</span><br><span class="line">    int left = maxPathSum(root-&gt;left);</span><br><span class="line">    int right = maxPathSum(root-&gt;right);</span><br><span class="line">    int temp = root-&gt;val;</span><br><span class="line">    if (left &gt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        temp += left;</span><br><span class="line">    &#125;</span><br><span class="line">    if (right &gt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        temp += right;</span><br><span class="line">    &#125;</span><br><span class="line">    maxSumResult = max(maxSumResult, temp);</span><br><span class="line">    return max(root-&gt;val, max(root-&gt;val + left, root-&gt;val + right));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>调用maxPathSum后maxSumResult得到的就是最大路径和</p>
+</blockquote>
+</blockquote>
+<h1 id="判断是不是平衡二叉树"><a href="#判断是不是平衡二叉树" class="headerlink" title="判断是不是平衡二叉树"></a>判断是不是平衡二叉树</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">int getHeight(TreeNode* root,bool&amp; ifBalance)</span><br><span class="line">&#123;</span><br><span class="line">    if(!root) return 0;</span><br><span class="line">    int left = getHeight(root-&gt;left,ifBalance);</span><br><span class="line">    int right =getHeight(root-&gt;right,ifBalance);</span><br><span class="line">    if(abs(left-right)&gt;1)</span><br><span class="line">    &#123;</span><br><span class="line">        ifBalance=false;</span><br><span class="line">    &#125;</span><br><span class="line">    return left&gt;right?left+1:right+1;</span><br><span class="line">&#125;</span><br><span class="line">bool IsBalanced_Solution(TreeNode* pRoot) </span><br><span class="line">&#123;</span><br><span class="line">    bool ifBalance=true;</span><br><span class="line">    getHeight(pRoot,ifBalance);</span><br><span class="line">    return ifBalance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="next指针"><a href="#next指针" class="headerlink" title="next指针"></a>next指针</h1><blockquote>
+<blockquote>
+<p>完全二叉树增加next指针指向右侧节点</p>
+<p>只适用于完全二叉树</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Node *connectCore(Node *root)</span><br><span class="line">&#123;</span><br><span class="line">    if (!root-&gt;left &amp;&amp; !root-&gt;right) return NULL;</span><br><span class="line">    root-&gt;left-&gt;next = root-&gt;right;</span><br><span class="line">    connectCore(root-&gt;left);</span><br><span class="line">    if (root-&gt;next)</span><br><span class="line">    &#123;</span><br><span class="line">        root-&gt;right-&gt;next = root-&gt;next-&gt;left;</span><br><span class="line">    &#125;</span><br><span class="line">    connectCore(root-&gt;right);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Node *connect(Node *root)</span><br><span class="line">&#123;</span><br><span class="line">    if (!root || (!root-&gt;left &amp;&amp; !root-&gt;right))</span><br><span class="line">        return root;</span><br><span class="line">    return connectCore(root);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>层序遍历，适用于任何形式的二叉树</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Node *connect(Node *root)</span><br><span class="line">&#123;</span><br><span class="line">    if(!root ||(!root-&gt;left &amp;&amp; !root-&gt;right)) return root;</span><br><span class="line">    Node *cursor = root;</span><br><span class="line">    queue&lt;Node *&gt; q;</span><br><span class="line">    q.push(cursor);</span><br><span class="line">    while (!q.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        int size = q.size();</span><br><span class="line">        for (int i = 0; i &lt; size; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            cursor = q.front();</span><br><span class="line">            q.pop();</span><br><span class="line">            cursor-&gt;next = (i==size-1)? nullptr:q.front();</span><br><span class="line">            if(cursor-&gt;left)</span><br><span class="line">            &#123;</span><br><span class="line">                q.push(cursor-&gt;left);</span><br><span class="line">            &#125;</span><br><span class="line">            if(cursor-&gt;right)</span><br><span class="line">            &#123;</span><br><span class="line">                q.push(cursor-&gt;right);</span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return root;</span><br></pre></td></tr></table></figure>
+<h1 id="二叉树从右向左看"><a href="#二叉树从右向左看" class="headerlink" title="二叉树从右向左看"></a><a href="https://leetcode.com/problems/binary-tree-right-side-view/submissions/" target="_blank" rel="noopener">二叉树从右向左看</a></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void fromRight(TreeNode* root,vector&lt;int&gt;&amp; result,int deep)</span><br><span class="line">    &#123;</span><br><span class="line">        if(!root)</span><br><span class="line">        &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        if(deep==result.size())</span><br><span class="line">        &#123;</span><br><span class="line">            result.push_back(root-&gt;val);</span><br><span class="line">        &#125;</span><br><span class="line">        fromRight(root-&gt;right,result,deep+1);</span><br><span class="line">        fromRight(root-&gt;left,result,deep+1);</span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;int&gt; rightSideView(TreeNode* root) &#123;</span><br><span class="line">        vector&lt;int&gt; result;</span><br><span class="line">        fromRight(root,result,0);</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>这是用中右左的方式遍历,若从左向右看可以中左右的方式遍历</p>
+</blockquote>
+</blockquote>
+<h1 id="找到最近公共祖先"><a href="#找到最近公共祖先" class="headerlink" title="找到最近公共祖先"></a><a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/" target="_blank" rel="noopener">找到最近公共祖先</a></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)</span><br><span class="line">&#123;</span><br><span class="line">    if (root == NULL || root == p || root == q) return root;</span><br><span class="line">    TreeNode *left = lowestCommonAncestor(root-&gt;left, p, q);</span><br><span class="line">    TreeNode *right = lowestCommonAncestor(root-&gt;right, p, q);</span><br><span class="line">    if (left != NULL &amp;&amp; right != NULL) return root;</span><br><span class="line">    return left == NULL ? right : left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="二叉树最大宽度"><a href="#二叉树最大宽度" class="headerlink" title="二叉树最大宽度"></a><a href="https://leetcode.com/problems/maximum-width-of-binary-tree/submissions/" target="_blank" rel="noopener">二叉树最大宽度</a></h1><blockquote>
+<blockquote>
+<p>还不知道咋解决溢出问题…先这样</p>
+<p>BFS</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">int widthOfBinaryTree(TreeNode *root)</span><br><span class="line">&#123;</span><br><span class="line">    if (!root) return 0;</span><br><span class="line">    queue&lt;TreeNode *&gt; q;</span><br><span class="line">    q.push(root);</span><br><span class="line">    unordered_map&lt;TreeNode *, int&gt; record;</span><br><span class="line">    record[root] = 1;</span><br><span class="line">    int result = 1;</span><br><span class="line">    while (!q.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        TreeNode *leftNode = q.front();</span><br><span class="line">        int leftEdge = record[leftNode];</span><br><span class="line">        int size = q.size();</span><br><span class="line">        for (int i = 0; i &lt; size; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            TreeNode *currentNode = q.front();</span><br><span class="line">            q.pop();</span><br><span class="line">            result = max(result, record[currentNode] - leftEdge + 1);</span><br><span class="line">            if (currentNode-&gt;left)</span><br><span class="line">            &#123;</span><br><span class="line">                q.push(currentNode-&gt;left);</span><br><span class="line">                record[currentNode-&gt;left] = 2 * record[currentNode];</span><br><span class="line">            &#125;</span><br><span class="line">            if (currentNode-&gt;right)</span><br><span class="line">            &#123;</span><br><span class="line">                q.push(currentNode-&gt;right);</span><br><span class="line">                record[currentNode-&gt;right] = 2 * record[currentNode] + 1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>DFS</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">int result = 0;</span><br><span class="line"></span><br><span class="line">void DFS(TreeNode *root, int level, int order, unordered_map&lt;int, int&gt; record)</span><br><span class="line">&#123;</span><br><span class="line">    if (!root) return;</span><br><span class="line">    if (record.find(level) == record.end())</span><br><span class="line">    &#123;</span><br><span class="line">        record[level] = order;</span><br><span class="line">    &#125;</span><br><span class="line">    result = max(result, order - record[level] + 1);</span><br><span class="line">    DFS(root-&gt;left, level + 1, order * 2, record);</span><br><span class="line">    DFS(root-&gt;right, level + 1, order * 2 + 1, record);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int widthOfBinaryTree(TreeNode *root)</span><br><span class="line">&#123;</span><br><span class="line">    if (!root) return 0;</span><br><span class="line">    unordered_map&lt;int, int&gt; record;</span><br><span class="line">    DFS(root, 0, 1, record);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="判断二叉搜索树"><a href="#判断二叉搜索树" class="headerlink" title="判断二叉搜索树"></a>判断二叉搜索树</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">   bool isValidDFS(TreeNode *root, long low, long high)</span><br><span class="line">&#123;</span><br><span class="line">    if (!root) return true;</span><br><span class="line">    if (root-&gt;val &gt; low &amp;&amp; root-&gt;val &lt; high)</span><br><span class="line">    &#123;</span><br><span class="line">        bool result = isValidDFS(root-&gt;left, low, root-&gt;val);</span><br><span class="line">        if (result)</span><br><span class="line">        &#123;</span><br><span class="line">            result = isValidDFS(root-&gt;right, root-&gt;val, high);</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">    return false;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool isValidBST(TreeNode *root)</span><br><span class="line">&#123;</span><br><span class="line">    return isValidDFS(root, LONG_MIN, LONG_MAX);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="更大的二茬搜索"><a href="#更大的二茬搜索" class="headerlink" title="更大的二茬搜索"></a><a href="https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/submissions/" target="_blank" rel="noopener">更大的二茬搜索</a></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">int currVal = 0;</span><br><span class="line"></span><br><span class="line">void helper(TreeNode *root)</span><br><span class="line">&#123;</span><br><span class="line">    if (root)</span><br><span class="line">    &#123;</span><br><span class="line">        helper(root-&gt;right);</span><br><span class="line">        root-&gt;val += currVal;</span><br><span class="line">        currVal = root-&gt;val;</span><br><span class="line">        helper(root-&gt;left);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">TreeNode *bstToGst(TreeNode *root)</span><br><span class="line">&#123;</span><br><span class="line">    helper(root);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="判断完全二叉树"><a href="#判断完全二叉树" class="headerlink" title="判断完全二叉树"></a>判断完全二叉树</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"> bool isCompleteTree(TreeNode *root)</span><br><span class="line">&#123;</span><br><span class="line">    if (!root)</span><br><span class="line">        return true;</span><br><span class="line">    queue&lt;TreeNode *&gt; record;</span><br><span class="line">    record.push(root);</span><br><span class="line">    bool flag = true;</span><br><span class="line">    while (!record.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        TreeNode *front = record.front();</span><br><span class="line">        record.pop();</span><br><span class="line">        if (!flag &amp;&amp; (front-&gt;left || front-&gt;right))</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        if(front-&gt;left &amp;&amp; front-&gt;right)</span><br><span class="line">        &#123;</span><br><span class="line">            record.push(front-&gt;left);</span><br><span class="line">            record.push(front-&gt;right);</span><br><span class="line">        &#125; else if (front-&gt;right)</span><br><span class="line">        &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125; </span><br><span class="line">        else if (front-&gt;left)</span><br><span class="line">        &#123;</span><br><span class="line">            flag = false;</span><br><span class="line">            record.push(front-&gt;left);</span><br><span class="line">        &#125; else</span><br><span class="line">        &#123;</span><br><span class="line">            flag = false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="二叉树中序遍历的前驱和后继"><a href="#二叉树中序遍历的前驱和后继" class="headerlink" title="二叉树中序遍历的前驱和后继"></a>二叉树中序遍历的前驱和后继</h1><h2 id="前驱"><a href="#前驱" class="headerlink" title="前驱:"></a>前驱:</h2><blockquote>
+<blockquote>
+<p>1.如果当前节点有左子树则找左子树的最右<br>2.如果当前节点没有左子树则找其父节点，直到某节点是父节点的右子树，返回该父节点</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">struct TreeLinkNode &#123;</span><br><span class="line">    int val;</span><br><span class="line">    struct TreeLinkNode *left;</span><br><span class="line">    struct TreeLinkNode *right;</span><br><span class="line">    struct TreeLinkNode *next;</span><br><span class="line">    TreeLinkNode(int x) :val(x), left(NULL), right(NULL), next(NULL) &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="后继"><a href="#后继" class="headerlink" title="后继"></a>后继</h2><blockquote>
+<blockquote>
+<p>1.如果当前节点右右子树则找右子树的最左<br>2.如果当前节点没有右子树则找其父节点，直到该某节点是父节点的左子树，返回该父节点.</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">struct TreeLinkNode</span><br><span class="line">&#123;</span><br><span class="line">    int val;</span><br><span class="line">    struct TreeLinkNode *left;</span><br><span class="line">    struct TreeLinkNode *right;</span><br><span class="line">    struct TreeLinkNode *next;</span><br><span class="line">    TreeLinkNode(int x) :val(x), left(NULL), right(NULL), next(NULL) &#123;  &#125;</span><br><span class="line">&#125;</span><br><span class="line">    TreeLinkNode* GetNext(TreeLinkNode* pNode)</span><br><span class="line">    &#123;</span><br><span class="line">        if(pNode ==nullptr)</span><br><span class="line">            return nullptr;</span><br><span class="line">        // 假如有右子树，就去找右子树的最左节点</span><br><span class="line">        if(pNode-&gt;right)&#123;   </span><br><span class="line">            TreeLinkNode * res=pNode-&gt;right;</span><br><span class="line">            while(res-&gt;left)</span><br><span class="line">                res=res-&gt;left;</span><br><span class="line">            return res;</span><br><span class="line">        &#125;</span><br><span class="line">        //没有右子树时，就一直向上找，找到当前节点是父节点的左孩子为止</span><br><span class="line">        TreeLinkNode *father=pNode-&gt;next;</span><br><span class="line">        TreeLinkNode * cur=pNode;</span><br><span class="line">        while(father != nullptr &amp;&amp; father-&gt;left != cur)&#123;</span><br><span class="line">            cur=father;</span><br><span class="line">            father=father-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        return father;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-04T17:05:50.331Z" itemprop="dateUpdated">2021-04-05 01:05:50</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/04/11/Trees/" target="_blank" rel="external">https://lingyixia.github.io/2019/04/11/Trees/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tree/">Tree</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/04/11/Trees/&title=《树的常见算法》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/11/Trees/&title=《树的常见算法》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/04/11/Trees/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《树的常见算法》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/04/11/Trees/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/04/11/Trees/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/04/11/DynamicProgramming/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">动态规划系列</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/04/09/PCA/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">PCA</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/04/11/Trees/&title=《树的常见算法》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/11/Trees/&title=《树的常见算法》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/04/11/Trees/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《树的常见算法》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/04/11/Trees/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/04/11/Trees/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMElEQVR42u3awY7DIAxF0f7/T2e2lSqS+2wyEnCzipoIOFm42Obzwdf1dX3/cv/093cy5uj9CZcMGTKWZVy31/2yOIaMQ34fUmXIkHEAYxTByH1rejzXw5plyJAhA2zg0oA7ml2GDBky+gy+oFrKKkOGDBmdJJa8T7aDZLQXc3EZMmQsyOBV9/+/f6W/IUOGjKUYtaCZBsR0WfGqZMiQsTWDT1OD3aed6eGM+5RYhgwZuzLSgxE8dKYNgPQTfMj3kCFDxhaMTklrLixtEgz/N2TIkLEdo5/Eprx05AmhVoYMGVswOls3fl87ihGfFpEhQ8amDJLKkqIYH42X7dCHkCFDxpEMFObCpwRfeypDhowTGDxcEkDtKAZPfVstTBkyZCzLmBV2+fauU2hDnQ0ZMmRsxKgtJQ2IPGTXjpTJkCFjb0atvMWPc/H2Q7r0hx2uDBkyNmWQIhffzKXJcBqmh+U2GTJkHMNIt3Fpslrbbj7k4jJkyNiUUTtgkbYQZpXYHt6UIUPGAYzO5q+TBk84bCFDhoxjGOk2rlNiI0E5bhjIkCHjGAYvkPWRHWqwIBkyZCzOuMKLlOE6QTZNemXIkHECI20JpBPzEdK6GW9zypAhYw8GL/2nzcV0c5keuZAhQ8ZpjFrgm5sS10K/DBkyZNynqSQ014Jy8ViYDBkyZJRCZLoR5Mc4pgVcGTJkLMLoFNR4uptiXim3yZAhY0EGD5e1JiVfKJmr1dSUIUPGeow/OOZBzzN9NH8AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

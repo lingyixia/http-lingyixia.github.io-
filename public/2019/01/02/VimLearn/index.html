@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>VimLearn | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="vim">
+    <meta name="description" content="vim学习笔记">
+<meta name="keywords" content="vim">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VimLearn">
+<meta property="og:url" content="https://lingyixia.github.io/2019/01/02/VimLearn/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="vim学习笔记">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lingyixia.github.io/img/transfer.gif">
+<meta property="og:updated_time" content="2021-04-04T17:05:50.332Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VimLearn">
+<meta name="twitter:description" content="vim学习笔记">
+<meta name="twitter:image" content="https://lingyixia.github.io/img/transfer.gif">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">VimLearn</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">VimLearn</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-01-02T11:29:51.000Z" itemprop="datePublished" class="page-time">
+  2019-01-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/基础/">基础</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#六种基本模式"><span class="post-toc-number">1.</span> <span class="post-toc-text">六种基本模式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#其它模式-gt-正常模式"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">其它模式-&gt;正常模式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#正常模式-gt-插入模式"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">正常模式-&gt;插入模式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#正常模式-gt-命令模式"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">正常模式-&gt;命令模式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#正常模式-gt-可视模式"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">正常模式-&gt;可视模式</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#常用功能"><span class="post-toc-number">2.</span> <span class="post-toc-text">常用功能</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#多行注释"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">多行注释</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#删除多行注释"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">删除多行注释</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#删除、复制、剪切"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">删除、复制、剪切</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#查找"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">查找</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#其他"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">其他</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-VimLearn"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">VimLearn</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-01-02 19:29:51" datetime="2019-01-02T11:29:51.000Z"  itemprop="datePublished">2019-01-02</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/基础/">基础</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>试过那么多次,这次一定要把vim用熟!!!!!<br>2019年1月19日,记第一次爱上Vim(Visual Studio中的viemu)<br><a id="more"></a></p>
+<h1 id="六种基本模式"><a href="#六种基本模式" class="headerlink" title="六种基本模式"></a>六种基本模式</h1><blockquote>
+<blockquote>
+<p>基本模式(6):<strong>普通模式</strong>、<strong>插入模式</strong>、<strong>可视模式</strong>、选择模式、<strong>命令行模式</strong>、Ex模式。<br>派生模式(5):操作符等待模式、插入普通模式、插入可视模式、插入选择模式、替换模式</p>
+</blockquote>
+</blockquote>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>模式名称</th>
+<th>英文名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>命令模式</td>
+<td>Command-Mode</td>
+<td>用于输入指令,如:保存、运行、切换标签、切割屏幕等</td>
+</tr>
+<tr>
+<td>插入模式</td>
+<td>Insert-Mode</td>
+<td>也即编辑模式,用于编辑文本,其他编辑器大多默认该模式,大多数新用户希望文本编辑器编辑过程中一直保持这个模式</td>
+</tr>
+<tr>
+<td>可视模式</td>
+<td>Visual-Mode</td>
+<td>相当于高亮选取文本后的<strong>普通模式</strong></td>
+</tr>
+<tr>
+<td>普通模式</td>
+<td>Normal-Mode</td>
+<td>用于查看文本，也可复制、粘贴、撤销、重做等</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/transfer.gif" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h2 id="其它模式-gt-正常模式"><a href="#其它模式-gt-正常模式" class="headerlink" title="其它模式-&gt;正常模式"></a>其它模式-&gt;正常模式</h2><p><code>Esc</code></p>
+<h2 id="正常模式-gt-插入模式"><a href="#正常模式-gt-插入模式" class="headerlink" title="正常模式-&gt;插入模式"></a>正常模式-&gt;插入模式</h2><p><code>a\A,s\S,o\O,i\I......</code></p>
+<h2 id="正常模式-gt-命令模式"><a href="#正常模式-gt-命令模式" class="headerlink" title="正常模式-&gt;命令模式"></a>正常模式-&gt;命令模式</h2><p><code>:</code></p>
+<h2 id="正常模式-gt-可视模式"><a href="#正常模式-gt-可视模式" class="headerlink" title="正常模式-&gt;可视模式"></a>正常模式-&gt;可视模式</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">指令</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">v</td>
+<td style="text-align:center">可视模式</td>
+</tr>
+<tr>
+<td style="text-align:center">Ctrl+v</td>
+<td style="text-align:center">可视块模式</td>
+</tr>
+<tr>
+<td style="text-align:center">Shift+v</td>
+<td style="text-align:center">可视行模式</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="常用功能"><a href="#常用功能" class="headerlink" title="常用功能"></a>常用功能</h1><h2 id="多行注释"><a href="#多行注释" class="headerlink" title="多行注释"></a>多行注释</h2><p>1.<code>Ctrl+v</code>进入可视模式<br>2.选择行<br>3.<code>I</code><br>4.输入注释符(“//“或”#”等等)<br>5.<code>Esc</code><br>以上步骤不可缺(尤其最后一步)!!!!</p>
+<h2 id="删除多行注释"><a href="#删除多行注释" class="headerlink" title="删除多行注释"></a>删除多行注释</h2><p>1.<code>Ctrl+v</code>进入可视模式<br>2.选定要取消注释的多行(只选择注释符列)<br>3.按下”x”或者”d”. </p>
+<h2 id="删除、复制、剪切"><a href="#删除、复制、剪切" class="headerlink" title="删除、复制、剪切"></a>删除、复制、剪切</h2><p>1.<code>normal</code>模式下,<code>yy</code>复制整行,<code>nyy</code>为复制n行,<code>10,15y</code>是复制10到15行,<code>10,15 move 20</code>把10到15行移动到20行后面<br>2.<code>dd</code>剪切整行,<code>ndd</code>为剪切n行,<code>10,15y</code>是剪切10到15行,<code>10,15d</code>删除10到15行,<code>10,15 move 20</code>把10到15行复制到20行后面<br>3.vim中<code>d</code>表示删除,实际上是剪切,要想真正删除使用<code>_d</code>即可。</p>
+<h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><p>在<code>normal</code>模式下按下/即可进入查找模式，输入要查找的字符串并按下回车。 Vim会跳转到第一个匹配。按下<code>n</code>查找下一个，按下<code>N</code>查找上一个。<br>1.<code>\c</code>表示大小写不敏感查找,<code>\C</code>表示大小写敏感查找。例如:<code>/foo\c</code><br>2.查找当前单词:<code>normal</code>模式下按下<code>*</code>即可查找光标所在单词(word),要求每次出现的前后为空白字符或标点符号。例如当前为foo,可以匹配foo bar中的foo,但不可匹配foobar中的foo。 这在查找函数名、变量名时非常有用。</p>
+<p>按下g*即可查找光标所在单词的字符序列，每次出现前后字符无要求。 即foo bar和foobar中的foo均可被匹配到。<br>3.查找并替换:s(substitute)命令用来查找和替换字符串。语法如下:{作用范围}s/{目标}/{替换}/{替换标志}<br>例如:<code>%s/foo/bar/g</code>会在全局范围(%)查找foo并替换为bar,所有出现都会被替换(g)<br>4.作用范围:作用范围分为当前行、全文、选区等等。<br>当前行:<code>s/foo/bar/g</code><br>全文:<code>%s/foo/bar/g</code><br>选区,在Visual模式下选择区域后输入: Vim即可自动补全为 :<code>&#39;&lt;,&#39;&gt;</code>。<br>:<code>&#39;&lt;,&#39;&gt;s/foo/bar/g</code><br>2-11行:<code>5,12s/foo/bar/g</code><br>当前行.与接下来两行+2:<code>.,+2s/foo/bar/g</code><br>5.替换标志:<code>i</code>表示大小写不敏感查找,<code>I</code>表示大小写敏感:<code>%s/foo/bar/i</code>(等效于<code>\C</code>和<code>\c</code>).<code>c</code>表示需要确认:<code>%s/foo/bar/gc</code><br><a href="https://www.cnblogs.com/huxinga/p/7942194.html" target="_blank" rel="noopener">参考这里</a></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>1.<strong>普通模式</strong>下,<code>I</code>是行首,<code>A</code>是行尾,<code>a</code>是从光标后插入,<code>i</code>是光标前插入,<code>O</code>从该行上一行新增一行,<code>o</code>从该行下一行新增一行<br>2.<code>d</code>剪切,<code>y</code>复制,<code>p</code>粘贴<br>3.全选:<strong>普通模式</strong>下:<code>ggVG</code><br>4.全部复制:<strong>普通模式</strong>下:<code>ggyG</code><br>5.全部删除:<strong>普通模式</strong>下:<code>dG</code><br>解释:<br><code>gg</code>是让光标移到首行，在vim才有效，vi中无效<br><code>v</code>:是进入Visual(可视）模式<br><code>G</code>:光标移到最后一行<br>选中内容以后就可以其他的操作了，比如<br><code>d</code>删除选中内容<br><code>y</code>复制选中内容到0号寄存器<br>6.字符串次数统计:<strong>普通模式</strong>下:<code>%s/需要统计的字符串(无需引号)//gn</code><br>7.代码移动:<strong>普通模式下</strong>:60,70 &gt; &lt;四个空格&gt;表示60到70行右移4个空格</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-04T17:05:50.332Z" itemprop="dateUpdated">2021-04-05 01:05:50</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/01/02/VimLearn/" target="_blank" rel="external">https://lingyixia.github.io/2019/01/02/VimLearn/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/01/02/VimLearn/&title=《VimLearn》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/01/02/VimLearn/&title=《VimLearn》 — 灵翼俠的个人博客&source=试过那么多次,这次一定要把vim用熟!!!!!2019年1月19日,记第一次爱上Vim(Visual Studio中的viemu)" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/01/02/VimLearn/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《VimLearn》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/01/02/VimLearn/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/01/02/VimLearn/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/01/08/TwoCrossEntropy/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">两种交叉熵损失函数对比</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/12/27/convex/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">convex</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/01/02/VimLearn/&title=《VimLearn》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/01/02/VimLearn/&title=《VimLearn》 — 灵翼俠的个人博客&source=试过那么多次,这次一定要把vim用熟!!!!!2019年1月19日,记第一次爱上Vim(Visual Studio中的viemu)" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/01/02/VimLearn/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《VimLearn》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/01/02/VimLearn/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/01/02/VimLearn/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJUlEQVR42u3aQXLDIAwF0N7/0um2nUmcL4l0anheZahteF6oQujrK74eP67J+Ks3V59qXhgYGLdlPC6vVxNMlng9nvz1yewYGBgHMJJFJGHxerLeXNf3Y2BgYFRDZw6rzouBgYFRfV0vfUzCMQYGBsZkEzspyeWwj+/FMTAwbsjIq+5///sj5xsYGBi3YjyKVzXhS0Z6K/n1HgwMjK0Z87SvWiCrlvAK68HAwNiaUQ18vdaKVdvgZckiBgbGrRjV4lq1CSMPsr1nMTAwzmFMXl1N+/JCW+E/BgYGxqaMXjm+VzKrZnHNbhEMDIztGNWQVw2XvWODPOnEwMA4gZG0YeX352G3/KWvPzEGBsbWjGrsqi49P/7M71kQgjEwMG7I6BXCVhXg8vD65lkMDIxNGdXpq0lbstDqIeiTEQwMjGMYq445q+ldvkF9CcbAwDiG0SuuzXs9eqW3J1VDDAyMTRlry15Jua1XhisknRgYGJsyeqWxfCRnT9rIMDAwTmDkv3tpXPKe6+D7ZhwDA+MAxiSxm7SR9do1omYLDAyM7Rh5Wb+6Ea2G1+TIEwMD4xzGo3hV2fNPE7V9YGBgbM2YBLsJKQ/T1SIgBgbGroxqkO0deVZbKJKnMDAwTmP0Al+eYq5tBXuzF8fAwDieMQmOSYtG734MDAyMfLLqdncSoD8ScDEwMP4xY0G7Q/ETTMp5GBgYpzHyrWOStOULWnU8gIGBsTXjG3tv+ggexjK6AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>NLPInterview | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content>
+    <meta name="description" content="总结一些NLP面试必备知识点链接总结:1.https://mp.weixin.qq.com/s/MCIhRmbq2N0HM_0v-nld_w   CNN发展史感受野SameAndValidCNN感受野为什么都是奇数:1.从SameAndValid](https://lingyixia.github.io/2019/03/13/CnnSizeCalc/),Padding = Kernel_siz">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLPInterview">
+<meta property="og:url" content="https://lingyixia.github.io/2019/05/02/NLPInterview/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="总结一些NLP面试必备知识点链接总结:1.https://mp.weixin.qq.com/s/MCIhRmbq2N0HM_0v-nld_w   CNN发展史感受野SameAndValidCNN感受野为什么都是奇数:1.从SameAndValid](https://lingyixia.github.io/2019/03/13/CnnSizeCalc/),Padding = Kernel_siz">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-04T17:05:50.329Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLPInterview">
+<meta name="twitter:description" content="总结一些NLP面试必备知识点链接总结:1.https://mp.weixin.qq.com/s/MCIhRmbq2N0HM_0v-nld_w   CNN发展史感受野SameAndValidCNN感受野为什么都是奇数:1.从SameAndValid](https://lingyixia.github.io/2019/03/13/CnnSizeCalc/),Padding = Kernel_siz">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">NLPInterview</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">NLPInterview</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-05-02T06:20:23.000Z" itemprop="datePublished" class="page-time">
+  2019-05-02
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#CNN"><span class="post-toc-number">1.</span> <span class="post-toc-text">CNN</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#发展史"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">发展史</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#感受野"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">感受野</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SameAndValid"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">SameAndValid</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#CNN感受野为什么都是奇数"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">CNN感受野为什么都是奇数:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Pooling的作用"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">Pooling的作用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#卷积和池化的区别"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">卷积和池化的区别</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参数计算方法"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">参数计算方法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#输出层维度计算"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">输出层维度计算</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1卷积的作用"><span class="post-toc-number">1.9.</span> <span class="post-toc-text">1*1卷积的作用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#反卷积和空洞卷积"><span class="post-toc-number">1.10.</span> <span class="post-toc-text">反卷积和空洞卷积</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#残差网络-https-lingyixia-github-io-2019-04-05-transformer"><span class="post-toc-number">1.11.</span> <span class="post-toc-text">(残差网络)[https://lingyixia.github.io/2019/04/05/transformer/]</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#transformer"><span class="post-toc-number">1.12.</span> <span class="post-toc-text">transformer</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#CNN复杂度分析"><span class="post-toc-number">1.13.</span> <span class="post-toc-text">CNN复杂度分析</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#RNN"><span class="post-toc-number">2.</span> <span class="post-toc-text">RNN</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#RNN梯度消失和爆炸"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">RNN梯度消失和爆炸</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#LSTM公式、结构，s和h的作用"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">LSTM公式、结构，s和h的作用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#LSTM和GRU"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">LSTM和GRU</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Transform"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">Transform</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参数计算"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">参数计算</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#CNN和RNN反向传播的不同"><span class="post-toc-number">2.6.</span> <span class="post-toc-text">CNN和RNN反向传播的不同</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#overfitting"><span class="post-toc-number">3.</span> <span class="post-toc-text">overfitting</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#BN的作用"><span class="post-toc-number">4.</span> <span class="post-toc-text">BN的作用</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#优化方式"><span class="post-toc-number">5.</span> <span class="post-toc-text">优化方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#激活函数-注意bert的gleu"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">激活函数(注意bert的gleu)</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#指标介绍"><span class="post-toc-number">6.</span> <span class="post-toc-text">指标介绍</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#机器学习"><span class="post-toc-number">7.</span> <span class="post-toc-text">机器学习</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#激活函数"><span class="post-toc-number">8.</span> <span class="post-toc-text">激活函数</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#为什么沿梯度方向最快"><span class="post-toc-number">9.</span> <span class="post-toc-text">为什么沿梯度方向最快</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#bert点"><span class="post-toc-number">10.</span> <span class="post-toc-text">bert点</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#L1和L2"><span class="post-toc-number">11.</span> <span class="post-toc-text">L1和L2</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#调参不理想"><span class="post-toc-number">12.</span> <span class="post-toc-text">调参不理想</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Dropout加在哪里"><span class="post-toc-number">13.</span> <span class="post-toc-text">Dropout加在哪里</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#GBDT和XGboost"><span class="post-toc-number">14.</span> <span class="post-toc-text">GBDT和XGboost</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#大文件小到大排序"><span class="post-toc-number">15.</span> <span class="post-toc-text">大文件小到大排序</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#类别不均衡"><span class="post-toc-number">16.</span> <span class="post-toc-text">类别不均衡</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#GDBT和RF优点缺点"><span class="post-toc-number">17.</span> <span class="post-toc-text">GDBT和RF优点缺点</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#维比特算法"><span class="post-toc-number">18.</span> <span class="post-toc-text">维比特算法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#各种normilization"><span class="post-toc-number">19.</span> <span class="post-toc-text">各种normilization</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-NLPInterview"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">NLPInterview</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-05-02 14:20:23" datetime="2019-05-02T06:20:23.000Z"  itemprop="datePublished">2019-05-02</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<blockquote>
+<p>总结一些NLP面试必备知识点<br>链接总结:<br>1.<a href="https://mp.weixin.qq.com/s/MCIhRmbq2N0HM_0v-nld_w" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/MCIhRmbq2N0HM_0v-nld_w</a></p>
+</blockquote>
+</blockquote>
+<h1 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a><a href="https://lingyixia.github.io/2019/01/23/CNN/">CNN</a></h1><h2 id="发展史"><a href="#发展史" class="headerlink" title="发展史"></a><a href="https://lingyixia.github.io/2019/05/01/CNNdevelopment/">发展史</a></h2><h2 id="感受野"><a href="#感受野" class="headerlink" title="感受野"></a><a href="https://lingyixia.github.io/2019/05/13/DilatedConvolution/">感受野</a></h2><h2 id="SameAndValid"><a href="#SameAndValid" class="headerlink" title="SameAndValid"></a><a href="https://lingyixia.github.io/2019/03/13/CnnSizeCalc/">SameAndValid</a></h2><h2 id="CNN感受野为什么都是奇数"><a href="#CNN感受野为什么都是奇数" class="headerlink" title="CNN感受野为什么都是奇数:"></a>CNN感受野为什么都是奇数:</h2><p>1.从SameAndValid](<a href="https://lingyixia.github.io/2019/03/13/CnnSizeCalc/),Padding">https://lingyixia.github.io/2019/03/13/CnnSizeCalc/),Padding</a> = Kernel_size-1,当Kernel_size为奇数的时候可以平均到两边<br>2.方便确定卷积核的位置，中心点就可以代表卷积核的位置，但是偶数的话就不方便</p>
+<h2 id="Pooling的作用"><a href="#Pooling的作用" class="headerlink" title="Pooling的作用"></a>Pooling的作用</h2><h2 id="卷积和池化的区别"><a href="#卷积和池化的区别" class="headerlink" title="卷积和池化的区别"></a><a href="https://mp.weixin.qq.com/s/MCIhRmbq2N0HM_0v-nld_w" target="_blank" rel="noopener">卷积和池化的区别</a></h2><h2 id="参数计算方法"><a href="#参数计算方法" class="headerlink" title="参数计算方法"></a>参数计算方法</h2><h2 id="输出层维度计算"><a href="#输出层维度计算" class="headerlink" title="输出层维度计算"></a>输出层维度计算</h2><h2 id="1-1卷积的作用"><a href="#1-1卷积的作用" class="headerlink" title="1*1卷积的作用"></a><a href="https://mp.weixin.qq.com/s/MCIhRmbq2N0HM_0v-nld_w" target="_blank" rel="noopener">1*1卷积的作用</a></h2><h2 id="反卷积和空洞卷积"><a href="#反卷积和空洞卷积" class="headerlink" title="反卷积和空洞卷积"></a>反卷积和空洞卷积</h2><h2 id="残差网络-https-lingyixia-github-io-2019-04-05-transformer"><a href="#残差网络-https-lingyixia-github-io-2019-04-05-transformer" class="headerlink" title="(残差网络)[https://lingyixia.github.io/2019/04/05/transformer/]"></a>(残差网络)[<a href="https://lingyixia.github.io/2019/04/05/transformer/">https://lingyixia.github.io/2019/04/05/transformer/</a>]</h2><h2 id="transformer"><a href="#transformer" class="headerlink" title="transformer"></a>transformer</h2><p>两个问题:<br>1,为什么用多头:多个attention便于模型学习不同子空间位置的特征表示，然后最终组合起来这些特征，而单头attention直接把这些特征平均，就减少了一些特征的表示可能。<br>2.为什么self-attention要除以一个根号维度:假设Q和K都是独立的随机变量，满足均值为0，方差为1，则点乘后结果均值为0，方差为dk。也即方差会随维度dk的增大而增大，而大的方差导致极小的梯度(我认为大方差导致有的输出单元a（a是softmax的一个输出）很小，softmax反向传播梯度就很小（梯度和a有关））。为了避免这种大方差带来的训练问题，论文中用内积除以维度的开方，使之变为均值为0，方差为1。</p>
+<blockquote>
+<blockquote>
+<p>batch normalization解决的是梯度消失问题,残差解决的是网络增加深度带来的退化问题<br>目的是学习F(x)=x，但是神经网络学习这个不容易，但是学习F(x)=0更容易(一般初始化的时候都是以0为均值).<br>在假设现在的目的是把5学到5.1，不加残差网络的参数变化是F(5)-&gt;5.1,加残差网络的参数变化是H(5)=F’(5)+5=5.1,也就是F’(5)=0.1，也就是学习的过程变成了学习残差,而残差一般数值较小,神经网络对小数更敏感。<br>平常的前向公式:</p>
+<script type="math/tex; mode=display">
+x_L = \sum_{i=1}^LF(x_i,w)</script><p>反向传播公式:</p>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial x_l}=\frac{\partial L}{\partial O} \prod_l \frac{\partial O}{\partial x_l}</script><p>残差网络的前向公式:</p>
+<script type="math/tex; mode=display">
+x_L = x_l+\sum_{i=1}^LF(x_i,w)</script><p>反向传播公式:</p>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial x}=\frac{\partial L}{\partial O}(1+ \prod_l \frac{\partial O}{\partial x_l})</script><p><a href="https://zhuanlan.zhihu.com/p/42706477" target="_blank" rel="noopener">残差网络名字由来</a></p>
+</blockquote>
+</blockquote>
+<h2 id="CNN复杂度分析"><a href="#CNN复杂度分析" class="headerlink" title="CNN复杂度分析"></a><a href="https://zhuanlan.zhihu.com/p/31575074" target="_blank" rel="noopener">CNN复杂度分析</a></h2><h1 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h1><h2 id="RNN梯度消失和爆炸"><a href="#RNN梯度消失和爆炸" class="headerlink" title="RNN梯度消失和爆炸"></a><a href="https://www.zhihu.com/question/34878706" target="_blank" rel="noopener">RNN梯度消失和爆炸</a></h2><blockquote>
+<blockquote>
+<p>回答要点:1,所说的梯度消失指的是远距离的消失，近处的不会消失<br>2.所谓的解决是在C的更新路径上解决，而h的路径上，该消失还会消失。</p>
+</blockquote>
+</blockquote>
+<h2 id="LSTM公式、结构，s和h的作用"><a href="#LSTM公式、结构，s和h的作用" class="headerlink" title="LSTM公式、结构，s和h的作用"></a>LSTM公式、结构，s和h的作用</h2><p>LSTM和普通的RNN相比,多了三个门结构，用来解决当序列过长造成的梯度爆炸或梯度消失问题(写下三个门结构的公式),这三个门结构都是针对输入信息进行处理的,首先对于输入信息要做一个非线性化(非线性化公式),也就是说f是针对上一步的信息拿过来多少，所以我觉得叫记住门更合适，i是真对当前信息留下多少,最后一个ht，也就是说，h是用来保保持前后联系的状态，c是用来维持信息的状态.</p>
+<h2 id="LSTM和GRU"><a href="#LSTM和GRU" class="headerlink" title="LSTM和GRU"></a>LSTM和GRU</h2><p>GRU和LSTM的性能在很多任务上不分伯仲。<br>GRU 参数更少因此更容易收敛，但是数据集很大的情况下，LSTM表达性能更好。<br>从结构上来说，GRU只有两个门（update和reset），LSTM有三个门（forget，input，output），GRU直接将hidden state 传给下一个单元，而LSTM则用memory cell 把hidden state 包装起来。</p>
+<h2 id="Transform"><a href="#Transform" class="headerlink" title="Transform"></a>Transform</h2><h2 id="参数计算"><a href="#参数计算" class="headerlink" title="参数计算"></a>参数计算</h2><h2 id="CNN和RNN反向传播的不同"><a href="#CNN和RNN反向传播的不同" class="headerlink" title="CNN和RNN反向传播的不同"></a>CNN和RNN反向传播的不同</h2><p><a href="https://www.cnblogs.com/pinard/p/6519110.html" target="_blank" rel="noopener">CNN反向传播</a>需要解决的问题是Pool压缩数据、卷积的解决,Pool可以进行上采样，得到原先的size，卷积可以转为矩阵乘矩阵的形式,比如inputsize为x=9*9,卷积核为4*4,stride为1,则输出为5*5,可以将该卷积操作写为25 * 81 乘以81 * 1,然后将得到的25写作5 *5即可,它每一层更新的都是不同的参数.而RNN由于每个步骤都是共享的参数,因此需要每一个步骤都反向传播到最开始，然后把每个步骤传播过来的梯度相加在更新.</p>
+<h1 id="overfitting"><a href="#overfitting" class="headerlink" title="overfitting"></a><a href="https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/">overfitting</a></h1><h1 id="BN的作用"><a href="#BN的作用" class="headerlink" title="BN的作用"></a><a href="https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/">BN的作用</a></h1><h1 id="优化方式"><a href="#优化方式" class="headerlink" title="优化方式"></a><a href="https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/">优化方式</a></h1><h2 id="激活函数-注意bert的gleu"><a href="#激活函数-注意bert的gleu" class="headerlink" title="激活函数(注意bert的gleu)"></a>激活函数(注意bert的gleu)</h2><h1 id="指标介绍"><a href="#指标介绍" class="headerlink" title="指标介绍"></a>指标介绍</h1><p>本来很简单的东西解释的一踏糊涂，，还是准备一下措辞吧:<br>语言介绍:精确度率指的是预测为正例中预测正确的比重 准确率指的是所有样本中预测正确的比重,前者针对正例，后者针对预测正确(包括正例预测正确和负例预测正确)</p>
+<p>ROC曲线:<br><a href="https://blog.csdn.net/program_developer/article/details/79946787" target="_blank" rel="noopener">绘制过程</a><br>横坐标:$FPR=\frac{FP}{样本标签所有负例}$，也就是所有的负例有多少被预测为正例了.<br>纵坐标:$TPR=\frac{TP}{样本标签所有正例}$(zh)召回率,也就是所有的正例有多少被预测为正例了.<br> AUC是衡量二分类模型优劣的一种评价指标，表示预测的正例排在负例前面的概率。</p>
+<h1 id="机器学习"><a href="#机器学习" class="headerlink" title="机器学习"></a><a href="https://www.zhihu.com/question/59683332/answer/281642849" target="_blank" rel="noopener">机器学习</a></h1><p><a href="https://lingyixia.github.io/2019/07/28/maxlikehood/">最大熵模型介绍</a>:第一,充分考虑,第二,不做任何假设<br>SVM和LR：<br>相同点:1.都是线性分类器(SVM不考虑核函数)(其实线性的意思是各个特征的线性组合而不是幂次方组合)<br>      2.都是判别模型<br>      3.都是有监督模型<br>不同点:1.损失函数(合页损失核交叉熵损失)<br>      2.LR优化考虑所有的点，SVM其实最终考虑的只有支持向量<br>      3.SVM基于距离分类，而LR基于概率分类，所以SVM最好先对数据进行归一化处理，而LR不受影响<br>      4.SVM的损失函数自带正则，而LR必须另外在损失函数外添加正则项。<br>      5.SVM解决非线性问题用核函数，LR不用核函数(计算所有数据复杂度太高)会在数据处理上下功夫，比如<a href="https://blog.csdn.net/u011086367/article/details/52879531" target="_blank" rel="noopener">数据离散化</a>.<br>使用场景:<br>1.异常点多，优先使用逻辑回归(使用所有的数据计算loss，会减少异常点的贡献)<br>2.特征维度很大，优先使用逻辑回归，因为特征纬度大用参数模型的逻辑回归表达能力更强,而且速度快<br>3.如果特征维度小，数据少,优先使用svm+核函数,因为特征少容易造成非线性问题,而数据少只要支持向量没变最后的平面也不会变。<br>4.特征小，数据很多很多，先想办法增加维度，然后用lr或线性svm(svm不擅长处理特征维度大核数据多的问题，花费时间会猛增))</p>
+<p>逻辑回归假设服从伯努利分布，线性回归假设服从正太分布</p>
+<h1 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a><a href="https://www.cnblogs.com/hutao722/p/9732223.html" target="_blank" rel="noopener">激活函数</a></h1><blockquote>
+<blockquote>
+<p>Relu/sigmoid /tanh<br>sigmoid: y = 1/(1 + e-x)<br>tanh: y = (ex - e-x)/(ex + e-x)<br>relu: y = max(0, x)</p>
+</blockquote>
+</blockquote>
+<p>激活函数通常有以下性质： </p>
+<ul>
+<li>非线性：如果激活函数都为线性，那么神经网络的最终输出都是和输入呈线性关系；显然这不符合事实。 </li>
+<li>可导性：神经网络的优化都是基于梯度的，求解梯度时需要确保函数可导。 </li>
+<li>单调性:激活函数是单调的，否则不能保证神经网络抽象的优化问题为凸优化问题了。 </li>
+<li>输出范围有限：激活函数的输出值的范围是有限时，基于梯度的方法会更加稳定。输入值范围为 (−∞,+∞) ，如果输出范围不加限制，虽然训练会更加高效，但是learning rate将会更小，且给工程实现带来许多困难。</li>
+</ul>
+<p>第一,sigmoid和tanh对比,后者相当于前者的平移版本,取值范围是[-1,1],可以看做一种数据中心化的效果<br>第二,sigmoid最大的优势就是可以输出概率<br>第三,sigmoid反向求导<strong>计算量大</strong>,<strong>容易梯度消失</strong>,relu速度快，不会梯度消失</p>
+<h1 id="为什么沿梯度方向最快"><a href="#为什么沿梯度方向最快" class="headerlink" title="为什么沿梯度方向最快"></a><a href="https://lingyixia.github.io/2019/06/14/derivative/">为什么沿梯度方向最快</a></h1><blockquote>
+<blockquote>
+<p>简单的说就是快不快要用方向导数定义，而方向导数沿梯度方向最大(两向量共线乘积最大)</p>
+</blockquote>
+</blockquote>
+<h1 id="bert点"><a href="#bert点" class="headerlink" title="bert点"></a>bert点</h1><ol>
+<li>transform的encoder</li>
+<li>预测15%,80%mask,10% 替换 10%保留<blockquote>
+<blockquote>
+<p>其实每次选取15%来predict对于一个句子来说还是比较多的，很容易造成某个词一直都是mask状态，也就是说最后的模型没有该词的信息,</p>
+</blockquote>
+</blockquote>
+</li>
+<li><a href="https://blog.csdn.net/liruihongbob/article/details/86510622" target="_blank" rel="noopener">激活函数</a>(在relu中加入了随机正则)</li>
+</ol>
+<h1 id="L1和L2"><a href="#L1和L2" class="headerlink" title="L1和L2"></a>L1和L2</h1><p>L1正则项更容易得到稀疏矩阵，用于特征选择<br>参考1(<a href="https://blog.csdn.net/jinping_shi/article/details/52433975" target="_blank" rel="noopener">https://blog.csdn.net/jinping_shi/article/details/52433975</a>)<br><a href="https://blog.csdn.net/autocyz/article/details/76511527" target="_blank" rel="noopener">参考2</a><br>L2用于过拟合<br><a href="https://blog.csdn.net/haidixipan/article/details/83186850" target="_blank" rel="noopener">参考3</a></p>
+<h1 id="调参不理想"><a href="#调参不理想" class="headerlink" title="调参不理想"></a>调参不理想</h1><p>如果超参数调不好就需要<br>1.考虑参数初始化问题和激活函数<br>2.看是否overfitting</p>
+<h1 id="Dropout加在哪里"><a href="#Dropout加在哪里" class="headerlink" title="Dropout加在哪里"></a>Dropout加在哪里</h1><p>word embedding层后、pooling层后、FC层（全联接层）后</p>
+<h1 id="GBDT和XGboost"><a href="#GBDT和XGboost" class="headerlink" title="GBDT和XGboost"></a>GBDT和XGboost</h1><h1 id="大文件小到大排序"><a href="#大文件小到大排序" class="headerlink" title="大文件小到大排序"></a>大文件小到大排序</h1><p>1.将大文件分割为N个内存可读的小文件,每个小文件从小到大排序<br>2.每个文件取一个指针指向头数据<br>3.将头数据组成小根堆<br>4.将堆顶文件存入文件,将之前堆顶文件的下一个数据放入堆顶，调整成小根堆<br>5.执行步骤4，直到完成.</p>
+<h1 id="类别不均衡"><a href="#类别不均衡" class="headerlink" title="类别不均衡"></a>类别不均衡</h1><p>1.调整class-weight，使对少的类更敏感(把类从小到大数量排序，在倒过来排序，softmax后就是各个权重，即少的大，多的小s)<br>2.比如大类是小类的N倍，则训练N个模型，每个模型都是小类全部和大类的1/N，最后投票。<br>3.少类过采样(复制多分，过拟合)，多类欠采样(没有充分利用样本)</p>
+<ul>
+<li><p>SMOTE可以合成少量数据用来训练</p>
+<h1 id="GDBT和RF优点缺点"><a href="#GDBT和RF优点缺点" class="headerlink" title="GDBT和RF优点缺点"></a>GDBT和RF优点缺点</h1><h1 id="维比特算法"><a href="#维比特算法" class="headerlink" title="维比特算法"></a><a href="https://wulc.me/2017/03/02/%E7%BB%B4%E7%89%B9%E6%AF%94%E7%AE%97%E6%B3%95/" target="_blank" rel="noopener">维比特算法</a></h1><p>假设序列长度为,隐含状态数量为m，穷举法的时间复杂度为$O(n^m)$<br>维比特算法时间复杂度为$O(m*n^2)$</p>
+<h1 id="各种normilization"><a href="#各种normilization" class="headerlink" title="各种normilization"></a><a href="https://blog.csdn.net/liuxiao214/article/details/81037416" target="_blank" rel="noopener">各种normilization</a></h1></li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-04T17:05:50.329Z" itemprop="dateUpdated">2021-04-05 01:05:50</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/05/02/NLPInterview/" target="_blank" rel="external">https://lingyixia.github.io/2019/05/02/NLPInterview/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/05/02/NLPInterview/&title=《NLPInterview》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/05/02/NLPInterview/&title=《NLPInterview》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/05/02/NLPInterview/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NLPInterview》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/05/02/NLPInterview/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/05/02/NLPInterview/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/05/07/matrix/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">矩阵若干题解</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/05/01/CNNdevelopment/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">CNN发展史</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/05/02/NLPInterview/&title=《NLPInterview》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/05/02/NLPInterview/&title=《NLPInterview》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/05/02/NLPInterview/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NLPInterview》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/05/02/NLPInterview/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/05/02/NLPInterview/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aQW7DMAxE0dz/0u6miwJBlD+kXED016pII1svi4Ek8vXC43obfz9ff588OZ1VHDJkyDiWcS3HpxeQV376/vss8t71E2TIkPEEBlkEAZDlrqOZB7oMGTJkEEa6TeSxK0OGDBl3BC5ZRG0DKkOGDBn8EEvCd70drG0NN5/FZciQcSCD37r//9+31DdkyJBxFOMKR7+csHc9v0+WIUPGaAYPuJRHjp1km0jWI0OGjNmMXQ0TvEki/o3JDy1DhozRjE6JsRbBpMxZLE7IkCFjKIOHZi1w0/BtRa0MGTIewyCTSWjy4E4BX7pFZMiQMZRBNmSdRgdeMCgWGGTIkDGawSO1f6xNl75h4yhDhowRjDRw+W/D45IDvly3yZAhYyijdoDkBcvOFjNmy5AhYzSDX4R1GLXiRGtvK0OGjBGMXRdetZavbWAZMmSMZqQXanyLxi/xOwUAGTJkPIeRNkOk12frEOcBXTyLy5AhYxAjfXGt/avW0oHO4jJkyHgAg7ymv6VLqXyFMmTIeAKjE5p8bhq+cbOFDBkyHsDg8Ur+mxYeaqUFGTJkzGZc4ejDbrmekyFDxmgGH7VNHrlW44fnTrFThgwZpzNIyKZtrLVF81nouk2GDBnjGLXg21XaTFvBPgauDBkyZDR2nbXPUZuFDBkyZJSaLVDRMQzozYErQ4aMAxnkENsvT6a3fbdct8mQIeNARvq4tKkiLQ+QucWipgwZMs5j/ACh5WqYoQVf2AAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

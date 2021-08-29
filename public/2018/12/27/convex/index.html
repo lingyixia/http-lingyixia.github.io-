@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>convex | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="C++,leetcode">
+    <meta name="description" content="对应[leetcode 587](https://leetcode.com/problems/erect-the-fence/)">
+<meta name="keywords" content="C++,leetcode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="convex">
+<meta property="og:url" content="https://lingyixia.github.io/2018/12/27/convex/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="对应[leetcode 587](https://leetcode.com/problems/erect-the-fence/)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-04T17:05:50.333Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="convex">
+<meta name="twitter:description" content="对应[leetcode 587](https://leetcode.com/problems/erect-the-fence/)">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">convex</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">convex</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-12-27T12:20:55.000Z" itemprop="datePublished" class="page-time">
+  2018-12-27
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Graham扫描法"><span class="post-toc-number">1.</span> <span class="post-toc-text">Graham扫描法</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-convex"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">convex</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-12-27 20:20:55" datetime="2018-12-27T12:20:55.000Z"  itemprop="datePublished">2018-12-27</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>There are some trees, where each tree is represented by (x,y) coordinate in a two-dimensional garden. Your job is to fence the entire garden using the minimum length of rope as it is expensive. The garden is well fenced only if all the trees are enclosed. Your task is to help find the coordinates of trees which are exactly located on the fence perimeter.<br><a id="more"></a></p>
+<h1 id="Graham扫描法"><a href="#Graham扫描法" class="headerlink" title="Graham扫描法"></a>Graham扫描法</h1><p>步骤:</p>
+<ol>
+<li>将所有的点排序,取$y$轴最小的一个点记为$P_0$(如果多个则取$x$最小的点)</li>
+<li>平移所有的点,使$P_0$为原点</li>
+<li>计算各个点相对于$P_0$的夹角$α$,按从小到大的顺序对各个点排序。当$α$相同时，距离$P_0$比较近的排在前面。例如图中得到的结果为$P_1,P_2,P_3,P_4,P_5,P_6,P_7,P_8$(<strong>此处排序是个关键点</strong>)。我们由几何知识可以知道，结果中第一个点$P_1$和最后一个点$P_8$一定是凸包上的点。然后将$P_0$和$P_1$依次入栈。</li>
+<li>栈顶出栈,即$P_1$然后判断下一个点$P_2$在栈顶点$P_0$和刚刚出栈的点$P_1$组成的直线的哪边，如果在左边或者同一直线上则$P_1$再次入栈,$P_2$跟随入栈,如果在右边则$P_1$扔掉,扔掉，重复步骤4,直到$P_2$在该直线的左边或同一直线<a href="/2018/12/22/dotAndLine"><strong>此处判断是个关键点</strong></a>。</li>
+<li>直到最后一个$P_8$为止:<br>代码如下(需要简化,以后在说):<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">#include&lt;stack&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct  Point</span><br><span class="line">&#123;</span><br><span class="line">	int x, y;</span><br><span class="line">	Point() :x(0), y(0) &#123;&#125;</span><br><span class="line">	Point(int a, int b) :x(a), y(b) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">Point operator -(const Point&amp; pointA, const Point&amp; pointB)</span><br><span class="line">&#123;</span><br><span class="line">	Point temp;</span><br><span class="line">	temp.x = pointA.x - pointB.x;</span><br><span class="line">	temp.y = pointA.y - pointB.y;</span><br><span class="line">	return temp;</span><br><span class="line">&#125;</span><br><span class="line">Point operator +(const Point&amp; pointA, const Point&amp; pointB)</span><br><span class="line">&#123;</span><br><span class="line">	Point temp;</span><br><span class="line">	temp.x = pointA.x + pointB.x;</span><br><span class="line">	temp.y = pointA.y + pointB.y;</span><br><span class="line">	return temp;</span><br><span class="line">&#125;</span><br><span class="line">bool compareLess(const Point&amp; A, const Point&amp; B)</span><br><span class="line">&#123;</span><br><span class="line">	if (A.y == B.y)</span><br><span class="line">	&#123;</span><br><span class="line">		return A.x &lt; B.x;</span><br><span class="line">	&#125;</span><br><span class="line">	return A.y &lt; B.y;</span><br><span class="line">&#125;</span><br><span class="line">bool compareAngle(const Point&amp; A, const Point&amp; B)</span><br><span class="line">&#123;</span><br><span class="line">	float a = A.x / sqrt(A.x*A.x + A.y* A.y);</span><br><span class="line">	float b = B.x / sqrt(B.x*B.x + B.y * B.y);</span><br><span class="line">	if (a == b)</span><br><span class="line">	&#123;</span><br><span class="line">		if (A.x == B.x)</span><br><span class="line">		&#123;</span><br><span class="line">			return A.y &gt; B.y;</span><br><span class="line">		&#125;</span><br><span class="line">		return A.x &lt; B.x;</span><br><span class="line">	&#125;</span><br><span class="line">	return a &gt; b;</span><br><span class="line">&#125;</span><br><span class="line">vector&lt;Point&gt; outerTrees(vector&lt;Point&gt;&amp; points);</span><br><span class="line">int calcSquare(Point&amp; A, Point&amp; B, Point&amp; C);</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;Point&gt; points = &#123; Point(0, 2), Point(0, 4), Point(0, 5), Point(0, 9), Point(2, 1), Point(2, 2), Point(2, 3), Point(2, 5), Point(3, 1), Point(3, 2), Point(3, 6), Point(3, 9), Point(4, 2), Point(4, 5), Point(5, 8), Point(5, 9), Point(6, 3), Point(7, 9), Point(8, 1), Point(8, 2), Point(8, 5), Point(8, 7), Point(9, 0), Point(9, 1), Point(9, 6) &#125;;</span><br><span class="line">	vector&lt;Point&gt; p = outerTrees(points);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">vector&lt;Point&gt; outerTrees(vector&lt;Point&gt;&amp; points)</span><br><span class="line">&#123;</span><br><span class="line">	if (points.size() &lt; 4)</span><br><span class="line">	&#123;</span><br><span class="line">		return points;</span><br><span class="line">	&#125;</span><br><span class="line">	sort(points.begin(), points.end(), compareLess);</span><br><span class="line">	Point zero = points.front();</span><br><span class="line">	for (vector&lt;Point&gt;::iterator iter = points.begin(); iter != points.end(); iter++)</span><br><span class="line">	&#123;</span><br><span class="line">		*iter = *iter - zero;</span><br><span class="line">	&#125;</span><br><span class="line">	sort(points.begin() + 1, points.end(), compareAngle);</span><br><span class="line">	vector&lt;Point&gt;::iterator iter;</span><br><span class="line">	for (iter = points.begin(); iter-&gt;x == 0; iter++);</span><br><span class="line">	sort(points.begin(), iter, compareLess);</span><br><span class="line">	stack&lt;Point&gt; outer;</span><br><span class="line">	vector&lt;Point&gt; result;</span><br><span class="line">	outer.push(points.front());</span><br><span class="line">	outer.push(*(points.begin() + 1));</span><br><span class="line">	for (vector&lt;Point&gt;::iterator iter = points.begin() + 2; iter != points.end(); iter++)</span><br><span class="line">	&#123;</span><br><span class="line">		Point tempTop = outer.top();</span><br><span class="line">		outer.pop();</span><br><span class="line">		while (calcSquare(outer.top(), tempTop, *iter) &lt; 0)</span><br><span class="line">		&#123;</span><br><span class="line"></span><br><span class="line">			tempTop = outer.top();</span><br><span class="line">			outer.pop();</span><br><span class="line">		&#125;</span><br><span class="line">		outer.push(tempTop);</span><br><span class="line">		outer.push(*iter);</span><br><span class="line">	&#125;</span><br><span class="line">	while (!outer.empty())</span><br><span class="line">	&#123;</span><br><span class="line">		result.push_back(outer.top() + zero);</span><br><span class="line">		outer.pop();</span><br><span class="line">	&#125;</span><br><span class="line">	return result;</span><br><span class="line">&#125;</span><br><span class="line">int calcSquare(Point&amp; A, Point&amp; B, Point&amp; C)</span><br><span class="line">&#123;</span><br><span class="line">	return A.x * B.y + A.y*C.x + B.x*C.y - B.y*C.x - A.y*B.x - A.x*C.y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-04T17:05:50.333Z" itemprop="dateUpdated">2021-04-05 01:05:50</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2018/12/27/convex/" target="_blank" rel="external">https://lingyixia.github.io/2018/12/27/convex/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2018/12/27/convex/&title=《convex》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2018/12/27/convex/&title=《convex》 — 灵翼俠的个人博客&source=There are some trees, where each tree is represented by (x,y) coordinate in a..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2018/12/27/convex/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《convex》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2018/12/27/convex/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2018/12/27/convex/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/01/02/VimLearn/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">VimLearn</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/12/26/entropy/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">各种熵</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2018/12/27/convex/&title=《convex》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2018/12/27/convex/&title=《convex》 — 灵翼俠的个人博客&source=There are some trees, where each tree is represented by (x,y) coordinate in a..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2018/12/27/convex/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《convex》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2018/12/27/convex/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2018/12/27/convex/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3a0W7DIBAEwPz/T7uvkdrYu+BGMgxPUUIN40qn447XKx7H27hr/u857Sr1wMDAeCzjOB2f5rx/f/7k5Antr3+si4GBsQEj2cT55s63+2mt81eT7A0DAwPjfPkkpUuCaULCwMDAaBn5RpM0FAMDAyNhJAu0f5UH7q+exTEwMB7IyKvu3//8L/0NDAyMRzGOctx1KG3D98WuMDAwlmbkAS5ZPjl2Jg2Gwf1gYGAsyhgr5c8cPtt2ZvSiMTAwNmDkYbRlz1zaKOZjYGBswBi7sDWT9uWNyaj0hoGBsTRjLNcaq8+3V8qKaxYYGBhLM/JtzSBnGglJYoqBgbEPI0/v8l/bst3Yi8bAwNiH0W4oOQC3G00uYUQtTAwMjIUYeYqWF8vGguxYovnK/wMYGBiPZcw3F+t3NtQovfgGAwNjG0Zejm9DZ34Mbi9eXGS4GBgYCzHao2NbmW8Dbt1kxcDAWJqRTB0Lo+0B+K6UFAMDY1XGEYykuTjTZmi3joGBsTMjD8Htrzl1MJXEwMDYgJG0JPMw3Zb+26sVHwMuBgbG0oyZcv9YeC3O00loxsDAWJRxlOO24FgedC+eg4GBsTRjPtjNNzjzZ441SjEwMNZg5MfRtkw2lgiOtTwxMDB2YLSXLdoyXHupokZiYGBgTN8yu2v+RdENAwMDoyz6t8fRNkDfFnAxMDAewsivTeQNg7yg35bzMDAwdmPkiVobavMgO7Y6BgbGBowfsM9qmDsvqu4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

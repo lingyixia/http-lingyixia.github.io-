@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>总有一个算法让你惊艳 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content>
+    <meta name="description" content="总有一个算法让你惊艳   随机洗牌问:一副牌54张，如何洗牌才能让最公平。什么叫公平?就是每张牌在每个位置的概率都一样就是公平, Knuth 老爷子给出来这样的算法: 1. 初始化任意顺序 2. 从最后一张牌开始,设为第K张,然后从[1,K]张中任选一张与其交换 3. 从[1,K-1]张牌中任选一张和第K-1张交换... ... 伪代码:1234for(int i =n;i&amp;gt;=1;i--">
+<meta property="og:type" content="article">
+<meta property="og:title" content="总有一个算法让你惊艳">
+<meta property="og:url" content="https://lingyixia.github.io/2019/07/06/interestAlgorighm/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="总有一个算法让你惊艳   随机洗牌问:一副牌54张，如何洗牌才能让最公平。什么叫公平?就是每张牌在每个位置的概率都一样就是公平, Knuth 老爷子给出来这样的算法: 1. 初始化任意顺序 2. 从最后一张牌开始,设为第K张,然后从[1,K]张中任选一张与其交换 3. 从[1,K-1]张牌中任选一张和第K-1张交换... ... 伪代码:1234for(int i =n;i&amp;gt;=1;i--">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lingyixia.github.io/img/dotandline.png">
+<meta property="og:updated_time" content="2021-06-28T13:41:52.504Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="总有一个算法让你惊艳">
+<meta name="twitter:description" content="总有一个算法让你惊艳   随机洗牌问:一副牌54张，如何洗牌才能让最公平。什么叫公平?就是每张牌在每个位置的概率都一样就是公平, Knuth 老爷子给出来这样的算法: 1. 初始化任意顺序 2. 从最后一张牌开始,设为第K张,然后从[1,K]张中任选一张与其交换 3. 从[1,K-1]张牌中任选一张和第K-1张交换... ... 伪代码:1234for(int i =n;i&amp;gt;=1;i--">
+<meta name="twitter:image" content="https://lingyixia.github.io/img/dotandline.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">总有一个算法让你惊艳</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">总有一个算法让你惊艳</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-07-06T05:34:05.000Z" itemprop="datePublished" class="page-time">
+  2019-07-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#随机洗牌"><span class="post-toc-number">1.</span> <span class="post-toc-text">随机洗牌</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#切分句子"><span class="post-toc-number">2.</span> <span class="post-toc-text">切分句子</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#约瑟夫环"><span class="post-toc-number">3.</span> <span class="post-toc-text">约瑟夫环</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#点和线"><span class="post-toc-number">4.</span> <span class="post-toc-text">点和线</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#一个知识点"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">一个知识点</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#一个应用"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">一个应用</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#点和矩形"><span class="post-toc-number">5.</span> <span class="post-toc-text">点和矩形</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#判断平面内两线段相交"><span class="post-toc-number">6.</span> <span class="post-toc-text">判断平面内两线段相交</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-interestAlgorighm"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">总有一个算法让你惊艳</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-07-06 13:34:05" datetime="2019-07-06T05:34:05.000Z"  itemprop="datePublished">2019-07-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<blockquote>
+<p>总有一个算法让你惊艳</p>
+</blockquote>
+</blockquote>
+<h1 id="随机洗牌"><a href="#随机洗牌" class="headerlink" title="随机洗牌"></a>随机洗牌</h1><p>问:一副牌54张，如何洗牌才能让最公平。<br>什么叫公平?就是每张牌在每个位置的概率都一样就是公平, Knuth 老爷子给出来这样的算法:</p>
+<pre><code>1. 初始化任意顺序
+2. 从最后一张牌开始,设为第K张,然后从[1,K]张中任选一张与其交换
+3. 从[1,K-1]张牌中任选一张和第K-1张交换... ...
+</code></pre><p>伪代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for(int i =n;i&gt;=1;i--)</span><br><span class="line">&#123;</span><br><span class="line">    swap(array[i],random(1,i))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>是不是贼简单？那为啥这个算法能做到呢？下面证明一下:<br>假设现在有5张牌，初始顺序为$1,2,3,4,5$<br>首先，从1~5(这是下标)中任选一张比如选到了2,那么用2和5交换得到$1,5,3,4,2$,也就是说，第一次交换2在最后一个位置的概率是1/5(也可以说任意一个数字在最后一个位置的概率是1/5),那么我们进行第二次交换,从1~4(这是下标)中任选一个和第4个交换,比如我们选到了1,在此之前要保证1没有在之前的步骤被选中也就是4/5,现在选中1的概率是1/4,那么两者相乘得到1/5,也就是1在第4个位置的概率是1/5也可以说任意一个数字在最后一个位置的概率是1/5),后面的不用多说了吧。<br>这题和<a href="https://lingyixia.github.io/2019/04/14/PoolSampling/">蓄水池采样算法</a>由异曲同工之妙。<br>用这个算法还可以在中途随意停止,比如有54张牌,我们要找任意10张牌进行公平洗牌,那么只需要上诉步骤执行10次就可以了.</p>
+<h1 id="切分句子"><a href="#切分句子" class="headerlink" title="切分句子"></a>切分句子</h1><p>在NLP中经常会有这样的需求,对于训练数据有少部分会特别长,远远超出平均长度,那么我们就需要对句子进行拆分,但是不能直接安长度切，这样很可能会切断关键词,切分方法一般是在无用的地方切分,比如标点符号,现在给出一个算法实现这个功能:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def data_cut(sentence, cut_chars, cut_length, min_length):</span><br><span class="line">    if len(sentence) &lt;= cut_length:</span><br><span class="line">        return [sentence]</span><br><span class="line">    else:</span><br><span class="line">        for char in cut_chars:</span><br><span class="line">            start = min_length  # 防止直接从头几个就找到了，这样切的太短</span><br><span class="line">            end = len(sentence) - (min_length - 1)  # 防止从最后几个找到了,这样切的也太短</span><br><span class="line">            if char in sentence[start:end]:</span><br><span class="line">                index = sentence[start:end].index(char)</span><br><span class="line">                return data_cut(sentence[:start + index], cut_chars, cut_length, min_length) + \</span><br><span class="line">                       data_cut(sentence[start + index:], cut_chars, cut_length, min_length)</span><br><span class="line">    return [sentence]  # 如果没有找到切分点那就不管句子长度直接返回</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>&gt;<br>参数说明:sentence是一个list,内容是sentence每个字符<br>       cut_chars是一个list,内容是切分字符，按优先级排序<br>       cut_length是int类型，表示切分多长的句子,这个长度以及以下的直接返回<br>       min_length:切分后子句子的最短长度<br>return:二维list,注意，每个切分后的句子不一定全小于cut_length,有些另类的句子可能没有切分点,这样的需要手动处理<br>eg:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">def data_cut(sentence, cut_chars, cut_length, min_length):</span><br><span class="line">    if len(sentence) &lt;= cut_length:</span><br><span class="line">        return [sentence]</span><br><span class="line">    else:</span><br><span class="line">        for char in cut_chars:</span><br><span class="line">            start = min_length</span><br><span class="line">            end = len(sentence) - (min_length - 1)</span><br><span class="line">            if char in sentence[start:end]:</span><br><span class="line">                index = sentence[start:end].index(char)</span><br><span class="line">                return data_cut(sentence[:start + index], cut_chars, cut_length, min_length) + data_cut(</span><br><span class="line">                    sentence[start + index:], cut_chars, cut_length, min_length)</span><br><span class="line">    return [sentence]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    sentence = &quot;三种上下文特征：单词、n-gram 和字符在词嵌入文献中很常用。大多数词表征方法本质上利用了词-词的共现统计，即使用词作为上下文特征（词特征）。受语言建模问题的启发，开发者将 n-gram 特征引入了上下文中。词到词和词到 n-gram 的共现统计都被用于训练 n-gram 特征。对于中文而言，字符（即汉字）通常表达了很强的语义。为此，开发者考虑使用词-词和词-字符的共现统计来学习词向量。字符级的 n-gram 的长度范围是从 1 到 4（个字符特征）。&quot;</span><br><span class="line">    l = data_cut(list(sentence), [&apos;，&apos;, &apos;。&apos;], 150, 5)</span><br><span class="line">    print(l)</span><br><span class="line">#自己运行看看吧，不好写</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h1 id="约瑟夫环"><a href="#约瑟夫环" class="headerlink" title="约瑟夫环"></a>约瑟夫环</h1><blockquote>
+<blockquote>
+<p>n个人拉成圈，按照1~n标号,从1开始报数,报到m的人出局，每一次有人出局后重新排号，1号是重新排号前m的下一个人.</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int JosephRing(int n, int m)</span><br><span class="line">&#123;</span><br><span class="line">    if (n == 1) return n;</span><br><span class="line">    return (JosephRing(n - 1, m) + m - 1) % n + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>解释:对于任何一个状态而言，每个位置设为$old_i$,如果现在把该状态的第$m$个剔除掉，则重新排号后每个位置设为$new_i$,两者的关系</p>
+<script type="math/tex; mode=display">
+old_i = (new +m-1)%n+1</script><p>$JosephRing(n,m)$表示有$n$个人,每次删除$m$号人最终剩下的号码，每次递归回来其实都是再算</p>
+</blockquote>
+</blockquote>
+<h1 id="点和线"><a href="#点和线" class="headerlink" title="点和线"></a>点和线</h1><h2 id="一个知识点"><a href="#一个知识点" class="headerlink" title="一个知识点"></a>一个知识点</h2><p>定义: 平面上的三点$A(x1,y1),B(x2,y2),C(x3,y3)$的面积量:</p>
+<script type="math/tex; mode=display">S(A,B,C)=\frac{1}{2}  
+\left|\begin{array}{}
+    x_1 &    y_1    & 1 \\ 
+    x_2 &    y_2   & 1\\ 
+    x_3 & y_3 & 1 
+\end{array}\right|</script><p>其中: 当A、B、C逆时针时S为正的,反之S为负的。<br>证明如图:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/dotandline.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>也就是说，平面三点一定能写成一个直角梯形减两个直角三角形的形式.<br>即:</p>
+<script type="math/tex; mode=display">S(A,B,C)=\frac{(x_1y_2+x_3y_1+x_2y_3-x_1y_3-x_2y_1-x_3y_2)}{2}</script><p>正好是上诉行列式.</p>
+<h2 id="一个应用"><a href="#一个应用" class="headerlink" title="一个应用"></a>一个应用</h2><p>令矢量的起点为A，终点为B，判断的点为C，<br>如果S(A，B，C)为正数，则C在矢量AB的左侧；<br>如果S(A，B，C)为负数，则C在矢量AB的右侧；<br>如果S(A，B，C)为0，则C在直线AB上</p>
+<h1 id="点和矩形"><a href="#点和矩形" class="headerlink" title="点和矩形"></a>点和矩形</h1><blockquote>
+<blockquote>
+<p>判断坐标系内某电点是否在某个矩形内部</p>
+</blockquote>
+</blockquote>
+<p>只需要将点与四个角连接，计算形成的四个三角形面积(海伦公式)和是否等于矩形面积,等于则在内部，否则在外部。</p>
+<h1 id="判断平面内两线段相交"><a href="#判断平面内两线段相交" class="headerlink" title="判断平面内两线段相交"></a>判断平面内两线段相交</h1><ol>
+<li>计算两线段所在的直线的的交点(如果有),然后看该交点是否在两条线段上即可</li>
+<li>若两直线相交,则如图:,,,算了不弄图了，也简单，假设有线段AB 和 CD 若相交则必定C 和 D 在 AB 的两侧，则有$\vec{AB} \times \vec{AC} $和$\vec{AB} \times \vec{AD} $必定异号 $\vec{AB} \times \vec{AC} $和$\vec{CA} \times \vec{CD} $必定异号，判断这个即可</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-06-28T13:41:52.504Z" itemprop="dateUpdated">2021-06-28 21:41:52</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/07/06/interestAlgorighm/" target="_blank" rel="external">https://lingyixia.github.io/2019/07/06/interestAlgorighm/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/07/06/interestAlgorighm/&title=《总有一个算法让你惊艳》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/07/06/interestAlgorighm/&title=《总有一个算法让你惊艳》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/07/06/interestAlgorighm/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《总有一个算法让你惊艳》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/07/06/interestAlgorighm/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/07/06/interestAlgorighm/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/07/11/parameters/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">请叫我调参工程师</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/06/23/Binary/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">二进制相关</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/07/06/interestAlgorighm/&title=《总有一个算法让你惊艳》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/07/06/interestAlgorighm/&title=《总有一个算法让你惊艳》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/07/06/interestAlgorighm/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《总有一个算法让你惊艳》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/07/06/interestAlgorighm/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/07/06/interestAlgorighm/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKklEQVR42u3aS3LDIBAFwNz/0soBYinvAUmVoFmlZMmivZgwn6+veF036+end1eev7l9anBhYGC8lnE9rucXrOIl33B3DwYGxjmMJBQmW6lfH7zr+X4MDAyMZIvP4TUJzcl7MTAwMFYx2qzz7oCIgYGBMZbEtjWusbT2z3NxDAyMFzLa4Piff/9JfwMDA+NVjKtcbfB9PgIu2xUGBsbWjDzAJc3FvEmZJ8b5fjAwMHZlJKFw7AA3lnYmzdGiboeBgbEF4/nhtiQ3H7LbH/HD/w0MDIztGG0pvx0ImxmzGAy1GBgYmzJWdRjaElveyCymRTAwMDZlJEEwTy+T0tvzs/l1DAyMcxgzIS+HJVtMEukPVzAwMLZm5NuaOSzOB/SoUYqBgbEpY35UIg++M8/+8rNiYGAcxpg5CObpa5v0RodCDAyMrRlrGwBj94/dczvAioGBsRFj7PCXj2Uk1Jk2KgYGxgmMK1irAmI79lq0MzEwMLZmtAfBIrEcKpwNJrEYGBgHMGaSzDawjgXQKPRjYGAcyWgPi/PpaDEhgoGBcTAjSUpXpaDz1PoMi4GB8ULGVa5kK205bEGDAQMDY2tGW3QbK4TlR8w8ZZ1qD2BgYLyQ0bYwk3C5KgTnZTgMDIwTGHk5Pi/fj+GnUlkMDAyMclSixY8dRjEwMDDmByzaIl2S1i4IuBgYGC9ktOMO+YBFHoLb0hsGBsY5jDx1bFuPY2W4sVYBBgbGpoxv81wsuo8l2MAAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

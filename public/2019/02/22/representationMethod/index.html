@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>representationMethod | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="表征">
+    <meta name="description" content="词表征(word representation)和句子表征(sentence representation)方式总结">
+<meta name="keywords" content="表征">
+<meta property="og:type" content="article">
+<meta property="og:title" content="representationMethod">
+<meta property="og:url" content="https://lingyixia.github.io/2019/02/22/representationMethod/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="词表征(word representation)和句子表征(sentence representation)方式总结">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lingyixia.github.io/img/contextWindow.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/co_occurrence_matrix.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/trainJ.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/f(x)J.png">
+<meta property="og:updated_time" content="2021-04-04T17:05:50.340Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="representationMethod">
+<meta name="twitter:description" content="词表征(word representation)和句子表征(sentence representation)方式总结">
+<meta name="twitter:image" content="https://lingyixia.github.io/img/contextWindow.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">representationMethod</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">representationMethod</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-02-22T01:35:12.000Z" itemprop="datePublished" class="page-time">
+  2019-02-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#词表征-word-representation"><span class="post-toc-number">1.</span> <span class="post-toc-text">词表征(word representation)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#one-hot-encoding"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">one-hot encoding</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Word-Embedding"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Word Embedding</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Frequency-based-Embedding"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">Frequency based Embedding</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Word2vec"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">Word2vec</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Glove"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">Glove</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#文章表征"><span class="post-toc-number">2.</span> <span class="post-toc-text">文章表征</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#卡方检验"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">卡方检验</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#信息增益"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">信息增益</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#TF-IDF"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">TF-IDF</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-representationMethod"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">representationMethod</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-02-22 09:35:12" datetime="2019-02-22T01:35:12.000Z"  itemprop="datePublished">2019-02-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>词表征(word representation)和句子表征(sentence representation)方式总结<br><a id="more"></a></p>
+<h1 id="词表征-word-representation"><a href="#词表征-word-representation" class="headerlink" title="词表征(word representation)"></a>词表征(word representation)</h1><h2 id="one-hot-encoding"><a href="#one-hot-encoding" class="headerlink" title="one-hot encoding"></a>one-hot encoding</h2><p>不解释</p>
+<h2 id="Word-Embedding"><a href="#Word-Embedding" class="headerlink" title="Word Embedding"></a>Word Embedding</h2><blockquote>
+<blockquote>
+<p>主要分为两类:Frequency based Embedding和Prediction based Embedding</p>
+</blockquote>
+</blockquote>
+<h3 id="Frequency-based-Embedding"><a href="#Frequency-based-Embedding" class="headerlink" title="Frequency based Embedding"></a>Frequency based Embedding</h3><ul>
+<li>Count Vector<br>最简单的方式,将train用的N个文本按顺序排列,统计出所有文本中的词频,结果组成一个矩阵,那么每一列就是一个向量，表示这个单词在不同的文档中出现的次数。</li>
+<li><p>TF-IDF Vector <a href="http://www.ruanyifeng.com/blog/2013/03/tf-idf.html" target="_blank" rel="noopener">比较好的介绍文章</a><br>TF是”词频”,IDF是”逆文档频率”.TF-IDF方法基于前者的算法进行了一些改进,它的计算公式如下:</p>
+<script type="math/tex; mode=display">
+tf-idf_{i,j} = tf_{i,j} \times idf_i</script><p>其中,$tf_{i,j}$(term-frequence)指的是第i个单词在第j个文档中出现的频次;而$idf_i$(inverse document frequency)的计算公式如下:</p>
+<script type="math/tex; mode=display">
+idf_i = \log ( \frac{N}{n+1})</script><p>其中,1用来防止$n$为0,$N$表示文档的总个数,$n$表示包含该单词的文档的数量。这个公式是什么意思呢？其实就是一个权重，设想一下如果一个单词在各个文档里都出现过，那么$N/n=1$,所以$idf_i=0$,这就意味着这个单词并不重要。这个东西其实很简单,就是在term-frequency的基础上加了一个权重，从而显著降低一些不重要/无意义的单词的frequency,比如a,an,the等,很明显$n$越大$idf_i$越小,即所谓的逆文本。</p>
+</li>
+<li><p>Co-Occurrence Vector<br>直译过来就是协同出现向量。在解释这个概念之前，我们先定义两个变量:</p>
+<ul>
+<li>Co-occurrence<br>协同出现指的是两个单词$w_1$和$w_2$在一个Context Window范围内共同出现的次数</li>
+<li>Context Window<br>指的是某个单词$w$的上下文范围的大小,也就是前后多少个单词以内的才算是上下文,比如一个Context Window Size = 2的示意图如下:<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/contextWindow.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+比如我们有如下的语料库:<br><code>He is not lazy. He is intelligent. He is smart.</code><br>我们假设Context Window=2，那么我们就可以得到如下的co-occurrence matrix(共现矩阵):<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/co_occurrence_matrix.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Word2vec"><a href="#Word2vec" class="headerlink" title="Word2vec"></a>Word2vec</h3><blockquote>
+<blockquote>
+<p>Word2vec的直观直觉是两个用两个单词同时出现的概率来区分不同单词。</p>
+</blockquote>
+</blockquote>
+<p>上面介绍的三种Word Embedding方法都是确定性(deterministic)的方法,而接下来介绍一种非确定性的基于神经网络的预测模型——word2vec。它是只有一个隐含层的神经网络,且激活函数(active function)是线性的,最后一层output采用softmax来计算概率。它包含两种模型:CBOW和Skip-gram.</p>
+<h3 id="Glove"><a href="#Glove" class="headerlink" title="Glove"></a>Glove</h3><blockquote>
+<blockquote>
+<p>Glove的直观直觉是单词同时出现的概率的比率能够更好地区分单词<a href="http://www.elecfans.com/d/700088.html" target="_blank" rel="noopener">参考链接</a>。比如，假设我们要表示“冰”和“蒸汽”这两个单词。对于和“冰”相关，和“蒸汽”无关的单词，比如“固体”，我们可以期望P冰-固体/P蒸汽-固体较大。类似地，对于和“冰”无关，和“蒸汽”相关的单词，比如“气体”，我们可以期望P冰-气体/P蒸汽-气体较小。相反，对于像“水”之类同时和“冰”、“蒸汽”相关的单词，以及“时尚”之类同时和“冰”、“蒸汽”无关的单词，我们可以期望P冰-水/P蒸汽-水、P冰-时尚/P蒸汽-时尚应当接近于1.</p>
+</blockquote>
+</blockquote>
+<p>另一方面，之前我们已经提到过，Word2Vec中隐藏层没有使用激活函数，这就意味着，隐藏层学习的其实是线性关系。既然如此，那么，是否有可能使用比神经网络更简单的模型呢？<br>基于以上两点想法，Glove提出了一个加权最小二乘回归模型,输入为单词-上下文同时出现频次矩阵(共现矩阵):<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/trainJ.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>其中,f是加权函数,定义如下:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/f(x)J.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h1 id="文章表征"><a href="#文章表征" class="headerlink" title="文章表征"></a>文章表征</h1><h2 id="卡方检验"><a href="#卡方检验" class="headerlink" title="卡方检验"></a>卡方检验</h2><h2 id="信息增益"><a href="#信息增益" class="headerlink" title="信息增益"></a>信息增益</h2><h2 id="TF-IDF"><a href="#TF-IDF" class="headerlink" title="TF-IDF"></a>TF-IDF</h2>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-04T17:05:50.340Z" itemprop="dateUpdated">2021-04-05 01:05:50</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/02/22/representationMethod/" target="_blank" rel="external">https://lingyixia.github.io/2019/02/22/representationMethod/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/表征/">表征</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/02/22/representationMethod/&title=《representationMethod》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/02/22/representationMethod/&title=《representationMethod》 — 灵翼俠的个人博客&source=词表征(word representation)和句子表征(sentence representation)方式总结" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/02/22/representationMethod/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《representationMethod》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/02/22/representationMethod/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/02/22/representationMethod/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/02/22/cart/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">CART算法</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/02/20/regression/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">线性回归和逻辑回归对比</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/02/22/representationMethod/&title=《representationMethod》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/02/22/representationMethod/&title=《representationMethod》 — 灵翼俠的个人博客&source=词表征(word representation)和句子表征(sentence representation)方式总结" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/02/22/representationMethod/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《representationMethod》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/02/22/representationMethod/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/02/22/representationMethod/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMklEQVR42u3aS47CMBBFUfa/6bTUM6R2uK8qtOTy9QgBCT4ZmPq9Xnhdvyt9f/Xp6g78quKSIUPGtozrdqWM9D7375C9yZAh4xwGPwpXm1v9AHm///hkyJAho/adC6x7sAwZMmTUDtzaEbzaHPlUhgwZMniIRsph6fFKXj+ci8uQIWNDRtoY+M/XX+xvyJAhYxPGFS4SJvZblfGuZMiQMZrB24ppiT9tWNZSXNRNlSFDxiAG3zpJboOfx4/pVbtYhgwZQxlp6JYW9NNQEj10GTJkjGb0A7WnQkkSUMqQIeM0Rlpiq41/1VLTx8YsZMiQMYJRSyD7IxT9Et5bf0OGDBlDGXFyGJbb+NHJx9GCGTcZMmQMYvSTTN6kfKphIEOGjHMYnTJZp6CWPoIPAaUMGTKOYZBNp9/skIIynAwZMg5g1ApnPNRLE12+n7cDV4YMGaMZ/QOXp6P8QQSDHTJkyBjN4BMLaeE+bS2QVDmOJWXIkDGIwTfdb0PWkmEEkyFDxlBGerSRQ7nDiwNBGTJkHMPgBbV0CIN8P0X+sWcZMmSMZhQL8aUAkTcJ+N9DMCEiQ4aMbRlXuPhV36Au40AZMmSMZtTGszoB31NzXDJkyDiNwQ9Z3k7gJbMUubxWhgwZBzD6bYBO87J26KOpNBkyZBzGqA1J8Pg0Pe5lyJAhI75RmIKmSe+HwFGGDBkHMNLRh/RnSHDJA8S4kSlDhozNGWkCSYplnbvxhmirvyFDhow9GD9Rt9E/LPiY4gAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

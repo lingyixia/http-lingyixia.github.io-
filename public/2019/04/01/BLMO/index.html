@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>BLMO总结 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="词向量,预训练">
+    <meta name="description" content="BLMO是为了解决word2vec的一词多意而诞生的,比如“苹果”这个词,在word2vec中的词向量是确定的,无论语境是在讲水果还是手机,但是在BLMO中单个词的词向量是随上下文而变化的,即动态的词向量,原理就是在将词转化为此向量的时候让其通过一个网络,得到上下文信息,然后在将其与预训练的静态词向量加权获得真正要在下游任务使用的词向量。">
+<meta name="keywords" content="词向量,预训练">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BLMO总结">
+<meta property="og:url" content="https://lingyixia.github.io/2019/04/01/BLMO/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="BLMO是为了解决word2vec的一词多意而诞生的,比如“苹果”这个词,在word2vec中的词向量是确定的,无论语境是在讲水果还是手机,但是在BLMO中单个词的词向量是随上下文而变化的,即动态的词向量,原理就是在将词转化为此向量的时候让其通过一个网络,得到上下文信息,然后在将其与预训练的静态词向量加权获得真正要在下游任务使用的词向量。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lingyixia.github.io/img/BLMO1.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/BLMO2.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/BLMO3.png">
+<meta property="og:updated_time" content="2021-04-04T17:05:50.326Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BLMO总结">
+<meta name="twitter:description" content="BLMO是为了解决word2vec的一词多意而诞生的,比如“苹果”这个词,在word2vec中的词向量是确定的,无论语境是在讲水果还是手机,但是在BLMO中单个词的词向量是随上下文而变化的,即动态的词向量,原理就是在将词转化为此向量的时候让其通过一个网络,得到上下文信息,然后在将其与预训练的静态词向量加权获得真正要在下游任务使用的词向量。">
+<meta name="twitter:image" content="https://lingyixia.github.io/img/BLMO1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">BLMO总结</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">BLMO总结</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-01T09:15:53.000Z" itemprop="datePublished" class="page-time">
+  2019-04-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/神经网络/">神经网络</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#基本框架"><span class="post-toc-number">1.</span> <span class="post-toc-text">基本框架</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用方式"><span class="post-toc-number">2.</span> <span class="post-toc-text">使用方式</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#源码部分解析"><span class="post-toc-number">3.</span> <span class="post-toc-text">源码部分解析</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#其他"><span class="post-toc-number">4.</span> <span class="post-toc-text">其他</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-BLMO"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">BLMO总结</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-04-01 17:15:53" datetime="2019-04-01T09:15:53.000Z"  itemprop="datePublished">2019-04-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/神经网络/">神经网络</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>BLMO是为了解决word2vec的一词多意而诞生的,比如“苹果”这个词,在word2vec中的词向量是确定的,无论语境是在讲水果还是手机,但是在BLMO中单个词的词向量是随上下文而变化的,即动态的词向量,原理就是在将词转化为此向量的时候让其通过一个网络,得到上下文信息,然后在将其与预训练的静态词向量加权获得真正要在下游任务使用的词向量。<br><a id="more"></a></p>
+<h1 id="基本框架"><a href="#基本框架" class="headerlink" title="基本框架"></a>基本框架</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/BLMO1.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/BLMO2.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>也就是说,在我们想进行一个下游任务比如文本分类,本来需要输入是预训练的词向量,直接将词向量输入模型即可,但是现在我们需要首先将输入词通过BLMO,得到新的词向量,然后在将其输入模型.</p>
+<h1 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h1><p><a href="http://www.cnblogs.com/jiangxinyang/p/10235054.html" target="_blank" rel="noopener">这个教程相当不错</a></p>
+<h1 id="源码部分解析"><a href="#源码部分解析" class="headerlink" title="源码部分解析"></a>源码部分解析</h1><p>主要模型都在<code>bilm/model</code>中的<code>BidirectionalLanguageModelGraph</code>类.</p>
+<p>1.word embedding or word_char embedding:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def __init__(self, options, weight_file, ids_placeholder,</span><br><span class="line">                use_character_inputs=True, embedding_weight_file=None,</span><br><span class="line">                max_batch_size=128):</span><br></pre></td></tr></table></figure></p>
+<p>对应<code>_build</code>函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">def _build(self):</span><br><span class="line">    if self.use_character_inputs:</span><br><span class="line">        self._build_word_char_embeddings()</span><br><span class="line">    else:</span><br><span class="line">        self._build_word_embeddings()</span><br><span class="line">    self._build_lstms()</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>也就是说无论输入的是字符还是词,<code>use_character_inputs=True</code>都默认使用<code>char_embedding</code>,一般都这样设置,<code>_build_word_embeddings</code>虽然写了,但是似乎就没什么作用(按道理应该是用该函数得到预训练的词向量然后和上下文词向量加权,但是代码中似乎并没有用它).</p>
+</blockquote>
+</blockquote>
+<p>2.构建word_char embedding<br>这部分代码的输出要输入LSTM,应该是总体模型中最复杂的一部分,代码较长,只挑重点部分(函数<code>_build_word_char_embeddings</code>):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"> with tf.device(&quot;/cpu:0&quot;):</span><br><span class="line">            self.embedding_weights = tf.get_variable(</span><br><span class="line">                    &quot;char_embed&quot;, [n_chars, char_embed_dim],</span><br><span class="line">                    dtype=DTYPE,</span><br><span class="line">                    initializer=tf.random_uniform_initializer(-1.0, 1.0)</span><br><span class="line">            )</span><br><span class="line">            # shape (batch_size, unroll_steps, max_chars, embed_dim)</span><br><span class="line">            self.char_embedding = tf.nn.embedding_lookup(self.embedding_weights,</span><br><span class="line">                                                    self.ids_placeholder)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>这部分是得到<code>char_embedding</code>的代码</p>
+</blockquote>
+</blockquote>
+<p>下面这部分代码是卷积char<a href="https://blog.csdn.net/jeryjeryjery/article/details/81183433" target="_blank" rel="noopener"><code>_build_word_char_embeddings</code></a><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/BLMO3.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>输入是<code>[batch_size,n_token, max_char, char_dim]</code>,<code>batch_size</code>表示句子数量,<code>n_token</code>表示一个句子单词数,<code>max_char</code>表示一个单词字符数,<code>char_dim</code>表示字符向量维度。<br>卷积核size为<code>[1, n_width, char_dim,char_dim]</code>,卷积得到的结果为<code>[batch_size,n_token,max_char-n_width+1,char_dim]</code>。上图是对<code>[1, n_width, char_dim]</code>卷积的结果,然后将m各卷积核得到的结果<code>contact</code>起来,然后下一步经过<code>highway</code>层和<code>project</code>层,这两层可选,且前后维度完全相同。</p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p><a href="https://allennlp.org/elmo" target="_blank" rel="noopener">ELMO模型</a><br><a href="https://github.com/lingyixia/textClassifier/tree/master/ELMo" target="_blank" rel="noopener">ELMO代码</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-04T17:05:50.326Z" itemprop="dateUpdated">2021-04-05 01:05:50</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/04/01/BLMO/" target="_blank" rel="external">https://lingyixia.github.io/2019/04/01/BLMO/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/词向量/">词向量</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/预训练/">预训练</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/04/01/BLMO/&title=《BLMO总结》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/01/BLMO/&title=《BLMO总结》 — 灵翼俠的个人博客&source=BLMO是为了解决word2vec的一词多意而诞生的,比如“苹果”这个词,在word2vec中的词向量是确定的,无论语境是在讲水果还是手机,但是在BLMO..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/04/01/BLMO/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《BLMO总结》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/04/01/BLMO/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/04/01/BLMO/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/04/02/Attention/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Attention小结</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/03/18/biasAndVariance/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">方差和偏差</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/04/01/BLMO/&title=《BLMO总结》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/01/BLMO/&title=《BLMO总结》 — 灵翼俠的个人博客&source=BLMO是为了解决word2vec的一词多意而诞生的,比如“苹果”这个词,在word2vec中的词向量是确定的,无论语境是在讲水果还是手机,但是在BLMO..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/04/01/BLMO/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《BLMO总结》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/04/01/BLMO/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/04/01/BLMO/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKklEQVR42u3aQW7DMAwEwPz/0+61QGtnSblBTY1OQevYnhwWEsnXK17Ht7Xy9+trkm8tLQwMjMcyjsuVX3N25+s7nP23/FwMDIwNGMlLVEPzLIiTV8/fDQMDAyO59XX45gGNgYGBcS8jwVxf8y8CFwMD41GM/NbJVi8P0NsOzxgYGKMZedX985//pL+BgYHxKMZRXHlo9pqUR2thYGDMZuQBlzy+10KojmicXomBgTGaUR3Vyj/3WgLXx+DyZhEDA2MDRt6GvKvcttKcwMDAmMeobul6zcs8fJtRi4GBMZrRayWuVON7jc8CDAMDYxwj+XJ++Mx/oF5h7s1+FgMDYyhjJf56EZxsHHtHXAwMjJ0ZSditD1jcEMEYGBijGb0i/spoRfWnKQ9kYGBgbMCobvLyrV4vRstHawwMjEGM/NDYK/pXI7g6tPHLsAUGBsZoxnqk5lG71AD4CcPAwBjNqI5/5eG7wkti902hDQMDYwNGfqPPDJMVzuIYGBhDGb1tXLlYX6yM5eGLgYGxJ6O64euNjuUb0/LMCAYGxmhG/lq9JkHvQLs0CoaBgfFwRu9IuRLT1cNzdB8MDIzRjJWwyx/T21D2BjIwMDCmMnql+Sq+17xMwhoDA2MfRvVwe9e28jYkBgYGRrEMt9LmzFsI0bAFBgbG9oxesSyJ7ySgbwtcDAyMhzB64w7J8bI3LvaH5TYMDIwHMvKNWrWFmYds0oTo/UAYGBgPZ3wB29TRPzF5s5MAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

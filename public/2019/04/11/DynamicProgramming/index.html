@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>动态规划系列 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="字符串,背包,递归,硬币">
+    <meta name="description" content="动态规划常用体型,其实最大的难度是遇到一个问题如何将其归类,当归类正确的时候往往是写出的递推公式”似曾相识”的时候。">
+<meta name="keywords" content="字符串,背包,递归,硬币">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划系列">
+<meta property="og:url" content="https://lingyixia.github.io/2019/04/11/DynamicProgramming/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="动态规划常用体型,其实最大的难度是遇到一个问题如何将其归类,当归类正确的时候往往是写出的递推公式”似曾相识”的时候。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-08-25T16:51:31.729Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="动态规划系列">
+<meta name="twitter:description" content="动态规划常用体型,其实最大的难度是遇到一个问题如何将其归类,当归类正确的时候往往是写出的递推公式”似曾相识”的时候。">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">动态规划系列</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">动态规划系列</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-11T07:46:55.000Z" itemprop="datePublished" class="page-time">
+  2019-04-11
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#字符串问题"><span class="post-toc-number">1.</span> <span class="post-toc-text">字符串问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最长公共子串"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">最长公共子串</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最长公共子序列"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">最长公共子序列</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最长回文子串"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">最长回文子串</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最长回文子序列"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">最长回文子序列</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最长递增子序列"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">最长递增子序列</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#背包问题"><span class="post-toc-number">2.</span> <span class="post-toc-text">背包问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#0-1背包问题"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">0-1背包问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#常规写法"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">常规写法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#空间优化写法"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">空间优化写法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#再次改善"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">再次改善</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#完全背包问题"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">完全背包问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#常规写法-1"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">常规写法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#空间优化写法-1"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">空间优化写法</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#多重背包问题（即每种物品的数量有上限）"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">多重背包问题（即每种物品的数量有上限）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#常规写法-2"><span class="post-toc-number">2.3.1.</span> <span class="post-toc-text">常规写法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#空间优化写法-2"><span class="post-toc-number">2.3.2.</span> <span class="post-toc-text">空间优化写法</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#硬币问题"><span class="post-toc-number">3.</span> <span class="post-toc-text">硬币问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#硬币问题1"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">硬币问题1</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#硬币问题2"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">硬币问题2</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#数组分裂"><span class="post-toc-number">4.</span> <span class="post-toc-text">数组分裂</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数组分裂一"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">数组分裂一</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数组分裂二"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">数组分裂二</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#零和问题"><span class="post-toc-number">5.</span> <span class="post-toc-text">零和问题</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#编辑距离"><span class="post-toc-number">6.</span> <span class="post-toc-text">编辑距离</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#矩阵中最大正方形"><span class="post-toc-number">7.</span> <span class="post-toc-text">矩阵中最大正方形</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#鹰蛋问题"><span class="post-toc-number">8.</span> <span class="post-toc-text">鹰蛋问题</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#其他DP"><span class="post-toc-number">9.</span> <span class="post-toc-text">其他DP</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#连续数组最大和"><span class="post-toc-number">9.1.</span> <span class="post-toc-text">连续数组最大和</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#连续数组最大积"><span class="post-toc-number">9.2.</span> <span class="post-toc-text">连续数组最大积</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数组最大积-不一定连续"><span class="post-toc-number">9.3.</span> <span class="post-toc-text">数组最大积(不一定连续)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#最大子矩阵和"><span class="post-toc-number">9.4.</span> <span class="post-toc-text">最大子矩阵和</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#小偷"><span class="post-toc-number">9.5.</span> <span class="post-toc-text">小偷</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Jump-Game"><span class="post-toc-number">9.6.</span> <span class="post-toc-text">Jump Game</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#染色问题"><span class="post-toc-number">10.</span> <span class="post-toc-text">染色问题</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-DynamicProgramming"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">动态规划系列</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-04-11 15:46:55" datetime="2019-04-11T07:46:55.000Z"  itemprop="datePublished">2019-04-11</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>动态规划常用体型,其实最大的难度是遇到一个问题如何将其归类,当归类正确的时候往往是写出的递推公式”似曾相识”的时候。<br><a id="more"></a></p>
+<h1 id="字符串问题"><a href="#字符串问题" class="headerlink" title="字符串问题"></a>字符串问题</h1><h2 id="最长公共子串"><a href="#最长公共子串" class="headerlink" title="最长公共子串"></a>最长公共子串</h2><blockquote>
+<blockquote>
+<p><a href="https://www.cnblogs.com/guolipa/p/10053551.html" target="_blank" rel="noopener">其实很简单</a>,动态规划,记录矩阵dp[i][j]表示以s1[i]和s2[j]结尾的最长公共字串长度,可以看出如果s1[i]!=s2[j]则dp[i][j]一定是0,因为两者不相等,以他们为结尾不可能有公共字串,只有s1[i]==s2[j]的时候才不为0,即:</p>
+<script type="math/tex; mode=display">
+dp[i][j]=\begin{cases}
+0 & s1[i]!=s2[j] \\
+dp[i-1][j-1]+1 & s1[i]=s2[j] \\
+\end{cases}</script></blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">string maxLengthSubstr(string s1, string s2)</span><br><span class="line">&#123;</span><br><span class="line">    int maxLength = 0;</span><br><span class="line">    int index;</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; dp(s1.size() + 1, vector&lt;int&gt;(s2.size() + 1));</span><br><span class="line">    for(int i = 0; i &lt; s1.size(); i++)</span><br><span class="line">    &#123;</span><br><span class="line">        for(int j = 0; j &lt; s2.size(); j++)</span><br><span class="line">        &#123;</span><br><span class="line">            int left_up = i &gt; 0 &amp;&amp; j &gt; 0 ? dp[i - 1][j - 1] : 0;</span><br><span class="line">            if(s1[i] == s2[j])</span><br><span class="line">            &#123;</span><br><span class="line">                dp[i][j] = left_up + 1;</span><br><span class="line">            &#125;</span><br><span class="line">            if(dp[i][j] &gt; maxLength)</span><br><span class="line">            &#123;</span><br><span class="line">                maxLength = dp[i][j];</span><br><span class="line">                index = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return s1.substr(index - maxLength, maxLength);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="最长公共子序列"><a href="#最长公共子序列" class="headerlink" title="最长公共子序列"></a>最长公共子序列</h2><blockquote>
+<blockquote>
+<p>跟上面没有什么不同,动态规划,记录矩阵dp[i][j]表示以s1[i]和s2[j]结尾的最长公共子序列长度,可以看出如果s1[i]!=s2[j]则dp[i][j]= max(dp[i-1][j],dp[i][j-1]),这里是与上面dp公式唯一不同点,而当s1[i]=s2[j]的时候dp[i][j]=dp[i-1][j-1]+1,即:</p>
+</blockquote>
+</blockquote>
+<script type="math/tex; mode=display">
+dp[i][j]=\begin{cases}
+max(dp[i-1][j],dp[i][j-1]) & s1[i]!=s2[j] \\
+dp[i-1][j-1]+1 & s1[i]=s2[j] \\
+\end{cases}</script><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">string maxLengthSequence(string s1, string s2)</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; dp(s1.size(), vector&lt;int&gt;(s2.size()));</span><br><span class="line">    string result = &quot;&quot;;</span><br><span class="line">    for(int i = 0; i &lt; s1.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        for(int j = 0; j &lt; s2.size(); ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            int left_up = i &gt; 0 &amp;&amp; j &gt; 0 ? dp[i - 1][j - 1] : 0;</span><br><span class="line">            int left = j &gt; 0 ? dp[i][j - 1] : 0;</span><br><span class="line">            int up = i &gt; 0 ? dp[i - 1][j] : 0;</span><br><span class="line">            if(s1[i] == s2[j])</span><br><span class="line">            &#123;</span><br><span class="line">                dp[i][j] = left_up + 1;</span><br><span class="line">                //                dp[i][j] = max(left_up + 1, max(left, up));//本来应该是 这行代码，但是dp[i-1][j]和dp[i][j-1]最多比dp[i][j]大1，因此没必要这样写</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                dp[i][j] = max(left, up);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i = s1.size() - 1, j = s2.size() - 1; i &gt;= 0 &amp;&amp; j &gt;= 0;)</span><br><span class="line">    &#123;</span><br><span class="line">        if(s1[i] == s2[j])</span><br><span class="line">        &#123;</span><br><span class="line">            result.push_back(s1[i]);</span><br><span class="line">            i--;</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">        else if(dp[i][j - 1] &gt;= dp[i - 1][j]) j--;</span><br><span class="line">        else i--;</span><br><span class="line">    &#125;</span><br><span class="line">    std::reverse(result.begin(), result.end());</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="最长回文子串"><a href="#最长回文子串" class="headerlink" title="最长回文子串"></a><a href="https://leetcode.com/problems/longest-palindromic-substring/" target="_blank" rel="noopener">最长回文子串</a></h2><blockquote>
+<blockquote>
+<p>dp[i][j]是记录从i到j是不是回文串,如果是则dp[i][j]=true,反之为false,因为每一次计算dp[i][j]都需要用到dp[i+1][j-1],而j-1&gt;=i+1,即j-i&gt;=2,即i到j的长度至少为3,也就是说间隔长度为1和2的更新不到,因此要先预处理dp,先把间隔为1和2的提前处理<br>递推公式为:</p>
+<script type="math/tex; mode=display">
+dp[i][j] = \begin{cases}
+true & str[i]=str[j] and dp[i+1][j-1]=true\\
+false & others
+\end{cases}</script><p>或</p>
+<script type="math/tex; mode=display">
+dp[i][j] = \begin{cases}
+str[i+1][j-1] & str[i]=str[j]\\
+false & others
+\end{cases}</script></blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">string longestPalindrome(string str)</span><br><span class="line">&#123;</span><br><span class="line">	int index = 0;</span><br><span class="line">	int maxLength = 1;</span><br><span class="line">	vector&lt;vector&lt;bool&gt;&gt; dp(str.size(), vector&lt;bool&gt;(str.size(), false));</span><br><span class="line">	for (int i = 0; i &lt;= str.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		dp[i][i] = true;</span><br><span class="line">		if (i + 1 &lt; str.size())</span><br><span class="line">		&#123;</span><br><span class="line">			if (str[i] == str[i + 1])</span><br><span class="line">			&#123;</span><br><span class="line">				dp[i][i + 1] = true;</span><br><span class="line">				index = i;</span><br><span class="line">				maxLength = 2;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	for (int l = 3; l &lt;= str.size(); l++)</span><br><span class="line">	&#123;</span><br><span class="line">		for (int i = 0; i + l - 1 &lt; str.size(); i++)</span><br><span class="line">		&#123;</span><br><span class="line">			int j = i + l - 1;</span><br><span class="line">			if (str[i] == str[j] &amp;&amp; dp[i + 1][j - 1])</span><br><span class="line">			&#123;</span><br><span class="line">				dp[i][j] = true;</span><br><span class="line">				if (l &gt; maxLength)</span><br><span class="line">				&#123;</span><br><span class="line">					index = i;</span><br><span class="line">					maxLength = l;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return str.substr(index, maxLength);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="最长回文子序列"><a href="#最长回文子序列" class="headerlink" title="最长回文子序列"></a><a href="https://leetcode.com/problems/longest-palindromic-subsequence/" target="_blank" rel="noopener">最长回文子序列</a></h2><blockquote>
+<blockquote>
+<p>跟上诉差不多,公式为:</p>
+<script type="math/tex; mode=display">
+dp[i][j] = \begin{cases}
+dp[i+1][j-1]+2 & str[i]=str[j] \\
+max(dp[i+1][j],dp[i][j-1]) & others
+\end{cases}</script></blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">int longestPalindromeSubseq(string str)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;vector&lt;int&gt;&gt; dp(str.size(), vector&lt;int&gt;(str.size(), 1));</span><br><span class="line">	for (int i = 0; i &lt; str.size()-1; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (str[i + 1] == str[i]) dp[i][i + 1]++;</span><br><span class="line">	&#125;</span><br><span class="line">	for (int l = 3; l &lt;= str.size(); l++)</span><br><span class="line">	&#123;</span><br><span class="line">		for (int i = 0; i + l - 1 &lt; str.size(); i++)</span><br><span class="line">		&#123;</span><br><span class="line">			int j = i + l - 1;</span><br><span class="line">			if (str[i] == str[j])</span><br><span class="line">			&#123;</span><br><span class="line">				dp[i][j] = dp[i + 1][j - 1]+2;</span><br><span class="line">			&#125;</span><br><span class="line">			else dp[i][j] = max(dp[i + 1][j], dp[i][j - 1]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return dp[0][str.size()-1];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="最长递增子序列"><a href="#最长递增子序列" class="headerlink" title="最长递增子序列"></a><a href="https://leetcode.com/problems/longest-increasing-subsequence/" target="_blank" rel="noopener">最长递增子序列</a></h2><blockquote>
+<blockquote>
+<p>dp解法一,dp[i]为以第i个元素结尾的最长递增子序列长度,$O(n^2)$</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">int lengthOfLIS(vector&lt;int&gt;&amp; nums) </span><br><span class="line">&#123;</span><br><span class="line">        if(nums.empty()) return 0;</span><br><span class="line">        int result=1;</span><br><span class="line">        vector&lt;int&gt; dp(nums.size(),1);</span><br><span class="line">        for(int i =1;i&lt;nums.size();i++)</span><br><span class="line">        &#123;</span><br><span class="line">            for(int j =0;j&lt;i;j++)//不断更新dp[i]的值</span><br><span class="line">            &#123;</span><br><span class="line">                if(nums[i]&gt;nums[j])</span><br><span class="line">                &#123;</span><br><span class="line">                    dp[i]=max(dp[j]+1,dp[i]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            result=max(dp[i],result);</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h1><blockquote>
+<p>0-1背包、完全背包、多重背包问题简记.一般而言,背包问题有两种:<strong>要求恰好装满</strong>和<strong>不要求恰好装满</strong>,其实两者<strong>仅仅</strong>初始化数组不同,前者要初始化<code>values[i][0]=0</code>,其他全为<code>-INT_MIN</code>.后者初始化全为0即可。</p>
+</blockquote>
+<h2 id="0-1背包问题"><a href="#0-1背包问题" class="headerlink" title="0-1背包问题"></a>0-1背包问题</h2><h3 id="常规写法"><a href="#常规写法" class="headerlink" title="常规写法"></a>常规写法</h3><p>递推公式为:<code>values[i][j] = max(values[i - 1][j], values[i-1][j - woods[i-1].volume] + woods[i-1].value);</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct Woods</span><br><span class="line">&#123;</span><br><span class="line">	int volume;</span><br><span class="line">	int value;</span><br><span class="line">&#125;;</span><br><span class="line">void backPack(vector&lt;Woods&gt;&amp; woods, int bag);</span><br><span class="line">void findItems(vector&lt;vector&lt;int&gt;&gt;&amp; values, vector&lt;Woods&gt;&amp; woods, vector&lt;int&gt;&amp; items, int i, int j);</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;Woods&gt; woods = &#123; Woods&#123;2,3&#125;,Woods&#123;3,4&#125;,Woods&#123;4,5&#125;,Woods&#123;5,6&#125; &#125;;</span><br><span class="line">	backPack(woods, 8);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">void backPack(vector&lt;Woods&gt;&amp; woods, int bag)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;vector&lt;int&gt;&gt; values(woods.size() + 1, vector&lt;int&gt;(bag + 1));</span><br><span class="line">	for (int i = 1; i &lt;= woods.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for (int j = 1; j &lt;= bag; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			if (j &lt; woods[i - 1].volume)//装不进去</span><br><span class="line">			&#123;</span><br><span class="line">				values[i][j] = values[i - 1][j];</span><br><span class="line">			&#125;</span><br><span class="line">			else//能装进去</span><br><span class="line">			&#123;</span><br><span class="line">				values[i][j] = max(values[i - 1][j], values[i - 1][j - woods[i - 1].volume] + woods[i - 1].value);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	vector&lt;int&gt; items(woods.size() + 1);//保存的是最终放入了哪些物品</span><br><span class="line">	findItems(values, woods, items, woods.size(), bag);</span><br><span class="line">&#125;</span><br><span class="line">void findItems(vector&lt;vector&lt;int&gt;&gt;&amp; values, vector&lt;Woods&gt;&amp; woods, vector&lt;int&gt;&amp; items, int i, int j)</span><br><span class="line">&#123;</span><br><span class="line">	if (i &gt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		if (values[i][j] == values[i - 1][j])</span><br><span class="line">		&#123;</span><br><span class="line">			items[i] = 0;</span><br><span class="line">			findItems(values, woods, items, i - 1, j);</span><br><span class="line">		&#125;</span><br><span class="line">		else</span><br><span class="line">		&#123;</span><br><span class="line">			items[i] = 1;</span><br><span class="line">			findItems(values, woods, items, i - 1, j - woods[i - 1].volume);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上诉方法使用二维数组保存中间值values,values[i][j]表示当背包空间为j,允许使用的物品只有前两个的时候的最大价值，比较消耗空间，而且我们可以看出，对于每一步要求的<code>values[i][j]</code>而言，只依赖于<code>values[i-1][:]</code>,即前一行，因此我们只需要一维数组即可，循环保存前一行数据。但是这样貌似就无法找物品组成了，回头在想。</p>
+<h3 id="空间优化写法"><a href="#空间优化写法" class="headerlink" title="空间优化写法"></a>空间优化写法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">void backPack(vector&lt;Woods&gt;&amp; woods, int bag)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; values(bag + 1);</span><br><span class="line">	for (int i = 1; i &lt;= woods.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for (int j = bag; j &gt;=1; j--)</span><br><span class="line">		&#123;</span><br><span class="line">			if (j &gt;= woods[i - 1].volume)//放不进去</span><br><span class="line">			&#123;</span><br><span class="line">				values[j] = max(values[j], values[j - woods[i - 1].volume] + woods[i - 1].value);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="再次改善"><a href="#再次改善" class="headerlink" title="再次改善"></a>再次改善</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void backPack(vector&lt;Woods&gt;&amp; woods, int bag)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; values(bag + 1);</span><br><span class="line">	for (int i = 1; i &lt;= woods.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for (int j = bag; j &gt;= woods[i - 1].volume; j--)//倒序</span><br><span class="line">		&#123;</span><br><span class="line">			values[j] = max(values[j], values[j - woods[i - 1].volume] + woods[i - 1].value);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="完全背包问题"><a href="#完全背包问题" class="headerlink" title="完全背包问题"></a>完全背包问题</h2><h3 id="常规写法-1"><a href="#常规写法-1" class="headerlink" title="常规写法"></a>常规写法</h3><p>与0-1背包唯一的不同就是递推公式：<code>values[i][j] = max(values[i - 1][j], values[i][j - woods[i-1].volume] + woods[i-1].value);</code>不在详细说明</p>
+<h3 id="空间优化写法-1"><a href="#空间优化写法-1" class="headerlink" title="空间优化写法"></a>空间优化写法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">void backPack(vector&lt;Woods&gt;&amp; woods, int bag)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; values(bag + 1);</span><br><span class="line">	for (int i = 1; i &lt;= woods.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for (int j = woods[i - 1].volume; j &lt;=bag ; j--)//正序</span><br><span class="line">		&#123;</span><br><span class="line">			values[j] = max(values[j], values[j - woods[i - 1].volume] + woods[i - 1].value);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="多重背包问题（即每种物品的数量有上限）"><a href="#多重背包问题（即每种物品的数量有上限）" class="headerlink" title="多重背包问题（即每种物品的数量有上限）"></a>多重背包问题（即每种物品的数量有上限）</h2><h3 id="常规写法-2"><a href="#常规写法-2" class="headerlink" title="常规写法"></a>常规写法</h3><p>在0-1背包的基础上增加数量循环判断,递推公式为:<code>values[i][j] = max(values[i][j], values[i-1][j - k * woods[i - 1].volume] + k * woods[i - 1].value);</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">#include&lt;vector&gt;</span><br><span class="line">#include&lt;algorithm&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct Woods</span><br><span class="line">&#123;</span><br><span class="line">	int volume;</span><br><span class="line">	int value;</span><br><span class="line">	int num;</span><br><span class="line">&#125;;</span><br><span class="line">void backPack(vector&lt;Woods&gt;&amp; woods, int bag);</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;Woods&gt; woods = &#123; Woods&#123; 80 ,20 ,4 &#125;,Woods&#123; 40 ,50, 9 &#125;,Woods&#123; 30 ,50, 7 &#125;,Woods&#123; 40 ,30 ,6 &#125;,Woods&#123; 20 ,20 ,1 &#125; &#125;;</span><br><span class="line">	backPack(woods, 1000);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line">void backPack(vector&lt;Woods&gt;&amp; woods, int bag)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;vector&lt;int&gt;&gt; values(woods.size() + 1, vector&lt;int&gt;(bag + 1));</span><br><span class="line">	for (int i = 1; i &lt;= woods.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for (int j = 1; j &lt;= bag; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			for (int k = 1; k &lt;= woods[i - 1].num; k++)</span><br><span class="line">			&#123;</span><br><span class="line">				if (j &lt; k * woods[i - 1].volume) break;</span><br><span class="line">				values[i][j] = max(values[i-1][j], values[i - 1][j - k * woods[i - 1].volume] + k * woods[i - 1].value);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="空间优化写法-2"><a href="#空间优化写法-2" class="headerlink" title="空间优化写法"></a>空间优化写法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">void backPack(vector&lt;Woods&gt;&amp; woods, int bag)</span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; values(bag + 1);</span><br><span class="line">	for (int i = 1; i &lt;= woods.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for (int j = bag; j &gt;= 0; j--)</span><br><span class="line">		&#123;</span><br><span class="line">			for (int k = 1; k &lt;= woods[i - 1].num; k++)</span><br><span class="line">			&#123;</span><br><span class="line">				if (j &lt; k * woods[i - 1].volume) break;</span><br><span class="line">				values[j] = max(values[j], values[j - k * woods[i - 1].volume] + k * woods[i - 1].value);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="硬币问题"><a href="#硬币问题" class="headerlink" title="硬币问题"></a>硬币问题</h1><blockquote>
+<blockquote>
+<p>背包问题变种</p>
+</blockquote>
+</blockquote>
+<h2 id="硬币问题1"><a href="#硬币问题1" class="headerlink" title="硬币问题1"></a><a href="https://leetcode.com/problems/coin-change/" target="_blank" rel="noopener">硬币问题1</a></h2><p>最少硬币数量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">int coinChange(vector&lt;int&gt;&amp; coins, int amount) </span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;vector&lt;int&gt;&gt; values(coins.size() + 1, vector&lt;int&gt;(amount + 1,INT_MAX-1));</span><br><span class="line">	for (int i = 1; i &lt;= coins.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		values[i][0] = 0;</span><br><span class="line">		for (int j = 1; j &lt;= amount; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			if (j &lt; coins[i - 1])</span><br><span class="line">			&#123;</span><br><span class="line">				values[i][j] = values[i - 1][j];</span><br><span class="line">			&#125;</span><br><span class="line">			else</span><br><span class="line">			&#123;</span><br><span class="line">				values[i][j] = min(values[i - 1][j], values[i][j - coins[i - 1]] + 1);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return values[coins.size()][amount]==INT_MAX-1?-1:values[coins.size()][amount];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>values[i][j]表示使用前i种硬币组成j至少需要多少个硬币</p>
+</blockquote>
+</blockquote>
+<p>简化空间:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int coinChange(vector&lt;int&gt;&amp; coins, int amount) </span><br><span class="line">&#123;</span><br><span class="line">	    vector&lt;int&gt; values(amount + 1,INT_MAX-1);</span><br><span class="line">        values[0]=0;</span><br><span class="line">	    for (int i = 1; i &lt;= coins.size(); i++)</span><br><span class="line">	    &#123;</span><br><span class="line">		    for (int j = coins[i - 1]; j &lt;= amount; j++)</span><br><span class="line">		    &#123;</span><br><span class="line">			    values[j] = min(values[j], values[j - coins[i - 1]] + 1);</span><br><span class="line">		    &#125;</span><br><span class="line">	    &#125;</span><br><span class="line">	    return values[amount]==INT_MAX-1?-1:values[amount];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="硬币问题2"><a href="#硬币问题2" class="headerlink" title="硬币问题2"></a><a href="https://leetcode.com/problems/coin-change-2/" target="_blank" rel="noopener">硬币问题2</a></h2><p>能够组成该数量钱的情况数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">int change(int amount, vector&lt;int&gt;&amp; coins) </span><br><span class="line">&#123;</span><br><span class="line">        vector&lt;vector&lt;int&gt;&gt; dp(coins.size()+1,vector&lt;int&gt;(amount+1));</span><br><span class="line">        dp[0][0]=1;</span><br><span class="line">        for(int i =1;i&lt;=coins.size();i++)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[i][0]=1;</span><br><span class="line">            for(int j=1;j&lt;=amount;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                if(j&lt;coins[i-1])</span><br><span class="line">                &#123;</span><br><span class="line">                    dp[i][j]=dp[i-1][j];</span><br><span class="line">                &#125;</span><br><span class="line">                else</span><br><span class="line">                &#123;</span><br><span class="line">                    dp[i][j]=dp[i-1][j]+dp[i][j-coins[i-1]];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return dp[coins.size()][amount];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>dp[i][j]表示使用前i种硬币组成j的组成数量,dp[i][j]=dp[i-1][j]+dp[i][j-coins[i-1]]的意思，第一项表示不使用币种i组成j的种类数量，第二项表示至少使用一个币种i组成j的种类数，j-coins[i-1]就确保了至少使用一个币种i</p>
+</blockquote>
+</blockquote>
+<p>简化空间:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int change(int amount, vector&lt;int&gt;&amp; coins) </span><br><span class="line">&#123;</span><br><span class="line">       vector&lt;int&gt; dp(amount+1);</span><br><span class="line">       dp[0]=1;</span><br><span class="line">       for(int i =1;i&lt;=coins.size();i++)</span><br><span class="line">       &#123;</span><br><span class="line">           for(int j=coins[i-1];j&lt;=amount;j++)</span><br><span class="line">           &#123;</span><br><span class="line">               dp[j]=dp[j]+dp[j-coins[i-1]];</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       return dp[amount];</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="数组分裂"><a href="#数组分裂" class="headerlink" title="数组分裂"></a>数组分裂</h1><h2 id="数组分裂一"><a href="#数组分裂一" class="headerlink" title="数组分裂一"></a><a href="https://leetcode.com/problems/partition-equal-subset-sum/" target="_blank" rel="noopener">数组分裂一</a></h2><blockquote>
+<blockquote>
+<p>背包问题变种。其实就是数组中每个数字是一个物品,value=weight=数值,看能不能<strong>恰好</strong>装满背包的一半</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">bool canPartition(vector&lt;int&gt;&amp; nums) </span><br><span class="line">&#123;</span><br><span class="line">       int sum = 0;</span><br><span class="line">       for(int i = 0;i&lt;nums.size();i++)</span><br><span class="line">       &#123;</span><br><span class="line">           sum+=nums[i];</span><br><span class="line">       &#125;</span><br><span class="line">       if((sum&amp;1)==1) return false;</span><br><span class="line">       int bag = sum/2;</span><br><span class="line">       vector&lt;int&gt; values(bag+1,INT_MIN);</span><br><span class="line">       values[0]=0;</span><br><span class="line">       for(int i =1;i&lt;=nums.size();i++)</span><br><span class="line">       &#123;</span><br><span class="line">           for(int j = bag;j&gt;=nums[i-1];j--)</span><br><span class="line">           &#123;</span><br><span class="line">               values[j]=max(values[j],values[j-nums[i-1]]+nums[i-1]); </span><br><span class="line">               if(values[j]==bag) return true;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       return false;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组分裂二"><a href="#数组分裂二" class="headerlink" title="数组分裂二"></a>数组分裂二</h2><blockquote>
+<blockquote>
+<p>背包问题变种。将数组分为两部分，求各自和的差的绝对值(两部分的和最接近)其实就是数组中每个数字是一个物品,value=weight=数值,target(bag)=sum/2,看这个target(bag)下最大的和是多少</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">int splitArray(vector&lt;int&gt; nums)</span><br><span class="line">&#123;</span><br><span class="line">	int sum = 0;</span><br><span class="line">	for (int i = 0; i &lt; nums.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		sum += nums[i];</span><br><span class="line">	&#125;</span><br><span class="line">	int target = sum/2;</span><br><span class="line">	vector&lt;vector&lt;int&gt;&gt; dp(nums.size() + 1, vector&lt;int&gt;(target + 1));</span><br><span class="line">	for (int i = 1; i &lt;=nums.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for (int j = 1; j &lt;= target; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			if (nums[i-1]&gt;j)</span><br><span class="line">			&#123;</span><br><span class="line">				dp[i][j] = dp[i-1][j];</span><br><span class="line">			&#125;</span><br><span class="line">			else</span><br><span class="line">			&#123;</span><br><span class="line">				dp[i][j] = max(dp[i-1][j],dp[i-1][j-nums[i-1]]+nums[i-1]);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return ( sum- target) - dp[nums.size()][target];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>空间优化:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">int splitArray(vector&lt;int&gt; nums)</span><br><span class="line">&#123;</span><br><span class="line">	int sum = 0;</span><br><span class="line">	for (int i = 0; i &lt; nums.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		sum += nums[i];</span><br><span class="line">	&#125;</span><br><span class="line">	int target = sum/2;</span><br><span class="line">	vector&lt;int&gt; dp(target + 1);</span><br><span class="line">	for (int i = 1; i &lt;=nums.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for (int j = target; j &gt;= nums[i - 1]; j--)</span><br><span class="line">		&#123;</span><br><span class="line">			dp[j] = max(dp[j],dp[j-nums[i-1]]+nums[i-1]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return ( sum- target) - dp[target];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="零和问题"><a href="#零和问题" class="headerlink" title="零和问题"></a><a href="https://leetcode.com/problems/ones-and-zeroes/" target="_blank" rel="noopener">零和问题</a></h1><blockquote>
+<blockquote>
+<p>背包问题变种，难点在于分清<strong>资源</strong>和<strong>目标</strong>,此题有两个<strong>目标</strong></p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">int findMaxForm(vector&lt;string&gt; strs, int m, int n) </span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;vector&lt;vector&lt;int&gt;&gt;&gt; dp(strs.size() + 1, vector&lt;vector&lt;int&gt;&gt;(m + 1, vector&lt;int&gt;(n + 1)));</span><br><span class="line">	for(int k = 1;k&lt;=strs.size();k++)</span><br><span class="line">	&#123;</span><br><span class="line">		int zeros = count(strs[k-1].begin(), strs[k-1].end(), &apos;0&apos;);</span><br><span class="line">		int ones = count(strs[k-1].begin(), strs[k-1].end(), &apos;1&apos;);</span><br><span class="line">		for (int i = 0; i &lt;= m; i++)//注意从零开始</span><br><span class="line">		&#123;</span><br><span class="line">			for (int j = 0; j &lt;= n; j++)//注意从零开始</span><br><span class="line">			&#123;</span><br><span class="line">				if (i&lt; zeros || j&lt;ones)</span><br><span class="line">				&#123;</span><br><span class="line">					dp[k][i][j] = dp[k-1][i][j];</span><br><span class="line">				&#125;</span><br><span class="line">				else</span><br><span class="line">				&#123;</span><br><span class="line">					dp[k][i][j] = max(dp[k-1][i][j], dp[k-1][i - zeros][j - ones] + 1);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return dp[strs.size()][m][n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>空间优化:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">int findMaxForm(vector&lt;string&gt;&amp; strs, int m, int n) </span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; dp(m+1,vector&lt;int&gt;(n+1));</span><br><span class="line">    for(string str:strs)</span><br><span class="line">    &#123;</span><br><span class="line">        int ones = count(str.begin(),str.end(),&apos;1&apos;);</span><br><span class="line">        int zeros = count(str.begin(),str.end(),&apos;0&apos;);</span><br><span class="line">        for(int i = m;i&gt;=zeros;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            for(int j = n;j&gt;=ones;j--)</span><br><span class="line">            &#123;</span><br><span class="line">                dp[i][j]=max(dp[i][j],dp[i-zeros][j-ones]+1);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return dp[m][n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="编辑距离"><a href="#编辑距离" class="headerlink" title="编辑距离"></a><a href="https://leetcode.com/problems/edit-distance/description/" target="_blank" rel="noopener">编辑距离</a></h1><blockquote>
+<blockquote>
+<p>dp[i][j]表示将word1[1:i]转为word2[1:j]所需要的最少次数</p>
+<script type="math/tex; mode=display">
+dp[i][j] = \begin{cases}
+dp[i-1][j-1] & word1[i]==word2[j] \\
+min(dp[i-1][j],dp[i][j],dp[i][j-1]) & word1[i]!=word2[j]
+\end{cases}</script><p>dp[i-1][j]、dp[i][j]、dp[i][j-1]表示三种转换方式，取其最小.<br>dp[i-1][j]+1表示把word1[1:i-1]转为word2[1:j],然后删除words[i]<br>dp[i-1][j-1]+1表示把word1[1:i-1]转为word2[1:j-1]然后把word1[i]替换为word2[j]<br>dp[i][j-1]+1表示把word1[1:i]转为dp[1:j-1]然后把word2[j]插入到末尾</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">T min(T a,T b,T c)</span><br><span class="line">&#123;</span><br><span class="line">    if(c&gt;b) c=b;</span><br><span class="line">    if(c&gt;a) c=a;</span><br><span class="line">    return c;</span><br><span class="line">&#125;</span><br><span class="line">int minDistance(string word1, string word2) </span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; dp(word1.size()+1,vector&lt;int&gt;(word2.size()+1));</span><br><span class="line">    for(int i=1;i&lt;=word1.size();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        dp[i][0]=i;</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i=1;i&lt;=word2.size();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        dp[0][i]=i;</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i =1;i&lt;=word1.size();i++)</span><br><span class="line">    &#123;</span><br><span class="line">        for(int j =1;j&lt;=word2.size();j++)</span><br><span class="line">        &#123;</span><br><span class="line">            if(word1[i-1]==word2[j-1])</span><br><span class="line">            &#123;</span><br><span class="line">                dp[i][j]=dp[i-1][j-1];</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                dp[i][j]=min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1])+1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return dp[word1.size()][word2.size()];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="矩阵中最大正方形"><a href="#矩阵中最大正方形" class="headerlink" title="矩阵中最大正方形"></a><a href="https://leetcode.com/problems/maximal-square/description/" target="_blank" rel="noopener">矩阵中最大正方形</a></h1><blockquote>
+<blockquote>
+<p>同编辑距离.dp[i][j]记录以matrix[i][j]结尾的边长(要包含matrix[i][j])</p>
+</blockquote>
+</blockquote>
+<script type="math/tex; mode=display">
+dp[i][j] = \begin{cases}
+dp[i+1][j-1]+2 & str[i]=str[j] \\
+max(dp[i+1][j],dp[i][j-1]) & others
+\end{cases}</script><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">T min(T a, T b, T c)</span><br><span class="line">&#123;</span><br><span class="line">	if (c&gt;a)</span><br><span class="line">	&#123;</span><br><span class="line">		c = a;</span><br><span class="line">	&#125;</span><br><span class="line">	if (c&gt;b)</span><br><span class="line">	&#123;</span><br><span class="line">		c = b;</span><br><span class="line">	&#125;</span><br><span class="line">	return c;</span><br><span class="line">&#125;</span><br><span class="line">int maximalSquare(vector&lt;vector&lt;char&gt;&gt;&amp; matrix)</span><br><span class="line">&#123;</span><br><span class="line">	int maxResult = 0;</span><br><span class="line">	vector&lt;vector&lt;int&gt;&gt; dp(matrix.size(),vector&lt;int&gt;(matrix[0].size()));</span><br><span class="line">	for (int i = 0; i &lt; matrix.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (matrix[i][0]==&apos;1&apos;)</span><br><span class="line">		&#123;</span><br><span class="line">			dp[i][0] = 1;</span><br><span class="line">			maxResult = max(maxResult, 1);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	for (int i = 0; i &lt; matrix[0].size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (matrix[0][i] == &apos;1&apos;)</span><br><span class="line">		&#123;</span><br><span class="line">			dp[0][i] = 1;</span><br><span class="line">			maxResult = max(maxResult, 1);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	for (int i = 1; i &lt; dp.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for (int j = 1; j &lt; dp[0].size(); j++)</span><br><span class="line">		&#123;</span><br><span class="line">			if (matrix[i][j]==&apos;0&apos;)</span><br><span class="line">			&#123;</span><br><span class="line">				dp[i][j] = 0;</span><br><span class="line">			&#125;</span><br><span class="line">			else</span><br><span class="line">			&#123;</span><br><span class="line">				dp[i][j] = min(dp[i-1][j-1],dp[i][j-1],dp[i-1][j])+1;</span><br><span class="line">				maxResult= max(maxResult, dp[i][j]* dp[i][j]);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="鹰蛋问题"><a href="#鹰蛋问题" class="headerlink" title="鹰蛋问题"></a><a href="https://leetcode.com/problems/super-egg-drop/" target="_blank" rel="noopener">鹰蛋问题</a></h1><blockquote>
+<blockquote>
+<p>问题大概就是一栋楼N层,你有K个一模一样的鸡蛋,问如何找到一个最高层,这个层扔下去刚好鸡蛋不碎,在上一层就碎了。<br>此题变种较多,在编程角度是一个动态规划，在数学角度是一个趣味问答题，下面具体分析.<br>数学角度:<br>比如我们只有两枚蛋,让你给出一个方案，这个方案测试的次数最少，而且一定能找到这个楼层.<br>难度在于思维转换,比如我们现在已经找到了这个次数X，不可能有某个方案的测试次数比X更小，那么X是多少呢?<br>首先我们要转换的思维是:某个楼层,X是它最少的测试次数,意味着这个楼层是X能测试得到的最高楼层.所以我们把题转为这个最高楼层是多少。<br>现在我们想一下,两个鸡蛋最少得有两次测试机会吧，那么如果X是2，这个最高楼层是多少呢?<br>想想方案,如果第一个蛋测试的是5楼，咔，破了,这时候你只剩下一个蛋,只有一次机会了,但是这次机会你只能测试第一层啊,如果没破，机会没了,没测出来.也就是说,只有两次机会,你第一次不能测的太高,最高只能测试第2层.那最低呢?不需要最低，要得到最高楼层只需要考虑每个蛋放的最高楼层是多少才能得到最大效益，也就是说，如果最少次数是X，那第一次放置的最高楼层只能是X,这样才能保证在第一次破的时候剩下的蛋在X-1次内完成测试。那第二次呢?还剩X-1次机会那就在向上走X-1层呗，，，以此类推直到最顶层。<br>也就是说，如果楼层是$F$，那最少次数只需要解方程:</p>
+<script type="math/tex; mode=display">
+X+(X-1)+(X-2)+...+1=\frac{X(X-1)}{2}≤F</script><p>也就是说两个鸡蛋,X次机会最多可测试的楼层数是$\frac{X(X-1)}{2}$<br>那么三个鸡蛋X次的最大楼层是多少呢?那么同样，第一次首先要确定一个最高楼层，这个楼层下如果破了，剩下的2个蛋和X-1次机会能恰好测完.那么就可以这么想，第一次放在第f层，那剩下的2个蛋和X-1次机会最高到$\frac{X(X-1)}{2}$,所以f就是$\frac{(X-1)(X-2)}{2}$+1，至于为什么加1稍微想想就知道了，剩下的就一样了.(看到没，这题还可以改成如果n个蛋，X次机会，能测试的最高楼层是多少.)<br>动态规划角度:同样利用上诉思维转换dp[i][j]表示j个鸡蛋i次机会能确定的最高楼层<br>dp[l][i] = dp[l - 1][i - 1] + dp[l - 1][i] + 1这个地推公式的含义<br>dp[l][i]:i个鸡蛋l次机会所能确定的最高楼层<br>dp[l-1][i-1]:第一枚鸡蛋的最高位置<br>dp[l - 1][i]:剩下鸡蛋能在此基础上累加的高度。<br>其实上面这个公式是这个:<br>dp[l][i] = max(dp[l - 1][i - 1], dp[l - 1][i - 1]+ dp[l - 1][i] + 1)<br>前面代表第一个碎了，后面代表第一个没碎，因为前面肯定小于等于后面，所以就不写了.</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> int superEggDrop(int K, int N)</span><br><span class="line"> &#123;</span><br><span class="line">	vector&lt;vector&lt;int&gt;&gt; dp(N+1,vector&lt;int&gt;(K+1));//dp[i][j]表示j个鸡蛋i次机会能够确定的最高楼层</span><br><span class="line">	int l = 0;</span><br><span class="line">	while (dp[l][K] &lt; N)</span><br><span class="line">	&#123;</span><br><span class="line">		l++;</span><br><span class="line">		for (int i = 1; i &lt;= K; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			dp[l][i] = dp[l - 1][i - 1] + dp[l - 1][i] + 1;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return l;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="其他DP"><a href="#其他DP" class="headerlink" title="其他DP"></a>其他DP</h1><h2 id="连续数组最大和"><a href="#连续数组最大和" class="headerlink" title="连续数组最大和"></a>连续数组最大和</h2><blockquote>
+<blockquote>
+<p>给出一个数组，求连续数组最大和.<br>//递推公式为DP[i] = max{DP[i-1] + A[i],DP[i]},对于当前点i,要么与前面连起来组成和,要么自己组成和</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">int maxSubArray(vector&lt;int&gt;&amp; nums) </span><br><span class="line">&#123;</span><br><span class="line">	int before = 0;//before就是Dp[i-1]</span><br><span class="line">	int maxSum = INT_MIN;</span><br><span class="line">	for (int i = 0; i &lt;nums.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		before = max(before+nums[i],nums[i]);</span><br><span class="line">		maxSum = max(maxSum,before);</span><br><span class="line">	&#125;</span><br><span class="line">	return maxSum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="连续数组最大积"><a href="#连续数组最大积" class="headerlink" title="连续数组最大积"></a>连续数组最大积</h2><blockquote>
+<blockquote>
+<p>与最大和不同点在于数组中的负数会对积有影响，最大和只需要记录当前最大和即可，但是最大积需要记录最大积和最小积,举例说明:当前数字是-1，之前最大积是5,最小积是-6,那么到此时最大积应当是-1 * -6=6而不是-1.</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">int maxProduct(vector&lt;int&gt; &amp;nums)</span><br><span class="line">&#123;</span><br><span class="line">    int result = INT_MIN;</span><br><span class="line">    int beforeMaxProduct = 1;</span><br><span class="line">    int beforeMinProduct = 1;</span><br><span class="line">    for (int i = 0; i &lt; nums.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        int tempMax = beforeMaxProduct * nums[i];</span><br><span class="line">        int tempMin = beforeMinProduct * nums[i];</span><br><span class="line">        beforeMaxProduct = max(max(tempMax, tempMin), nums[i]);</span><br><span class="line">        beforeMinProduct = min(min(tempMax, tempMin), nums[i]);</span><br><span class="line">        result = max(beforeMaxProduct, result);</span><br><span class="line">    &#125;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组最大积-不一定连续"><a href="#数组最大积-不一定连续" class="headerlink" title="数组最大积(不一定连续)"></a>数组最大积(不一定连续)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">int maxProduct(vector&lt;int&gt; &amp;nums)</span><br><span class="line">&#123;</span><br><span class="line">    int result = INT_MIN;</span><br><span class="line">    int beforeMaxProduct = 1;</span><br><span class="line">    int beforeMinProduct = 1;</span><br><span class="line">    for (int i = 0; i &lt; nums.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        int tempMax = beforeMaxProduct * nums[i];</span><br><span class="line">        int tempMin = beforeMinProduct * nums[i];</span><br><span class="line">        beforeMaxProduct = max(max(tempMax, tempMin), beforeMaxProduct);</span><br><span class="line">        beforeMinProduct = min(min(tempMax, tempMin), beforeMinProduct);</span><br><span class="line">        result = max(beforeMaxProduct, result);</span><br><span class="line">    &#125;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="最大子矩阵和"><a href="#最大子矩阵和" class="headerlink" title="最大子矩阵和"></a>最大子矩阵和</h2><blockquote>
+<blockquote>
+<p>和上面基本一样</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">int calclineSum(vector&lt;int&gt; array)//完全和上面一样</span><br><span class="line">&#123;</span><br><span class="line">	int before=0;</span><br><span class="line">	int maxSum = INT_MIN;</span><br><span class="line">	for (int i = 0; i &lt; array.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		before = max(before+array[i],array[i]);</span><br><span class="line">		maxSum = max(maxSum,before);</span><br><span class="line">	&#125;</span><br><span class="line">	return maxSum;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int maxSumMatrix(vector&lt;vector&lt;int&gt;&gt; matrix)</span><br><span class="line">&#123;</span><br><span class="line">	int maxSum = INT_MIN;</span><br><span class="line">	for (int i = 0; i &lt; matrix.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		vector&lt;int&gt; lineSum(matrix[0].size());</span><br><span class="line">		for (int j = i; j &lt; matrix.size(); j++)</span><br><span class="line">		&#123;</span><br><span class="line">			for (int k = 0; k &lt; matrix[0].size(); k++)</span><br><span class="line">			&#123;</span><br><span class="line">				lineSum[k] += matrix[j][k];</span><br><span class="line">			&#125;</span><br><span class="line">			maxSum = max(maxSum, calclineSum(lineSum));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return maxSum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="小偷"><a href="#小偷" class="headerlink" title="小偷"></a><a href="https://leetcode.com/problems/house-robber" target="_blank" rel="noopener">小偷</a></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">int rob(vector&lt;int&gt; &amp;nums)</span><br><span class="line">&#123;</span><br><span class="line">    if (nums.size() == 0)</span><br><span class="line">    &#123;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125; else if (nums.size() == 1)</span><br><span class="line">    &#123;</span><br><span class="line">        return nums.back();</span><br><span class="line">    &#125; else if (nums.size() == 2)</span><br><span class="line">    &#123;</span><br><span class="line">        return max(nums.front(), nums.back());</span><br><span class="line">    &#125; else</span><br><span class="line">    &#123;</span><br><span class="line">        vector&lt;int&gt; dp(nums.size());</span><br><span class="line">        dp[0] = nums[0];</span><br><span class="line">        dp[1] = max(nums[0], nums[1]);</span><br><span class="line">        for (int i = 2; i &lt; nums.size(); ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[i] = max(dp[i - 2] + nums[i], dp[i - 1]);</span><br><span class="line">        &#125;</span><br><span class="line">        return dp.back();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Jump-Game"><a href="#Jump-Game" class="headerlink" title="Jump Game"></a><a href="https://leetcode.com/problems/jump-game/" target="_blank" rel="noopener">Jump Game</a></h2><p>贪心一:</p>
+<blockquote>
+<blockquote>
+<p>每到一个i,如果i&lt;=reach意味着[0,i-1]的坐标能达到reach,如果i&gt;reach,则意味着根本就到不了这里,无需继续。</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">bool canJump(vector&lt;int&gt;&amp; nums) </span><br><span class="line">&#123;</span><br><span class="line">	int reach = 0;</span><br><span class="line">	for (int i =0; i &lt; nums.size(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (i &gt; reach || i &gt;= nums.size() - 1) break;</span><br><span class="line">		else</span><br><span class="line">		&#123;</span><br><span class="line">			reach = max(reach, i + nums[i]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return reach &gt;= nums.size() - 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>贪心二:</p>
+<blockquote>
+<blockquote>
+<p>和上诉形式不一样,思想差不多</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">bool canJump(vector&lt;int&gt;&amp; nums) </span><br><span class="line">&#123;</span><br><span class="line">	int len = nums.size();</span><br><span class="line">	int curMax = nums[0];</span><br><span class="line"></span><br><span class="line">	for (int i = 0; i &lt;= curMax; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (nums[i] + i &gt;= len - 1) return true;</span><br><span class="line">		curMax = max(curMax, nums[i] + i);</span><br><span class="line">	&#125;</span><br><span class="line">	return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>动态规划:</p>
+<blockquote>
+<blockquote>
+<p>dp[i]表示到达i时候最多还剩下多少步</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">bool canJump(vector&lt;int&gt;&amp; nums) </span><br><span class="line">&#123;</span><br><span class="line">	vector&lt;int&gt; dp(nums.size(), 0);</span><br><span class="line">	for (int i = 1; i &lt; nums.size(); ++i) </span><br><span class="line">	&#123;</span><br><span class="line">		dp[i] = max(dp[i - 1], nums[i - 1]) - 1;</span><br><span class="line">		if (dp[i] &lt; 0) return false;</span><br><span class="line">	&#125;</span><br><span class="line">	return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="染色问题"><a href="#染色问题" class="headerlink" title="染色问题"></a><a href="https://blog.csdn.net/u012175043/article/details/50050379" target="_blank" rel="noopener">染色问题</a></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int numWays(int n, int k)</span><br><span class="line">&#123;</span><br><span class="line">    if (n == 0) return 0;</span><br><span class="line">    int same = 0;</span><br><span class="line">    int different = k;</span><br><span class="line">    for (int i = 2; i &lt;= n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        int temp = different;</span><br><span class="line">        different = (same + different) * (k - 1);</span><br><span class="line">        same = temp;</span><br><span class="line">    &#125;</span><br><span class="line">    return same + different;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-08-25T16:51:31.729Z" itemprop="dateUpdated">2021-08-26 00:51:31</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/04/11/DynamicProgramming/" target="_blank" rel="external">https://lingyixia.github.io/2019/04/11/DynamicProgramming/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/字符串/">字符串</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/硬币/">硬币</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/背包/">背包</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/递归/">递归</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/04/11/DynamicProgramming/&title=《动态规划系列》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/11/DynamicProgramming/&title=《动态规划系列》 — 灵翼俠的个人博客&source=动态规划常用体型,其实最大的难度是遇到一个问题如何将其归类,当归类正确的时候往往是写出的递推公式”似曾相识”的时候。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/04/11/DynamicProgramming/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《动态规划系列》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/04/11/DynamicProgramming/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/04/11/DynamicProgramming/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/04/14/PoolSampling/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">蓄水池采样算法</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/04/11/Trees/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">树的常见算法</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/04/11/DynamicProgramming/&title=《动态规划系列》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/11/DynamicProgramming/&title=《动态规划系列》 — 灵翼俠的个人博客&source=动态规划常用体型,其实最大的难度是遇到一个问题如何将其归类,当归类正确的时候往往是写出的递推公式”似曾相识”的时候。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/04/11/DynamicProgramming/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《动态规划系列》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/04/11/DynamicProgramming/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/04/11/DynamicProgramming/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJElEQVR42u3aQW7EIBAEwP3/p51rosRON3gTGYrTSosN5cMIZub1isfxadw1//ucdpV6YGBgPJZxXI5kybOF2zfn//6wIgYGxgaMs01cz2m33q6VzMfAwMA4+30WHFve2OfDwMDAmGGMwdo3YGBg7MlILpM5Lw+g/3AXx8DAeCAjv5r+/e+31DcwMDAexTjK0RYJ8iLlMTEwMDDWZuQBbv7imszMj30YGBi7Mdrk2jtSb/k1eOoMi4GB8VjGWKND3iI21hBWp/YwMDAWZbRhdKwAMNZmUYdaDAyMRRltUr4tMeahPAec7hADA2NRxnz6LMfn4TUvJ2BgYOzGyEPtXWXImQvwlw+BgYGxNOPe9NlYEG8/4i9ZQwwMjKUZY0n8meJBe62t2ywwMDCWY4xt6K4Gr7bZAgMDY2dGXp7Mi4tj4HoPGBgYSzPawNqGyLzBIk//3VDOxMDAeDgjD4J5GM2Lo8kHKsqZGBgYyzHmtzgWasf2gIGBsQ/juriYHPVmWsTyZF/UbIGBgbEl415kcikdPFZiYGBswMhTZjMptjahVjyLgYGxKOMoR7tku7kk7BaZQgwMjCUYd8XstqW1DdzzDR8YGBhPZyQLJK1deRkyT8AVz2JgYGzAuJ6UL5Z/iHtTchgYGBhJkB07gbbBeqpbBAMDYxvGWDIuvwC3JQoMDIx9GMkltj0g5se+9j0YGBi7MdqSZJtuK4LmUHkAAwNjacYHdLKyUEuxmzAAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

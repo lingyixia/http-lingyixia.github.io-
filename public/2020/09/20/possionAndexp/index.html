@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>泊松分布和指数分布 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="泊松分布,指数分布">
+    <meta name="description" content="一直不理解一些分布是干什么用的，怎么来的，看了马同学高数才有了一些了解，目前的感觉是，似乎常见的分布都来自于二项分布。此处加以记录。">
+<meta name="keywords" content="泊松分布,指数分布">
+<meta property="og:type" content="article">
+<meta property="og:title" content="泊松分布和指数分布">
+<meta property="og:url" content="https://lingyixia.github.io/2020/09/20/possionAndexp/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="一直不理解一些分布是干什么用的，怎么来的，看了马同学高数才有了一些了解，目前的感觉是，似乎常见的分布都来自于二项分布。此处加以记录。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-04T17:05:50.339Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="泊松分布和指数分布">
+<meta name="twitter:description" content="一直不理解一些分布是干什么用的，怎么来的，看了马同学高数才有了一些了解，目前的感觉是，似乎常见的分布都来自于二项分布。此处加以记录。">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">泊松分布和指数分布</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">泊松分布和指数分布</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-09-20T08:38:57.000Z" itemprop="datePublished" class="page-time">
+  2020-09-20
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/概率论/">概率论</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#从二项分布到泊松分布"><span class="post-toc-number">1.</span> <span class="post-toc-text">从二项分布到泊松分布</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#从泊松分布到指数分布"><span class="post-toc-number">2.</span> <span class="post-toc-text">从泊松分布到指数分布</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-possionAndexp"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">泊松分布和指数分布</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-09-20 16:38:57" datetime="2020-09-20T08:38:57.000Z"  itemprop="datePublished">2020-09-20</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/概率论/">概率论</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>一直不理解一些分布是干什么用的，怎么来的，看了<a href="https://www.matongxue.com/search/?q=%E6%8C%87%E6%95%B0%E5%88%86%E5%B8%83" target="_blank" rel="noopener">马同学高数</a>才有了一些了解，目前的感觉是，似乎常见的分布都来自于二项分布。此处加以记录。</p>
+<a id="more"></a>
+<h1 id="从二项分布到泊松分布"><a href="#从二项分布到泊松分布" class="headerlink" title="从二项分布到泊松分布"></a><a href="https://blog.csdn.net/ccnt_2012/article/details/81114920" target="_blank" rel="noopener">从二项分布到泊松分布</a></h1><ul>
+<li>已知：馒头老板统计了一周内每天卖的馒头数量</li>
+<li>问题：一个馒头店每天需要准备多少馒头？<br>最简单的办法是求平均值，每天就准备这么多馒头就行了，但是问题是如果每天卖出馒头数量方差较大，很容易有好几天准备不足或准备过剩。</li>
+<li>分析：将一天销售时间均分为$n$个阶段，似的每一阶段只卖出一个馒头，那么，每一阶段卖出与不卖出馒头就是一个<strong>伯努利分布</strong>，$n$个阶段就是<strong>二项分布</strong>。设每天卖出馒头为随机变量X，则一天销售时间卖出$k$个馒头的概率为：<script type="math/tex; mode=display">
+P(X=K)=C_n^kp^k(1-p)^{n-k} \tag{1}</script>很显然，时间是连续的，不能这样分，但是当$n \to+\infty$的时候，可以认为是连续的。<br>上诉二项分布$p$怎么求呢？由$np=\mu$得$p=\frac{\mu}{p}$,$\mu$可由一周内均值近似，则有：<script type="math/tex; mode=display">
+\begin{aligned}
+P(X=k)&=\lim_{n \to +\infty} C_n^k(\frac{\mu}{n})^k(1-\frac{\mu}{n})^{n-k}\\
+&=\lim_{x \to +\infty} \frac{n(n-1)...(n-k+1)}{k!}\frac{\mu^k}{n^k}(1-\frac{\mu}{n})^{n-k} \\
+&=\lim_{x \to +\infty}\frac{\mu^k}{k!} \frac{n}{n}\frac{n-1}{n}...\frac{n-k+1}{n}(1-\frac{\mu}{n})^{-k}(1-\frac{\mu}{n})^n
+\end{aligned}</script>其中$\frac{n}{n} \frac{n-1}{n}…\frac{n-k+1}{n}$和$(1-\frac{\mu}{n})^{-k}$在$n \to +\infty$下都是1，对于最后一个因式:<script type="math/tex; mode=display">
+\lim_{n \to +\infty}(1-\frac{\mu}{n})^n=\lim_{n\to+\infty}((1+(-\frac{1}{\frac{n}{\mu}}))^{-\frac{n}{\mu}})^{-\mu} = e^{-\mu}</script>故而原式可化为$P(X=k)=\frac{\mu^k}{k!}e^{-\mu}$,即泊松分布的公式。<br>因此，可以认为，泊松分布是描述某段时间内，卖出多少馒头的分布，其中$\mu$代表这段时间内卖出馒头的期望。<h1 id="从泊松分布到指数分布"><a href="#从泊松分布到指数分布" class="headerlink" title="从泊松分布到指数分布"></a>从泊松分布到指数分布</h1>上诉泊松分布只告诉了我们确定时间段内的分布，改造该公式如下：<script type="math/tex; mode=display">
+P(X=k,t)=\frac{(\mu t)^k}{k!}e^{-\mu t}</script>称之为<strong>波松过程</strong>，可以看出，当$t=1$时就是普通的泊松分布，当$t=n$的时候表示时间间隔为$n$内卖出馒头的分布。<br>对于馒头店老板而言，不仅仅需要知道每天要准备多少馒头，还需要知道卖出馒头的时间间隔，好以此适时调整服务员人数。<br>设随机变量X表示两次卖出馒头之间的间隔，则有：<script type="math/tex; mode=display">
+P(Y>t)=P(X=0,0)=\frac{(\mu t)^0}{0!}e^{-\mu t}=e^{-\mu t}</script><blockquote>
+<blockquote>
+<p>$P(X=k,t)$表示时间段t内卖出k个馒头的概率，P(Y&gt;t)表示两次卖出馒头时间间隔大于t的概率，则就是时间t内卖出0个馒头的概率。<br>则:</p>
+<script type="math/tex; mode=display">
+P(Y\le t)=1-e^{-\mu t}</script><p>即指数分布</p>
+</blockquote>
+</blockquote>
+</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-04T17:05:50.339Z" itemprop="dateUpdated">2021-04-05 01:05:50</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2020/09/20/possionAndexp/" target="_blank" rel="external">https://lingyixia.github.io/2020/09/20/possionAndexp/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/指数分布/">指数分布</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/泊松分布/">泊松分布</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2020/09/20/possionAndexp/&title=《泊松分布和指数分布》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2020/09/20/possionAndexp/&title=《泊松分布和指数分布》 — 灵翼俠的个人博客&source=一直不理解一些分布是干什么用的，怎么来的，看了马同学高数才有了一些了解，目前的感觉是，似乎常见的分布都来自于二项分布。此处加以记录。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2020/09/20/possionAndexp/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《泊松分布和指数分布》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2020/09/20/possionAndexp/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2020/09/20/possionAndexp/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2021/04/04/realtive-position-transformer/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">相对编码</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/08/10/BPE/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">BPE 和 WordPiece</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2020/09/20/possionAndexp/&title=《泊松分布和指数分布》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2020/09/20/possionAndexp/&title=《泊松分布和指数分布》 — 灵翼俠的个人博客&source=一直不理解一些分布是干什么用的，怎么来的，看了马同学高数才有了一些了解，目前的感觉是，似乎常见的分布都来自于二项分布。此处加以记录。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2020/09/20/possionAndexp/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《泊松分布和指数分布》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2020/09/20/possionAndexp/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2020/09/20/possionAndexp/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIUlEQVR42u3aQW7DMAwEwP7/0+kDmrhL0g4gaXwKWtXq5LAQKf78xM/rw/N3zd/1yTvzvxo9GBgYyzJel09vzTUseX++LwYGxjmMTwl2vSYJ3H+2v9wrWY+BgYGRfK5GcI+EgYGBMX9dXnz2DpcYGBgYSXRev2hS6H61FsfAwFiQkUfk9z8/cr+BgYGxFONVfKqBm19t5iH7ZhcMDIytGdWm/2Rlftxs7oKBgXEAI39pHseTMjhpCDa/PwwMjKUYd72oF5G9I+Ob9RgYGFszqg21/OIz/201lG/oC2JgYCzFyAe2HgnH4HRXnhbBwMDYlJFvX+VNwrfQhsPAwDiA0StTq3+bD35VG4IYGBh7M+5qkFWvEKpDYNUox8DA2ImRHwSfbutXi9iP0yIYGBhbM/KgzGO02mirDstiYGCcwCifFluFZXVotXk5gYGBsSnj3sGIed1cjWkMDIzTGJOjXtJoy8M3iV0MDIxzGL1/MT/kVX9evWAopDUGBsbWjF6zfh7NeSGNgYFxDqM38pW3+5+YEMHAwDiNUW299VpmTwyHYWBg7M2YDFJM2voJqUDFwMDYmnHXaEU1spOVyecyDAMDY1lGNWTn7bl5Ay66GMDAwNiOkQffPBwnx75/hi0wMDAwBtcD82vRqCLHwMDAGNTHeXMtH2wdBS4GBsaCjKSIrRaW1SNgPvaBgYFxGqN3yKteOiZfVrL76MCKgYGxHuMXAGp0cpRUwkwAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

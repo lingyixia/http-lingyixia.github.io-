@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>Summarization-with-Pointer-Generator-Networks | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="论文,tensorflow">
+    <meta name="description" content="Get To The Point:Summarization with Pointer-Generator Networks论文导读">
+<meta name="keywords" content="论文,tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Summarization-with-Pointer-Generator-Networks">
+<meta property="og:url" content="https://lingyixia.github.io/2019/03/05/Summarization-with-Pointer-Generator-Networks/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="Get To The Point:Summarization with Pointer-Generator Networks论文导读">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-04T17:05:50.331Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Summarization-with-Pointer-Generator-Networks">
+<meta name="twitter:description" content="Get To The Point:Summarization with Pointer-Generator Networks论文导读">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Summarization-with-Pointer-Generator-Networks</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">Summarization-with-Pointer-Generator-Networks</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-03-05T11:30:48.000Z" itemprop="datePublished" class="page-time">
+  2019-03-05
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#传统Attention"><span class="post-toc-number">1.</span> <span class="post-toc-text">传统Attention</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Pointer-generator-network"><span class="post-toc-number">2.</span> <span class="post-toc-text">Pointer-generator network</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Coverage-mechanism"><span class="post-toc-number">3.</span> <span class="post-toc-text">Coverage mechanism</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Summarization-with-Pointer-Generator-Networks"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Summarization-with-Pointer-Generator-Networks</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-03-05 19:30:48" datetime="2019-03-05T11:30:48.000Z"  itemprop="datePublished">2019-03-05</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本论文针对的是摘要生成任务,普遍而言文本生成类的任务都是使用Seq2Seq模型,本论文也不例外,一般而言文本生成有两种模式:抽取式和生成式,顾名思义不在详细描述，本论文分为三个部分:传统Attention,Pointer-Generator Networks和Coverage机制.<br>论文连接: <a href="https://arxiv.org/pdf/1704.04368.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1704.04368.pdf</a><br><a id="more"></a></p>
+<h1 id="传统Attention"><a href="#传统Attention" class="headerlink" title="传统Attention"></a>传统Attention</h1><p>简述:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+e_i^t&=V^Ttanh(W_hh_i+W_ss_t+b_{attn}) \tag{1} \\
+a^t&=sotfmax(e^t) \tag{2} \\
+h_t^*&=\sum_ia_i^th_i \tag{3} \\
+\end{align}</script><script type="math/tex; mode=display">
+\begin{gather}
+P_{vocab}=sotfmax(V^{'}(V[o_t;h_t^*]+b)+b^{'}) \tag{4} \\
+P(w)=P_{vocab}(w) \tag{5} \\
+loss_t = -logP(w_t^*) \tag{6} \\
+loss=\frac{1}{T}\sum_t^Tloss_t \tag{7}
+\end{gather}</script><p>其中(4)中$o_t$是<code>LSTM</code>的输出,外面包着的两层实际上是个全连接网络$V^{‘},V,b,b^{‘}$也就是两个全连接网络的参数。<br>需要注意的是代码实现方式,见<a href="https://github.com/becxer/pointer-generator/blob/master/attention_decoder.py" target="_blank" rel="noopener">attention_decoder.py</a><br>由于<code>h</code>的<code>shape</code>是<code>(batch_size,encode_length,hidden_size)</code>，无法直接加权重<code>W</code>,<br>作者首先增加其维度,得到<code>(batch_size,encode_length,1,hidden_size)</code>利用了<code>conv2d</code>卷积函数实现,得到相同<code>shape</code>,而$s_t$的<code>shape</code>是<code>(batch_size,hidden_size)</code>,要加到每个<code>encode_length</code>上,作者首先增加其维度，得到<code>shape</code>为<code>(batch_size,1,1,hidden_size)</code>,然后利用<strong>广播机制</strong>,直接相加即可.</p>
+<h1 id="Pointer-generator-network"><a href="#Pointer-generator-network" class="headerlink" title="Pointer-generator network"></a>Pointer-generator network</h1><p>原理很简单，就是在<code>Attention</code>步骤中,认为(2)中得到的就是词概率,当然，此时的词概率所计算的词只有<code>encoder</code>部分原文的词量，而上面求得的$P_{vocab}$的词量是整个词典的量,但是两者并不是后者包含前者,而是交集关系，因为<code>encoder</code>的原文很可能包含原训练集不包含的词语$(OOV)$,因此，加入$Pointer-generator network$后得到两个词概率,需要把他们合并，方式是通过一个参数做平滑计算.</p>
+<script type="math/tex; mode=display">
+\begin{gather}
+P_gen=\sigma(w_{h^*}h_t^* + w_s^Ts_t+w_x^Ts_t+b_{ptr}) \tag{8} \\
+P(w)=p_{gen}P_{vocab}(w)+(1-p_{gen})\sum_{i:w_i=w}a_i^t \tag{9}
+\end{gather}</script><p>,作者代码的实现方式如:<a href="https://github.com/becxer/pointer-generator/blob/master/model.py" target="_blank" rel="noopener">model.py</a>的<code>_calc_final_dist</code>函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#首先计算乘以参数之后:</span><br><span class="line">vocab_dists = [p_gen * dist for (p_gen, dist) in zip(self.p_gens, vocab_dists)]</span><br><span class="line">attn_dists = [(1 - p_gen) * dist for (p_gen, dist) in zip(self.p_gens, attn_dists)]</span><br><span class="line">#然后需要得到原词表加上oov词后的数量:</span><br><span class="line">extended_vsize = self._vocab.size() + self._max_art_oovs</span><br><span class="line">shape = [self._hps.batch_size, extended_vsize]</span><br><span class="line">#将attention的原文词概率插入其中</span><br><span class="line">attn_dists_projected = [tf.scatter_nd(indices, copy_dist, shape) for copy_dist in attn_dists]</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://lingyixia.github.io/2018/12/25/tensorflowFunctions/#tf-scatter-nd">tf.scatter_nd函数介绍</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#最后将词典的词概率加入其中</span><br><span class="line">final_dists = [vocab_dist + copy_dist for (vocab_dist, copy_dist) inzip(vocab_dists_extended,attn_dists_projected)]</span><br></pre></td></tr></table></figure></p>
+<h1 id="Coverage-mechanism"><a href="#Coverage-mechanism" class="headerlink" title="Coverage mechanism"></a>Coverage mechanism</h1><p>Coverage 机制的作用是减少重复生成,基本思想是通过每进行一步attention就将前面所有步骤的$a^t$加和:</p>
+<script type="math/tex; mode=display">c^t=\sum_{t{'}=0}^{t-1}a^{t{'}} \tag{10}</script><p>这个$c^t$就是decoder第t步开始生成之前原文每个词生成量合成的上下文信息，然后更改公式(1)为:</p>
+<script type="math/tex; mode=display">
+e_i^t=V^Ttanh(W_hh_i+W_s+w_cc_i^t+b_{attn}) \tag{11}</script><p>增加一个$covloss_t$:</p>
+<script type="math/tex; mode=display">
+covloss_t = \sum_i min(a_i^t,c_i^t) \tag{12}</script><p>其含义是<strong>如果之前该词出现过了，那么它的$c_i^t$就很大，那么为了减少loss，就需要$a_i^t$变小（因为loss是取两者较小值），$a_i^t$小就代表着这个位置被注意的概率减少.</strong><br>最终$loss$为</p>
+<script type="math/tex; mode=display">
+loss=\sum_t^T(-logP(w_t^*)+\lambda\sum_i min(a_i^t,c_i^t)) \tag{13}</script>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-04T17:05:50.331Z" itemprop="dateUpdated">2021-04-05 01:05:50</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/03/05/Summarization-with-Pointer-Generator-Networks/" target="_blank" rel="external">https://lingyixia.github.io/2019/03/05/Summarization-with-Pointer-Generator-Networks/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tensorflow/">tensorflow</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/论文/">论文</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/03/05/Summarization-with-Pointer-Generator-Networks/&title=《Summarization-with-Pointer-Generator-Networks》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/03/05/Summarization-with-Pointer-Generator-Networks/&title=《Summarization-with-Pointer-Generator-Networks》 — 灵翼俠的个人博客&source=本论文针对的是摘要生成任务,普遍而言文本生成类的任务都是使用Seq2Seq模型,本论文也不例外,一般而言文本生成有两种模式:抽取式和生成式,顾名思义不在详..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/03/05/Summarization-with-Pointer-Generator-Networks/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Summarization-with-Pointer-Generator-Networks》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/03/05/Summarization-with-Pointer-Generator-Networks/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/03/05/Summarization-with-Pointer-Generator-Networks/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/03/10/neuralNetWorkTips/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">神经网络调优</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/03/01/Intellectualproblem/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">智力题</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/03/05/Summarization-with-Pointer-Generator-Networks/&title=《Summarization-with-Pointer-Generator-Networks》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/03/05/Summarization-with-Pointer-Generator-Networks/&title=《Summarization-with-Pointer-Generator-Networks》 — 灵翼俠的个人博客&source=本论文针对的是摘要生成任务,普遍而言文本生成类的任务都是使用Seq2Seq模型,本论文也不例外,一般而言文本生成有两种模式:抽取式和生成式,顾名思义不在详..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/03/05/Summarization-with-Pointer-Generator-Networks/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Summarization-with-Pointer-Generator-Networks》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/03/05/Summarization-with-Pointer-Generator-Networks/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/03/05/Summarization-with-Pointer-Generator-Networks/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADOklEQVR42u3awW4iQQwE0Pz/T2cve1gpy1BlE4lp3pwiAjP9moNxub++4uv7x/Xv6z//fvRK8pSfT3z0yuwpX9jY2NjHsb8vr4R9/dn2Du2mzNaDjY2NfR47ecwjxr5+5ve/LmCJBRsbGxs7Lyp5AzNb+uaz2NjY2J/MLm5dFrZZucLGxsbGnpWcVxW8FpyXw5dladjY2Nhvz56Vlvf8+1fm29jY2NhvzP4ur+sCk7QHrxroztb/9w7Y2NjYB7HzApC0Adf4zZA4aTby9WNjY2OfxE6WlZSQlp0fyhl+k9ftCjY2NvZx7ORh10vMN2h/iHNWRJ90YNjY2Ni3ZbcBzR7ckvJoqT36g42NjX0Suy0Js7Hrps3YjJ8f3gcbGxv7IPbswXmUk5STWclsYyxsbGzss9mbKKdtV1610ZsoChsbG/s89mbcm4dN7fYli07uVhQ2bGxs7Fux88gmL1rJqLj9Btow68nGYWNjYx/EzgtYu/R2YLyptElhq2MmbGxs7Nuy28Mx15/Ki1x+tihvS4rgCRsbG/u27HyAmpeKvOC1mzsLvB6GStjY2NhHsPfFY/bIPHKarS3aSmxsbOwPYG/Co1lk36Zf7QADGxsb+zx2+4O+Hb62wVPbFOWx1H/m29jY2NjHsetJQvz+WSzVjpmTdggbGxv7PPbsgMs+9JltR1Lw6rVhY2Nj35ydh0Gb2CiPhNrIafYKNjY29qnsfFnFsZh14WljrOgLw8bGxj6UnbcQs6M2UXA/Gjzkh4qynAkbGxv7Tuz2R387xH3B4kYtTbR+bGxs7OPYbYFpxwn5QLcdDCTrfDIPwcbGxj6CPbvprDhtDtxsgqcnfRg2Njb2zdmbYe3sEE9SRPORczuixsbGxj6PPftZn2/TvoDNGqHi4A42Njb2DdmzYzSbIzuzrcnLZPQ1YGNjYx/EbgtAHuJvGozZsaG6FcHGxsY+iD0rWvsjO3nLkZSo+r/Y2NjYx7E3Q9Ok8LSxUfueKD+bpV/Y2NjYx7HbsGb2zraU1uMHbGxs7I9n59vxqlK3ifuxsbGxP4E9O0aZH/dpw6Pf6B2wsbGxT2VvmoR9zLRvUfKACRsbG/s49h9EvsRwGc2L6QAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

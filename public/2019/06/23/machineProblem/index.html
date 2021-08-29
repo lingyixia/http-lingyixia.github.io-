@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>概率计算问题 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="概率论">
+    <meta name="description" content="若干有趣的有关概率计算的小问题">
+<meta name="keywords" content="概率论">
+<meta property="og:type" content="article">
+<meta property="og:title" content="概率计算问题">
+<meta property="og:url" content="https://lingyixia.github.io/2019/06/23/machineProblem/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="若干有趣的有关概率计算的小问题">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-04T17:05:50.336Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="概率计算问题">
+<meta name="twitter:description" content="若干有趣的有关概率计算的小问题">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">概率计算问题</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">概率计算问题</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-06-23T11:14:33.000Z" itemprop="datePublished" class="page-time">
+  2019-06-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/数学/">数学</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#抛硬币"><span class="post-toc-number">1.</span> <span class="post-toc-text">抛硬币</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#羊、车、门"><span class="post-toc-number">2.</span> <span class="post-toc-text">羊、车、门</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#圆上任取三点"><span class="post-toc-number">3.</span> <span class="post-toc-text">圆上任取三点</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#生日悖论"><span class="post-toc-number">4.</span> <span class="post-toc-text">生日悖论</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-machineProblem"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">概率计算问题</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-06-23 19:14:33" datetime="2019-06-23T11:14:33.000Z"  itemprop="datePublished">2019-06-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/数学/">数学</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>若干有趣的有关概率计算的小问题<br><a id="more"></a></p>
+<h1 id="抛硬币"><a href="#抛硬币" class="headerlink" title="抛硬币"></a>抛硬币</h1><blockquote>
+<blockquote>
+<p>一枚均匀硬币，平均抛多少次才能连续两次正面向上?</p>
+</blockquote>
+</blockquote>
+<p>答:设<script type="math/tex">N_k</script>表示连续$k$次正面向上的随机变量,则<script type="math/tex">E(N_k)</script>表示连续$k$面朝上需要抛硬币次数的均值,则:</p>
+<script type="math/tex; mode=display">N_k=N_{k-1}+p+(1-p)[1+N_k]</script><p>下面解释这个式子.<br>要想得到<script type="math/tex">N_k</script>次正面向上之前必须有<script type="math/tex">N_{k-1}</script>次正面向上,因此第一项的<script type="math/tex">N_{k-1}</script>就是这个意思,第二项的意思是达到$N_{k-1}$之的下一个伯努利实验如果成功,则实验到此为止。第三项的意思是如果不成功,则一切从头开始.</p>
+<script type="math/tex; mode=display">E(N_k)=E(N_{k-1})+p+(1-p)[1+E(N_k)]</script><p>得:</p>
+<script type="math/tex; mode=display">
+E(N_k) = \frac{E(N_{k-1})+1}{p}</script><p>得:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+E(N_K)&=\frac{1}{p^N}+\frac{1}{p^{N-1}}+...+\frac{1}{p} \\
+&=\frac{p^N-1 }{p^N(p-1)}
+\end{align}</script><h1 id="羊、车、门"><a href="#羊、车、门" class="headerlink" title="羊、车、门"></a>羊、车、门</h1><blockquote>
+<blockquote>
+<p>有3扇关闭的门，一扇门后面停着汽车，另外两扇门后是山羊，只有主持人知道每扇门后面是什么。参赛者先选择一扇门，在开启它之前，主持人会开启另外一扇门，露出门后的山羊，然后如果你是参赛者，你换不换门? </p>
+</blockquote>
+</blockquote>
+<p>正常人会认为换不换几率都是1/2,但是真的是这样么?现在我们把此题用解答一下:</p>
+<ol>
+<li>如果换门，那么所有的情况只有三种:<ul>
+<li>参赛者挑山羊一号，主持人挑山羊二号。转换将成功</li>
+<li>参赛者挑山羊二号，主持人挑山羊一号。转换将成功</li>
+<li>参赛者挑汽车，主持人挑两头山羊的任何一头。转换将失败<br>或者说不换门所有的情况只有三种:</li>
+<li>参赛者挑山羊一号，主持人挑山羊二号。不换将失败</li>
+<li>参赛者挑山羊二号，主持人挑山羊一号。不换则失败</li>
+<li>参赛者挑汽车，主持人挑两头山羊的任何一头。转换将成功<br>或者这样说:<br>已知第一个步骤得到车的概率是1/3，那第二个步骤换门得到车的概率是0，—&gt; 1/3 <em> 0 =0<br>已知第一个步骤得到羊的概率是2/3，那第二个步骤换门得到车的概率是1，—&gt; 2/3 </em> 1 =2/3<br>总的来说，换门得到的概率是2/3</li>
+</ul>
+</li>
+<li>现在把这个问题普遍化，问题就是计算换门和不换门两种情况下成功的概率,假设$N$扇门中有一个车，其他的都是羊<ul>
+<li>不换门:成功的条件是第一次选择了车 设事件A=第一次选择了车 则$P(A)=\frac{1}{N}$</li>
+<li>换门:成功的条件是第一次选择了羊 第二次选择了车   设事件B=第一次选择了羊，事件C=第二次选择了车 $P(C|B)=\frac{N-1}{N} \times \frac{1}{N-2} = \frac{N-1}{N-2} \times \frac{1}{N} &gt; \frac{1}{N}$<br>实例代码,更改N可以更改门的数量:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import time  # 导入时间库</span><br><span class="line">from random import choice</span><br><span class="line"></span><br><span class="line">TIMES = 100000  # 用来标记做了多少次选择</span><br><span class="line">che = 0  # 用来记录多少次选择了车</span><br><span class="line">yang = 0  # 用来记录多少次选了羊</span><br><span class="line">N = 5  # 标记多少个门</span><br><span class="line">time.clock()  # 开始计时</span><br><span class="line"># for 循环用于选择并判断多少次选择了车</span><br><span class="line">for i in range(TIMES):</span><br><span class="line">    l = [&apos;c&apos;] + [&apos;s&apos; + str(i + 1) for i in range(N - 1)]</span><br><span class="line">    # eg: l = [&apos;c&apos;, &apos;s1&apos;, &apos;s2&apos;, &apos;s3&apos;, &apos;s4&apos;]  # 选择内容，c代表车，sn代表第N只羊</span><br><span class="line">    first = choice(l)  # 随机从中选择一个</span><br><span class="line">    if first == &apos;c&apos;:</span><br><span class="line">        yang = yang + 1  # 当选择车时，主持人亮出一只羊，更改选择后就是选择了羊</span><br><span class="line">    else:</span><br><span class="line">        l.remove(first)  # 扔掉first选的的羊</span><br><span class="line">        sheeps = l.copy()</span><br><span class="line">        sheeps.remove(&apos;c&apos;)#主持人在剩下的羊中选择一只</span><br><span class="line">        sheep = choice(sheeps)  # 主持人选了这个羊</span><br><span class="line">        l.remove(sheep)</span><br><span class="line">        second = choice(l)</span><br><span class="line">        if second == &apos;c&apos;:#如果第二次选中了车</span><br><span class="line">            che = che + 1</span><br><span class="line"></span><br><span class="line">car = che / TIMES  # 得出选择车的概率</span><br><span class="line">sheep = yang / TIMES  # 得出选择羊的概率</span><br><span class="line">print(&quot;car =&quot;, car)</span><br><span class="line">print(&quot;sheep =&quot;, sheep)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="圆上任取三点"><a href="#圆上任取三点" class="headerlink" title="圆上任取三点"></a>圆上任取三点</h1><blockquote>
+<blockquote>
+<p>圆上任取三点组成锐角三角形的概率是多少?此题可以转化为圆上任取三点不在同一半圆内的概率是多少?</p>
+</blockquote>
+</blockquote>
+<p>假设先任取A和B，他们一定在同一半圆内,假设他们连接O组成的角$AOB$为X(x$\in[0,\pi]$)，则C点必定在OA和OB反向延长线的夹角内才能保证不在同一半圆内,该角度也必定为X,此时概率为:$\frac{x}{2 \pi}$</p>
+<script type="math/tex; mode=display">
+P= \frac{1}{\pi} \times \int_0^{\pi} \frac{x}{2 \pi} dx = \frac{1}{4}</script><h1 id="生日悖论"><a href="#生日悖论" class="headerlink" title="生日悖论"></a>生日悖论</h1><p>至少有多少人才能保证有两人生日相同?<br>答案是366，一点没错，但是我们改一下题:<br>一个屋子里有23人，计算有两人生日相同的概率。</p>
+<script type="math/tex; mode=display">
+P = 1- \frac{C_{365}^{23}}{365^{23}}≈1-0.493=0.507</script><p>也就是说，当有23人的时候，就有50%的概率有两人生日相同,当人70人时，在通过上诉公示可以得到概率达到了99.9%,几乎是100%，也就是说，不需要366人，只需要70人基本上就可以断定至少两人生日相同了.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-04T17:05:50.336Z" itemprop="dateUpdated">2021-04-05 01:05:50</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/06/23/machineProblem/" target="_blank" rel="external">https://lingyixia.github.io/2019/06/23/machineProblem/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/概率论/">概率论</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/06/23/machineProblem/&title=《概率计算问题》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/06/23/machineProblem/&title=《概率计算问题》 — 灵翼俠的个人博客&source=若干有趣的有关概率计算的小问题" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/06/23/machineProblem/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《概率计算问题》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/06/23/machineProblem/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/06/23/machineProblem/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/06/23/Binary/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">二进制相关</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/06/23/gametheory/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">常见博弈游戏</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/06/23/machineProblem/&title=《概率计算问题》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/06/23/machineProblem/&title=《概率计算问题》 — 灵翼俠的个人博客&source=若干有趣的有关概率计算的小问题" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/06/23/machineProblem/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《概率计算问题》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/06/23/machineProblem/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/06/23/machineProblem/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIElEQVR42u3aYW7DIAwG0N7/0tkBuqSf7bRS4PGr6gLjZZJnY16veBxv4/2nZ88na+azRgMDA+OxjONyXDPyjU7Wv56LgYGxD+NsE8l2e1u/Drv53jAwMDCSZ/KULnkeAwMD43sBd5I4VlfAwMDYk5EUmdeHYslh3PWsH9XiGBgYD2TkpenvP3+lv4GBgfEoxlEc+QqTVK+8KwwMjKUZvQK1evEiJ/WO7TAwMHZjTC5Y9EJttQxuZq8YGBiPZSThr7rRPOBOjur+yXAxMDAWZUzOrPLwWi2Jy/8xMDAwtmH0krNeu7H3TTnbxcDAWILxjaP8/P1Vr2uc/h0wMDA2Y+SnWNWjujytLJ+kYWBgLM3IT9p7271uMORtyyoeAwNjbUb1+le+ueq77DUYMDAw1mPcdUmrt9F81odvMDAwNmDcsNAg3t8AxsDA2IxxXXbmnydhOu+4YmBg7MDoBdlqgZqXvqMAjYGBsQEjL2Xzy6m966rNxBQDA2MbRj65GkDzcFydi4GBsQ+jWrhWk8IkNubrfMhwMTAwNmD02o3JL0te1m0BFwMDYwnGURzV4nYeXqN1MDAwlmbko9qYnJS+32iUYmBgPJ2RBNlqgzNPOvP0sXDZAgMDY1FGEijvAkzSvtOVMTAwMMYFZB5wm00FDAwMjFvTxLyBmpTBGBgY+zDyq6jVorfanszXxMDA2IfRO9yf3O+oHsNNXhAGBsbDGX9u7yy6tPjjpAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

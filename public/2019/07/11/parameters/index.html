@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>请叫我调参工程师 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content>
+    <meta name="description" content="这篇博客会一直更新.对于初学者而言，兴趣往往都在模型构成上面,但是，只有真正成为调参工程师才能深刻体会到调参对于模型的重要性，虽然我也只能算入门级,但已经被坑了好几次了。。。。。说多了都是泪啊。总的来说,训练神经网络模型的超参数一般可以分为两类:  训练参数:学习率,正则项系数,epoch数,batchsize 模型参数:模型层数,隐藏层参数    调参技巧 当你想实现一个模型的时候,一定要用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="请叫我调参工程师">
+<meta property="og:url" content="https://lingyixia.github.io/2019/07/11/parameters/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="这篇博客会一直更新.对于初学者而言，兴趣往往都在模型构成上面,但是，只有真正成为调参工程师才能深刻体会到调参对于模型的重要性，虽然我也只能算入门级,但已经被坑了好几次了。。。。。说多了都是泪啊。总的来说,训练神经网络模型的超参数一般可以分为两类:  训练参数:学习率,正则项系数,epoch数,batchsize 模型参数:模型层数,隐藏层参数    调参技巧 当你想实现一个模型的时候,一定要用">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-04T17:05:50.339Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="请叫我调参工程师">
+<meta name="twitter:description" content="这篇博客会一直更新.对于初学者而言，兴趣往往都在模型构成上面,但是，只有真正成为调参工程师才能深刻体会到调参对于模型的重要性，虽然我也只能算入门级,但已经被坑了好几次了。。。。。说多了都是泪啊。总的来说,训练神经网络模型的超参数一般可以分为两类:  训练参数:学习率,正则项系数,epoch数,batchsize 模型参数:模型层数,隐藏层参数    调参技巧 当你想实现一个模型的时候,一定要用">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">请叫我调参工程师</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">请叫我调参工程师</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-07-11T11:50:42.000Z" itemprop="datePublished" class="page-time">
+  2019-07-11
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#调参技巧"><span class="post-toc-number">1.</span> <span class="post-toc-text">调参技巧</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#训练参数"><span class="post-toc-number">2.</span> <span class="post-toc-text">训练参数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#学习率"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">学习率</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#batchsize"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">batchsize</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#模型参数"><span class="post-toc-number">3.</span> <span class="post-toc-text">模型参数</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-parameters"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">请叫我调参工程师</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-07-11 19:50:42" datetime="2019-07-11T11:50:42.000Z"  itemprop="datePublished">2019-07-11</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<blockquote>
+<p>这篇博客会一直更新.<br>对于初学者而言，兴趣往往都在模型构成上面,但是，只有真正成为调参工程师才能深刻体会到调参对于模型的重要性，虽然我也只能算入门级,但已经被坑了好几次了。。。。。说多了都是泪啊。<br>总的来说,训练神经网络模型的超参数一般可以分为两类:</p>
+<ul>
+<li>训练参数:学习率,正则项系数,epoch数,batchsize</li>
+<li>模型参数:模型层数,隐藏层参数</li>
+</ul>
+</blockquote>
+</blockquote>
+<h1 id="调参技巧"><a href="#调参技巧" class="headerlink" title="调参技巧"></a>调参技巧</h1><ol>
+<li><p>当你想实现一个模型的时候,一定要用最精简的结构去实现它,尽量不要在任何地方做其他tip,任何tip都要尽量在保证模型无误的条件下进行，否则你永远不知道你所谓的一个小tip对你的模型有多大影响(血的教训,当初在做一个文本生成模型的时候所有激活函数都用的relu,这个bug让我一顿好找。。。)</p>
+</li>
+<li><p>保证每次随机种子不变,才能让实验更有效的对比</p>
+</li>
+<li><h1 id="训练参数"><a href="#训练参数" class="headerlink" title="训练参数"></a>训练参数</h1><h2 id="学习率"><a href="#学习率" class="headerlink" title="学习率"></a>学习率</h2>作为一个调参工程师，私以为,学习率是<strong>最重要</strong>的参数,对于初学者来说，往往最容易忽视学习率的作用.举一个我最开始被坑的例子,当初是做了一个NER模型,写完之后各项指标增长速度特别特别慢,慢到令人发指(一小时从1%到2%),但问题是确实是不断增长，由于刚刚接触也不知道增长速度应该是怎样就一直等着，凉了一天，发现还是那个速度,等不及了开始检查模型问题,由于刚刚接触TF，对自己没把握就一直找一直找，几乎找了一个星期愣是没改出来.不得已，要不调调参数把,还好第一个改的就是学习率,其实原来是0.01我以为已经够小了,改成了0.001,刚一运行，200个step后precision直接到了20%,我他娘的就。。。。原来问题在这。所以以后我在设置学习率的时候都会从一个特别小的数开始，比如0.0001，看看指标的变化，在增大一点学习率比如0.001，再看看变化，确定模型没问题，然后在开始。当然，学习率的设置还有很多方式,比如模拟退火方式,Transform中的学习率代码就使用了这种:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class CustomSchedule(tf.keras.optimizers.schedules.LearningRateSchedule):</span><br><span class="line">    def __init__(self, d_model, warmup_steps=4000):</span><br><span class="line">        super(CustomSchedule, self).__init__()</span><br><span class="line">        self.d_model = d_model</span><br><span class="line">        self.d_model = tf.cast(self.d_model, tf.float32)</span><br><span class="line">        self.warmup_steps = warmup_steps</span><br><span class="line"></span><br><span class="line">    def __call__(self, step):</span><br><span class="line">        arg1 = tf.math.rsqrt(step)</span><br><span class="line">        arg2 = step * (self.warmup_steps ** -1.5)</span><br><span class="line">        return tf.math.rsqrt(self.d_model) * tf.math.minimum(arg1, arg2)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>也就是让学习率先快诉增大，当step达到warmup_steps后后在慢慢减小<br>bert中的学习率是这样设置的:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">learning_rate = tf.train.polynomial_decay(</span><br><span class="line">      learning_rate,</span><br><span class="line">      global_step,</span><br><span class="line">      num_train_steps,</span><br><span class="line">      end_learning_rate=0.0,</span><br><span class="line">      power=1.0,</span><br><span class="line">      cycle=False)</span><br><span class="line">  if num_warmup_steps:</span><br><span class="line">    global_steps_int = tf.cast(global_step, tf.int32)</span><br><span class="line">    warmup_steps_int = tf.constant(num_warmup_steps, dtype=tf.int32)</span><br><span class="line">    global_steps_float = tf.cast(global_steps_int, tf.float32)</span><br><span class="line">    warmup_steps_float = tf.cast(warmup_steps_int, tf.float32)</span><br><span class="line">    warmup_percent_done = global_steps_float / warmup_steps_float</span><br><span class="line">    warmup_learning_rate = init_lr * warmup_percent_done</span><br><span class="line">    is_warmup = tf.cast(global_steps_int &lt; warmup_steps_int, tf.float32)</span><br><span class="line">    learning_rate = ((1.0 - is_warmup) * learning_rate + is_warmup * warmup_learning_rate)</span><br></pre></td></tr></table></figure></p>
+<p>它也是先让学习率快速增大，当step达到warmup_steps时，在安装多项式方式衰减 顺便提一下，<code>learning_rate = ((1.0 - is_warmup) * learning_rate + is_warmup * warmup_learning_rate)</code>这行代码值得学习</p>
+<h2 id="batchsize"><a href="#batchsize" class="headerlink" title="batchsize"></a>batchsize</h2><ol>
+<li>batch 和 batch 之间差别太大,训练难以收敛,形成震荡</li>
+<li>batchsize 增大会使梯度优化方向更准</li>
+<li>随着 batch_size 增大，处理相同数据量的速度越快。</li>
+<li>随着 batch_size 增大，达到相同精度所需要的 epoch 数量越来越多。</li>
+<li>由于上述两种因素的矛盾，batch_size 增大到某个时候，达到时间上的最优。</li>
+<li>增大 batchsize 能够有效的利用GPU并行能力</li>
+<li>GPU对batchsize为2的整数次幂效果更好</li>
+</ol>
+<h1 id="模型参数"><a href="#模型参数" class="headerlink" title="模型参数"></a>模型参数</h1><p>首先需要知道的是，对于隐藏层和层数刚开始的设置要紧盯训练样本的量，要保证模型的参数量不高于样本量的一半，有权威称$\frac{1}{10}$最好.反正你不要写完模型后参数太大,你想想用一千条数据去训练好几百万的参数能学到点啥？下面给出个统计模型参数的tf代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def __get_parametres(self):</span><br><span class="line">       total_parameters = 0</span><br><span class="line">       for variable in tf.trainable_variables():</span><br><span class="line">           shape = variable.get_shape()</span><br><span class="line">           variable_parameters = 1</span><br><span class="line">           for dim in shape:</span><br><span class="line">               variable_parameters *= dim.value</span><br><span class="line">           total_parameters += variable_parameters</span><br><span class="line">       tf.logging.info(&quot;总参数量为:&#123;total_parameters&#125;&quot;.format(total_parameters=total_parameters))</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-04-04T17:05:50.339Z" itemprop="dateUpdated">2021-04-05 01:05:50</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/07/11/parameters/" target="_blank" rel="external">https://lingyixia.github.io/2019/07/11/parameters/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/07/11/parameters/&title=《请叫我调参工程师》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/07/11/parameters/&title=《请叫我调参工程师》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/07/11/parameters/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《请叫我调参工程师》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/07/11/parameters/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/07/11/parameters/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/07/13/stackAndqueue/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">stackAndqueue</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/07/06/interestAlgorighm/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">总有一个算法让你惊艳</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/07/11/parameters/&title=《请叫我调参工程师》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/07/11/parameters/&title=《请叫我调参工程师》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/07/11/parameters/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《请叫我调参工程师》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/07/11/parameters/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/07/11/parameters/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACP0lEQVR42u3aS47DMAwEUd//0h5gVhMY0VRTSgBR5VWQj6PnRUMkdV34un+v5zt/378f1/O3z0/Hv118yZAhY1vGPbzeMfh9xg+CPILxnWXIkHEOYxyyNUaak/x/ZciQIYNs6dJwnAliGTJkyEgDl4cjD9N0SypDhowzGSQWebNs/M2ZFt6CWlyGDBkbMtLBwDdff3C+IUOGjE0Yd+kaDyN5622mAH65swwZMlozyIJWnW2olbhBEMuQIaMpgwQo/w75tHa04p8NqwwZMo5h8IjkvDTc063nVZuCypAhY3PG/DGLtExNS+ILzTNlyJDRjUEWwYvPmQdEyl3UNZQhQ0YjBunG8UXzMCVbzDigZciQcQAjLV/ThfKWXAqWIUNGb0bQfJ8I1pSdxrQMGTJ6M/hIoFZe1ork9HiHDBkyejN4q4u31eZbb3xrWFyEDBkytmKkDfr0IEW6OLI9jc9xyJAhowUjjb/a8LJ2LoJvUmXIkNGbweNv1TAgHRIsa7TJkCFjW0ZcLuLWW1oGo77geKQhQ4aMpoy0WK3x+OaSjBzmKl0ZMmR0YPBSM/4zHNAkcGXIkHEOY34YWRuCcnCwBhkyZLRj1A51fTqgeTH8cixMhgwZTRkzMZcuGvX8wsafDBkyzmGkIVsbOvK4TIthGTJknMNIg49s6fjRjdrjliFDhoyZ3WVapqal74LAlSFDRlMG3+TNHLBIy2YZMmScw5gpRL/TBUQzWBkyZDRlzAwG0mFA2m5b1oyTIUPGrowf0rr6CNothtsAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
