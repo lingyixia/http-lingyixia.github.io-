@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>链表总结 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="链表">
+    <meta name="description" content="链表题型总结">
+<meta name="keywords" content="链表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="链表总结">
+<meta property="og:url" content="https://lingyixia.github.io/2019/02/02/linkLists/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="链表题型总结">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lingyixia.github.io/img/cyclelinkllist.jpg">
+<meta property="og:image" content="https://lingyixia.github.io/img/imgcyclelinkllist2.png">
+<meta property="og:updated_time" content="2021-09-19T18:01:25.960Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="链表总结">
+<meta name="twitter:description" content="链表题型总结">
+<meta name="twitter:image" content="https://lingyixia.github.io/img/cyclelinkllist.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">链表总结</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">链表总结</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-02-02T03:43:08.000Z" itemprop="datePublished" class="page-time">
+  2019-02-02
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#倒数第K个"><span class="post-toc-number">1.</span> <span class="post-toc-text">倒数第K个</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解法一"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">解法一</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解法二"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">解法二</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解法三"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">解法三</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#判断有无环"><span class="post-toc-number">2.</span> <span class="post-toc-text">判断有无环</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解法一-1"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">解法一</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解法二-1"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">解法二</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#判断环起始位置"><span class="post-toc-number">3.</span> <span class="post-toc-text">判断环起始位置</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#删除链表重复元素"><span class="post-toc-number">4.</span> <span class="post-toc-text">删除链表重复元素</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#重复保留一个"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">重复保留一个</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#重复全删"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">重复全删</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#两个排序链表合并"><span class="post-toc-number">5.</span> <span class="post-toc-text">两个排序链表合并</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#单链表排序"><span class="post-toc-number">6.</span> <span class="post-toc-text">单链表排序</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#单链表每k个一组反转"><span class="post-toc-number">7.</span> <span class="post-toc-text">单链表每k个一组反转</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-linkLists"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">链表总结</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-02-02 11:43:08" datetime="2019-02-02T03:43:08.000Z"  itemprop="datePublished">2019-02-02</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>链表题型总结<br><a id="more"></a></p>
+<h1 id="倒数第K个"><a href="#倒数第K个" class="headerlink" title="倒数第K个"></a>倒数第K个</h1><blockquote>
+<blockquote>
+<p>给出一个单链表,输出该链表倒数第K个节点</p>
+</blockquote>
+</blockquote>
+<p>三种解法:</p>
+<h2 id="解法一"><a href="#解法一" class="headerlink" title="解法一"></a>解法一</h2><p>遍历一遍,记录长度L,然后重新遍历到第L-K的位置,代码略</p>
+<h2 id="解法二"><a href="#解法二" class="headerlink" title="解法二"></a>解法二</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//递归,先递归到链表尾,然后往回走,每走一步K-1,如果K-1！=0则上抛NULL,反之就是找到了,上抛该节点即可</span><br><span class="line">ListNode* FindKthToTail(ListNode* pListHead, unsigned int&amp; k) //**注意引用传递的方式**</span><br><span class="line">&#123;</span><br><span class="line">	if (!pListHead) return NULL;</span><br><span class="line">	ListNode* node = FindKthToTail(pListHead-&gt;next, k);</span><br><span class="line">	if (node)//找到了,不断上抛该节点</span><br><span class="line">	&#123;</span><br><span class="line">		return node;</span><br><span class="line">	&#125;</span><br><span class="line">	if (--k == 0)</span><br><span class="line">	&#123;</span><br><span class="line">		return pListHead;//第一次找到,开始上抛</span><br><span class="line">	&#125;</span><br><span class="line">	return NULL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="解法三"><a href="#解法三" class="headerlink" title="解法三"></a>解法三</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//快慢指针1</span><br><span class="line">ListNode* FindKthToTail(ListNode* pListHead, unsigned int k)</span><br><span class="line">&#123;</span><br><span class="line">	int count = k;</span><br><span class="line">	if (!pListHead || k == 0) return NULL;</span><br><span class="line">	ListNode* behind = pListHead;</span><br><span class="line">	ListNode* front = pListHead;</span><br><span class="line">	bool flag = false;</span><br><span class="line">	while (front)</span><br><span class="line">	&#123;</span><br><span class="line">		if (count-- &lt;= 0)</span><br><span class="line">		&#123;</span><br><span class="line">			behind = behind-&gt;next;</span><br><span class="line">			flag = true;</span><br><span class="line">		&#125;</span><br><span class="line">		front = front-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	return flag || count == 0 ? behind : NULL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="判断有无环"><a href="#判断有无环" class="headerlink" title="判断有无环"></a>判断有无环</h1><p>一般解法有两种</p>
+<h2 id="解法一-1"><a href="#解法一-1" class="headerlink" title="解法一"></a>解法一</h2><blockquote>
+<blockquote>
+<p>将遍历过的节点都加入哈希表,每次该点是否在哈希表中:</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">bool hasCycle(ListNode *head)</span><br><span class="line">&#123;</span><br><span class="line">	unordered_set&lt;ListNode*&gt; record;</span><br><span class="line">	ListNode* p = head;</span><br><span class="line">	while (p)</span><br><span class="line">	&#123;</span><br><span class="line">		if (record.count(p)&gt;0)</span><br><span class="line">		&#123;</span><br><span class="line">			return true;</span><br><span class="line">		&#125;</span><br><span class="line">		record.insert(p);</span><br><span class="line">		p = p-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="解法二-1"><a href="#解法二-1" class="headerlink" title="解法二"></a>解法二</h2><blockquote>
+<blockquote>
+<p>快慢指针,快指针一定会在环中与慢指针相遇,下面证明这个结论<br>命题:<br>如图所示:<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="\img\cyclelinkllist.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>注意,图中的$m,n$都是移动次数,即箭头个数,不是圆圈的个数!!!<br>其中快指针速度为$s$,慢指针速度为$q$且$s&gt;q$,问为什么两者一定在环内相遇?<br>证明:假设慢指针第一次到达环内移动了$x$次,此时慢指针在环内的位置为$a$,则快指针也移动了$x$次,位置为$b$,则现在题目转化为:必有当继续走$y$步时使得$(a+s \times y)\mod n=(b+q \times y) \mod n$,即</p>
+<script type="math/tex; mode=display">
+((b-a)+(q-s) \times y)\mod n =0 \tag{1}</script><p>成立.<br>当移动$x$后有:</p>
+<script type="math/tex; mode=display">
+a=(s \times x - m) \mod n \tag{2}</script><script type="math/tex; mode=display">
+b=(q \times x -m) \mod n \tag{3}</script><p>将$(2)(3)$带入$(1)$中:</p>
+<script type="math/tex; mode=display">
+((q-s) \times x) \mod n +(q-s) \times y) \mod n =0</script><p>由于:$((q-s) \mod n) \mod n =(q-s) \mod n$(多次取模等于一次取模)<br>故</p>
+<script type="math/tex; mode=display">
+((q-s) \times (x+y)) \mod n=0 \tag{4}</script><p>即只需要$(x+y)$是$n$的整数倍即可.因为我们一般取$q=2,s=1$,因为当$q=2,s=1$的时候最快取得$n$得整数倍,即循环次数最少。</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">bool hasCycle1(ListNode *head)</span><br><span class="line">&#123;</span><br><span class="line">	ListNode* slow = head;</span><br><span class="line">	ListNode* fast = head;</span><br><span class="line">	while (fast)</span><br><span class="line">	&#123;</span><br><span class="line">		fast = fast-&gt;next;</span><br><span class="line">		if (!fast) return false;</span><br><span class="line">		fast = fast-&gt;next;</span><br><span class="line">		slow = slow-&gt;next;</span><br><span class="line">		if (fast == slow)</span><br><span class="line">		&#123;</span><br><span class="line">			return true;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="判断环起始位置"><a href="#判断环起始位置" class="headerlink" title="判断环起始位置"></a>判断环起始位置</h1><blockquote>
+<blockquote>
+<p>求起始位置也就是求上图中$m$得长度,由于$q=2,s=1,x=m$,相遇位置为$y$,$y$是距离环起始位置的长度,上图(4)式可改为:</p>
+<script type="math/tex; mode=display">
+(m+y) \mod n =0</script><p>但是在这里要写成这样的形式:</p>
+<script type="math/tex; mode=display">
+(y+m) \mod n =0 \tag{5}</script><p>即$m$是在$y$的基础上再增加,公式(5)和公(4)意义不同,公式(4)指的是当符合公式(4)的时候前后两指针相遇,公式(5)的意义是当符合该公式的时候对$m$取模为零,即正好在环头位置.<br>eg:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="\img\imgcyclelinkllist2.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>图中在节点5处相遇,此时$m+y$就是$1,2,3,4,5$,此时有$(m+y) \mod n=0$,现在把这个长度的前$m$放到后面,$3,4,5,6,3$,即$y+m$,此时同样有$(y+m)\mod n =0$,因此现在要做的就是一个指针放到头部,一个指针放到相遇的地方,依次next一步,当两者相遇的时候就是环的初始位置.</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">ListNode *detectCycle(ListNode *head) </span><br><span class="line">&#123;</span><br><span class="line">        ListNode* slow=head;</span><br><span class="line">        ListNode* fast = head;</span><br><span class="line">        while(fast)</span><br><span class="line">        &#123;</span><br><span class="line">            fast=fast-&gt;next;</span><br><span class="line">            if(!fast) return NULL;</span><br><span class="line">            fast=fast-&gt;next;</span><br><span class="line">            slow=slow-&gt;next;</span><br><span class="line">            if(fast==slow)</span><br><span class="line">            &#123;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        if(!fast) return NULL;</span><br><span class="line">        ListNode* p =head;</span><br><span class="line">        ListNode* q=fast;</span><br><span class="line">        while(p!=q)</span><br><span class="line">        &#123;</span><br><span class="line">            p=p-&gt;next;</span><br><span class="line">            q=q-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        return p;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="删除链表重复元素"><a href="#删除链表重复元素" class="headerlink" title="删除链表重复元素"></a>删除链表重复元素</h1><h2 id="重复保留一个"><a href="#重复保留一个" class="headerlink" title="重复保留一个"></a>重复保留一个</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ListNode *deleteDuplicates(ListNode *head)</span><br><span class="line">&#123;</span><br><span class="line">    if (!head || !head-&gt;next)</span><br><span class="line">    &#123;</span><br><span class="line">        return head;</span><br><span class="line">    &#125;</span><br><span class="line">    while (head-&gt;next &amp;&amp; head-&gt;next-&gt;val == head-&gt;val)</span><br><span class="line">    &#123;</span><br><span class="line">        head = head-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    head-&gt;next = deleteDuplicates(head-&gt;next);</span><br><span class="line">    return head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="重复全删"><a href="#重复全删" class="headerlink" title="重复全删"></a>重复全删</h2><p>解法一:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">struct ListNode</span><br><span class="line">&#123;</span><br><span class="line">	int val;</span><br><span class="line">	ListNode* next;</span><br><span class="line">	ListNode(int x) :val(x), next(NULL) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">void deleteOne(ListNode* head,ListNode* current)//注意删除单节点方式</span><br><span class="line">&#123;</span><br><span class="line">	if (current-&gt;next)</span><br><span class="line">	&#123;</span><br><span class="line">		current-&gt;val = current-&gt;next-&gt;val;</span><br><span class="line">		current-&gt;next = current-&gt;next-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	else</span><br><span class="line">	&#123;</span><br><span class="line">		ListNode* p = head;//如果删除的是尾节点则需要从头遍历</span><br><span class="line">		while (p-&gt;next!=current)</span><br><span class="line">		&#123;</span><br><span class="line">			p = p-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		p-&gt;next = NULL;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">ListNode* deleteDuplicates(ListNode* pHead)</span><br><span class="line">&#123;</span><br><span class="line">	ListNode* newHead = new ListNode(-100);</span><br><span class="line">	newHead-&gt;next = pHead;</span><br><span class="line">	ListNode* before = newHead;</span><br><span class="line">	ListNode* after = pHead;</span><br><span class="line">	bool flag = false;</span><br><span class="line">	while (after)</span><br><span class="line">	&#123;</span><br><span class="line">		while (after &amp;&amp;( before-&gt;val == after-&gt;val))</span><br><span class="line">		&#123;</span><br><span class="line">			flag = true;</span><br><span class="line">			deleteOne(newHead,after);</span><br><span class="line">			after = before-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		if (flag)</span><br><span class="line">		&#123;</span><br><span class="line">			deleteOne(newHead,before);</span><br><span class="line">			flag = false;</span><br><span class="line">		&#125;</span><br><span class="line">		else</span><br><span class="line">		&#123;</span><br><span class="line">			before = after;</span><br><span class="line">		&#125;</span><br><span class="line">		after = before-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	return newHead-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>解法二:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">ListNode *deleteDuplication(ListNode *pHead)</span><br><span class="line">&#123;</span><br><span class="line">    if (!pHead || !pHead-&gt;next) return pHead;</span><br><span class="line">    if (pHead-&gt;next-&gt;val == pHead-&gt;val)</span><br><span class="line">    &#123;</span><br><span class="line">        while (pHead-&gt;next &amp;&amp; pHead-&gt;next-&gt;val == pHead-&gt;val)</span><br><span class="line">        &#123;</span><br><span class="line">            pHead = pHead-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        return deleteDuplication(pHead-&gt;next);</span><br><span class="line">    &#125; </span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        pHead-&gt;next = deleteDuplication(pHead-&gt;next);</span><br><span class="line">        return pHead;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="两个排序链表合并"><a href="#两个排序链表合并" class="headerlink" title="两个排序链表合并"></a>两个排序链表合并</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) &#123;</span><br><span class="line">        if(!l1) return l2;</span><br><span class="line">        if(!l2) return l1;</span><br><span class="line">        if(l1-&gt;val&lt;l2-&gt;val)</span><br><span class="line">        &#123;</span><br><span class="line">            l1-&gt;next = mergeTwoLists(l1-&gt;next,l2);</span><br><span class="line">            return l1;</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            l2-&gt;next = mergeTwoLists(l1,l2-&gt;next);</span><br><span class="line">            return l2;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="单链表排序"><a href="#单链表排序" class="headerlink" title="单链表排序"></a>单链表排序</h1><p>归并<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">ListNode* getMidNode(ListNode* head)</span><br><span class="line">   &#123;</span><br><span class="line">       ListNode* slow=head;</span><br><span class="line">       ListNode* fast =head-&gt;next;</span><br><span class="line">       while(fast)</span><br><span class="line">       &#123;</span><br><span class="line">           fast=fast-&gt;next;</span><br><span class="line">           if(fast)</span><br><span class="line">           &#123;</span><br><span class="line">               fast=fast-&gt;next;</span><br><span class="line">               slow=slow-&gt;next;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       return slow;</span><br><span class="line">   &#125;</span><br><span class="line">   ListNode* mergeList(ListNode* l1,ListNode* l2)</span><br><span class="line">   &#123;</span><br><span class="line">       if(!l1) return l2;</span><br><span class="line">       if(!l2) return l1;</span><br><span class="line">       if(l1-&gt;val&lt;=l2-&gt;val)</span><br><span class="line">       &#123;</span><br><span class="line">           l1-&gt;next = mergeList(l1-&gt;next,l2);</span><br><span class="line">           return l1;</span><br><span class="line">       &#125;</span><br><span class="line">       l2-&gt;next = mergeList(l1,l2-&gt;next);</span><br><span class="line">       return l2;</span><br><span class="line">   &#125;</span><br><span class="line">   ListNode* sortList(ListNode* head) &#123;</span><br><span class="line">       if(head &amp;&amp; head-&gt;next)</span><br><span class="line">       &#123;</span><br><span class="line">           ListNode* mid=getMidNode(head);</span><br><span class="line">           ListNode* left = head;</span><br><span class="line">           ListNode* right = mid-&gt;next;</span><br><span class="line">           mid-&gt;next=NULL;</span><br><span class="line">           left = sortList(left);</span><br><span class="line">           right = sortList(right);</span><br><span class="line">           return mergeList(left,right);   </span><br><span class="line">       &#125;</span><br><span class="line">       return head;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="单链表每k个一组反转"><a href="#单链表每k个一组反转" class="headerlink" title="单链表每k个一组反转"></a>单链表每k个一组反转</h1><p>百度面试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">struct ListNode</span><br><span class="line">&#123;</span><br><span class="line">	ListNode* next;</span><br><span class="line">	int val;</span><br><span class="line">	ListNode(int val) :next(NULL), val(val) &#123;&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ListNode* reverseKGroup(ListNode* head, int k) </span><br><span class="line">&#123;</span><br><span class="line">	ListNode* cursor = head;</span><br><span class="line">	for (int i = 1; i &lt; k; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (!cursor-&gt;next) return head;</span><br><span class="line">		cursor = cursor-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">	ListNode* tempHead = head;</span><br><span class="line">	ListNode* tempLast = head;</span><br><span class="line">	head = cursor;</span><br><span class="line">	cursor = head;</span><br><span class="line">	while (tempLast-&gt;next != head)</span><br><span class="line">	&#123;</span><br><span class="line">		cursor = tempLast-&gt;next;</span><br><span class="line">		tempLast-&gt;next = cursor-&gt;next;</span><br><span class="line">		cursor-&gt;next = tempHead;</span><br><span class="line">		tempHead = cursor;</span><br><span class="line">	&#125;</span><br><span class="line">	tempLast-&gt;next = reverseKGroup(head-&gt;next, k);</span><br><span class="line">	head-&gt;next = tempHead;</span><br><span class="line">	return head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	ListNode* head = new ListNode(1);</span><br><span class="line">	ListNode* p = head;</span><br><span class="line">	p-&gt;next = new ListNode(2);</span><br><span class="line">	p = p-&gt;next;</span><br><span class="line">	p-&gt;next = new ListNode(3);</span><br><span class="line">	p = p-&gt;next;</span><br><span class="line">	p-&gt;next = new ListNode(4);</span><br><span class="line">	p = p-&gt;next;</span><br><span class="line">	p-&gt;next = new ListNode(5);</span><br><span class="line">	ListNode* result = reverseKGroup(head,3);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-19T18:01:25.960Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/02/02/linkLists/" target="_blank" rel="external">https://lingyixia.github.io/2019/02/02/linkLists/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/链表/">链表</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/02/02/linkLists/&title=《链表总结》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/02/02/linkLists/&title=《链表总结》 — 灵翼俠的个人博客&source=链表题型总结" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/02/02/linkLists/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《链表总结》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/02/02/linkLists/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/02/02/linkLists/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/02/03/learningAndMovingAverage/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">滑动平均模型</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/01/26/activationFunction/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">activationFunction</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/02/02/linkLists/&title=《链表总结》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/02/02/linkLists/&title=《链表总结》 — 灵翼俠的个人博客&source=链表题型总结" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/02/02/linkLists/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《链表总结》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/02/02/linkLists/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/02/02/linkLists/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMklEQVR42u3aQW7FIAxF0ex/0+kCKsh9JqmKuYyiX0Q4Gbhg+7rwuAfj919H8+drjn55eciQIWNbxj0dhMG3la5M9iZDhoxzGKMINp8zn49eP30XmS9DhgwZ5PmLI6MMGTJkrDNGWyR3zNF8vqYMGTLOZJDQSebz6y7Z+id3cRkyZGzI4Fn3v3/+pL4hQ4aMrRi1oJkGRJ6qK4ZyGTJktGa8+5p5wwT/Jd2PDBkyTmCQJFqQ9goTZ2RzwWFRhgwZrRm8eaK29EqrGdmPDBkyujJIME0x6Zrp8fGqLSpDhozNGST88YMdj/Hkc8TdIjJkyGjHIEGTtDhwALkqF9NwMmTIOIbBn1Mk2eJ8ow9BWYYMGU0ZtTDHSwhftGI8pNtkyJDRlJFG6FqBkwfotDgqQ4aMcxi1Q9uNR61QunS2lSFDRgtGmtJaaRErpvtDsAwZMvoxyMW11jzx1vERwWTIkHEAo9batZ6SqwX34SVWhgwZTRlpemv9xfzaTP4NyJAh4xxGrYhI0mErITv+EDJkyDiAwZPyBJ+2U/AD5UOVQ4YMGa0ZtZJhmobjQZaXS2XIkNGbcYeDfJV0izwlhxosZMiQ0Y6xEuxq7RSkaWzeLLsSsmXIkLEvgwdZHi5XQmSt+VWGDBknMGopM3I0TA+XRaQMGTJkhJdYXtpMU3LFbhEZMmTIWGjXqF1rPw+4MmTI+JeMtBjAL7Ep8vN0mwwZMjZk8KtjbXNB0CyVB2TIkNGa8QMvzJNhCzi1BwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>

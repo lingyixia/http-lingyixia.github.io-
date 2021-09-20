@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>Bleu | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="转载">
+    <meta name="description" content="转载自这里: https://www.cnblogs.com/weiyinfu/p/9853769.html">
+<meta name="keywords" content="转载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bleu">
+<meta property="og:url" content="https://lingyixia.github.io/2019/05/26/bleu/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="转载自这里: https://www.cnblogs.com/weiyinfu/p/9853769.html">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-09-19T18:01:25.951Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Bleu">
+<meta name="twitter:description" content="转载自这里: https://www.cnblogs.com/weiyinfu/p/9853769.html">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Bleu</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">Bleu</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-05-26T08:38:13.000Z" itemprop="datePublished" class="page-time">
+  2019-05-26
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/自然语言处理/">自然语言处理</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#理解bleu"><span class="post-toc-number">1.</span> <span class="post-toc-text">理解bleu</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#问题描述"><span class="post-toc-number">2.</span> <span class="post-toc-text">问题描述</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#给定一个句子和一个候选句子集计算bleu值"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">给定一个句子和一个候选句子集计算bleu值</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#给定一组句子和一个组候选句子集计算bleu值"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">给定一组句子和一个组候选句子集计算bleu值</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#简化代码"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">简化代码</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-bleu"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Bleu</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-05-26 16:38:13" datetime="2019-05-26T08:38:13.000Z"  itemprop="datePublished">2019-05-26</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/自然语言处理/">自然语言处理</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>转载自这里: <a href="https://www.cnblogs.com/weiyinfu/p/9853769.html" target="_blank" rel="noopener">https://www.cnblogs.com/weiyinfu/p/9853769.html</a><br><a id="more"></a></p>
+<h1 id="理解bleu"><a href="#理解bleu" class="headerlink" title="理解bleu"></a>理解bleu</h1><p>bleu全称为Bilingual Evaluation Understudy(双语评估替换),是2002年提出的用于评估机器翻译效果的一种方法，这种方法简单朴素、短平快、易于理解。因为其效果还算说得过去，因此被广泛迁移到自然语言处理的各种评估任务中。这种方法可以说是：山上无老虎，猴子称大王。时无英雄遂使竖子成名。蜀中无大将，廖化做先锋。</p>
+<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>首先，对bleu算法建立一个直观的印象。<br>有两类问题：</p>
+<ol>
+<li>给定一个句子和一个候选句子集，求bleu值，此问题称为sentence_bleu</li>
+<li>给定一堆句子和一堆候选句子集，求bleu值，此问题称为corpus_bleu</li>
+</ol>
+<p>机器翻译得到的句子称为candidate，候选句子集称为references。<br>计算方式就是计算candidate和references的公共部分。公共部分越多，说明翻译结果越好。</p>
+<h2 id="给定一个句子和一个候选句子集计算bleu值"><a href="#给定一个句子和一个候选句子集计算bleu值" class="headerlink" title="给定一个句子和一个候选句子集计算bleu值"></a>给定一个句子和一个候选句子集计算bleu值</h2><p>bleu考虑1，2，3，4共4个n-gram，可以给每个n-gram指定权重。</p>
+<p>对于n-gram：</p>
+<ul>
+<li>对candidate和references分别分词（n-gram分词）</li>
+<li>统计candidate和references中每个word的出现频次<br>对于candidate中的每个word，它的出现频次不能大于references中最大出现频次</li>
+<li>这一步是为了整治形如the the the the the这样的candidate，因为the在candidate中出现次数太多了，导致分值为1。为了限制这种不正常的candidate，使用正常的references加以约束。</li>
+<li>candidate中每个word的出现频次之和除以总的word数，即为得分score</li>
+<li>score乘以句子长度惩罚因子即为最终的bleu分数<br>这一步是为了整治短句子，比如candidate只有一个词：the，并且the在references中出现过，这就导致得分为1。也就是说，有些人因为怕说错而保持沉默。</li>
+</ul>
+<p>bleu的发展不是一蹴而就的，很多人为了修正bleu，不断发现bleu的漏洞并提出解决方案。从bleu的发展历程上，我们可以学到如何设计规则整治badcase。</p>
+<p>最后,对于1-gram，2-gram，3-gram的组合，应该采用几何平均，也就是$s_1^{w_1} \times s_2^{w_2} \times s_3^{w_3}$，而不是算术平均$w_1 \times s_1+w_2 \times s_2+w_3 \times s_3$。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">from collections import Counter</span><br><span class="line"></span><br><span class="line">import numpy as np</span><br><span class="line">from nltk.translate import bleu_score</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def bp(references, candidate):</span><br><span class="line">    # brevity penality,句子长度惩罚因子</span><br><span class="line">    ind = np.argmin([abs(len(i) - len(candidate)) for i in references])</span><br><span class="line">    if len(references[ind]) &lt; len(candidate):</span><br><span class="line">        return 1</span><br><span class="line">    scale = 1 - (len(candidate) / len(references[ind]))</span><br><span class="line">    return np.e ** scale</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def parse_ngram(sentence, gram):</span><br><span class="line">    # 把一个句子分成n-gram</span><br><span class="line">    return [sentence[i:i + gram] for i in range(len(sentence) - gram + 1)]  # 此处一定要注意+1，否则会少一个gram</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def sentence_bleu(references, candidate, weight):</span><br><span class="line">    bp_value = bp(references, candidate)</span><br><span class="line">    s = 1</span><br><span class="line">    for gram, wei in enumerate(weight):</span><br><span class="line">        gram = gram + 1</span><br><span class="line">        # 拆分n-gram</span><br><span class="line">        ref = [parse_ngram(i, gram) for i in references]</span><br><span class="line">        can = parse_ngram(candidate, gram)</span><br><span class="line">        # 统计n-gram出现次数</span><br><span class="line">        ref_counter = [Counter(i) for i in ref]</span><br><span class="line">        can_counter = Counter(can)</span><br><span class="line">        # 统计每个词在references中的出现次数</span><br><span class="line">        appear = sum(min(cnt, max(i.get(word, 0) for i in ref_counter)) for word, cnt in can_counter.items())</span><br><span class="line">        score = appear / len(can)</span><br><span class="line">        # 每个score的权值不一样</span><br><span class="line">        s *= score ** wei</span><br><span class="line">    s *= bp_value  # 最后的分数需要乘以惩罚因子</span><br><span class="line">    return s</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">references = [</span><br><span class="line">    &quot;the dog jumps high&quot;,</span><br><span class="line">    &quot;the cat runs fast&quot;,</span><br><span class="line">    &quot;dog and cats are good friends&quot;</span><br><span class="line">]</span><br><span class="line">candidate = &quot;the d o g  jump s hig&quot;</span><br><span class="line">weights = [0.25, 0.25, 0.25, 0.25]</span><br><span class="line">print(sentence_bleu(references, candidate, weights))</span><br><span class="line">print(bleu_score.sentence_bleu(references, candidate, weights))</span><br></pre></td></tr></table></figure></p>
+<h2 id="给定一组句子和一个组候选句子集计算bleu值"><a href="#给定一组句子和一个组候选句子集计算bleu值" class="headerlink" title="给定一组句子和一个组候选句子集计算bleu值"></a>给定一组句子和一个组候选句子集计算bleu值</h2><blockquote>
+<blockquote>
+<p>一个corpus是由多个sentence组成的，计算corpus_bleu并非求sentence_bleu的均值，而是一种略微复杂的计算方式，可以说是没什么道理的狂想曲。一个文档包含3个句子，句子的分值分别为a1/b1，a2/b2，a3/b3。<br>那么全部句子的分值为：(a1+a2+a3)/(b1+b2+b3)<br>惩罚因子也是一样：三个句子的长度分别为l1,l2,l3，对应的最接近的reference分别为k1,k2,k3。那么相当于bp(l1+l2+l3,k1+k2+k3)。<br>也就是说：对于corpus_bleu不是单纯地对sentence_bleu求均值，而是基于更统一的一种方法。</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">from collections import Counter</span><br><span class="line"></span><br><span class="line">import numpy as np</span><br><span class="line">from nltk.translate import bleu_score</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def bp(references_len, candidate_len):</span><br><span class="line">    if references_len &lt; candidate_len:</span><br><span class="line">        return 1</span><br><span class="line">    scale = 1 - (candidate_len / references_len)</span><br><span class="line">    return np.e ** scale</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def parse_ngram(sentence, gram):</span><br><span class="line">    return [sentence[i:i + gram] for i in range(len(sentence) - gram + 1)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def corpus_bleu(references_list, candidate_list, weights):</span><br><span class="line">    candidate_len = sum(len(i) for i in candidate_list)</span><br><span class="line">    reference_len = 0</span><br><span class="line">    for candidate, references in zip(candidate_list, references_list):</span><br><span class="line">        ind = np.argmin([abs(len(i) - len(candidate)) for i in references])</span><br><span class="line">        reference_len += len(references[ind])</span><br><span class="line">    s = 1</span><br><span class="line">    for index, wei in enumerate(weights):</span><br><span class="line">        up = 0  # 分子</span><br><span class="line">        down = 0  # 分母</span><br><span class="line">        gram = index + 1</span><br><span class="line">        for candidate, references in zip(candidate_list, references_list):</span><br><span class="line">            # 拆分n-gram</span><br><span class="line">            ref = [parse_ngram(i, gram) for i in references]</span><br><span class="line">            can = parse_ngram(candidate, gram)</span><br><span class="line">            # 统计n-gram出现次数</span><br><span class="line">            ref_counter = [Counter(i) for i in ref]</span><br><span class="line">            can_counter = Counter(can)</span><br><span class="line">            # 统计每个词在references中的出现次数</span><br><span class="line">            appear = sum(min(cnt, max(i.get(word, 0) for i in ref_counter)) for word, cnt in can_counter.items())</span><br><span class="line">            up += appear </span><br><span class="line">            down += len(can) </span><br><span class="line">        s *= (up / down) ** wei</span><br><span class="line">    return bp(reference_len, candidate_len) * s</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">references = [</span><br><span class="line">    [</span><br><span class="line">        &quot;the dog jumps high&quot;,</span><br><span class="line">        &quot;the cat runs fast&quot;,</span><br><span class="line">        &quot;dog and cats are good friends&quot;],</span><br><span class="line">    [</span><br><span class="line">        &quot;ba ga ya&quot;,</span><br><span class="line">        &quot;lu ha a df&quot;,</span><br><span class="line">    ]</span><br><span class="line">]</span><br><span class="line">candidate = [&quot;the d o g  jump s hig&quot;, &apos;it is too bad&apos;]</span><br><span class="line">weights = [0.25, 0.25, 0.25, 0.25]</span><br><span class="line">print(corpus_bleu(references, candidate, weights))</span><br><span class="line">print(bleu_score.corpus_bleu(references, candidate, weights))</span><br></pre></td></tr></table></figure>
+<h2 id="简化代码"><a href="#简化代码" class="headerlink" title="简化代码"></a>简化代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">from collections import Counter</span><br><span class="line"></span><br><span class="line">import numpy as np</span><br><span class="line">from nltk.translate import bleu_score</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def bp(references_len, candidate_len):</span><br><span class="line">    return np.e ** (1 - (candidate_len / references_len)) if references_len &gt; candidate_len else 1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def nearest_len(references, candidate):</span><br><span class="line">    return len(references[np.argmin([abs(len(i) - len(candidate)) for i in references])])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def parse_ngram(sentence, gram):</span><br><span class="line">    return [sentence[i:i + gram] for i in range(len(sentence) - gram + 1)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def appear_count(references, candidate, gram):</span><br><span class="line">    ref = [parse_ngram(i, gram) for i in references]</span><br><span class="line">    can = parse_ngram(candidate, gram)</span><br><span class="line">    # 统计n-gram出现次数</span><br><span class="line">    ref_counter = [Counter(i) for i in ref]</span><br><span class="line">    can_counter = Counter(can)</span><br><span class="line">    # 统计每个词在references中的出现次数</span><br><span class="line">    appear = sum(min(cnt, max(i.get(word, 0) for i in ref_counter)) for word, cnt in can_counter.items())</span><br><span class="line">    return appear, len(can)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def corpus_bleu(references_list, candidate_list, weights):</span><br><span class="line">    candidate_len = sum(len(i) for i in candidate_list)</span><br><span class="line">    reference_len = sum(nearest_len(references, candidate) for candidate, references in zip(candidate_list, references_list))</span><br><span class="line">    bp_value = bp(reference_len, candidate_len)</span><br><span class="line">    s = 1</span><br><span class="line">    for index, wei in enumerate(weights):</span><br><span class="line">        up = 0  # 分子</span><br><span class="line">        down = 0  # 分母</span><br><span class="line">        gram = index + 1</span><br><span class="line">        for candidate, references in zip(candidate_list, references_list):</span><br><span class="line">            appear, total = appear_count(references, candidate, gram)</span><br><span class="line">            up += appear </span><br><span class="line">            down += total </span><br><span class="line">        s *= (up / down) ** wei</span><br><span class="line">    return bp_value * s</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def sentence_bleu(references, candidate, weight):</span><br><span class="line">    bp_value = bp(nearest_len(references, candidate), len(candidate))</span><br><span class="line">    s = 1</span><br><span class="line">    for gram, wei in enumerate(weight):</span><br><span class="line">        gram = gram + 1</span><br><span class="line">        appear, total = appear_count(references, candidate, gram)</span><br><span class="line">        score = appear / total</span><br><span class="line">        # 每个score的权值不一样</span><br><span class="line">        s *= score ** wei</span><br><span class="line">    # 最后的分数需要乘以惩罚因子</span><br><span class="line">    return s * bp_value</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    references = [</span><br><span class="line">        [</span><br><span class="line">            &quot;the dog jumps high&quot;,</span><br><span class="line">            &quot;the cat runs fast&quot;,</span><br><span class="line">            &quot;dog and cats are good friends&quot;],</span><br><span class="line">        [</span><br><span class="line">            &quot;ba ga ya&quot;,</span><br><span class="line">            &quot;lu ha a df&quot;,</span><br><span class="line">        ]</span><br><span class="line">    ]</span><br><span class="line">    candidate = [&quot;the d o g  jump s hig&quot;, &apos;it is too bad&apos;]</span><br><span class="line">    weights = [0.25, 0.25, 0.25, 0.25]</span><br><span class="line">    print(corpus_bleu(references, candidate, weights))</span><br><span class="line">    print(bleu_score.corpus_bleu(references, candidate, weights))</span><br><span class="line">    print(sentence_bleu(references[0], candidate[0], weights))</span><br><span class="line">    print(bleu_score.sentence_bleu(references[0], candidate[0], weights))</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-19T18:01:25.951Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/05/26/bleu/" target="_blank" rel="external">https://lingyixia.github.io/2019/05/26/bleu/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/转载/">转载</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/05/26/bleu/&title=《Bleu》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/05/26/bleu/&title=《Bleu》 — 灵翼俠的个人博客&source=转载自这里: https://www.cnblogs.com/weiyinfu/p/9853769.html" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/05/26/bleu/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Bleu》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/05/26/bleu/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/05/26/bleu/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/05/29/otherProblems/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">otherProblems</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/05/13/DilatedConvolution/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">膨胀卷积</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/05/26/bleu/&title=《Bleu》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/05/26/bleu/&title=《Bleu》 — 灵翼俠的个人博客&source=转载自这里: https://www.cnblogs.com/weiyinfu/p/9853769.html" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/05/26/bleu/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Bleu》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/05/26/bleu/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/05/26/bleu/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3aQW7DMAwEwP7/0+61h8bdpZIClkanwIgtjQ4CRfLrKx7Xj7Hy/P4/yVtLAwMD47GM63asTPnq//dfS976ZV4MDIwDGMki7vH3zxNYMu/L5xgYGBjxgpKYLYnxMDAwMFYYbfg4C0MxMDAwVj7dHrsz2Afv4hgYGA9k5Fn3///9kfoGBgbGoxhXOVZSb7PrbrQqDAyMrRn5AZc3VSRLTLajXg8GBsbWjPs0Vp4Oy1srZps1jGQxMDC2YKy0Z7WLyMPKfJswMDD2ZszS8W3xMj98l45aDAyMTRkrh+kwKTYqfEYwDAyMTRntlHXaKzjWZxdpDAyMcxhtcn/9CM6vzXXgiIGBcQwjLwPk7RRtg8WsjQMDA2NvxixlNjuO28aLYZsFBgbGpoz1kkDbYJEfo3XBAAMDYyNGsqxkubPEXNEPkjdbYGBgbMpIXk6S+O9N2OX9FRgYGCcw2gtqniZbSf0X24qBgbE1Iw/pZsn6PMR8w10cAwPjGEZ+4CbglU2pZ8TAwDiMkYSMeRmyDfiGDRwYGBgHMNpmi5WQri0q1N0iGBgYGzGucrSH5kpps/gOBgbG1oz2ujhLhCVBXlsWnV16MTAwnsuYtXzl7RfvLY7+kW7DwMDYmpEsKC9hzloxlpAYGBgY5e8651cGo0XPCAYGBsYoWZaXHIpwEwMD4wDGrN2hTZmtpPPelm7DwMB4ICMP1NpGivYa3G4ZBgbGAYxvcDyodnr1cDUAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>

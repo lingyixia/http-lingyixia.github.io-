@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>SVM | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content>
+    <meta name="description" content="svm总结 拉格朗日对偶性 \min_x \quad f(x)\\ s.t.\quad  c_i(x)=0}L(x,\alpha,\beta)定义拉格朗日极小极大问题为:  \min_x \theta_P(x)=\min_x\max_{\alpha,\beta:\alpha_i&amp;gt;=0}L(x,\alpha,\beta)定义原始问题的最优值:  p^*=\min_x \theta_P(x)对偶问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SVM">
+<meta property="og:url" content="https://lingyixia.github.io/2019/04/08/SVM/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="svm总结 拉格朗日对偶性 \min_x \quad f(x)\\ s.t.\quad  c_i(x)=0}L(x,\alpha,\beta)定义拉格朗日极小极大问题为:  \min_x \theta_P(x)=\min_x\max_{\alpha,\beta:\alpha_i&amp;gt;=0}L(x,\alpha,\beta)定义原始问题的最优值:  p^*=\min_x \theta_P(x)对偶问题">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-09-19T18:01:25.947Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SVM">
+<meta name="twitter:description" content="svm总结 拉格朗日对偶性 \min_x \quad f(x)\\ s.t.\quad  c_i(x)=0}L(x,\alpha,\beta)定义拉格朗日极小极大问题为:  \min_x \theta_P(x)=\min_x\max_{\alpha,\beta:\alpha_i&amp;gt;=0}L(x,\alpha,\beta)定义原始问题的最优值:  p^*=\min_x \theta_P(x)对偶问题">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">SVM</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">SVM</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-08T06:25:07.000Z" itemprop="datePublished" class="page-time">
+  2019-04-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/机器学习/">机器学习</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#拉格朗日对偶性"><span class="post-toc-number">1.</span> <span class="post-toc-text">拉格朗日对偶性</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#原始问题"><span class="post-toc-number">2.</span> <span class="post-toc-text">原始问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#对偶问题"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">对偶问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原始问题和对偶问题的关系"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">原始问题和对偶问题的关系</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#KTT条件"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">KTT条件</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#硬间隔最大化"><span class="post-toc-number">3.</span> <span class="post-toc-text">硬间隔最大化</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#软间隔最大化"><span class="post-toc-number">4.</span> <span class="post-toc-text">软间隔最大化</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#合页损失函数"><span class="post-toc-number">5.</span> <span class="post-toc-text">合页损失函数</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#核函数"><span class="post-toc-number">6.</span> <span class="post-toc-text">核函数</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-SVM"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">SVM</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-04-08 14:25:07" datetime="2019-04-08T06:25:07.000Z"  itemprop="datePublished">2019-04-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/机器学习/">机器学习</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>svm总结</p>
+<h1 id="拉格朗日对偶性"><a href="#拉格朗日对偶性" class="headerlink" title="拉格朗日对偶性"></a>拉格朗日对偶性</h1><script type="math/tex; mode=display">
+\min_x \quad f(x)\\
+s.t.\quad  c_i(x)<=0,i=1,2,3...k \\
+h_j(x)=0,j=1,2...,l</script><p>首先引进拉格朗日函数:</p>
+<script type="math/tex; mode=display">
+L(x,\alpha,\beta)=f(x)+\sum_{i=1}^k\alpha_ic_i(x)+\sum_{j=1}^l\beta h_j(x)</script><blockquote>
+<blockquote>
+<p>其中,$\alpha_i$&gt;=0</p>
+</blockquote>
+</blockquote>
+<h1 id="原始问题"><a href="#原始问题" class="headerlink" title="原始问题"></a>原始问题</h1><script type="math/tex; mode=display">
+\theta_P(x)=\max_{\alpha,\beta:\alpha_i>=0}L(x,\alpha,\beta)</script><p>定义拉格朗日极小极大问题为:</p>
+<script type="math/tex; mode=display">
+\min_x \theta_P(x)=\min_x\max_{\alpha,\beta:\alpha_i>=0}L(x,\alpha,\beta)</script><p>定义原始问题的最优值:</p>
+<script type="math/tex; mode=display">
+p^*=\min_x \theta_P(x)</script><h2 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h2><script type="math/tex; mode=display">
+\theta_D(\alpha,\beta)=\min_xL(x,\alpha,\beta)</script><p>定义拉格朗日极大极小问题为:</p>
+<script type="math/tex; mode=display">
+\max_{\alpha,\beta:\alpha_i>=0}\theta_D(\alpha,\beta)=\max_{\alpha,\beta:\alpha_i>=0}\min_xL(x,\alpha,\beta)</script><p>定义对偶问题的最优值:</p>
+<script type="math/tex; mode=display">
+d^*=\max_{\alpha,\beta:\alpha_i>=0}\theta_D(\alpha,\beta)</script><h2 id="原始问题和对偶问题的关系"><a href="#原始问题和对偶问题的关系" class="headerlink" title="原始问题和对偶问题的关系"></a>原始问题和对偶问题的关系</h2><p>很显然:</p>
+<script type="math/tex; mode=display">
+d^*=\max_{\alpha,\beta:\alpha_i>=0}\min_xL(x,\alpha,\beta)<=\min_x\max_{\alpha,\beta:\alpha_i>=0}L(x,\alpha,\beta)=p^*</script><h2 id="KTT条件"><a href="#KTT条件" class="headerlink" title="KTT条件"></a>KTT条件</h2><script type="math/tex; mode=display">
+\Deta</script><h1 id="硬间隔最大化"><a href="#硬间隔最大化" class="headerlink" title="硬间隔最大化"></a>硬间隔最大化</h1><p>假设最终分离超平面表达式为:</p>
+<script type="math/tex; mode=display">
+wx+b=0</script><p>则任意一点到该超平面的<strong>函数间隔</strong>为:</p>
+<script type="math/tex; mode=display">
+\hat{\gamma_i}=y_i(wx_i+b)</script><p>SVM的基本思维就是使任意一点到超平面的最小距离最大,但是<strong>函数距离</strong>不行,需要使用<strong>几何距离</strong>:</p>
+<script type="math/tex; mode=display">
+\gamma_i=y_i(\frac{w}{||w||}x_i+\frac{b}{||w||}) \\
+\gamma=\min_{i=1,2,3...N}\gamma_i</script><p>现在可以得到优化表达式:</p>
+<script type="math/tex; mode=display">
+\max_{w,b} \quad  \gamma \\
+s.t. \quad  y_i(\frac{w}{||w||}x_i+\frac{b}{||w||})>=\gamma \quad i=1,2...N</script><p>试想,其实$\gamma$无论是多少对最终值都没有任何影响,毕竟$w$和$b$是可以等比例变化的,现在我们假设$\gamma$=$\frac{1}{||w||}$得到:</p>
+<script type="math/tex; mode=display">
+\max_{w,b} \quad \frac{1}{||w||} \\
+s.t. \quad y_i(wx_i+b)>=1</script><p>为了向拉格朗日函数靠拢,改写为:</p>
+<script type="math/tex; mode=display">
+\min_{w,b} \quad \frac{1}{2}||w||^2 \\
+s.t. \quad y_i(wx_i+b)-1>=0 \quad i=1,2,3...N</script><p>拉格朗日函数:</p>
+<script type="math/tex; mode=display">
+L(w,b,\alpha)=\frac{1}{2}||w||^2+\sum_{i=1}^N \alpha_i-\sum_{i=1}^N\alpha_iy_i(wx_i+b)</script><p>SVM原始问题:</p>
+<script type="math/tex; mode=display">
+\min_x \theta_P(w,b)=\min_{w,b}\max_{\alpha}L(w,b,\alpha)</script><p>对偶问题:</p>
+<script type="math/tex; mode=display">
+\max_{\alpha}\min_{w,b}L(w,b,\alpha)</script><p>现在要求对偶问题的解:<br>先求$\min_{w,b}L(w,b,\alpha)$,由拉格朗日多元函数条件极值可知,极值必然在各个变量导数为0的位置:</p>
+<script type="math/tex; mode=display">
+\nabla_wL(w,b,\alpha)=0 \\
+\nabla_bL(w,b,\alpha) = 0\\</script><p>得到:</p>
+<script type="math/tex; mode=display">
+w=\sum_{i=1}^N\alpha_iy_ix_i \\
+\sum_{i=1}^N\alpha_iy_i=0</script><p>从$w$的公式可知模型参数$w$可以完全用训练数据和$\alpha$计算得出。模型在优化的过程中保存的是参数$\alpha$,优化完$\alpha$后可以直接算出$w$.<br>将$w$的公式带回$L(w,b,\alpha)$,则现在:</p>
+<script type="math/tex; mode=display">
+\min_{w,b}L(w,b,\alpha)=-\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j(x_ix_j)+\sum_{i=1}^N\alpha_i</script><p>现在自然要求的是极大化上诉公式,即$\max<em>{\alpha}\min</em>{w,b}L(w,b,\alpha)$:</p>
+<script type="math/tex; mode=display">
+\min_{\alpha} \quad \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j(x_ix_j)-\sum_{i=1}^N\alpha_i \\
+s.t. \quad \sum_{i=1}^N\alpha_iy_i=0 \\
+\alpha_i>=0 \quad i=1,2,3...N</script><p>剩下的就是SMO算法了,不在这里详解.</p>
+<h1 id="软间隔最大化"><a href="#软间隔最大化" class="headerlink" title="软间隔最大化"></a>软间隔最大化</h1><p>对每个点到分离超平面的距离不在硬性要求大于1,而是引入一个松弛变量。</p>
+<script type="math/tex; mode=display">
+\min_{w,b} \quad \frac{1}{2}||w||^2 +C\sum_{i=1}^N \xi_i \\
+s.t. \quad y_i(wx_i+b)-1 + \xi_i>=0 \quad i=1,2,3...N \\
+\xi_i>=0 \quad i=1,2,3...N</script><p>计算过程不在详细说明,跟上面差不多,就是多了一个优化参数。<br>参数说明:$C$越大表示对误分类的惩罚越大，即允许分错的样本越少</p>
+<h1 id="合页损失函数"><a href="#合页损失函数" class="headerlink" title="合页损失函数"></a>合页损失函数</h1><script type="math/tex; mode=display">
+\sum_{i=1}^N[1-y_i(wx_i+b)]_++\lambda||w||^2</script><p>下面证明合页损失函数和软间隔最大化优化公式等价.<br>令:</p>
+<script type="math/tex; mode=display">
+[1-y_i(wx_i+b)]_+=\xi_i</script><p>必然有$\xi_i$&gt;=0,可以看出,当$1-y_i(wx_i+b)&gt;0$时,$y_i(wx_i+b)=1-\xi_i$,当$1-y_i(wx_i+b)&lt;=0$时,$\xi_i=0$,故$y_i(wx_i+b)&gt;=1-\xi_i$恒成立。故合页损失函数实际上可以写作:</p>
+<script type="math/tex; mode=display">
+\min_{w,b} \sum_{i=1}^N\xi_i+\lambda||w||^2</script><p>取$\lambda=\frac{1}{2C}$得:</p>
+<script type="math/tex; mode=display">
+\min_{w,b}\frac{1}{C}(\frac{1}{2}||w||^2+C\sum_{i=1}^N\xi_i) \\
+s.t. \quad y_i(wx_i+b)>=1-\xi_i \\
+\xi_i>=0 \quad i=1,2,3...N</script><p>故合页损失函数和软间隔最大化其实等价.</p>
+<h1 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h1><p>核函数是解决非线性支持向量机的方式,在得软间隔的对偶问题:</p>
+<script type="math/tex; mode=display">
+\min_{\alpha} \quad \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_j(x_ix_j)-\sum_{i=1}^N\alpha_i \\
+s.t. \quad \sum_{i=1}^N\alpha_iy_i=0 \\
+0=<\alpha_i<=C \quad i=1,2,3...N</script><p>之后更改为:</p>
+<script type="math/tex; mode=display">
+\min_{\alpha} \quad \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\alpha_i\alpha_jy_iy_jK(x_ix_j)-\sum_{i=1}^N\alpha_i \\
+s.t. \quad \sum_{i=1}^N\alpha_iy_i=0 \\
+\alpha_i>=0 \quad i=1,2,3...N</script><p>其中$K(x_i,x_j)$就是核函数,用来处理不可分问题,将数据映射到高维.这样最终的分离超平面为:</p>
+<script type="math/tex; mode=display">
+\sum_{i=0}^N\alpha_iy_iK(x,x_i)+b=0</script>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-19T18:01:25.947Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/04/08/SVM/" target="_blank" rel="external">https://lingyixia.github.io/2019/04/08/SVM/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/04/08/SVM/&title=《SVM》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/08/SVM/&title=《SVM》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/04/08/SVM/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SVM》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/04/08/SVM/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/04/08/SVM/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/04/09/PCA/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">PCA</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/04/05/transformer/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Transformer</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/04/08/SVM/&title=《SVM》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/08/SVM/&title=《SVM》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/04/08/SVM/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SVM》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/04/08/SVM/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/04/08/SVM/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJklEQVR42u3aS27DMAwFwNz/0u62QBPnkXSCWhqtijaNNF7Q4ufxiNfxa/39TfLX829+tcvFCwMD47aM43Qlh06oVz2Ol1QMDIwNGEkoPA+Rze3jvd6cGQMDAyO4wE0CbrIvBgYGRs7oJZ/ngPPAjYGBgZEnsXmxLEl3qw/oslwcAwPjhoy86v79nz/S38DAwLgV4yiu6vdUj3W0FgYGxtqMfJvkktf7ZPK/0XkwMDAWZfRGu3rsax9BOd5jYGAsx6g2KavXvmpb9M3nMTAwlmbM09Hq9W7+/aMCHAYGxg0ZydhWb9iiN4pRHQHBwMDYgVFtXk7S4PlAxqhDi4GBcVtGL33tJaK9v0avAQwMjA0YSTo6h+WfT0L/k6ohBgbGBoxJyay6cS+tLU+LYGBgLMEoBLWYdxW1V4zDwMBYlZGnsr3Bi/wCWh28ePL2wMDAWJRRPcTFI1yD9iQGBsYOjPwqlpTY8uJaHqajsTMMDIylGZOj52X9pCXQu1BiYGDsw+g1F6up6aQwF70YMDAwNmA0m4WDMlxS1W+2LTEwMDZg9MLlPIBWqRgYGDswjuLKm469INtMejEwMJZmzINdbzijGtAnbVEMDIw1GHmQ7TUs83S392gwMDD2YVQDX759+UCTVBYDAwMjKNJVC3mXjYVhYGBgxMW1ybHy4bOPvDcwMDD+PaM37jBvIfRCMwYGxm6MPHXM08tqkS6/Yo6amhgYGPdj/ACD7iLggdd40QAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>

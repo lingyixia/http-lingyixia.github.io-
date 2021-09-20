@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>方差和偏差 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="优化">
+    <meta name="description" content="学习算法的预测误差, 或者说泛化误差(generalization error)可以分解为三个部分: 偏差(bias), 方差(variance)和噪声(noise). 在估计学习算法性能的过程中,我们主要关注偏差与方差. 因为噪声属于不可约减的误差 (irreducible error).">
+<meta name="keywords" content="优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="方差和偏差">
+<meta property="og:url" content="https://lingyixia.github.io/2019/03/18/biasAndVariance/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="学习算法的预测误差, 或者说泛化误差(generalization error)可以分解为三个部分: 偏差(bias), 方差(variance)和噪声(noise). 在估计学习算法性能的过程中,我们主要关注偏差与方差. 因为噪声属于不可约减的误差 (irreducible error).">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lingyixia.github.io/img/bias-variance-proof.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/bias-variance.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/Degree.jpg">
+<meta property="og:image" content="https://lingyixia.github.io/img/reularization.jpg">
+<meta property="og:image" content="https://lingyixia.github.io/img/curve1.jpg">
+<meta property="og:image" content="https://lingyixia.github.io/img/curve2.jpg">
+<meta property="og:image" content="https://lingyixia.github.io/img/curve3.jpg">
+<meta property="og:updated_time" content="2021-09-19T18:01:25.950Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="方差和偏差">
+<meta name="twitter:description" content="学习算法的预测误差, 或者说泛化误差(generalization error)可以分解为三个部分: 偏差(bias), 方差(variance)和噪声(noise). 在估计学习算法性能的过程中,我们主要关注偏差与方差. 因为噪声属于不可约减的误差 (irreducible error).">
+<meta name="twitter:image" content="https://lingyixia.github.io/img/bias-variance-proof.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">方差和偏差</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">方差和偏差</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-03-18T06:36:26.000Z" itemprop="datePublished" class="page-time">
+  2019-03-18
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/机器学习/">机器学习</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#符号说明"><span class="post-toc-number">1.</span> <span class="post-toc-text">符号说明</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#误差定义"><span class="post-toc-number">2.</span> <span class="post-toc-text">误差定义</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#方差与偏差"><span class="post-toc-number">3.</span> <span class="post-toc-text">方差与偏差</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#正则化参数-lambda"><span class="post-toc-number">4.</span> <span class="post-toc-text">正则化参数$\lambda$</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#学习曲线"><span class="post-toc-number">5.</span> <span class="post-toc-text">学习曲线</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Bagging和Boosting"><span class="post-toc-number">6.</span> <span class="post-toc-text">Bagging和Boosting</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结"><span class="post-toc-number">7.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-biasAndVariance"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">方差和偏差</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-03-18 14:36:26" datetime="2019-03-18T06:36:26.000Z"  itemprop="datePublished">2019-03-18</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/机器学习/">机器学习</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>学习算法的预测误差, 或者说泛化误差(generalization error)可以分解为三个部分: 偏差(bias), 方差(variance)和噪声(noise). 在估计学习算法性能的过程中,我们主要关注偏差与方差. 因为噪声属于不可约减的误差 (irreducible error).<br><a id="more"></a></p>
+<h1 id="符号说明"><a href="#符号说明" class="headerlink" title="符号说明"></a>符号说明</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x</td>
+<td>测试样本</td>
+</tr>
+<tr>
+<td>D</td>
+<td>数据集</td>
+</tr>
+<tr>
+<td>$y_D$</td>
+<td>x在D中的标记</td>
+</tr>
+<tr>
+<td>y</td>
+<td>x的真实标记</td>
+</tr>
+<tr>
+<td>f</td>
+<td>训练集D上得到的模型</td>
+</tr>
+<tr>
+<td>f(x;D)</td>
+<td>训练集D上得到的模型在x下输出</td>
+</tr>
+<tr>
+<td>$\bar{f(x)}$</td>
+<td>模型f对x的期望</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<blockquote>
+<p>1.y和$y_D$是有区别的,有些本来就标错了,即噪声。2.这是在不同的训练集D上得到的不同模型,下面的计算也是在不同训练集D下的均值。</p>
+</blockquote>
+</blockquote>
+<h1 id="误差定义"><a href="#误差定义" class="headerlink" title="误差定义"></a>误差定义</h1><ul>
+<li>泛化误差:<script type="math/tex; mode=display">
+Err(x)=E[(y-f(x;D))^2] \tag{1}</script></li>
+<li><p>均值</p>
+<script type="math/tex; mode=display">
+\bar{f(x)}=E_D[f(x;D)] \tag{2}</script><blockquote>
+<blockquote>
+<p>注意:方差和真实标记y无关,只和模型计算的实际值有关。</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>方差</p>
+<script type="math/tex; mode=display">
+var(x)=E_D[(f(x;D)-\bar{f(x)})^2] \tag{3}</script></li>
+<li><p>噪声</p>
+<script type="math/tex; mode=display">
+\epsilon ^2=E_D[(y_D-y)] \tag{4}</script></li>
+<li><p>偏差</p>
+<script type="math/tex; mode=display">
+bias ^2(x) = (\bar{f(x)}-y)^2 \tag{5}</script></li>
+</ul>
+<p>对算法的期望泛化误差进行分解:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/bias-variance-proof.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>其中红色部分计算会得0:<br>1.</p>
+<script type="math/tex; mode=display">
+E_D[2(f(x;D)-\bar{f(x)})(\bar{f(x)}-y_D)] = E_D(f(x;D)\bar{f(x)}-\bar{f(x)^2}+\bar{f(x)}y_D-f(x;D)y_D)</script><p>要谨记:其中带D得是变量,不带D的都是常量,也就是说$\bar{f(x)}$其实就是个数字,故有:</p>
+<script type="math/tex; mode=display">
+E_D(f(x;D)\bar{f(x)})=\bar{f(x)}E_D(f(x;D))=\bar{f(x)}^2</script><p>前两项得零,后两项等于:</p>
+<script type="math/tex; mode=display">
+\bar{f(x)}E_D(y_D)-E_D(f(x;D))E_D(y_D)</script><p>也等于零</p>
+<blockquote>
+<blockquote>
+<p>$E(XY)=E(X)E(Y)$的必要条件是X和Y相互独立,$E_D(f(x;D))E_D(y_D)$中$f(x;D)$和E_D(y_D)相互独立,因此可以分开。</p>
+</blockquote>
+</blockquote>
+<p>2.<br>第二部分怎么得零的不太明白,难道是展开后$E_D(y)=E_D(y_D)$?<br>整理如图:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/bias-variance.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h1 id="方差与偏差"><a href="#方差与偏差" class="headerlink" title="方差与偏差"></a>方差与偏差</h1><p>以线性回归为例(训练集(train)、验证集(cv)、测试集(test)比例为6:2:2)<br>我们现在做的是在训练10个模型,次数依次从1到10,对于 多项式回归,当次数选取较低时,我们的 训练集误差 和 交叉验证集误差 都会很大;当次数选择刚好时,训练集误差 和 交叉验证集误差 都很小;当次数过大时会产生过拟合，虽然 训练集误差 很小,但 交叉验证集误差 会很大(关系图如下)。 图像如下:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/Degree.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<blockquote>
+<blockquote>
+<p>Degree是次数</p>
+</blockquote>
+</blockquote>
+<h1 id="正则化参数-lambda"><a href="#正则化参数-lambda" class="headerlink" title="正则化参数$\lambda$"></a>正则化参数$\lambda$</h1><p>对于 正则化 参数,使用同样的分析方法,当参数比较小时容易产生过拟合现象,也就是高方差问题。而参数比较大时容易产生欠拟合现象,也就是高偏差问题.<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/reularization.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h1 id="学习曲线"><a href="#学习曲线" class="headerlink" title="学习曲线"></a>学习曲线</h1><p>学习曲线 的横轴是样本数，纵轴为 训练集 和 交叉验证集 的 误差。所以在一开始，由于样本数很少，Jtrain(θ)Jtrain(θ) 几乎没有,而 Jcv(θ)Jcv(θ) 则非常大。随着样本数的增加,Jtrain(θ)Jtrain(θ) 不断增大,而 Jcv(θ)Jcv(θ) 因为训练数据增加而拟合得更好因此下降。所以 学习曲线 看上去如下图:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/curve1.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>在高偏差的情形下,Jtrain(θ) 与 Jcv(θ) 已经十分接近，但是 误差 很大。这时候一味地增加样本数并不能给算法的性能带来提升。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/curve2.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>在高方差的情形下,Jtrain(θ) 的 误差 较小,Jcv(θ) 比较大,这时搜集更多的样本很可能带来帮助。<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/curve3.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<h1 id="Bagging和Boosting"><a href="#Bagging和Boosting" class="headerlink" title="Bagging和Boosting"></a>Bagging和Boosting</h1><blockquote>
+<blockquote>
+<p>如何理解bagging是减少variance，而boosting是减少bias?</p>
+</blockquote>
+</blockquote>
+<p>Bagging的意义是从总数据中每次随机取一部分,训练一个模型，这样做N次得到N个模型用投票的方式决定.(下面以N等于2为例)<br>这样得到的N个模型实际上是差不多的，Bagging的偏差表示为:$E(\frac{X_1+X_2}{2})=\frac{1}{N}E(X_2+X_2)=E(X_i)$,方差表示为$D(\frac{X_1+X_2}{2})$,如果$X$之间完全独立则等于$\frac{1}{4}D(X_1+X_2)=\frac{D(X_i)}{2}$,若$X$之间完全相同则等于$\frac{1}{4}D(X_1+X_2)=\frac{D(X_1)+D(X_2)+Cov(X_1,X_2)}{4}=\frac{4 \times D(X_i)}{4}=D{(X_i)}$<br>对于boosting而言每次都是为了降低$L(f(X),y)$,而降低损失函数就意味着降低偏差。由于各子模型之间是强相关的，于是子模型之和并不能显著降低variance(并未理解这句话。。。)</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li>获得更多的训练样本——解决高方差</li>
+<li>尝试减少特征的数量——解决高方差</li>
+<li>尝试获得更多的特征——解决高偏差</li>
+<li>尝试增加多项式特征——解决高偏差</li>
+<li>尝试减少正则化程度λ——解决高偏差</li>
+<li>尝试增加正则化程度λ——解决高方差</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-19T18:01:25.950Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/03/18/biasAndVariance/" target="_blank" rel="external">https://lingyixia.github.io/2019/03/18/biasAndVariance/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/优化/">优化</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/03/18/biasAndVariance/&title=《方差和偏差》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/03/18/biasAndVariance/&title=《方差和偏差》 — 灵翼俠的个人博客&source=学习算法的预测误差, 或者说泛化误差(generalization error)可以分解为三个部分: 偏差(bias), 方差(variance)和噪声(..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/03/18/biasAndVariance/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《方差和偏差》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/03/18/biasAndVariance/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/03/18/biasAndVariance/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/04/01/BLMO/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">BLMO总结</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/03/15/permutation/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">两种排列对比</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/03/18/biasAndVariance/&title=《方差和偏差》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/03/18/biasAndVariance/&title=《方差和偏差》 — 灵翼俠的个人博客&source=学习算法的预测误差, 或者说泛化误差(generalization error)可以分解为三个部分: 偏差(bias), 方差(variance)和噪声(..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/03/18/biasAndVariance/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《方差和偏差》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/03/18/biasAndVariance/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/03/18/biasAndVariance/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3awY7CMAxFUf7/pzsSK6SB9j47jKbOzQpBaX26sBw7jwdex3ORX4+X9enK39d8+n7xkiFDxm0Zx+k6D5SEW4uBxyZDhox9GCSN8hD71/PYZMiQIaOTlEkKPv9GhgwZMjoJl5eD5yT+amTIkCGD3O58G8lLQH6Hr+zFZciQcUNGOhj4y89fnG/IkCHjJoyjsTqvIB08XEQiQ4aM0YzauDEt49ZeHwQkQ4aMEQzSIEu3rLWtKd8qv3mWDBkyNmCQrEwSIh8bpEPTi8GADBkyNmB0SjR+VCJ9SlC8ypAhYzSj0wJLD5ARdu1whgwZMmYzOocnauz+MYs318uQIWM0Iw2LF5d847p4iytDhoxxjE6DvrN9TRt8F/+VIUPGxoz01GgrlMY5VRkyZOzA4E0uPqpMr+Qtv3gSK0OGjBEMnl7XFoW1p6OTIDJkyBjE4K00MkpMC0Q+WkAxy5AhYzSDpOBlrbFSmy/e+sqQIWMoo1bA1Yq/fnsunsTKkCHj5gze3qql3fP78A3wRQwyZMjYjEHSZdy+L90/GHPKkCFjNIOPHnmptyqJx8MMGTJkjGMc4eJDylXlI3oFMmTIGM2oVVzp8JKUjLV/yZAhYx9GbXDIy0E+TliwF5chQ8ZoBk986RGKVVn/gidDhgwZS8cDKTseYcqQIWNjRloO1ppx6VhChgwZ+zA6zXoO4I3+uJSUIUPGaEZnMLA2fae/LptvyJAh4/8yfgB+OGC+Ox2VZQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>

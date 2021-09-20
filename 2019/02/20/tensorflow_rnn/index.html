@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>Tensorflow中Rnn的实现 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tensorflow,rnn">
+    <meta name="description" content="tensorflow中各种rnn的实现">
+<meta name="keywords" content="tensorflow,rnn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow中Rnn的实现">
+<meta property="og:url" content="https://lingyixia.github.io/2019/02/20/tensorflow_rnn/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="tensorflow中各种rnn的实现">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lingyixia.github.io/img/SimpleRNN.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/rnn.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/basiclstm.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/GRU.png">
+<meta property="og:updated_time" content="2021-09-19T18:01:25.966Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tensorflow中Rnn的实现">
+<meta name="twitter:description" content="tensorflow中各种rnn的实现">
+<meta name="twitter:image" content="https://lingyixia.github.io/img/SimpleRNN.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Tensorflow中Rnn的实现</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">Tensorflow中Rnn的实现</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-02-20T02:11:08.000Z" itemprop="datePublished" class="page-time">
+  2019-02-20
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-tensorflow_rnn"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Tensorflow中Rnn的实现</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-02-20 10:11:08" datetime="2019-02-20T02:11:08.000Z"  itemprop="datePublished">2019-02-20</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>包含TensorFlow中BasicRNNCell,BasicLSTMCell等的实现<br><a id="more"></a><br>1.BasicRNNCell<br>基本结构如图:<br><img src="/img/SimpleRNN.png" alt>   </p>
+<blockquote>
+<blockquote>
+<p>在TensorFlow中，BasicRNNCellm每一步输出的state和output相同，源代码如下:</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def call(self, inputs, state):</span><br><span class="line">  &quot;&quot;&quot;Most basic RNN: output = new_state = act(W * input + U * state + B).&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">  gate_inputs = math_ops.matmul(</span><br><span class="line">      array_ops.concat([inputs, state], 1), self._kernel)</span><br><span class="line">  gate_inputs = nn_ops.bias_add(gate_inputs, self._bias)</span><br><span class="line">  output = self._activation(gate_inputs)</span><br><span class="line">  return output, output</span><br></pre></td></tr></table></figure>
+<p>公式如下:</p>
+<script type="math/tex; mode=display">
+h_t=tanh(W_k[x_t,h_{t-1}]+b)</script><p>或</p>
+<script type="math/tex; mode=display">
+h_t=tanh(Wx_t+Uh_{t-1}+b)</script><p>但是我个人认为应该是:</p>
+<script type="math/tex; mode=display">
+h_t=tanh([x_t,h_{t-1}]*W+b) \tag{1}</script><p>我也不知道为啥会都写作上面那两种形式.<br>eg:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">batch_size = 3</span><br><span class="line">input_dim = 2</span><br><span class="line">output_dim = 4</span><br><span class="line"></span><br><span class="line">inputs = tf.placeholder(dtype=tf.float32, shape=(batch_size, input_dim))</span><br><span class="line">cell = tf.contrib.rnn.BasicRNNCell(num_units=output_dim)</span><br><span class="line">previous_state = cell.zero_state(batch_size, dtype=tf.float32)</span><br><span class="line">output, state = cell(inputs, previous_state)</span><br><span class="line">kernel = cell.variables</span><br><span class="line">X = np.ones(shape=(batch_size, input_dim))</span><br><span class="line"></span><br><span class="line">with tf.Session() as sess:</span><br><span class="line">    sess.run(tf.global_variables_initializer())</span><br><span class="line">    output, state, kernel = sess.run([output, state,kernel], feed_dict=&#123;inputs: X&#125;)</span><br><span class="line">    print(X.shape)</span><br><span class="line">    print(kernel[0].shape)</span><br><span class="line">    print(kernel[1].shape)</span><br><span class="line">    print(previous_state.shape)</span><br><span class="line">    print(state.shape)</span><br><span class="line">    print(output.shape)</span><br><span class="line">结果为:</span><br><span class="line">(3, 2)</span><br><span class="line">(6, 4)</span><br><span class="line">(4,)</span><br><span class="line">(3, 4)</span><br><span class="line">(3, 4)</span><br><span class="line">(3, 4)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<p>分析: (kernel中是所有参数的list，此处是W和bias)根据公式(1),$output=([X,previous_state] * W+bias),即([(3, 2);(3, 4)]*(6, 4)+(4,)) = (3,4)$，代码中也较容易看出.<br>普通RNN梯度消失和梯度爆炸问题原因:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/rnn.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>这是一个普通RNN图,其中$W_1$、$W_2$、$W_3$是不同时间步骤下的参数,我们要训练的就是这个参数,输出表达式为:</p>
+<script type="math/tex; mode=display">
+f(w_1)=f_3(w_3f_2(w_2f_1(w_1)))</script><p>求$W_1$的梯度:</p>
+<script type="math/tex; mode=display">
+\frac{\partial f}{\partial W_1}=\frac{\partial f}{\partial  f_3} \times W_3 \times \frac{\partial f_3}{\partial f_2} \times W_2 \times \frac{\partial f_2}{\partial f_1}</script><p><a href="https://zhuanlan.zhihu.com/p/26892413" target="_blank" rel="noopener">这个讲解的相当清楚</a><br>若使用sigmoid函数,则每一次偏导都是一个(0,1)的数</p>
+<ol>
+<li>初始化W全都(0,1),那么上诉公式中每一个因式都是(0,1),因此连乘的多了就会<strong>梯度消失</strong></li>
+<li>初始化W很大,大到乘以sigmoid函数后还是大于1,那么连乘的多了就会<strong>梯度爆炸</strong></li>
+</ol>
+</blockquote>
+</blockquote>
+<p>2.BasicLSTMCell<br>基本结构如图:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/basiclstm.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>源码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">def call(self, inputs, state):</span><br><span class="line">   &quot;&quot;&quot;Long short-term memory cell (LSTM).</span><br><span class="line">   Args:</span><br><span class="line">     inputs: `2-D` tensor with shape `[batch_size, input_size]`.</span><br><span class="line">     state: An `LSTMStateTuple` of state tensors, each shaped</span><br><span class="line">       `[batch_size, self.state_size]`, if `state_is_tuple` has been set to</span><br><span class="line">       `True`.  Otherwise, a `Tensor` shaped</span><br><span class="line">       `[batch_size, 2 * self.state_size]`.</span><br><span class="line">   Returns:</span><br><span class="line">     A pair containing the new hidden state, and the new state (either a</span><br><span class="line">       `LSTMStateTuple` or a concatenated state, depending on</span><br><span class="line">       `state_is_tuple`).</span><br><span class="line">   &quot;&quot;&quot;</span><br><span class="line">   sigmoid = math_ops.sigmoid</span><br><span class="line">   one = constant_op.constant(1, dtype=dtypes.int32)</span><br><span class="line">   # Parameters of gates are concatenated into one multiply for efficiency.</span><br><span class="line">   if self._state_is_tuple:</span><br><span class="line">     c, h = state</span><br><span class="line">   else:</span><br><span class="line">     c, h = array_ops.split(value=state, num_or_size_splits=2, axis=one)</span><br><span class="line"></span><br><span class="line">   gate_inputs = math_ops.matmul(</span><br><span class="line">       array_ops.concat([inputs, h], 1), self._kernel)</span><br><span class="line">   gate_inputs = nn_ops.bias_add(gate_inputs, self._bias)</span><br><span class="line"></span><br><span class="line">   # i = input_gate, j = new_input, f = forget_gate, o = output_gate</span><br><span class="line">   i, j, f, o = array_ops.split(</span><br><span class="line">       value=gate_inputs, num_or_size_splits=4, axis=one)</span><br><span class="line"></span><br><span class="line">   forget_bias_tensor = constant_op.constant(self._forget_bias, dtype=f.dtype)</span><br><span class="line">   # Note that using `add` and `multiply` instead of `+` and `*` gives a</span><br><span class="line">   # performance improvement. So using those at the cost of readability.</span><br><span class="line">   add = math_ops.add</span><br><span class="line">   multiply = math_ops.multiply</span><br><span class="line">   new_c = add(multiply(c, sigmoid(add(f, forget_bias_tensor))),</span><br><span class="line">               multiply(sigmoid(i), self._activation(j)))</span><br><span class="line">   new_h = multiply(self._activation(new_c), sigmoid(o))</span><br><span class="line"></span><br><span class="line">   if self._state_is_tuple:</span><br><span class="line">     new_state = LSTMStateTuple(new_c, new_h)</span><br><span class="line">   else:</span><br><span class="line">     new_state = array_ops.concat([new_c, new_h], 1)</span><br><span class="line">   return new_h, new_state</span><br></pre></td></tr></table></figure></p>
+<p>公式如下:</p>
+<script type="math/tex; mode=display">
+\begin{gather}
+f_t = \sigma(W_f[h_{t-1},x_t]+b_f) \\
+i_t = \sigma(W_i[h_{t-1,x_t}]+b_i) \\
+\widetilde C_t = \tanh(W_C[h_{t-1,x_t}]+b_C) \\
+O_t = \sigma(W_o[h_{t-1},x_t]+b_o)\\
+C_t = f_t*C_{t-1}+i_t*\widetilde C_t \\
+h_t = O_t * \tanh(C_t)
+\end{gather}</script><p>同理，我感觉应该是:</p>
+<script type="math/tex; mode=display">
+\begin{gather}
+f_t = \sigma([h_{t-1},x_t]*W_f+b_f)\\
+i_t = \sigma([h_{t-1,x_t}]*W_i+b_i) \\
+\widetilde C_t = \tanh([h_{t-1,x_t}]*W_C+b_C) \\
+O_t = \sigma([h_{t-1},x_t]*W_o+b_o)\\
+C_t = f_t*C_{t-1}+i_t*\widetilde C_t \\
+h_t = O_t * \tanh(C_t)
+\end{gather}</script><p>eg:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">batch_size = 3</span><br><span class="line">input_dim = 2</span><br><span class="line">output_dim = 4</span><br><span class="line"></span><br><span class="line">inputs = tf.placeholder(dtype=tf.float32, shape=(batch_size, input_dim))</span><br><span class="line"></span><br><span class="line">cell = tf.contrib.rnn.BasicLSTMCell(num_units=output_dim)</span><br><span class="line">previous_state = cell.zero_state(batch_size, dtype=tf.float32)</span><br><span class="line">output, state = cell(inputs, previous_state)</span><br><span class="line">kernel = cell.variables</span><br><span class="line">X = np.ones(shape=(batch_size, input_dim))</span><br><span class="line"></span><br><span class="line">with tf.Session() as sess:</span><br><span class="line">    sess.run(tf.global_variables_initializer())</span><br><span class="line">    output, state,kernel = sess.run([output, state, kernel], feed_dict=&#123;inputs: X&#125;)</span><br><span class="line">    print(X.shape)</span><br><span class="line">    print(previous_state[0].shape)</span><br><span class="line">    print(previous_state[1].shape)</span><br><span class="line">    print(kernel[0].shape)</span><br><span class="line">    print(kernel[1].shape)</span><br><span class="line">    print(state[0].shape)</span><br><span class="line">    print(state[1].shape)</span><br><span class="line">    print(output.shape)</span><br><span class="line">结果:</span><br><span class="line">(3, 2)</span><br><span class="line">(3, 4)</span><br><span class="line">(3, 4)</span><br><span class="line">(6, 16)</span><br><span class="line">(16,)</span><br><span class="line">(3, 4)</span><br><span class="line">(3, 4)</span><br><span class="line">(3, 4)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<p>分析: (kernel是所有参数，即W和bias)根据上诉公式，在源码中求遗忘门:$f_t$,输入门$i_t$和$\widetilde C_t$s输出门$O_t$的代码为:<br><code>i, j, f, o = array_ops.split(value=gate_inputs, num_or_size_splits=4, axis=one)</code></p>
+</blockquote>
+</blockquote>
+<p>这里也解释了为什么eg中kernel[0]是(6,16),因为代码中是将4个W同时初始化在一起，即（6,16）中其实是有4个W，并在上诉代码中分别计算，kernal[1]同理。这样得到的i,j,f,o应该都是(3,4),在源码中可以看出计算i,j,f,o是矩阵相乘，但是计算$C_t$和$h_t$是各个元素相乘,因此得到的$C_t$和$h_t$都是(3,4).</p>
+<p>3.GRU<br><img src="/img/GRU.png" alt><br>源代码为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">def call(self, inputs, state):</span><br><span class="line">  &quot;&quot;&quot;Gated recurrent unit (GRU) with nunits cells.&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">  gate_inputs = math_ops.matmul(</span><br><span class="line">      array_ops.concat([inputs, state], 1), self._gate_kernel)</span><br><span class="line">  gate_inputs = nn_ops.bias_add(gate_inputs, self._gate_bias)</span><br><span class="line"></span><br><span class="line">  value = math_ops.sigmoid(gate_inputs)</span><br><span class="line">  r, u = array_ops.split(value=value, num_or_size_splits=2, axis=1)</span><br><span class="line"></span><br><span class="line">  r_state = r * state</span><br><span class="line"></span><br><span class="line">  candidate = math_ops.matmul(</span><br><span class="line">      array_ops.concat([inputs, r_state], 1), self._candidate_kernel)</span><br><span class="line">  candidate = nn_ops.bias_add(candidate, self._candidate_bias)</span><br><span class="line"></span><br><span class="line">  c = self._activation(candidate)</span><br><span class="line">  new_h = u * state + (1 - u) * c</span><br><span class="line">  return new_h, new_h</span><br></pre></td></tr></table></figure></p>
+<p>eg:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">batch_size = 3</span><br><span class="line">input_dim = 2</span><br><span class="line">output_dim = 4</span><br><span class="line"></span><br><span class="line">inputs = tf.placeholder(dtype=tf.float32, shape=(batch_size, input_dim))</span><br><span class="line"></span><br><span class="line">cell = tf.contrib.rnn.GRUCell(num_units=output_dim)</span><br><span class="line">previous_state = cell.zero_state(batch_size, dtype=tf.float32)</span><br><span class="line">output, state = cell(inputs, previous_state)</span><br><span class="line">kernel = cell.variables</span><br><span class="line">X = np.ones(shape=(batch_size, input_dim))</span><br><span class="line"></span><br><span class="line">with tf.Session() as sess:</span><br><span class="line">    sess.run(tf.global_variables_initializer())</span><br><span class="line">    output, state, kernel = sess.run([output, state, kernel], feed_dict=&#123;inputs: X&#125;)</span><br><span class="line">    print(X.shape)</span><br><span class="line">    print(previous_state.shape)</span><br><span class="line">    print(kernel[0].shape)</span><br><span class="line">    print(kernel[1].shape)</span><br><span class="line">    print(kernel[2].shape)</span><br><span class="line">    print(kernel[3].shape)</span><br><span class="line">    print(state.shape)</span><br><span class="line">    print(output.shape)</span><br><span class="line">结果:</span><br><span class="line">(3, 2)</span><br><span class="line">(3, 4)</span><br><span class="line">(6, 8)</span><br><span class="line">(8,)</span><br><span class="line">(6, 4)</span><br><span class="line">(4,)</span><br><span class="line">(3, 4)</span><br><span class="line">(3, 4)</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-19T18:01:25.966Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/02/20/tensorflow_rnn/" target="_blank" rel="external">https://lingyixia.github.io/2019/02/20/tensorflow_rnn/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rnn/">rnn</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tensorflow/">tensorflow</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/02/20/tensorflow_rnn/&title=《Tensorflow中Rnn的实现》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/02/20/tensorflow_rnn/&title=《Tensorflow中Rnn的实现》 — 灵翼俠的个人博客&source=包含TensorFlow中BasicRNNCell,BasicLSTMCell等的实现" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/02/20/tensorflow_rnn/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Tensorflow中Rnn的实现》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/02/20/tensorflow_rnn/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/02/20/tensorflow_rnn/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/02/20/regression/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">线性回归和逻辑回归对比</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/02/14/binaryOne/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">二进制中一的个数</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/02/20/tensorflow_rnn/&title=《Tensorflow中Rnn的实现》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/02/20/tensorflow_rnn/&title=《Tensorflow中Rnn的实现》 — 灵翼俠的个人博客&source=包含TensorFlow中BasicRNNCell,BasicLSTMCell等的实现" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/02/20/tensorflow_rnn/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Tensorflow中Rnn的实现》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/02/20/tensorflow_rnn/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/02/20/tensorflow_rnn/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aS3ICMQwFQO5/abLJjox5kgdStturFJmPm1QpkqzHI17Pl/X626vrkydX72ouDAyMZRnP4Rq/YPzKqyckK98bBgbGOYxkE/ld422NQ/P4+svPMTAwMIavryaC4/CNgYGB8bmAm29ifD0GBgbGTBGbl6N5Q+0fanEMDIwFGXnX/fs/f+R8AwMDYylGr1nfC6af2M/vkzEwMLZm5AGuB0uK3pkRDQwMjDMZ4wKy2p6rJny9kQ4MDIxzGPOt/yQQV+8tXI+BgbEpI2/rVzdRbf3n6WMzb8XAwFiWcdcBQO9Qswe4IdvFwMBYipGPOPTaZ8nneXl8+XfAwMA4klEtUHuBuPqVXe4QAwNja0YeBKulbLXErfb8CyEYAwNjI0Ye8mbK1PxY9IY0EQMDYwtG8qBeaz5PJasHmX98goGBsTWj2hp7TKz55l05w8XAwNiCkSeCSUBMGmfVJl10LwYGxtaMXiJYjei9wjUvjzEwME5gVG+oNtGqwxa9MTIMDIxzGPlBYy8dnGnqvcFgYGAcxpgZhqgOk/WeEwVcDAyMrRl5a6ycwE0cjjb/b2BgYCzOeBZXzq5ieu25N/8xMDAwtmDcNSrROzaofgUzSScGBsbqjDzIzsS3+VL2zVeGgYFxAKMa+HoDFtX0sYDEwMDAmG6czYTdceqJgYGB0auJeyNfvUE0DAyMcxjVw4DkZXnaVx2wwMDAOI2RJ2p3beve4wEMDIytGT9ypuTzJ4ED9gAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>

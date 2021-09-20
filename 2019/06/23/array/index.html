@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>数组常用算法 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content>
+    <meta name="description" content="两排序数组最大差值  时间复杂度能达到O(n),未排序数组先排序即可   12345678910111213141516171819202122232425int computeMinimumDistanceB(vector&amp;lt;int&amp;gt; a, vector&amp;lt;int&amp;gt; b)&amp;#123;    int aindex = 0;    int bindex = 0;    int m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数组常用算法">
+<meta property="og:url" content="https://lingyixia.github.io/2019/06/23/array/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="两排序数组最大差值  时间复杂度能达到O(n),未排序数组先排序即可   12345678910111213141516171819202122232425int computeMinimumDistanceB(vector&amp;lt;int&amp;gt; a, vector&amp;lt;int&amp;gt; b)&amp;#123;    int aindex = 0;    int bindex = 0;    int m">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-09-19T18:01:25.949Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数组常用算法">
+<meta name="twitter:description" content="两排序数组最大差值  时间复杂度能达到O(n),未排序数组先排序即可   12345678910111213141516171819202122232425int computeMinimumDistanceB(vector&amp;lt;int&amp;gt; a, vector&amp;lt;int&amp;gt; b)&amp;#123;    int aindex = 0;    int bindex = 0;    int m">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">数组常用算法</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">数组常用算法</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-06-23T04:12:57.000Z" itemprop="datePublished" class="page-time">
+  2019-06-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#两排序数组最大差值"><span class="post-toc-number">1.</span> <span class="post-toc-text">两排序数组最大差值</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#有序数组并集交集"><span class="post-toc-number">2.</span> <span class="post-toc-text">有序数组并集交集</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#找到所有数组中消失的数字"><span class="post-toc-number">3.</span> <span class="post-toc-text">找到所有数组中消失的数字</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Ksum"><span class="post-toc-number">4.</span> <span class="post-toc-text">Ksum</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#数组中右面第一个比它大的距离"><span class="post-toc-number">5.</span> <span class="post-toc-text">数组中右面第一个比它大的距离</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-array"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">数组常用算法</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-06-23 12:12:57" datetime="2019-06-23T04:12:57.000Z"  itemprop="datePublished">2019-06-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="两排序数组最大差值"><a href="#两排序数组最大差值" class="headerlink" title="两排序数组最大差值"></a>两排序数组最大差值</h1><blockquote>
+<blockquote>
+<p>时间复杂度能达到O(n),未排序数组先排序即可</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">int computeMinimumDistanceB(vector&lt;int&gt; a, vector&lt;int&gt; b)</span><br><span class="line">&#123;</span><br><span class="line">    int aindex = 0;</span><br><span class="line">    int bindex = 0;</span><br><span class="line">    int min = abs(a[0] - b[0]);</span><br><span class="line">    while (true)</span><br><span class="line">    &#123;</span><br><span class="line">        if (a[aindex] &gt; b[bindex])</span><br><span class="line">        &#123;</span><br><span class="line">            bindex++;</span><br><span class="line">        &#125; else</span><br><span class="line">        &#123;</span><br><span class="line">            aindex++;</span><br><span class="line">        &#125;</span><br><span class="line">        if (aindex &gt;= a.size() || bindex &gt;= b.size())</span><br><span class="line">        &#123;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">        if (abs(a[aindex] - b[bindex]) &lt; min)</span><br><span class="line">        &#123;</span><br><span class="line">            min = abs(a[aindex] - b[bindex]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return min;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="有序数组并集交集"><a href="#有序数组并集交集" class="headerlink" title="有序数组并集交集"></a>有序数组并集交集</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;queue&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">vector&lt;int&gt; aggregate(vector&lt;int&gt; A, vector&lt;int&gt; B)</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;int&gt; result;</span><br><span class="line">    int pointA = 0;</span><br><span class="line">    int pointB = 0;</span><br><span class="line">    while (pointA &lt; A.size() &amp;&amp; pointB &lt; B.size())</span><br><span class="line">    &#123;</span><br><span class="line">        if (A[pointA] &lt; B[pointB])</span><br><span class="line">        &#123;</span><br><span class="line">            result.push_back(A[pointA++]);</span><br><span class="line">        &#125; else if (A[pointA] &gt; B[pointB])</span><br><span class="line">        &#123;</span><br><span class="line">            result.push_back(B[pointB++]);</span><br><span class="line">        &#125; else</span><br><span class="line">        &#123;</span><br><span class="line">            result.push_back(A[pointA++]);</span><br><span class="line">            pointB++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;int&gt; intersection(vector&lt;int&gt; A, vector&lt;int&gt; B)</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;int&gt; result;</span><br><span class="line">    int pointA = 0;</span><br><span class="line">    int pointB = 0;</span><br><span class="line">    while (pointA &lt; A.size() &amp;&amp; pointB &lt; B.size())</span><br><span class="line">    &#123;</span><br><span class="line">        if (A[pointA] &lt; B[pointB])</span><br><span class="line">        &#123;</span><br><span class="line">            pointA++;</span><br><span class="line">        &#125; else if (A[pointA] &gt; B[pointB])</span><br><span class="line">        &#123;</span><br><span class="line">            pointB++;</span><br><span class="line">        &#125; else</span><br><span class="line">        &#123;</span><br><span class="line">            result.push_back(A[pointA]);</span><br><span class="line">            pointA++;</span><br><span class="line">            pointB++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;int&gt; A = &#123;1, 3, 4, 5, 7&#125;;</span><br><span class="line">    vector&lt;int&gt; B = &#123;2, 3, 5, 8, 9&#125;;</span><br><span class="line">    vector&lt;int&gt; result = aggregate(A, B);</span><br><span class="line">    for (auto r:result)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; r &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="找到所有数组中消失的数字"><a href="#找到所有数组中消失的数字" class="headerlink" title="找到所有数组中消失的数字"></a><a href="https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/" target="_blank" rel="noopener">找到所有数组中消失的数字</a></h1><blockquote>
+<blockquote>
+<p>要我说这就是个’伪’O(n)</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; findDisappearedNumbers(vector&lt;int&gt; &amp;nums)</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;int&gt; result;</span><br><span class="line">    for (int i = 0; i &lt; nums.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        if (nums[nums[i] - 1] != nums[i])</span><br><span class="line">        &#123;</span><br><span class="line">            swap(nums[nums[i] - 1], nums[i]);</span><br><span class="line">            i--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i = 0; i &lt; nums.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        if (nums[i] != i + 1)</span><br><span class="line">        &#123;</span><br><span class="line">            result.push_back(i + 1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Ksum"><a href="#Ksum" class="headerlink" title="Ksum"></a><a href="https://blog.csdn.net/Gease_Gg/article/details/82055295" target="_blank" rel="noopener">Ksum</a></h1><blockquote>
+<blockquote>
+<p>数组中K个数相加为target(不定几个用背包)</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; result;</span><br><span class="line"></span><br><span class="line">void kSum(vector&lt;int&gt; &amp;nums, int k, int start, int end, int target, vector&lt;int&gt; current)</span><br><span class="line">&#123;</span><br><span class="line">    if (k == 2)</span><br><span class="line">    &#123;</span><br><span class="line">        int low = start;</span><br><span class="line">        int high = end;</span><br><span class="line">        while (low &lt; high)</span><br><span class="line">        &#123;</span><br><span class="line">            if (nums[low] + nums[high] == target)</span><br><span class="line">            &#123;</span><br><span class="line">                current.push_back(nums[low]);</span><br><span class="line">                current.push_back(nums[high]);</span><br><span class="line">                result.push_back(current);</span><br><span class="line">                while (low &lt; end &amp;&amp; nums[low + 1] == nums[low]) low++;</span><br><span class="line">                while (low &lt; end &amp;&amp; nums[high - 1] == nums[high]) high--;</span><br><span class="line">                low++;</span><br><span class="line">                high--;</span><br><span class="line">                current.pop_back();</span><br><span class="line">                current.pop_back();</span><br><span class="line">            &#125; else if (nums[low] + nums[high] &lt; target)</span><br><span class="line">            &#123;</span><br><span class="line">                low++;</span><br><span class="line">            &#125; else</span><br><span class="line">            &#123;</span><br><span class="line">                high--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i = start; i &lt;= end - (k - 1); ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            if (i &gt; start &amp;&amp; nums[i] == nums[i - 1])continue;</span><br><span class="line">            current.push_back(nums[i]);</span><br><span class="line">            kSum(nums, k - 1, i + 1, end, target - nums[i], current);</span><br><span class="line">            current.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vector&lt;vector&lt;int&gt;&gt; fourSum(vector&lt;int&gt; &amp;nums, int target)</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;int&gt; current;</span><br><span class="line">    sort(nums.begin(), nums.end());</span><br><span class="line">    kSum(nums, 4, 0, nums.size() - 1, target, current);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="数组中右面第一个比它大的距离"><a href="#数组中右面第一个比它大的距离" class="headerlink" title="数组中右面第一个比它大的距离"></a><a href="https://leetcode.com/problems/daily-temperatures/submissions/" target="_blank" rel="noopener">数组中右面第一个比它大的距离</a></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"> vector&lt;int&gt; dailyTemperatures(vector&lt;int&gt; T)</span><br><span class="line">&#123;</span><br><span class="line">    vector&lt;int&gt; result(T.size());</span><br><span class="line">    stack&lt;int&gt; record;</span><br><span class="line">    int pos = 0;</span><br><span class="line">    while (pos &lt; T.size())</span><br><span class="line">    &#123;</span><br><span class="line">        if (record.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            record.push(pos++);</span><br><span class="line">        &#125; else</span><br><span class="line">        &#123;</span><br><span class="line">            if (T[pos] &lt;= T[record.top()])</span><br><span class="line">            &#123;</span><br><span class="line">                record.push(pos++);</span><br><span class="line">            &#125; else</span><br><span class="line">            &#123;</span><br><span class="line">                result[record.top()] = pos-record.top();</span><br><span class="line">                record.pop();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-19T18:01:25.949Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/06/23/array/" target="_blank" rel="external">https://lingyixia.github.io/2019/06/23/array/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/06/23/array/&title=《数组常用算法》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/06/23/array/&title=《数组常用算法》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/06/23/array/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《数组常用算法》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/06/23/array/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/06/23/array/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/06/23/commondistribution/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">常用分布</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/06/23/DFSandBFS/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">DFSandBFS</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/06/23/array/&title=《数组常用算法》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/06/23/array/&title=《数组常用算法》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/06/23/array/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《数组常用算法》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/06/23/array/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/06/23/array/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3aS3LcMAwFQN//0srWrpQ0D4DkRGRz5RrLQ7YWMD78+orX8W19/+T6t39/nnzn2fM3LAwMjNcyjsvVe6bKm+yLgYGxD+MsgiXPjLa/3Ct5HgMDAyNJBHsB92x3DAwMjLsCbnKgXsmKgYGBMSli89L0Oh1M/vbBWhwDA+OFjLzr/vs/PzLfwMDAeBXjKK48XFaPVQ3fP3bBwMBYmlHdppc4Jm216mULDAyMfRi90nR+jazK+LAvBgbG0ozecZ+AVYcEp/83MDAwlmNMitjkotgkxbwh1GJgYCzKyMvOeVnbu7oRzWAxMDA2YMwHA73C+PqFnr4IDAyMbRhJKtZr5SdhvVrE/vgEAwNjA8ZdA8XJVYxe4oiBgbEP497h4iSJTBptHyYbGBgYizJ6wTQPiHm62XtZGBgYOzCqpWxvbJmH8rygPb1sgYGBsRxjPlbsHasX3D+02zAwMJZjzBPBvGTtXapoNgExMDCWYxzBmoTUu1psH57EwMDYgNErPiewXuJ4eioMDIwNGHlgTVr/9zbvooEBBgbGBoxqvVsNwU808qIDYWBgvJxxFNdzI4S8VRd9EQYGxkKMXrp2HaDzplu1eO6VvhgYGGswkiB7QzusNaQspKcYGBgbMKqBr1qgVkvicujHwMDAaLX+q8OGajiO3gQGBgbGuK2fX0T7ZwEXAwPjv2EkRWz1asX8qusj7TYMDIwXMvLScXIhIx+OVl8TBgbG0ow/4SIi4P2cj4sAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>

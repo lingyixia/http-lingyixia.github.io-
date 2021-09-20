@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>Knn和K-means | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="分类,聚类">
+    <meta name="description" content="kNN就是k近邻算法,用于监督式分类,kNN中的k代表距离最近的k个样本。K-means是聚类算法,非监督式,k-means中的k代表聚类的个数.两者唯一的相似点时均利用近邻信息来标注类别。 K近邻算法原理输入: 训练数据集:  T={(x_1,y_1),(x_2,y_2),...(x_N,y_N)}其中$x_i \in R^n$为特征向量,$y \in {c_1,c_2,…c_K}$为类别输出:">
+<meta name="keywords" content="分类,聚类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Knn和K-means">
+<meta property="og:url" content="https://lingyixia.github.io/2019/02/28/KnnAndKmeans/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="kNN就是k近邻算法,用于监督式分类,kNN中的k代表距离最近的k个样本。K-means是聚类算法,非监督式,k-means中的k代表聚类的个数.两者唯一的相似点时均利用近邻信息来标注类别。 K近邻算法原理输入: 训练数据集:  T={(x_1,y_1),(x_2,y_2),...(x_N,y_N)}其中$x_i \in R^n$为特征向量,$y \in {c_1,c_2,…c_K}$为类别输出:">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-09-19T18:01:25.946Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Knn和K-means">
+<meta name="twitter:description" content="kNN就是k近邻算法,用于监督式分类,kNN中的k代表距离最近的k个样本。K-means是聚类算法,非监督式,k-means中的k代表聚类的个数.两者唯一的相似点时均利用近邻信息来标注类别。 K近邻算法原理输入: 训练数据集:  T={(x_1,y_1),(x_2,y_2),...(x_N,y_N)}其中$x_i \in R^n$为特征向量,$y \in {c_1,c_2,…c_K}$为类别输出:">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Knn和K-means</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">Knn和K-means</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-02-28T02:48:15.000Z" itemprop="datePublished" class="page-time">
+  2019-02-28
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/机器学习/">机器学习</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#K近邻算法"><span class="post-toc-number">1.</span> <span class="post-toc-text">K近邻算法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原理"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">原理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#距离度量"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">距离度量</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#计算最近点"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">计算最近点</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#K-means"><span class="post-toc-number">2.</span> <span class="post-toc-text">K-means</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#传统K-means"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">传统K-means</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#原理-1"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">原理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#算法流程"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">算法流程</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#K-means-1"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">K-means++</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-KnnAndKmeans"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Knn和K-means</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-02-28 10:48:15" datetime="2019-02-28T02:48:15.000Z"  itemprop="datePublished">2019-02-28</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/机器学习/">机器学习</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>kNN就是k近邻算法,用于监督式分类,kNN中的k代表距离最近的k个样本。K-means是聚类算法,非监督式,k-means中的k代表聚类的个数.两者唯一的相似点时均利用近邻信息来标注类别。</p>
+<h1 id="K近邻算法"><a href="#K近邻算法" class="headerlink" title="K近邻算法"></a>K近邻算法</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>输入: 训练数据集:</p>
+<script type="math/tex; mode=display">
+T={(x_1,y_1),(x_2,y_2),...(x_N,y_N)}</script><p>其中$x_i \in R^n$为特征向量,$y \in {c_1,c_2,…c_K}$为类别<br>输出: 实例$x$对应的类$y$</p>
+<ol>
+<li>根据给定的<strong>距离度量</strong>,在训练集中找出与$x$最近的K个点</li>
+<li>在这K个点中多数投票原则决定$x$的类别.<br>当K=1的时候称为最近邻原则,即距离谁最近就分到谁的那一类中.<br>步骤很简单,但是有两个关键问题:距离度量和计算最近点</li>
+</ol>
+<h2 id="距离度量"><a href="#距离度量" class="headerlink" title="距离度量"></a>距离度量</h2><p>一般距离度量使用$L_p$距离：</p>
+<script type="math/tex; mode=display">
+L_p(x_i,x_j)=(\sum_{l=1}^n|x_i^l-x_j^l|^p)^{\frac{1}{p}} \quad (p>=1)</script><p>当$p=2$时称为欧式距离:</p>
+<script type="math/tex; mode=display">
+L_2(x_i,x_j)=(\sum_{l=1}^n |x_i^l-x_j^l|^2)^{\frac{1}{2}}</script><p>当$p=1$时程为曼哈顿距离:</p>
+<script type="math/tex; mode=display">
+L_1(x_i,x_j)=\sum_{l=1}^n|x_i^l-x_j^l|</script><p>当$p=\infty$时时各个坐标距离的最大值:</p>
+<script type="math/tex; mode=display">
+L_{\infty}(x_i,x_j)=\max_l|x_i^l-x_j^l|</script><p>这个需要证明:</p>
+<script type="math/tex; mode=display">
+\max_l|x_i^l-x_j^l|<=(\sum_{l=1}^n|x_i^l-x_j^l|^p)^{\frac{1}{p}}<=(n \times \max_l|x_i^l-x_j^l|^p)^{\frac{1}{p}}=n^{\frac{1}{p}} \times \max_l|x_i^l-x_j^l|</script><p>而</p>
+<script type="math/tex; mode=display">
+\lim_{p \to +\infty} n^{\frac{1}{p}}=1</script><p>故由夹逼定理即可得出.</p>
+<h2 id="计算最近点"><a href="#计算最近点" class="headerlink" title="计算最近点"></a>计算最近点</h2><p>可以线性扫描,但是非常耗时,一般采用$kd$树的方式。 </p>
+<h1 id="K-means"><a href="#K-means" class="headerlink" title="K-means"></a>K-means</h1><h2 id="传统K-means"><a href="#传统K-means" class="headerlink" title="传统K-means"></a>传统K-means</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>K-Means算法的思想很简单，对于给定的样本集，按照样本之间的距离大小，将样本集划分为K个簇。让簇内的点尽量紧密的连在一起，而让簇间的距离尽量的大。<br>如果用数据表达式表示，假设簇划分为$(C1,C2,…Ck)$则我们的目标是最小化平方误差$E$:</p>
+<script type="math/tex; mode=display">
+E=\sum_{i=1}^k\sum_{x \in C_i} distance(x_i,\mu_i) \tag{1}</script><p>其中$\mu_i$是$(C1,C2,…Ck)$每个簇的质心:</p>
+<script type="math/tex; mode=display">
+\mu_i=\frac{1}{|C_i|}\sum_{x \in C_i}x \tag{2}</script><h3 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h3><ol>
+<li>在训练样本<script type="math/tex">{x_1,x_2,...,x_N}</script>中随机初始化K(提前确定)个质心<script type="math/tex">\mu_{i,1},\mu_{i,2},...,\mu_{i,K}</script>。</li>
+<li>计算训练样本与各个质心的距离</li>
+<li>根据上诉距离划分K个簇(对于一个点$x_i$到各个质心<script type="math/tex">\mu_j</script>的距离,该点距离哪个<script type="math/tex">\mu_j</script>近就归到哪一类中)</li>
+<li>根据公式(2)重新计算每个簇的质心,更新为<script type="math/tex">\mu_{i+1,1},\mu_{i+1,2},...,\mu_{i+1,K}</script></li>
+<li>重复步骤2~4,直到<script type="math/tex">\mu_{i+1,1},\mu_{i+1,2},...,\mu_{i+1,K}=\mu_{i,1},\mu_{i,2},...,\mu_{i,K}</script></li>
+</ol>
+<h2 id="K-means-1"><a href="#K-means-1" class="headerlink" title="K-means++"></a>K-means++</h2><p>传统K-means最大的缺陷在于初始化$\mu_1,\mu_2,…,\mu_K$的选择很重要,K_means++就是在输出化质心的选择上面做文章</p>
+<ol>
+<li>随机选取一个质心$\mu_1$</li>
+<li>计算训练样本${x_1,x_2,…,x_N}$中所有样本到当前已经确定的初始质心的距离的最小值,记作$d_1,d_2,…d_k$(k表示当前已知的质点数.比如说现在已经确定的质心有两个$\mu_1,\mu_2$,先计算所有样本到$\mu_1$的距离,取距离最小的那个样本记作$d_1$,在计算所有样本到$\mu_2$的距离,取距离最小的那个样本记作$d_2$)。</li>
+<li>计算上诉得到的样本被选择的概率:<script type="math/tex; mode=display">
+P(x_i)=\frac{d_i}{\sum_i d_i}</script>也就是说最小距离大的点有更大的概率被选择</li>
+<li>重复1~3,直到选够K个质心作为初始质心.</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-19T18:01:25.946Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/02/28/KnnAndKmeans/" target="_blank" rel="external">https://lingyixia.github.io/2019/02/28/KnnAndKmeans/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分类/">分类</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/聚类/">聚类</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/02/28/KnnAndKmeans/&title=《Knn和K-means》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/02/28/KnnAndKmeans/&title=《Knn和K-means》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/02/28/KnnAndKmeans/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Knn和K-means》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/02/28/KnnAndKmeans/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/02/28/KnnAndKmeans/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/03/01/Intellectualproblem/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">智力题</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/02/28/normalization/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">数据规范化</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/02/28/KnnAndKmeans/&title=《Knn和K-means》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/02/28/KnnAndKmeans/&title=《Knn和K-means》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/02/28/KnnAndKmeans/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Knn和K-means》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/02/28/KnnAndKmeans/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/02/28/KnnAndKmeans/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJUlEQVR42u3aQY6EMAwFUe5/aWbb0ih0fXsYKU5lhbqB5LGw7MTXhcf9MX7/zu9f3Zk+VRwyZMjYlnE/jtUEZMrV/avP8TzL8xtkyJBxAoMsohb3nudaLZ2vTYYMGTJ4CsjvScO0DBkyZKSMGwwSXnkCKkOGDBnpgngJmj6bfjIZMmScw+Cl6f9fv3K+IUOGjK0YdzhIoOwcSd6lIUOGjNkMHuB4csZ/J58maP6QIUPGwQzSMMGbJGoMFLJlyJAxlFFr8+os941nZciQMZtRC6Oc108rg603GTJkHMmoJZGdrbpaMSxDhozZjH5DWMrjIT5IW2XIkDGawQMrB3eOQnnqGW/DyZAhY1sGCaB8w6tzJz+2XO4aypAhYygjLSk7bVvkXx7il6WsDBkyxjHSjbB0iZ3iNkhVZciQcTCDAJ6TQhTvwzd86RmRIUPGOAZfYq3EvcKRPiVDhowTGGTRPFzWDiZ54tgqYmXIkLEto3/0+AY+DfoyZMg4jcEXGndwhFts/FkZMmScw0iTRd5MxktTklyiPFeGDBmjGby8TDfjOrw44MqQIWMQo9bg9VcYEkzRe2TIkDGa0Ql26VZ++h5yHcNkyJCxLYME2bSNlbRxpKVs3DMiQ4aMcQwe+NLitngkmSJlyJAhI7wmxwa1LbkvFbkMGTJkgK264NARvCcI5TJkyDiAUVsWb5XgGB70ZciQcQ6Dl461cMw/VjqXDBkyDmD8AGtX2xktwuLLAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>

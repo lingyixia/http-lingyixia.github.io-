@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>神经网络调优 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="tips">
+    <meta name="description" content="神经网络调优 OverFitting early stop 正则化 Dropout 增加数据量 减少模型参数  tip:为什么正则化防止过拟合?  L=L_0+\frac{\lambda}{2n}\sum w^2 \\ \frac{\partial L}{\partial w}=\frac{\partial L_0}{\partial w}+ \frac{\lambda}{n} w \\ \fra">
+<meta name="keywords" content="tips">
+<meta property="og:type" content="article">
+<meta property="og:title" content="神经网络调优">
+<meta property="og:url" content="https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="神经网络调优 OverFitting early stop 正则化 Dropout 增加数据量 减少模型参数  tip:为什么正则化防止过拟合?  L=L_0+\frac{\lambda}{2n}\sum w^2 \\ \frac{\partial L}{\partial w}=\frac{\partial L_0}{\partial w}+ \frac{\lambda}{n} w \\ \fra">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-09-19T18:01:25.962Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="神经网络调优">
+<meta name="twitter:description" content="神经网络调优 OverFitting early stop 正则化 Dropout 增加数据量 减少模型参数  tip:为什么正则化防止过拟合?  L=L_0+\frac{\lambda}{2n}\sum w^2 \\ \frac{\partial L}{\partial w}=\frac{\partial L_0}{\partial w}+ \frac{\lambda}{n} w \\ \fra">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">神经网络调优</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">神经网络调优</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-03-10T02:13:05.000Z" itemprop="datePublished" class="page-time">
+  2019-03-10
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#OverFitting"><span class="post-toc-number">1.</span> <span class="post-toc-text">OverFitting</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#数据预处理"><span class="post-toc-number">2.</span> <span class="post-toc-text">数据预处理</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#权重初始化"><span class="post-toc-number">3.</span> <span class="post-toc-text">权重初始化</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Batch-Normalization"><span class="post-toc-number">4.</span> <span class="post-toc-text">Batch Normalization</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#加速训练"><span class="post-toc-number">5.</span> <span class="post-toc-text">加速训练</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-neuralNetWorkTips"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">神经网络调优</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-03-10 10:13:05" datetime="2019-03-10T02:13:05.000Z"  itemprop="datePublished">2019-03-10</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>神经网络调优</p>
+<h1 id="OverFitting"><a href="#OverFitting" class="headerlink" title="OverFitting"></a>OverFitting</h1><ol>
+<li>early stop</li>
+<li>正则化</li>
+<li>Dropout</li>
+<li>增加数据量</li>
+<li>减少模型参数</li>
+</ol>
+<p>tip:为什么正则化防止过拟合?</p>
+<script type="math/tex; mode=display">
+L=L_0+\frac{\lambda}{2n}\sum w^2 \\
+\frac{\partial L}{\partial w}=\frac{\partial L_0}{\partial w}+ \frac{\lambda}{n} w \\
+\frac{\partial L}{\partial b}=\frac{\partial L_0}{\partial b}</script><p>可以看出,正则项对b没影响,对w有影响,即:</p>
+<script type="math/tex; mode=display">
+w=(1-\frac{\eta \lambda}{n}) w -\eta \frac{\partial L_0}{\partial w}</script><p>也即是说w<strong>权重衰减</strong>了,w更小了,为什么w更小了就能防止过拟合呢?因为过拟合的网络一般参数较大,w更小了网络就更简单了,所谓奥卡姆剃刀,所以过拟合减少了.</p>
+<h1 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h1><p>中心化\标准化</p>
+<h1 id="权重初始化"><a href="#权重初始化" class="headerlink" title="权重初始化"></a>权重初始化</h1><p>1.随机初始化为小数据,如均值为0,方差为0.01的高斯分布,初始化小数据目的是使激活函数梯度尽量大,从而加速训练。<br>2.Xavier initialization<br>初始化$w$为:</p>
+<script type="math/tex; mode=display">
+[-\sqrt{\frac{6}{m+n}},\sqrt{\frac{6}{m+n}}]</script><blockquote>
+<blockquote>
+<p>m和n分别为数据的输入维度和输出维度。该方法的原理使使<strong>每一层输出的方差应该尽量相等</strong>,也就是<strong>每一层的输入和输出方差尽量相等</strong>。下面进行公式推导(假设线性激活函数(或者说没有激活函数)),假设任意一层输入为$X=(x_1,x_2,x_3…x_n)$,输出$y=(y_1,y_2,y_3…y_m)$<br>前提:$W$,$X$独立同分布,$E(W)$和$E(X)都为0$。<a href="https://en.wikipedia.org/wiki/Variance#Product_of_independent_variables" target="_blank" rel="noopener">参考</a></p>
+<script type="math/tex; mode=display">
+Var(y_i)=Var(W_iX_i)=Var(W_i)Var(X_i)</script><script type="math/tex; mode=display">
+Var(Y)=Var(\sum_{i=1}^{n_{in}} W_iX_i)=n_{in}Var(W_i)Var(X_i)</script><p>为使$Var(Y)=Var(X)$则<script type="math/tex">Var(W_i)=\frac{1}{n_{in}}</script><br>若考虑反向则:<script type="math/tex">Var(W_i)=\frac{1}{n_{out}}</script><br>综合两点:</p>
+<script type="math/tex; mode=display">
+Var(W_i)=\frac{2}{n_{in}+n_{out}}</script></blockquote>
+</blockquote>
+<h1 id="Batch-Normalization"><a href="#Batch-Normalization" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h1><p><a href="https://blog.csdn.net/hjimce/article/details/50866313" target="_blank" rel="noopener">参考文章</a></p>
+<blockquote>
+<blockquote>
+<p>目的是解决<a href="https://zhuanlan.zhihu.com/p/34879333" target="_blank" rel="noopener">特征分布偏移问题</a>,会造成梯度消失<br>其实就是对每一层的输入做一个Norm,但是直接Norm就损失了学到的特征,因此使用传导公式如下:</p>
+<script type="math/tex; mode=display">
+\mu = \frac{1}{m}\sum_{i=1}^m x_i \\
+\sigma^2 = \frac{1}{m}\sum_{i=1}^m(x_i-\mu)^2 \\
+\hat{x_i} = \frac{x_i-\mu}{\sigma^2+\epsilon} \\
+y_i = \gamma \hat{x_i}+\beta</script><p>$\epsilon$是个超参数,m是min-batch的大小,$\gamma$和$\beta$是两个需要学习的超参数。可以看出,当$\gamma$=$\sigma^2$,$\epsilon$=0,$\beta$=$\mu$的时候就恢复了原特征.</p>
+</blockquote>
+</blockquote>
+<p>详细解释:<br>已知对于任何一个参数$W$，它在神经网络中的梯度为:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial L}{\partial W}&=\frac{\partial L}{\partial O} \times W_l \times \sigma^{'} \times W_{l-1} \times \sigma^{'}....\times {x} \\
+&=\frac{\partial L}{\partial O} \times \prod_{i=l}^{1}\sigma^{'}W_{i}
+\end{align}</script><p>如果没有激活函数的话，则原式等于:</p>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial W}=\frac{\partial L}{\partial O} \times \prod_{i=l}^{1}W_{i}</script><p>如果在初始化的时候$W$非常小，那么各层的$W$连乘后也肯定非常小，那上式得到的梯度也一定非常小.但是如果按照BN的方式操作一下，其实按照上诉公式:</p>
+<script type="math/tex; mode=display">
+\hat{x_i} = \frac{x_i-\mu}{\sigma^2+\epsilon}</script><p>即:</p>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial W}=\frac{\partial L}{\partial O} \times \prod_{i=l}^{1}\frac{W_i}{\sigma^2}</script><p>也就是说，梯度不在仅仅和$W$有关，而是和$\frac{W}{\sigma^2}$有关，$W$大的时候一般$\sigma^2$也大，$W$小的时候一般$\sigma^2$也小。</p>
+<h1 id="加速训练"><a href="#加速训练" class="headerlink" title="加速训练"></a>加速训练</h1><ol>
+<li>SGD (训练集做手脚)</li>
+<li>momentum(在梯度上做手脚)<blockquote>
+<blockquote>
+<p>SGD方法的一个缺点是其更新方向完全依赖于当前batch计算出的梯度，因而十分不稳定,momentum模拟了惯性,充分考虑历史梯度，并用当前地推加以微调,从而保证稳定性.</p>
+</blockquote>
+</blockquote>
+</li>
+</ol>
+<script type="math/tex; mode=display">
+v_t=\lambda v_{t-1}+(1-\lambda)_tg_t \\
+w_t=w_{t-1}-v_t</script><blockquote>
+<blockquote>
+<p>初始化$v_0$=0当前梯度是前面所有梯度的加权平均,当前时刻计算的梯度的作用仅仅是在前面梯度加权平均上的调整</p>
+</blockquote>
+</blockquote>
+<ol>
+<li><p>Adagard (学习率做手脚)<br>本来应该:</p>
+<script type="math/tex; mode=display">
+w^{t+1} \leftarrow w^t - \eta^t g^t</script><p>Adagard:</p>
+<script type="math/tex; mode=display">
+s_t =s_{t-1}+g_t^2 \\
+w_t=w_{t-1} - \frac{\eta}{\sqrt{s_t+\epsilon}} \times g_t</script><blockquote>
+<blockquote>
+<p>Adagard中对每个参数都有不同的学习率,比如一个参数$W_1$的梯度较大,则经过这个计算之后学习率就较小,反之$w_2$的梯度较小,计算之后学习率较大。</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>RMSProp(3的改进)</p>
+<script type="math/tex; mode=display">
+s_t=\lambda s_{t-1}+(1-\lambda)g_t^2 \\
+w_t=w_{t-1} - \frac{\eta}{\sqrt{s_t+\epsilon}} \times g_t</script><blockquote>
+<blockquote>
+<p>初始化$s_0$=0</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>Adadelta(没有学习率)</p>
+<script type="math/tex; mode=display">
+s_t= \rho s_t+(1-\rho)g_t^2 \\
+g_t^{\prime}=\sqrt{\frac{\Delta w_{t-1}+\epsilon}{s_t+\epsilon}}*g_t \\
+w_t= w_{t-1}-g_t^{\prime} \\
+\Delta w_t=\rho \Delta w_{t-1}+(1-\rho)g_t^{\prime} * g_t</script><blockquote>
+<blockquote>
+<p>其实就是维护了一个$\Delta w$用来代替Adagard中的学习率。</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>Adam(2和4的结合)</p>
+</li>
+</ol>
+<script type="math/tex; mode=display">
+v_t=\beta_1 v_{t-1} +(1-\beta_1)g_t \\
+s_t=\beta_2 s_{t-1} + (1-\beta_2)g_t^2\\
+\hat{v_t}=\frac{v_t}{1-\beta_1^t} \\
+\hat{s_t}=\frac{s_t}{1-\beta_2^t} \\
+g_t^{\prime} = \frac{\eta \hat{v_t}}{\sqrt{\hat{s_t}}+\epsilon} \\
+w_t=w_{t-1}-g_t^{\prime}</script><blockquote>
+<blockquote>
+<p>初始化$v_0$=0,$s_0$=0其中3、4两步是参数修正,原因是如果不这样刚开始的时候有可能会使v和g,S和g相差太大.</p>
+</blockquote>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-19T18:01:25.962Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/03/10/neuralNetWorkTips/" target="_blank" rel="external">https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tips/">tips</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/&title=《神经网络调优》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/&title=《神经网络调优》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《神经网络调优》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/03/13/CnnSizeCalc/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">SameAndValid</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/03/05/Summarization-with-Pointer-Generator-Networks/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Summarization-with-Pointer-Generator-Networks</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/&title=《神经网络调优》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/&title=《神经网络调优》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《神经网络调优》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNElEQVR42u3a22rDQAyE4bz/S7tQchFovZ4ZrUst/b4KabL2l4LQ6fWSr+P7+nytv/P5/s8z1+dsvmDAgPFYxrG8zhgutX7OxU8DAwaMAYzssdYnuKT1z3dxRxgwYMCQg6DyLTcNhQEDBows4OqFq0KtpKEwYMCYw9Bv5qaJbkF7ey0OAwaMBzKywcDfvL59vgEDBox/zzjMy22oKYG48jzvE2DAgNGaod9ALzjXoVNJHN0zYcCAMYGRHeqG4Iy0IVmEAQPGwxlKm155CP2EbJB5QYUBA0ZrRr1NX4l77mgBBgwYMxlu6pYVorvKXWlbBAYMGO0YbrjUm196SM3WyC7+MzBgwGjH0FM6nV1JIt0VMRgwYMxh6AsQeqIWxv6s8w8DBowBDD3gVpa3KqtjMGDAmMyoJHzKYDIjuW04GDBg9GbYu2PyaCH7jH6v0wwXBgwY7Rh6iHTHA9kIcx2gjR8dBgwYjRhKercrB9u1ugEDBoxpjHU40xv67uKFvthqwGDAgNGOccdwMRshlEpWGDBgDGAot8ya9co4s7I69v4rDBgwWjPchr6eaeqBOAvuv3weBgwYTRmVRQp38pCFWqmohgEDRmtGpX3vjhtdhjv4hAEDRm+GEmT1o93hqBtwT78LAwaMAYysNb8ryXOD/oZaHAYMGE0ZymAga/S7TT0YMGDAyIpJdxggDSb1AhgGDBgDGO5iRMao9/8uJrEwYMBoyqgUkJW1CaU9ly1zwIABoxHjC0fmA/F/Sm2wAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>

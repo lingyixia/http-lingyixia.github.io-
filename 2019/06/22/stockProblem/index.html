@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>股票利润问题 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="leetcode,动态规划">
+    <meta name="description" content="动态规划中的股票问题汇总记录 一次买卖1234567891011121314151617//第一种方法：记录到i-1为止，最小下标，然后比较prices[i]-prices[currintMinIndex]int maxProfit(vector&amp;lt;int&amp;gt;&amp;amp; prices) &amp;#123;	int currintMinIndex = 0;	int currentMax = 0;">
+<meta name="keywords" content="leetcode,动态规划">
+<meta property="og:type" content="article">
+<meta property="og:title" content="股票利润问题">
+<meta property="og:url" content="https://lingyixia.github.io/2019/06/22/stockProblem/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="动态规划中的股票问题汇总记录 一次买卖1234567891011121314151617//第一种方法：记录到i-1为止，最小下标，然后比较prices[i]-prices[currintMinIndex]int maxProfit(vector&amp;lt;int&amp;gt;&amp;amp; prices) &amp;#123;	int currintMinIndex = 0;	int currentMax = 0;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-09-19T18:01:25.966Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="股票利润问题">
+<meta name="twitter:description" content="动态规划中的股票问题汇总记录 一次买卖1234567891011121314151617//第一种方法：记录到i-1为止，最小下标，然后比较prices[i]-prices[currintMinIndex]int maxProfit(vector&amp;lt;int&amp;gt;&amp;amp; prices) &amp;#123;	int currintMinIndex = 0;	int currentMax = 0;">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">股票利润问题</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">股票利润问题</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-06-22T10:50:47.000Z" itemprop="datePublished" class="page-time">
+  2019-06-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#一次买卖"><span class="post-toc-number">1.</span> <span class="post-toc-text">一次买卖</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#不限次数-https-leetcode-com-problems-best-time-to-buy-and-sell-stock-ii"><span class="post-toc-number">2.</span> <span class="post-toc-text">不限次数(https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#两次买卖"><span class="post-toc-number">3.</span> <span class="post-toc-text">两次买卖</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#K次买卖"><span class="post-toc-number">4.</span> <span class="post-toc-text">K次买卖</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#股票冷冻期"><span class="post-toc-number">5.</span> <span class="post-toc-text">股票冷冻期</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-stockProblem"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">股票利润问题</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-06-22 18:50:47" datetime="2019-06-22T10:50:47.000Z"  itemprop="datePublished">2019-06-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>动态规划中的股票问题汇总记录</p>
+<h1 id="一次买卖"><a href="#一次买卖" class="headerlink" title="一次买卖"></a><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" target="_blank" rel="noopener">一次买卖</a></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//第一种方法：记录到i-1为止，最小下标，然后比较prices[i]-prices[currintMinIndex]</span><br><span class="line">int maxProfit(vector&lt;int&gt;&amp; prices) </span><br><span class="line">&#123;</span><br><span class="line">	int currintMinIndex = 0;</span><br><span class="line">	int currentMax = 0;</span><br><span class="line">	int maxSum = 0;</span><br><span class="line">	for(int i = 1;i&lt;prices.size();i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if(prices[i-1]&lt;prices[currintMinIndex])</span><br><span class="line">		&#123;</span><br><span class="line">			currintMinIndex = i-1;</span><br><span class="line">		&#125;</span><br><span class="line">		currentMax = prices[i] - prices[currintMinIndex];</span><br><span class="line">		maxSum = maxSum&gt;currentMax?maxSum:currentMax;</span><br><span class="line">	&#125;     </span><br><span class="line">	return maxSum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>容易理解的写法</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int maxProfit(vector&lt;int&gt; &amp;prices)</span><br><span class="line">&#123;</span><br><span class="line">    if(prices.empty()) return 0;</span><br><span class="line">    int maxProfits = INT_MIN;</span><br><span class="line">    int currentMinPirce = prices[0];</span><br><span class="line">    for (int i = 1; i &lt; prices.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        maxProfits = max(maxProfits, prices[i] - currentMinPirce);</span><br><span class="line">        currentMinPirce = min(currentMinPirce, prices[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    return maxProfits&gt;0?maxProfits:0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//第二种方法：计算prices[i]-price[i-1],然后题目就可以转为连续数组最大值问题</span><br><span class="line">int maxProfit(vector&lt;int&gt;&amp; prices) </span><br><span class="line">&#123;</span><br><span class="line">	int currentProfit = 0;</span><br><span class="line">	int currentMaxProfit=0;</span><br><span class="line">	int maxProfit = 0;//此处不能是INT_MIN，因为有可能[7,6,4,3,1]，即一直下降，此时可以选择不买不买，即利润最低为0</span><br><span class="line">	for(int i = 1;i&lt;prices.size();i++)</span><br><span class="line">	&#123;</span><br><span class="line">		currentProfit = prices[i]-prices[i-1];</span><br><span class="line">		currentMaxProfit += currentProfit;</span><br><span class="line">		maxProfit = currentMaxProfit&gt;maxProfit?currentMaxProfit:maxProfit;</span><br><span class="line">		currentMaxProfit = currentMaxProfit&lt;0?0:currentMaxProfit;</span><br><span class="line">	&#125;</span><br><span class="line">	return maxProfit&gt;0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="不限次数-https-leetcode-com-problems-best-time-to-buy-and-sell-stock-ii"><a href="#不限次数-https-leetcode-com-problems-best-time-to-buy-and-sell-stock-ii" class="headerlink" title="不限次数(https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)"></a>不限次数(<a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/" target="_blank" rel="noopener">https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/</a>)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int maxProfit(vector&lt;int&gt;&amp; prices) </span><br><span class="line">&#123;</span><br><span class="line">       if(prices.empty()) return 0;</span><br><span class="line">       int result=0;</span><br><span class="line">       for(int i =1;i&lt;prices.size();i++)</span><br><span class="line">       &#123;</span><br><span class="line">           if(prices[i]&gt;prices[i-1])</span><br><span class="line">           &#123;</span><br><span class="line">               result+=prices[i]-prices[i-1];</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       return result;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="两次买卖"><a href="#两次买卖" class="headerlink" title="两次买卖"></a><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/" target="_blank" rel="noopener">两次买卖</a></h1><blockquote>
+<blockquote>
+<p>最多两次买卖</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int maxProfit(vector&lt;int&gt; &amp;prices)</span><br><span class="line">&#123;</span><br><span class="line">    if (prices.empty()) return 0;</span><br><span class="line">    int sell1=0, sell2=0, buy1 = INT_MIN, buy2 = INT_MIN;</span><br><span class="line">    for (int i = 0; i &lt; prices.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        buy1 = max(buy1, -prices[i]);</span><br><span class="line">        sell1 = max(sell1, prices[i] + buy1);</span><br><span class="line">        buy2 = max(buy2, sell1 - prices[i]);//如果sell1=prices[i] + buy1,在此处减去prices[i]就相当于改点没卖，提现了&quot;最多两次&quot;</span><br><span class="line">        sell2 = max(sell2, prices[i] + buy2);</span><br><span class="line">    &#125;</span><br><span class="line">    return sell2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="K次买卖"><a href="#K次买卖" class="headerlink" title="K次买卖"></a><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/" target="_blank" rel="noopener">K次买卖</a></h1><blockquote>
+<blockquote>
+<p>动态规划:global[i][j]的意义是第i天以及之前最多进行j次交易所能获得的最大利润,local[i][j]的意义是在第i天以及之前最多进行j次交易且在第i天卖出股票所能得到的最大利润(如果global[i][j]是在第i天卖出,则global[i][j]=local[i][j]),地推公式为:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+diff &= prices[i] - prices[i - 1] \\
+local[i][j] &= max(global[i - 1][j - 1] + max(diff, 0), local[i - 1][j] + diff)\\
+ global[i][j] &= max(global[i - 1][j], local[i][j]) \end{align}</script><p>解释:<br>local公式:$global[i-1][j-1]+max(diff,0)$的意思是global[i-1][j-1]必然不可能在第i-1天买入(买入就没办法卖出了,利润自然要小),如果diff&gt;0则在加上i-1天买,第i天卖的利润(一共j次交易)，否则就不算了(一共j-1次交易)。$local[i - 1][j] + diff$的意思是$第i-1天不卖了,改为第i天卖.<br>gobal公式较简单,不解释.</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> int maxProfitK(int k, vector&lt;int&gt; &amp;prices)</span><br><span class="line">&#123;</span><br><span class="line"> if(prices.size()&lt;2) return 0;       </span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; local(prices.size(), vector&lt;int&gt;(k+1, 0));</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; global(prices.size(), vector&lt;int&gt;(k+1, 0));</span><br><span class="line">    for (int i = 1; i &lt; prices.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        int diff = prices[i] - prices[i - 1];</span><br><span class="line">        for (int j = 1; j &lt;= k; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            local[i][j] = max(global[i - 1][j - 1] + max(diff, 0), local[i - 1][j] + diff);</span><br><span class="line">            global[i][j] = max(global[i - 1][j], local[i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return global[prices.size() - 1][k];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>空间优化</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">int maxProfitK(int k, vector&lt;int&gt; &amp;prices)</span><br><span class="line">&#123;</span><br><span class="line">    if(prices.size()&lt;2) return 0;</span><br><span class="line">    vector&lt;int&gt; local(k + 1);</span><br><span class="line">    vector&lt;int&gt; global(k + 1);</span><br><span class="line">    vector&lt;int&gt; localCopy;</span><br><span class="line">    vector&lt;int&gt; globalCopy;</span><br><span class="line">    for (int i = 1; i &lt; prices.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">         localCopy = local;</span><br><span class="line">        globalCopy = global;</span><br><span class="line">        int diff = prices[i] - prices[i - 1];</span><br><span class="line">        for (int j = 1; j &lt;= k; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            local[j] = max(globalCopy[j - 1] + max(diff, 0), localCopy[j] + diff);</span><br><span class="line">            global[j] = max(global[j], local[j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return global[k];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>注意,当k&gt;prices.size()/2的时候其实就退化成了<strong>不限次数</strong>问题，因此这里可以做一些优化.</p>
+</blockquote>
+</blockquote>
+<h1 id="股票冷冻期"><a href="#股票冷冻期" class="headerlink" title="股票冷冻期"></a>股票冷冻期</h1><blockquote>
+<blockquote>
+<p><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/" target="_blank" rel="noopener">Leetcode309</a><br>动态规划:<br>buy[i]数组:第i天以及之前最后一个操作是buy所能得到的最大利润<br>sell[i]数组:第i天以及之前最后一个操作是sell所能得到的最大利润<br>cooldown[i]数组:第i天以及之前最后一个操作是cooldown所能得到的最大利润<br>地推公式为:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+        buy[i] &= max(buy[i - 1], cooldown[i - 1] - prices[i]); \\
+        sell[i] &= max(sell[i - 1], buy[i] + prices[i]); \\
+        cooldown[i] &= max(cooldown[i - 1], max(buy[i - 1], sell[i - 1])); \\
+\end{align}</script><p>解释:<br>每一个公式的前一项都表示在第i天不进行相应的操作会怎样,第二项表示在第i天进行相应的操作会怎样.<br>buy:第一项表示如果在第i天不buy,则自然$buy[i]=buy[i-1]$,如果在第i天buy,则buy之前的状态必然是cooldown,因此$buy[i]=cooldown[i-1]-prices[i]$<br>sell:第一项表示如果在第i天不sell,则自然$sell[i]=sell[i-1]$,如果在第i天sell,则sell之前的状态必然是buy,因此$sell[i]=buy[i-1]+prices[i]$<br>cooldown:第一项表示如果在第i天cooldown,则自然$cooldown[i]=cooldown[i-1]$,如果在第i天cooldown,则cooldown[i]=max(sell[i-1],buy[i-1])</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> int maxProfit(vector&lt;int&gt; &amp;prices)</span><br><span class="line">&#123;</span><br><span class="line">    if(prices.size()&lt;2) return 0;</span><br><span class="line">    vector&lt;int&gt; buy(prices.size());</span><br><span class="line">    vector&lt;int&gt; sell(prices.size());</span><br><span class="line">    vector&lt;int&gt; cooldown(prices.size());</span><br><span class="line">    buy[0]=-prices[0];</span><br><span class="line">    for (int i = 1; i &lt; prices.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        buy[i] = max(buy[i - 1], cooldown[i - 1] - prices[i]);</span><br><span class="line">        sell[i] = max(sell[i - 1], buy[i] + prices[i]);</span><br><span class="line">        cooldown[i] = max(cooldown[i - 1], max(buy[i - 1], sell[i - 1]));</span><br><span class="line">    &#125;</span><br><span class="line">    return sell.back();//利润最高的最后一次操作必然是sell</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>由于$cooldown[i] = sell[i-1]$(cooldown[i]的意思是i以及之前的最后一次操作是cooldown,也就是i-1以及之前的最后一次操作是sell,也就是sell[i-1])<br>地推公式可以归位两个:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+buy[i]  &= max(sell[i-2] - price, buy[i-1]) \\
+sell[i] &= max(buy[i-1] + price, sell[i-1])
+\end{align}</script></blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> int maxProfit(vector&lt;int&gt; &amp;prices)</span><br><span class="line">&#123;</span><br><span class="line">    if(prices.size()&lt;2) return 0;</span><br><span class="line">    vector&lt;int&gt; buy(prices.size());</span><br><span class="line">    vector&lt;int&gt; sell(prices.size());</span><br><span class="line">    buy[0]=-prices[0];</span><br><span class="line">    sell[0]=0;</span><br><span class="line">    buy[1]=-(prices[0]&gt;prices[1]?prices[1]:prices[0]);</span><br><span class="line">    sell[1]=prices[1]-prices[0]&gt;0?prices[1]-prices[0]:0;</span><br><span class="line">    for (int i = 2; i &lt; prices.size(); ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        buy[i] = max(buy[i - 1], sell[i - 2] - prices[i]);</span><br><span class="line">        sell[i] = max(sell[i - 1], buy[i] + prices[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    return sell.back();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>最后优化</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int maxProfit(vector&lt;int&gt;&amp; prices) </span><br><span class="line">&#123;</span><br><span class="line">    int buy = INT_MIN, pre_buy = 0, sell = 0, pre_sell = 0;</span><br><span class="line">    for (int price : prices) </span><br><span class="line">    &#123;</span><br><span class="line">        pre_buy = buy;</span><br><span class="line">        buy = max(pre_sell - price, pre_buy);</span><br><span class="line">        pre_sell = sell;</span><br><span class="line">        sell = max(pre_buy + price, pre_sell);</span><br><span class="line">    &#125;</span><br><span class="line">    return sell;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-19T18:01:25.966Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/06/22/stockProblem/" target="_blank" rel="external">https://lingyixia.github.io/2019/06/22/stockProblem/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/动态规划/">动态规划</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/06/22/stockProblem/&title=《股票利润问题》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/06/22/stockProblem/&title=《股票利润问题》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/06/22/stockProblem/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《股票利润问题》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/06/22/stockProblem/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/06/22/stockProblem/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/06/22/personal/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">繁琐记录</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/06/16/pythonVisual/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Python可视化</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/06/22/stockProblem/&title=《股票利润问题》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/06/22/stockProblem/&title=《股票利润问题》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/06/22/stockProblem/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《股票利润问题》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/06/22/stockProblem/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/06/22/stockProblem/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACOklEQVR42u3aS3KEMAxFUfa/aTJNVWL3fRKkYvsyShFo+0yE9bkufN3frp/3+fOjJ9O3ipcMGTKWZdzTa7QAWXL0/Pw++e8v68qQIeMABtnE/Pn5dkfvjrbO9yZDhgwZaeisndkISYYMGTJqjBTGj4AyZMiQUUtiSfCdHwcJ7PVcXIYMGQsyeNX97/9+pb8hQ4aMpRh3ePXbCa/sSoYMGVszeIDjhzN+n5TbguEPGTJkHMxIByZSdmf47OIPyZAhY1kG2SJpMdbKbU+9K0OGjBMYnR/io11pyyH+YsiQIWNTBjlf8XS0VqpLAcVjogwZMpZl8HT0qUJ/ZwhsuK4MGTK2ZtQKcP3W4/wtvqvgGyJDhoxlGTyxTAttvJBXaxh8KLfJkCFjIwZPKdOQmh4x0yQ2SGVlyJCxOIOPatWCLznqkST5wx0ZMmRszUgHsziDb5oX9YLCnwwZMjZipMGUl/U7Bbv4eRkyZGzNqL3QD8e1g2OrnSlDhoztGOmIWG3JtMwXh1oZMmRsxKg1FzvNyM6wxZAtQ4aMAxidZXjA5RvlibQMGTLOYaSLkRS3E14f+G7IkCFjC0ZtwItvNw2yvPFwkWqfDBkytmB0gh1vKJImQRq+i10OGTJkLMsgQZYPgdXGxToFOBkyZJzDqA1Y8CNmpwyHkDJkyJABTpf9g2NrdkKGDBkywM/xpmM/rX3luyFDhox/zyBJbO04yEdUyYoPlNtkyJCxIIOnjmk47hTseHtAhgwZWzO+AECUaphZTShuAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>

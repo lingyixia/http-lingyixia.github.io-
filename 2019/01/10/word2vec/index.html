@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>word2vec | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="词向量">
+    <meta name="description" content="本文不作为详细教程，知识自己容易遗忘知识点的记录。">
+<meta name="keywords" content="词向量">
+<meta property="og:type" content="article">
+<meta property="og:title" content="word2vec">
+<meta property="og:url" content="https://lingyixia.github.io/2019/01/10/word2vec/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="本文不作为详细教程，知识自己容易遗忘知识点的记录。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lingyixia.github.io/img/NPLM.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/hcbow.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/example.PNG">
+<meta property="og:image" content="https://lingyixia.github.io/img/skipgram.PNG">
+<meta property="og:image" content="https://lingyixia.github.io/img/CBOW_Softmax.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/Negative_Softmax.png">
+<meta property="og:updated_time" content="2021-09-19T18:01:25.967Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="word2vec">
+<meta name="twitter:description" content="本文不作为详细教程，知识自己容易遗忘知识点的记录。">
+<meta name="twitter:image" content="https://lingyixia.github.io/img/NPLM.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">word2vec</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">word2vec</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-01-10T10:00:04.000Z" itemprop="datePublished" class="page-time">
+  2019-01-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#语言模型"><span class="post-toc-number">1.</span> <span class="post-toc-text">语言模型</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#统计语言模型"><span class="post-toc-number">2.</span> <span class="post-toc-text">统计语言模型</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#神经网络语言模型"><span class="post-toc-number">3.</span> <span class="post-toc-text">神经网络语言模型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#神经概率语言模型-NPLM"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">神经概率语言模型(NPLM)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#词向量模型"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">词向量模型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#基于Hierarchical-SoftMax"><span class="post-toc-number">3.2.1.</span> <span class="post-toc-text">基于Hierarchical SoftMax</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#CBOW"><span class="post-toc-number">3.2.1.1.</span> <span class="post-toc-text">CBOW</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Skip-Gram"><span class="post-toc-number">3.2.1.2.</span> <span class="post-toc-text">Skip-Gram</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#基于Negative-Sampling"><span class="post-toc-number">3.2.2.</span> <span class="post-toc-text">基于Negative Sampling</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#个人想法"><span class="post-toc-number">4.</span> <span class="post-toc-text">个人想法</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-word2vec"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">word2vec</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-01-10 18:00:04" datetime="2019-01-10T10:00:04.000Z"  itemprop="datePublished">2019-01-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本文不作为详细教程，知识自己容易遗忘知识点的记录。<br><a id="more"></a></p>
+<h1 id="语言模型"><a href="#语言模型" class="headerlink" title="语言模型"></a>语言模型</h1><p>通俗来说就是用来量化哪个句子更像人话的模型,目前可分为统计语言模型和神经网络模型。</p>
+<h1 id="统计语言模型"><a href="#统计语言模型" class="headerlink" title="统计语言模型"></a>统计语言模型</h1><p>由Bayes公式,一个句子组成的概率公式为:</p>
+<script type="math/tex; mode=display">
+p(w_k|w_1^{k-1})=\frac{p(w_1^k)}{p(w_1^{k-1})} \tag{1}</script><p>根据大数定理:</p>
+<script type="math/tex; mode=display">
+p(w_k|w_1^{k-1})≈\frac{count(w_1^k)}{count(w_1^{k-1})} \tag{2}</script><p>由<strong>马尔科夫假设:任意一个词出现的概率只是他前面出现的有限的一个或者几个词相关(未来的事件，只取决于有限的历史)</strong><br>基于马尔可夫假设，N-gram 语言模型认为一个词出现的概率只与它前面的n-1个词相关,即:</p>
+<script type="math/tex; mode=display">
+p(w_k|w_{k-n+1}^{k-1})=\frac{p(w_{k-n+1}^k)}{w_{k-n+1}^{k-1}}≈\frac{count(w_{k-n+1}^k)}{count(w_{k-n+1}^{k-1})} \tag{3}</script><p>eg:<br>n=2</p>
+<script type="math/tex; mode=display">
+p(w_k|w_{k-1})≈\frac{count(w_{k-1}^{k})}{count(w_{k-1})} \tag{4}</script><p>一般而言,语言模型利用最大似然确定目标函数(即最大化某句子的概率):</p>
+<script type="math/tex; mode=display">
+Loss=\sum_w \log p(w|context(w))  \tag{5}</script><p>其中:</p>
+<script type="math/tex; mode=display">
+p(w|context(w))=F(w,context(w),\theta)  \tag{6}</script><p>比如早期的智能ABC据说就是用的N-gram,还有搜索引擎,输入一个词后面多个选项也是N-gram.</p>
+<h1 id="神经网络语言模型"><a href="#神经网络语言模型" class="headerlink" title="神经网络语言模型"></a>神经网络语言模型</h1><h2 id="神经概率语言模型-NPLM"><a href="#神经概率语言模型-NPLM" class="headerlink" title="神经概率语言模型(NPLM)"></a>神经概率语言模型(NPLM)</h2><p>该结构是词向量模型的先驱<br>网络结构:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/NPLM.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<ul>
+<li>Input Layer是n-1个词的词向量<strong>首尾相连</strong>,得到$x_w$,长度为:$(n-1)m$,$m$是词向量长度.</li>
+<li>Projectjon Layer是:$z_w=tanh(Wx_w+p)$,长度依然为$(n-1)m$.</li>
+<li>Hjdden Layer是$y_w=Uz_w+q$,得到的$y_w=(y_1,y_2…y_N)$,N是词表大小.</li>
+<li>Output Layer是$softmax$,即将$y_w$的各个分量做$softmax$，使其加和为1.</li>
+</ul>
+<p>由式(6)$F(w,context(w),\theta)$,此时$\theta$包含:</p>
+<ul>
+<li>词向量: $v_w\in R^m$</li>
+<li>神经网络参数: $W \in R^{n_h \times (n-1)m},p \in R^{n_h},Y \in R^{n_h},q \in R^{N}$<br>其中$n_h$是batchsjze,N是词典大小。</li>
+</ul>
+<h2 id="词向量模型"><a href="#词向量模型" class="headerlink" title="词向量模型"></a>词向量模型</h2><h3 id="基于Hierarchical-SoftMax"><a href="#基于Hierarchical-SoftMax" class="headerlink" title="基于Hierarchical SoftMax"></a>基于Hierarchical SoftMax</h3><h4 id="CBOW"><a href="#CBOW" class="headerlink" title="CBOW"></a>CBOW</h4><p>由上下文词推断当前词的词向量模型<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/hcbow.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<ul>
+<li>Input Layer: $2c$个词的随机初始化词向量</li>
+<li>Projectjon Layer是:$x_w=\sum_{j=1}^{2c}v(context(w)_j)$</li>
+<li>Output Layer:是一颗由训练语料构成的Huffman树</li>
+</ul>
+<p>与NPML相比,他们的$x_w$不同,NPML是收尾相接,而$CBOW$是向量加和.他们的输出层不同,NPML是输出层是线性结构,$CBOW$输出层是$Huffman$树.<br>损失函数计算:<br>引入一些符号:</p>
+<ul>
+<li>$p^w$:从根节点到达$w$节点的路径</li>
+<li>$l^w$:路径$p^w$中节点的个数</li>
+<li>$p^w<em>1…p^w</em>{l^w}$:依次代表路径中的节点,根节点-中间节点-叶子节点</li>
+<li>$d<em>2^w…d^w</em>{l^w} \in {0,1}$:词$w$的$Huffman$编码,由$l^w-1$位构成,根节点无需编码</li>
+<li>$\theta<em>1^w…\theta^w</em>{l^w-1}$: 路径中<strong>非叶子节点对应的向量</strong>,用于辅助计算。</li>
+<li>单词$w$是足球,对应的上下文词汇为$c_w$,上下文词向量和为$x_w$<br>举例说明:<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/example.PNG" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+约定编码1为负类,0为正类,每一个节点就是一个二分类器，是逻辑回归(sjgmojd)。其中$\theta$<br>是对应的非叶子节点的向量，一个节点被分为正类和负类的概率分别如下:<script type="math/tex; mode=display">
+\sigma(x^T_w\theta)=\frac{1}{1+e^{x^T_w\theta}},1-\sigma(x^T_w\theta)</script>那么从根节点到足球的概率为:</li>
+</ul>
+<ol>
+<li>第一次: $p(d_2^w|x_w,\theta_1^w)=1-\sigma(x_w^T\theta_1^w)$</li>
+<li>第二次: $p(d_3^w|x_w,\theta_2^w)=\sigma(x_w^T\theta_2^w)$</li>
+<li>第三次: $p(d_4^w|x_w,\theta_3^w)=\sigma(x_w^T\theta_3^w)$</li>
+<li>第四次: $p(d_5^w|x_w,\theta_4^w)=1-\sigma(x_w^T\theta_4^w)$<script type="math/tex; mode=display">
+p(足球|c_{足球})=\prod_{j=2}^5p(d_j^w|x_w,\theta_{j-1}^w)</script>该公式即为<strong>目标函数</strong>,重新整理:<script type="math/tex; mode=display">
+p(w|context(w))=\prod_{j=2}^{l^w}p(d_j^w|x_w,\theta_{j-1}^w)</script>其中<script type="math/tex; mode=display">
+p(d_j^w|x_w,\theta_{j-1}^w) = \begin{cases}
+\sigma(x_w^T\theta_{j-1}^w) & d_j^w=0\\
+1-\sigma(x_w^T\theta_{j-1}^w) & d_j^w=1\\
+\end{cases}</script>写成整体形式为:<script type="math/tex; mode=display">
+p(d_j^w|x_w,\theta_{-1}^w)=[\sigma(x_w^T\theta_{j-1}^w)]^{1-d_j^w}·[1-\sigma(x_w^T\theta_{j-1}^w)]^{d_j^w}</script>最大似然损失函数<script type="math/tex; mode=display">
+\begin{align}
+L &= \sum_{w \in C} \log \prod_{j=2}^{l^w}\{[\sigma(x_w^T\theta_{j-1}^w)]^{1-d_j^w}·[1-\sigma(x_w^T\theta_{j-1}^w)]^{d_j^w}\}\\
+&= \sum_{w \in C}\sum_{j=2}^{l^w}\{(1-d_j^w)·log[\sigma(x_w^T\theta_{j-1}^w)]+d_j^w·log[1-\theta(x_w^T\theta_{j-1}^w)]\}
+\end{align}</script>令$L(w,j)=\sum<em>{w \in C}\sum</em>{j=2}^{l^w}{(1-d<em>j^w)·log[\sigma(x_w^T\theta</em>{j-1}^w)]+d<em>j^w·log[1-\theta(x_w^T\theta</em>{j-1}^w)]}<br>$<br>则<script type="math/tex; mode=display">
+L=\sum_{w \in C}L(w,j)</script>对于具体求导见<a href="https://blog.csdn.net/itplus/article/details/37969979" target="_blank" rel="noopener">参考1</a>和<a href="https://plmsmile.github.io/2017/11/02/word2vec-math/" target="_blank" rel="noopener">参考2</a><h4 id="Skip-Gram"><a href="#Skip-Gram" class="headerlink" title="Skip-Gram"></a>Skip-Gram</h4>由上下文词推断当前词的词向量模型<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/skipgram.PNG" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure></li>
+</ol>
+<ul>
+<li>Input Layer:中心词w的词向量$v_w$</li>
+<li>Projectjon Layer:其实在这里是多余的，只是为了和CBOW做对比</li>
+<li>Output Layer:是一颗由训练语料构成的Huffman树<br>由于需要预测中心词左右共2c个词，因此每次预测都需要走2c遍该Huffman树(CBOW)只需要走一遍，因此条件概率应为:<script type="math/tex; mode=display">
+p(Context(w)|w)=\prod_{u \in Context(w)} p(u|w)</script>而<script type="math/tex; mode=display">
+p(u|w)=\prod_{j=2}^{l^u}p(d_j^u|v_w,\theta_{j-1}^u)</script>上诉公式仿照CBOW即可<script type="math/tex; mode=display">
+p(d_j^u|v_w,\theta_{-1}^u)=[\sigma(v_w^T\theta_{j-1}^u)]^{1-d_j^u}·[1-\sigma(v_w^T\theta_{j-1}^u)]^{d_j^u}</script>根据最大似然估计得: <script type="math/tex; mode=display">
+\begin{align}
+L &=\sum_{w \in c} log \prod_{u \in Context(w)} \prod_{j=2}^{l^u}\{[\sigma(v_w^T\theta_{j-1}^u)]^{1-d_j^u}·[1-\sigma(v_w)^T\theta_{j-1}^u]\} \\
+&= \sum_{w \in C} \sum_{u \in Context(w)} \sum_{j=2}^{l^u}\{(1-d_j^u)·log[\sigma(v_w)^T\theta_{j-1}^u]+d_j^u·log[1-\sigma(v_w)^T\theta_{j-1}^u]\}
+\end{align}</script>令<script type="math/tex; mode=display">
+L(w,u,j)=(1-d_j^u)·log[\sigma(v_w)^T\theta_{j-1}^u]+d_j^u·log[1-\sigma(v_w)^T\theta_{j-1}^u]</script>求梯度同上<h3 id="基于Negative-Sampling"><a href="#基于Negative-Sampling" class="headerlink" title="基于Negative Sampling"></a>基于Negative Sampling</h3></li>
+</ul>
+<h1 id="个人想法"><a href="#个人想法" class="headerlink" title="个人想法"></a>个人想法</h1><p>对于cbow的hierarchical softmax伪代码:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/CBOW_Softmax.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>Negative Sampling伪代码:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/Negative_Softmax.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure></p>
+<p>我觉得大多数博客说的hierarchical softmax一次更新所有参数的说法简直误人子弟,看看伪代码即可,hierarchical softmax一次性更新的权重是该路径上所有非叶子节点的权值,因此如果huffman数很大,则更新的权值也就非常多,而Negative Sampling的方式只更新正样本对应的一个权值和负样本对应各自的权值,是固定个数的,所以它更新的权值少。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-19T18:01:25.967Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/01/10/word2vec/" target="_blank" rel="external">https://lingyixia.github.io/2019/01/10/word2vec/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/词向量/">词向量</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/01/10/word2vec/&title=《word2vec》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/01/10/word2vec/&title=《word2vec》 — 灵翼俠的个人博客&source=本文不作为详细教程，知识自己容易遗忘知识点的记录。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/01/10/word2vec/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《word2vec》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/01/10/word2vec/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/01/10/word2vec/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/01/11/gradientDescent/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">gradientDescent</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/01/10/inverse/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">矩阵可逆充要条件</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/01/10/word2vec/&title=《word2vec》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/01/10/word2vec/&title=《word2vec》 — 灵翼俠的个人博客&source=本文不作为详细教程，知识自己容易遗忘知识点的记录。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/01/10/word2vec/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《word2vec》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/01/10/word2vec/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/01/10/word2vec/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNUlEQVR42u3aQW7DMAwEwP7/0+kDEju7lFvA8ugUBI6k8YGhSP38xOP1Nt6/P3o+mbn91XBgYGDclvE6HSsLHM1wPn/yqw87wcDAeAAj2cRKaD6a52jr+d4wMDAwks/n4fg8mOYkDAwMjDbg5oldkoZiYGBgJIxkgbzG1b6OPKBfcBbHwMC4IWNWOPufz3/S38DAwLgV41WOPOE7D6bnG613hYGBsTUjD3BJQS1PImdluy/7wcDA2JrRXo/IMVdtbpgsYmBgbMG49jrFrNw2++2HDBcDA2NTRh40V5qXs5C9VEHEwMDYjpEncEmrMm9qXnbNAgMD4wGM9gDZlvvbVLIurmFgYGzNOJ96Vrhvm6DtnB9eMQYGxtaM2VF2djmjDccrIR4DA2M/Rn79a9b4zF9NEkwPwRgYGJsy2uXz1K09oM4O0hgYGE9jJAu0DYBZTSzZ+uGdEQwMjO0Y+SEzbysWvYi2PXn+PAYGxqaMawtkK9+3zYCi0IaBgXFzRlt0a9uQeVNhNg8GBsZzGLOELz++JkfTupuRF90wMDA2YsyCabvF9cJcUW7DwMDYlDG7vBUFxEsbpRgYGM9hvMqRl/LzdkJbnit8GBgYWzDaZuF6yti+mjZhxcDA2JWRBNnZtbCVklx+3MXAwHgOYxb4ZoF15R/gy1kcAwMDY6HoPyvV5c9jYGBgrAfENtGsQzkGBsYDGMkhNk8WV15Bnp5iYGA8h9EukLce8yDbrj5samJgYNyP8QsDx0upq2JcpgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>

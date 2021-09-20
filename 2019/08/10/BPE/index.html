@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>BPE 和 WordPiece | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="算法">
+    <meta name="description" content="WordPiece 是从 BPE(byte pair encoder) 发展而来的一种处理词的技术，目的是解决 OOV 问题,以翻译模型为例,原理是抽取公共二元串(bigram),首先看下BPE(Transformer的官方代码也是使用的这种方式):   BPE关键代码123456789101112131415161718192021222324252627282930313233343536">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BPE 和 WordPiece">
+<meta property="og:url" content="https://lingyixia.github.io/2019/08/10/BPE/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="WordPiece 是从 BPE(byte pair encoder) 发展而来的一种处理词的技术，目的是解决 OOV 问题,以翻译模型为例,原理是抽取公共二元串(bigram),首先看下BPE(Transformer的官方代码也是使用的这种方式):   BPE关键代码123456789101112131415161718192021222324252627282930313233343536">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-09-19T18:01:25.943Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BPE 和 WordPiece">
+<meta name="twitter:description" content="WordPiece 是从 BPE(byte pair encoder) 发展而来的一种处理词的技术，目的是解决 OOV 问题,以翻译模型为例,原理是抽取公共二元串(bigram),首先看下BPE(Transformer的官方代码也是使用的这种方式):   BPE关键代码123456789101112131415161718192021222324252627282930313233343536">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">BPE 和 WordPiece</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">BPE 和 WordPiece</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-10T09:37:51.000Z" itemprop="datePublished" class="page-time">
+  2019-08-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/NLP/">NLP</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#BPE"><span class="post-toc-number">1.</span> <span class="post-toc-text">BPE</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#关键代码"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">关键代码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#subword-nmt使用"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">subword-nmt使用</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#WordPiece"><span class="post-toc-number">2.</span> <span class="post-toc-text">WordPiece</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考"><span class="post-toc-number">3.</span> <span class="post-toc-text">参考:</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-BPE"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">BPE 和 WordPiece</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-10 17:37:51" datetime="2019-08-10T09:37:51.000Z"  itemprop="datePublished">2019-08-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/NLP/">NLP</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<blockquote>
+<p>WordPiece 是从 BPE(byte pair encoder) 发展而来的一种处理词的技术，目的是解决 OOV 问题,以翻译模型为例,原理是抽取公共二元串(bigram),首先看下BPE(Transformer的官方代码也是使用的这种方式):</p>
+</blockquote>
+</blockquote>
+<h1 id="BPE"><a href="#BPE" class="headerlink" title="BPE"></a>BPE</h1><h2 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line">import re, collections</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_pairs(word):</span><br><span class="line">    &quot;&quot;&quot;Return set of symbol pairs in a word.</span><br><span class="line">    Word is represented as a tuple of symbols (symbols being variable-length strings).</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    pairs = set()</span><br><span class="line">    prev_char = word[0]</span><br><span class="line">    for char in word[1:]:</span><br><span class="line">        pairs.add((prev_char, char))</span><br><span class="line">        prev_char = char</span><br><span class="line">    return pairs</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def encode(orig):</span><br><span class="line">    &quot;&quot;&quot;Encode word based on list of BPE merge operations, which are applied consecutively&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    word = tuple(orig) + (&apos;&lt;/w&gt;&apos;,)</span><br><span class="line">    print(&quot;__word split into characters:__ &lt;tt&gt;&#123;&#125;&lt;/tt&gt;&quot;.format(word))</span><br><span class="line"></span><br><span class="line">    pairs = get_pairs(word)</span><br><span class="line"></span><br><span class="line">    if not pairs:</span><br><span class="line">        return orig</span><br><span class="line"></span><br><span class="line">    iteration = 0</span><br><span class="line">    while True:</span><br><span class="line">        iteration += 1</span><br><span class="line">        print(&quot;__Iteration &#123;&#125;:__&quot;.format(iteration))</span><br><span class="line">        print(&quot;bigrams in the word: &#123;&#125;&quot;.format(pairs))</span><br><span class="line">        print(pairs)</span><br><span class="line">        bigram = min(pairs, key=lambda pair: bpe_codes.get(pair, float(&apos;inf&apos;)))</span><br><span class="line">        print(&quot;candidate for merging: &#123;&#125;&quot;.format(bigram))</span><br><span class="line">        if bigram not in bpe_codes:</span><br><span class="line">            print(&quot;__Candidate not in BPE merges, algorithm stops.__&quot;)</span><br><span class="line">            break</span><br><span class="line">        first, second = bigram</span><br><span class="line">        new_word = []</span><br><span class="line">        i = 0</span><br><span class="line">        while i &lt; len(word):</span><br><span class="line">            try:</span><br><span class="line">                j = word.index(first, i)</span><br><span class="line">                new_word.extend(word[i:j])</span><br><span class="line">                i = j</span><br><span class="line">            except:</span><br><span class="line">                new_word.extend(word[i:])</span><br><span class="line">                break</span><br><span class="line"></span><br><span class="line">            if word[i] == first and i &lt; len(word) - 1 and word[i + 1] == second:</span><br><span class="line">                new_word.append(first + second)</span><br><span class="line">                i += 2</span><br><span class="line">            else:</span><br><span class="line">                new_word.append(word[i])</span><br><span class="line">                i += 1</span><br><span class="line">        new_word = tuple(new_word)</span><br><span class="line">        word = new_word</span><br><span class="line">        print(&quot;word after merging: &#123;&#125;&quot;.format(word))</span><br><span class="line">        if len(word) == 1:</span><br><span class="line">            break</span><br><span class="line">        else:</span><br><span class="line">            pairs = get_pairs(word)</span><br><span class="line"></span><br><span class="line">    # don&apos;t print end-of-word symbols</span><br><span class="line">    if word[-1] == &apos;&lt;/w&gt;&apos;:</span><br><span class="line">        word = word[:-1]</span><br><span class="line">    elif word[-1].endswith(&apos;&lt;/w&gt;&apos;):</span><br><span class="line">        word = word[:-1] + (word[-1].replace(&apos;&lt;/w&gt;&apos;, &apos;&apos;),)</span><br><span class="line"></span><br><span class="line">    return word</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_stats(vocab):</span><br><span class="line">    pairs = collections.defaultdict(int)</span><br><span class="line">    for word, freq in vocab.items():</span><br><span class="line">        symbols = word.split()</span><br><span class="line">        for i in range(len(symbols) - 1):</span><br><span class="line">            pairs[symbols[i], symbols[i + 1]] += freq</span><br><span class="line">    return pairs</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def merge_vocab(pair, v_in):</span><br><span class="line">    v_out = &#123;&#125;</span><br><span class="line">    bigram = re.escape(&apos; &apos;.join(pair))</span><br><span class="line">    p = re.compile(r&apos;(?&lt;!\S)&apos; + bigram + r&apos;(?!\S)&apos;)</span><br><span class="line">    for word in v_in:</span><br><span class="line">        w_out = p.sub(&apos;&apos;.join(pair), word)</span><br><span class="line">        v_out[w_out] = v_in[word]</span><br><span class="line">    return v_out</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    train_data = &#123;&apos;l o w&apos; + re.escape(&apos;&lt;/w&gt;&apos;): 5,</span><br><span class="line">                  &apos;l o w e r&apos; + re.escape(&apos;&lt;/w&gt;&apos;): 2,</span><br><span class="line">                  &apos;n e w e s t&apos; + re.escape(&apos;&lt;/w&gt;&apos;): 6,</span><br><span class="line">                  &apos;w i d e s t&apos; + re.escape(&apos;&lt;/w&gt;&apos;): 3&#125;</span><br><span class="line">    bpe_codes = &#123;&#125;</span><br><span class="line">    bpe_codes_reverse = &#123;&#125;</span><br><span class="line">    num_merges = 1000</span><br><span class="line">    for i in range(num_merges):</span><br><span class="line">        pairs = get_stats(train_data)</span><br><span class="line">        if not pairs:</span><br><span class="line">            break</span><br><span class="line">        print(&quot;Iteration &#123;&#125;&quot;.format(i + 1))</span><br><span class="line">        best = max(pairs, key=pairs.get)</span><br><span class="line">        train_data = merge_vocab(best, train_data)</span><br><span class="line">        bpe_codes[best] = i</span><br><span class="line">        bpe_codes_reverse[best[0] + best[1]] = best</span><br><span class="line">        print(&quot;new merge: &#123;&#125;&quot;.format(best))</span><br><span class="line">        print(&quot;train data: &#123;&#125;&quot;.format(train_data))</span><br></pre></td></tr></table></figure>
+<p>输出结果:</p>
+<blockquote>
+<blockquote>
+<p>Iteration 1<br>new merge: (‘e’, ‘s’)<br>train data: {‘l o w&lt;/w&gt;’: 5, ‘l o w e r&lt;/w&gt;’: 2, ‘n e w es t&lt;/w&gt;’: 6, ‘w i d es t&lt;/w&gt;’: 3}<br>Iteration 2<br>new merge: (‘es’, ‘t&lt;/w&gt;’)<br>train data: {‘l o w&lt;/w&gt;’: 5, ‘l o w e r&lt;/w&gt;’: 2, ‘n e w est&lt;/w&gt;’: 6, ‘w i d est&lt;/w&gt;’: 3}<br>Iteration 3<br>new merge: (‘l’, ‘o’)<br>train data: {‘lo w&lt;/w&gt;’: 5, ‘lo w e r&lt;/w&gt;’: 2, ‘n e w est&lt;/w&gt;’: 6, ‘w i d est&lt;/w&gt;’: 3}<br>Iteration 4<br>new merge: (‘n’, ‘e’)<br>train data: {‘lo w&lt;/w&gt;’: 5, ‘lo w e r&lt;/w&gt;’: 2, ‘ne w est&lt;/w&gt;’: 6, ‘w i d est&lt;/w&gt;’: 3}<br>Iteration 5<br>new merge: (‘ne’, ‘w’)<br>train data: {‘lo w&lt;/w&gt;’: 5, ‘lo w e r&lt;/w&gt;’: 2, ‘new est&lt;/w&gt;’: 6, ‘w i d est&lt;/w&gt;’: 3}<br>Iteration 6<br>new merge: (‘new’, ‘est&lt;/w&gt;’)<br>train data: {‘lo w&lt;/w&gt;’: 5, ‘lo w e r&lt;/w&gt;’: 2, ‘newest&lt;/w&gt;’: 6, ‘w i d est&lt;/w&gt;’: 3}<br>Iteration 7<br>new merge: (‘lo’, ‘w&lt;/w&gt;’)<br>train data: {‘low&lt;/w&gt;’: 5, ‘lo w e r&lt;/w&gt;’: 2, ‘newest&lt;/w&gt;’: 6, ‘w i d est&lt;/w&gt;’: 3}<br>Iteration 8<br>new merge: (‘w’, ‘i’)<br>train data: {‘low&lt;/w&gt;’: 5, ‘lo w e r&lt;/w&gt;’: 2, ‘newest&lt;/w&gt;’: 6, ‘wi d est&lt;/w&gt;’: 3}<br>Iteration 9<br>new merge: (‘wi’, ‘d’)<br>train data: {‘low&lt;/w&gt;’: 5, ‘lo w e r&lt;/w&gt;’: 2, ‘newest&lt;/w&gt;’: 6, ‘wid est&lt;/w&gt;’: 3}<br>Iteration 10<br>new merge: (‘wid’, ‘est&lt;/w&gt;’)<br>train data: {‘low&lt;/w&gt;’: 5, ‘lo w e r&lt;/w&gt;’: 2, ‘newest&lt;/w&gt;’: 6, ‘widest&lt;/w&gt;’: 3}<br>Iteration 11<br>new merge: (‘lo’, ‘w’)<br>train data: {‘low&lt;/w&gt;’: 5, ‘low e r&lt;/w&gt;’: 2, ‘newest&lt;/w&gt;’: 6, ‘widest&lt;/w&gt;’: 3}<br>Iteration 12<br>new merge: (‘low’, ‘e’)<br>train data: {‘low&lt;/w&gt;’: 5, ‘lowe r&lt;/w&gt;’: 2, ‘newest&lt;/w&gt;’: 6, ‘widest&lt;/w&gt;’: 3}<br>Iteration 13<br>new merge: (‘lowe’, ‘r&lt;/w&gt;’)<br>train data: {‘low&lt;/w&gt;’: 5, ‘lower&lt;/w&gt;’: 2, ‘newest&lt;/w&gt;’: 6, ‘widest&lt;/w&gt;’: 3}</p>
+<p>可以看到，首先输入是词典{单词:词频}的形式,在每一个轮次都会寻找一个最大的子串，上诉第一次频率最大的子串就是(‘e’, ‘s’),然后把字典中所有的(‘e’, ‘s’)合并就得到了{‘l o w &lt;\/w&gt;’: 5, ‘l o w e r &lt;\/w&gt;’: 2, ‘n e w es t &lt;\/w&gt;’: 6, ‘w i d es &lt;\/w&gt;’: 3, ‘f o l l o w &lt;\/w&gt;’: 1},后面以此类推,直到最大的词频小于某个阈值为止，上面设置的是2，最终得到的词表是:train data: {‘low&lt;\/w&gt;’: 5, ‘lower&lt;\/w&gt;’: 2, ‘newest&lt;\/w&gt;’: 6, ‘wides&lt;\/w&gt;’: 3, ‘f o l low&lt;\/w&gt;’: 1}，</p>
+</blockquote>
+</blockquote>
+<p>这就是处理原语料的过程，在训练的时候，首先用上诉的<code>encode</code>代码把训练数据根据<code>code.file</code>映射到’voc.txt’中的词，然后进行训练(label方面的处理方式是独立的，也不一定需要BPE处理)</p>
+<h2 id="subword-nmt使用"><a href="#subword-nmt使用" class="headerlink" title="subword-nmt使用"></a>subword-nmt使用</h2><p>数据准备类似：<a href="https://github.com/rsennrich/subword-nmt/blob/master/subword_nmt/tests/data/corpus.en" target="_blank" rel="noopener">https://github.com/rsennrich/subword-nmt/blob/master/subword_nmt/tests/data/corpus.en</a></p>
+<ol>
+<li><p>subword-nmt learn-bpe -s {num_operations} &lt; {train_file} &gt; {codes_file}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">作用：生成分词器</span><br><span class="line">eg: subword-nmt learn-bpe -s 30000 &lt; corpus.en &gt; codes_file</span><br><span class="line">codes_file生成的就是接下来用到的分词器，其实就是一个词对组成的文件，其中每一行都是当时预料中词对中频率最高的一个。（上诉代码对应这部分）</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>subword-nmt apply-bpe -c {codes_file} &lt; {test_file} &gt; {out_file}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">作用：用分词器处理预料</span><br><span class="line">eg:subword-nmt apply-bpe -c codes_file &lt; corpus.en &gt; out_file</span><br><span class="line">out_file中就是靠分词器生成的语料</span><br><span class="line">这里的操作单元是对原始预料的各个单词，比如&apos;cement&apos;，分为&apos;c e m e n t&lt;/w&gt;&apos;</span><br><span class="line">1. 词对为:[&lt;c,e&gt;,&lt;e,m&gt;,&lt;m,e&gt;,&lt;e,n&gt;,&lt;n,t&lt;/w&gt;&gt;],其中[&lt;e,m&gt;,&lt;m,e&gt;,&lt;e,n&gt;]在codes_file,并且&lt;e,n&gt;在codes_file排名靠前(语料中词频高),合并结果为:&apos;c e m en t&lt;/w&gt;&apos;</span><br><span class="line">2. 词对为:[&lt;c,e&gt;,&lt;e,m&gt;,&lt;m,en&gt;,&lt;en,t&lt;/w&gt;&gt;],其中[&lt;e,m&gt;,&lt;en,t&lt;/w&gt;&gt;]在codes_file,并且&lt;en,t&lt;/w&gt;&gt;在codes_file中排名靠前，合并结果为:&apos;c e m ent&lt;/w&gt;&apos;</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">.</span><br><span class="line">最终合并结果为:&apos;c ement&lt;/w&gt;&apos;此时只有一个词对&lt;c,ement&lt;/w&gt;&gt;,并且不再codes_file中，因此合并停止，该词分为两个子词:c,ement,在预料中为:c@@ ement</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>subword-nmt get-vocab —train_file {train_file} —vocab_file {vocab_file}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">作用：生成词典（训练模型要用）</span><br><span class="line">eg: subword-nmt get-vocab --input out_file --output vocab_file</span><br><span class="line">vocab_file就是预料对应的词典(把out_file 中的单词set一便即可)，即接下来用vocab_file作为词典，out_file作为语料训练模型即可</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>模型训练完成后，在具体场景使用的时候，必定会有@（因为词典中有@，用来区分该单词是前缀还是独立单词），因此要对后缀是@的单词跟下一个单词合并。</p>
+</li>
+</ol>
+<h1 id="WordPiece"><a href="#WordPiece" class="headerlink" title="WordPiece"></a>WordPiece</h1><blockquote>
+<p>WordPiece是Bert使用的处理方式,这个过两天在写吧，有点事。。。</p>
+</blockquote>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考:"></a>参考:</h1><ol>
+<li><a href="https://github.com/wszlong/sb-nmt" target="_blank" rel="noopener">https://github.com/wszlong/sb-nmt</a></li>
+<li><a href="https://blog.csdn.net/u013453936/article/details/80878412" target="_blank" rel="noopener">https://blog.csdn.net/u013453936/article/details/80878412</a></li>
+<li><a href="http://ufal.mff.cuni.cz/~helcl/courses/npfl116/ipython/byte_pair_encoding.html" target="_blank" rel="noopener">http://ufal.mff.cuni.cz/~helcl/courses/npfl116/ipython/byte_pair_encoding.html</a></li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-19T18:01:25.943Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/08/10/BPE/" target="_blank" rel="external">https://lingyixia.github.io/2019/08/10/BPE/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/08/10/BPE/&title=《BPE 和 WordPiece》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/08/10/BPE/&title=《BPE 和 WordPiece》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/08/10/BPE/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《BPE 和 WordPiece》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/08/10/BPE/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/08/10/BPE/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/09/20/possionAndexp/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">泊松分布和指数分布</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/07/28/maxlikehood/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">顿悟最大熵</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/08/10/BPE/&title=《BPE 和 WordPiece》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/08/10/BPE/&title=《BPE 和 WordPiece》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/08/10/BPE/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《BPE 和 WordPiece》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/08/10/BPE/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/08/10/BPE/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJElEQVR42u3aS3KDMBAFQN//0s4muyT4PQ2kCtGsXAYjtReq+b1e8fWOr7+eP37zz1+9rrgwMDBuy1jb1s/Fjn+VfJPf/YWKgYHxAEZyFB4fkYvLx2t92DMGBgZGEK5NDtx2XQwMDIzkdW3yeQw4PrgxMDAw8iR2Uoyb/0Gn5eIYGBg3ZORV9///fEl/AwMD41aMd3lN+oZX7Of7zRgYGFszJqW09sn8m8VVMDAwHsCYjHa1xbWWEa2OgYGxKaMN6dpmwFpjIE+eP0S4GBgYWzCS22cdmvOzsa4IYmBgbMFoh0qTzU1GMdoREAwMjCcwkh8kYxNJGtw2EuowFAMDY1PGZAisbQms3Y1SXAwMjAcwJrlhHhTmz+ehJwYGxpMZ7ebaQt5aWltPi2BgYGzKmCST51KLYhwGBsYDGG0qe9bARPtnnTYzgoGBcStGOzaRb2htgGxt1AwDA2NvRlKsXxuPaNuTa22G/lEMDIz7MYo2YVusP3UWoijVYWBgbMpIgr95arpWmEvuYmBgYBQvKoO/4+3WaTAGBsYDGHmquZa+XkHFwMB4AuNdXvkmJtuqk14MDIytGfmVLJYfsm2KWwxbYGBgbMrID9m1Ylk7WhH1Mf4qt2FgYGzNWCvDTZ5vQ8kolcXAwMCIE+B526AeC8PAwMAYh4N5ILjYeMDAwHgAY23cIWkYTN5zSbkNAwPjhow8dUwO5fyYzoO/fOwDAwNjO8YXtrBBz4xq5z8AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>

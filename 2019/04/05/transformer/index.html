@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>Transformer | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Attention">
+    <meta name="description" content="本文章只用于自己记录,详细内容好多博客已经讲的很清楚了。参考博客1参考博客2参考博客3参考平博客(最佳)残差网络我的实现">
+<meta name="keywords" content="Attention">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Transformer">
+<meta property="og:url" content="https://lingyixia.github.io/2019/04/05/transformer/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="本文章只用于自己记录,详细内容好多博客已经讲的很清楚了。参考博客1参考博客2参考博客3参考平博客(最佳)残差网络我的实现">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lingyixia.github.io/img/transform2.jpg">
+<meta property="og:image" content="https://lingyixia.github.io/img/transform1.gif">
+<meta property="og:image" content="https://lingyixia.github.io/img/selfattention.jpg">
+<meta property="og:updated_time" content="2021-09-19T18:01:25.966Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Transformer">
+<meta name="twitter:description" content="本文章只用于自己记录,详细内容好多博客已经讲的很清楚了。参考博客1参考博客2参考博客3参考平博客(最佳)残差网络我的实现">
+<meta name="twitter:image" content="https://lingyixia.github.io/img/transform2.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Transformer</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">Transformer</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-05T05:31:37.000Z" itemprop="datePublished" class="page-time">
+  2019-04-05
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#整体架构"><span class="post-toc-number">1.</span> <span class="post-toc-text">整体架构</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#self-Attention"><span class="post-toc-number">2.</span> <span class="post-toc-text">self-Attention</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解释一"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">解释一</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解释二"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">解释二</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解释三：复杂度-O-n-2-n为序列"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">解释三：复杂度$O(n^2)$(n为序列)</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ResNet-And-Norm"><span class="post-toc-number">3.</span> <span class="post-toc-text">ResNet And Norm</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Feed-Forward"><span class="post-toc-number">4.</span> <span class="post-toc-text">Feed-Forward</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Positional-Encoding"><span class="post-toc-number">5.</span> <span class="post-toc-text">Positional Encoding</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#进一步解释"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">进一步解释</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#其他"><span class="post-toc-number">6.</span> <span class="post-toc-text">其他</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-transformer"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Transformer</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-04-05 13:31:37" datetime="2019-04-05T05:31:37.000Z"  itemprop="datePublished">2019-04-05</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/深度学习/">深度学习</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本文章只用于自己记录,详细内容好多博客已经讲的很清楚了。<br><a href="https://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener">参考博客1</a><br><a href="https://zhuanlan.zhihu.com/p/47282410?utm_source=wechat_session&amp;utm_medium=social&amp;s_r=0" target="_blank" rel="noopener">参考博客2</a><br><a href="https://blog.csdn.net/yiyele/article/details/81913031" target="_blank" rel="noopener">参考博客3</a><br><a href="https://medium.com/@mromerocalvo/dissecting-bert-part1-6dcf5360b07f" target="_blank" rel="noopener">参考平博客(最佳)</a><br><a href="https://lingyixia.github.io/2019/05/01/CNNdevelopment/#ResNet">残差网络</a><br><a href="https://github.com/lingyixia/Attention" target="_blank" rel="noopener">我的实现</a><br><a id="more"></a></p>
+<h1 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/transform2.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>解释1:左半部分是<code>encoder</code>,方框中是一个<code>encoder cell</code>,右半部分是<code>decoder</code>,方框中是一个<code>decoder cell</code>。<br>解释2:一个<code>encoder cell</code>包含四层:<code>self-Multi-Attention</code>+<code>ResNet And Norm</code>+<code>Feed-Forward</code>+<code>ResNet And Norm</code>,名字和图中不太一样,按照层数数下即可.<br>解释3: 一个<code>decoder cell</code>包含六层:<code>Mask-self-Multi-Attention</code>+<code>ResNet And Norm</code>+<code>encoder-decoder-Multi-Attention</code>+<code>ResNet And Norm</code>+<code>Feed-Forward</code>+<code>ResNet And Norm</code>,名字和图中不太一样,按照层数数下即可.<br>解释4:<code>encoder</code>阶段的<code>self-Multi-Attention</code>和<code>decoder</code>阶段的<code>Mask-self-Multi-Attention</code>,<code>encoder-decoder-Multi-Attention</code>是同一段代码。<br>解释5:以翻译任务为例,假设当前需要翻译t位置的词汇,<code>decoder</code>阶段的<code>mask-self-Attention</code>是对0~t-1,即对已经翻译出来部分的attention,故需要做<code>mask</code>,防止attention未翻译部分,<code>encoder-decoder-Attention</code>是对原文所有的attention。<br>解释6:<code>encoder-decoder-Multi-Attention</code>并不是<code>self-Attention</code>,因为它的<code>Q</code>是原文状态,<code>K</code>和<code>V</code>是译文状态</p>
+<h1 id="self-Attention"><a href="#self-Attention" class="headerlink" title="self-Attention"></a>self-Attention</h1><p>先上图:<br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/transform1.gif" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure><br><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/img/selfattention.jpg" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure><br>其实就是计算句子中每个单词对其他所有单词的关注程度:</p>
+<script type="math/tex; mode=display">
+Attention(Q,K,V)=\frac{softmax(Q \times K^T)}{\sqrt{d_k}} \times V</script><p>这里只解释为啥要除以$\sqrt{dk}$:</p>
+<h2 id="解释一"><a href="#解释一" class="headerlink" title="解释一"></a>解释一</h2><p>已知:$E(Q_n \times d_k)=0,D(Q_n \times d_k)=1,E(K_n \times d_k)=0,D(K_n \times d_k)=1$,注意，此时的期望和方差都是指的$d_k$维向量的每个分量，且假设这$d_k$个分量独立同分布。<br>目的是保持点积后期望方差不变。如果直接计算点积:$Q \times K^T$为$n \times n$维矩阵,<strong>注意，后面计算的期望和方差都是按照行或者列，不要想成整个矩阵的期望方差</strong>。以某个单词$q$为例:<br>$E(qK^T)=E(\sum_0^{d_k}q_iK^T)=\sum_0^{d_k}E(K^T)=d_k \times 0=0$。其实把$Q$的每个分量看作一个常数即可<br>$D(qK^T)=D(\sum_0^{d_k}q_iK^T)=\sum_0^{d_k}D(K^T)=d_k \times 1=d_k$<br>而$D(\frac{qK^T}{\sqrt{d_k}})=D((qKT)^2)\times D((\frac{1}{d_k})^2)=d_k/d_k=1$</p>
+<h2 id="解释二"><a href="#解释二" class="headerlink" title="解释二"></a>解释二</h2><p>很简单的方法，一个$d_k$维的向量$q_i$，去乘以$d_k \times n$维度的向量，同时这个$d_k \times n$的向量在$d_k$的每个维度上(设第$i$个维度的随机变量为$X_i$)均值为零，方差为1，现在要求相乘后得到的向量,即一个$n$维向量的均值和方差，其实这和乘不乘$q_i$没关系，只和相乘的时候的加法有关系，最后$n$维度向量的均值$E=E(\sum_{i=0}^{d_k}X_i)=d_kE(X)=0$,同理$D(\sum_{i=0}^{d_k}X_i)=\sum_{i=0}^{d_k}D(X)=d_k$,因此要除以$\sqrt d_k$.</p>
+<h2 id="解释三：复杂度-O-n-2-n为序列"><a href="#解释三：复杂度-O-n-2-n为序列" class="headerlink" title="解释三：复杂度$O(n^2)$(n为序列)"></a>解释三：复杂度$O(n^2)$(n为序列)</h2><p>三个步骤：<br>1.$Q \times K^T$，其实就是$n \times d_k$矩阵乘以$d_k \times n$维矩阵，复杂度是$O(d_kn^2)$<br>2.$softmax(Q \times K^T)$,没什么好说的，复杂度$O(n^2)$<br>3.$\frac{softmax(Q \times K^T)}{\sqrt{d_k}}$,就是一个$n\times d_k$矩阵乘以$d_k\times n$矩阵,复杂度$O(d_k^2 \times n)$<br>因此，去除常数$d_k$,复杂度就是$O(n^2)$</p>
+<h1 id="ResNet-And-Norm"><a href="#ResNet-And-Norm" class="headerlink" title="ResNet And Norm"></a>ResNet And Norm</h1><p>残差网络的作用见<a href="https://www.jianshu.com/p/e58437f39f65" target="_blank" rel="noopener">残差网络</a>,Norm的作用自然是加快收敛,防止梯度消失.</p>
+<h1 id="Feed-Forward"><a href="#Feed-Forward" class="headerlink" title="Feed-Forward"></a>Feed-Forward</h1><p>这里其实没有什么特殊的东西,源码中用了两个<code>conv1</code>,先把特征维度放大,在把特征维度缩小,其实也就是特征提取的作用.</p>
+<h1 id="Positional-Encoding"><a href="#Positional-Encoding" class="headerlink" title="Positional Encoding"></a>Positional Encoding</h1><p>由于在attention的时候仅仅计算了当前词与其他词的相关度,但是并没有其他词的位置信息,试想,输入一个待翻译的句子1,然后将该句中任意两个单词互换位置形成句子2,在当前结构中其实两个句子并没有什么不同,因此需要对每个单词引如其位置信息.在论文中使用的是这样的方式:</p>
+<script type="math/tex; mode=display">
+PE_{(pos,2i)}=sin(pos/10000^{2i/d_{modle}}) \\
+PE_{(pos,2i+1)}=cos(pos/10000^{2i/d_{modle}})</script><p>其中pos是当前单词在该句子中的位置,比如句子长20,则pos可以是1,2…20.i是在当前单词的第i个维度,比如每个单词有512个维度,则i可以是1,2…512.$d_{modle}$是单词维度,当前例子中即是512.<br>为什么要用三角函数呢?首先，这种方式能保证各个位置的位置信息各不相同。即<strong>绝对位置</strong>,其次，由</p>
+<script type="math/tex; mode=display">
+sin(\alpha+\beta)=sin\alpha cos\beta + cos\alpha\beta \\
+cos(\alpha+\beta)=cos\alpha cos\beta-sin\alpha sin\beta</script><p>也就是说，如果单用sin和cos交替使用可以保证PE(pos+k)能用PE(pos)和PE(k)表示出来，也就是相对<strong>相对位置</strong>,如果仅仅使用sin或cos就没有了<strong>相对信息</strong></p>
+<h2 id="进一步解释"><a href="#进一步解释" class="headerlink" title="进一步解释"></a>进一步解释</h2><p>对于一个序列，第$i$个单词和第$j$个单词的$Attention$ $score$为:</p>
+<script type="math/tex; mode=display">
+A_{i,j}=(W_q(E_i+U_i))^T(W_k(E_j+U_j))</script><p>其中，$W_q$和$W_k$分别是$Q$和$K$的对齐权重,$E_i$和$E_j$分别是第$i$和$j$个单词的词向量,$U_i$和$U_j$分别是第$i$和$j$个单词的位置向量。<br>分解上式:</p>
+<script type="math/tex; mode=display">
+A_{i,j}=\underbrace{E_i^TW_qW_kE_j}_a+\underbrace{E_i^TW_qW_kU_j}_b+ \underbrace{U_i^TW_qW_kE_j}_c+\underbrace{U_i^TW_qW_kU_j}_d</script><p>其中，只有$d$包含$i$和$j$的位置相对信息,我们知道:</p>
+<script type="math/tex; mode=display">
+U_t=\left[ sin(f(0,t)),cos(f(0,t)),sin(f(1,t)),cos(f(1,t))...sin(f(d_{model}/2,t)),cos(f(d_{model}/2,t)) \right]^T</script><p>如果没有$W_q$和$W_k$,假设$j-k=i$则有:</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+d&=U_i^TU_{i+k}\\
+&=\sum_{j=0}^{d_{model}-1}[sin(f(j,i))sin(f(j,i+k))]+[cos(f(j,i))cos(f(j,i+k))] \\
+&=\sum_{j=0}^{d_{model}-1}cos(f(j,(t-(t+k))))\\
+&=\sum_{j=0}^{d_{model}-1}cos(f(j,-k))
+\end{aligned}</script><p>发现如果没有$W_q$和$W_k$,位置距离为$k$的两个单词的同一维度只和相对位置有关，即包含了相对位置信息，但是加上这两个矩阵之后这种相对信息不复存在，但是在学习的过程中可以学出来，比如学到$W_qW_k=E$，这种相对位置信息就完全恢复了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import math</span><br><span class="line"></span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line">flag = 0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def attention_scores(d_model, t, k):</span><br><span class="line">    def get_angle(pos, i):</span><br><span class="line">        return pos / math.pow(10000, 2 * i / d_model)</span><br><span class="line"></span><br><span class="line">    angles1 = map(lambda x: get_angle(t, x), range(d_model // 2))</span><br><span class="line">    angles2 = map(lambda x: get_angle(t + k, x), range(d_model // 2))</span><br><span class="line">    result1 = list()</span><br><span class="line">    for angle in list(angles1):</span><br><span class="line">        result1.append(math.sin(angle))</span><br><span class="line">        result1.append(math.cos(angle))</span><br><span class="line">    result2 = list()</span><br><span class="line">    for angle in list(angles2):</span><br><span class="line">        result2.append(math.sin(angle))</span><br><span class="line">        result2.append(math.cos(angle))</span><br><span class="line">    result1 = np.asarray(result1)</span><br><span class="line">    result2 = np.asarray(result2)</span><br><span class="line">    if flag == 0:</span><br><span class="line">        return sum(result1 * result2)</span><br><span class="line">    elif flag == 1:</span><br><span class="line">        W1 = np.random.normal(size=(128, 256))</span><br><span class="line">        W2 = np.random.normal(size=(256, 128))</span><br><span class="line">        W = np.dot(W1, W2)</span><br><span class="line">        return sum(np.dot(result1.T, W) * result2)</span><br><span class="line">    else:</span><br><span class="line">        W = np.identity(128)</span><br><span class="line">        return sum(np.dot(result1.T, W) * result2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    result = list()</span><br><span class="line">    for pos in range(-50, 50):</span><br><span class="line">        result.append(attention_scores(d_model=128, t=64, k=pos))</span><br><span class="line">    data = pd.Series(result)</span><br><span class="line">    data.plot()</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<p>上诉代码表示第$64$个数据的位置向量和他前后各50个数据范围内的位置向量$attention$值 ,flag=0表示$U_t^T U_{t+k}$,flag=1表示$U_t^TWU_{t+k}$,flag=2表示$U_t^T E U_{t+k}$,$E$表示单位向量,运行代码可以看出flag=0/2图形对称有规律，flag=1图形毫无规律。</p>
+</blockquote>
+</blockquote>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>1.每一个<code>self-Attention</code>都维护一个自己的$W_Q$,$W_K$,$W_V$,也就是生成<code>Q</code>,<code>K</code>,<code>V</code>的全连接神经网络参数,即每个<code>cell</code>的这三个值是不同的.<br>2.在<code>encoder</code>阶段的最后一个<code>encoder cell</code>会将生成的<code>K</code>和<code>V</code>传递给<code>decoder</code>阶段每个<code>decoder cell</code>的<code>encoder-decoder-Multi-Attention</code>使用.而<code>encoder-decoder-Multi-Attention</code>使用的<code>Q</code>是<code>Mask-self-Multi-Attention</code>输出的.<br>3.<code>decoder</code>阶段<code>Mask-self-Multi-Attention</code>用来Attention翻译过的句子,<code>encoder-decoder-Multi-Attention</code>用来Attention原文.</p>
+<ol>
+<li>在代码中,的多头 <code>Multi-Attention</code> 的实现实际上每个头把维度给均分了,并不是每个头都 attention 所有的维度。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">class MultiHeadAttention(tf.keras.layers.Layer):</span><br><span class="line">    def __init__(self, d_model, num_heads):</span><br><span class="line">        super(MultiHeadAttention, self).__init__()</span><br><span class="line">        self.num_heads = num_heads</span><br><span class="line">        self.d_model = d_model</span><br><span class="line">        self.depth = d_model // self.num_heads</span><br><span class="line">        self.wq = tf.keras.layers.Dense(d_model)</span><br><span class="line">        self.wk = tf.keras.layers.Dense(d_model)</span><br><span class="line">        self.wv = tf.keras.layers.Dense(d_model)</span><br><span class="line">        self.dense = tf.keras.layers.Dense(d_model)</span><br><span class="line"></span><br><span class="line">    def split_heads(self, x, batch_size):</span><br><span class="line">        x = tf.reshape(x, (batch_size, -1, self.num_heads, self.depth))</span><br><span class="line">        return tf.transpose(x, perm=[0, 2, 1, 3])</span><br><span class="line"></span><br><span class="line">    def call(self, v, k, q, mask):</span><br><span class="line">        batch_size = tf.shape(q)[0]</span><br><span class="line">        q = self.wq(q)  # (batch_size, seq_len, d_model)</span><br><span class="line">        k = self.wk(k)  # (batch_size, seq_len, d_model)</span><br><span class="line">        v = self.wv(v)  # (batch_size, seq_len, d_model)</span><br><span class="line">        q = self.split_heads(q, batch_size)  # (batch_size, num_heads, seq_len_q, depth)</span><br><span class="line">        k = self.split_heads(k, batch_size)  # (batch_size, num_heads, seq_len_k, depth)</span><br><span class="line">        v = self.split_heads(v, batch_size)  # (batch_size, num_heads, seq_len_v, depth)</span><br><span class="line">        scaled_attention, attention_weights = self.scaled_dot_product_attention(q, k, v, mask)</span><br><span class="line">        scaled_attention = tf.transpose(scaled_attention, perm=[0, 2, 1, 3])</span><br><span class="line">        concat_attention = tf.reshape(scaled_attention, (batch_size, -1, self.d_model))</span><br><span class="line">        output = self.dense(concat_attention)  # (batch_size, seq_len_q, d_model)</span><br><span class="line">        return output, attention_weights</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-19T18:01:25.966Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/04/05/transformer/" target="_blank" rel="external">https://lingyixia.github.io/2019/04/05/transformer/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Attention/">Attention</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/04/05/transformer/&title=《Transformer》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/05/transformer/&title=《Transformer》 — 灵翼俠的个人博客&source=本文章只用于自己记录,详细内容好多博客已经讲的很清楚了。参考博客1参考博客2参考博客3参考平博客(最佳)残差网络我的实现" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/04/05/transformer/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Transformer》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/04/05/transformer/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/04/05/transformer/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/04/08/SVM/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">SVM</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/04/02/Attention/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Attention小结</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/04/05/transformer/&title=《Transformer》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/05/transformer/&title=《Transformer》 — 灵翼俠的个人博客&source=本文章只用于自己记录,详细内容好多博客已经讲的很清楚了。参考博客1参考博客2参考博客3参考平博客(最佳)残差网络我的实现" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/04/05/transformer/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Transformer》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/04/05/transformer/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/04/05/transformer/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3a0YrDMAxE0fz/T6ewT4VSe2bklLV8/VSW1s7JgpBkXZe87r/1/vl96d/Rd76eWDBgwNiWcQ/X52Hj3357IP0Rx6/j6z4wYMA4gJFtN96hsr/+WxgwYMBwA64eduvnwoABA4YecLPidvwXGDBgwMiKWOUwhefutrgWhwEDxoaM7GLgN58fv9+AAQPGv2fc5honZ5WryruwYMCA0ZvhPtD4m0pbf5w4ZnvCgAGjN0MvPt2SchVJShZhwIDRmlE5clUAzUY0Jl1DGDBgtGO4yZ87bKEPgWUJKAwYME5grGqc1QcswjELGDBgtGboA15Zo02P95UhMxgwYPRmuIVldrzy6Pr3J1eYMGDAaMrIGmeVoFkpksNSFgYMGJszstGKSkNNb/cbFwwwYMA4kpENZCgpnT5CYbQCYcCA0ZShF5yVEvTxi0wYMGC0ZugPpze/3EQwG9EI3zEMGDA2ZLgP4Q6NKW07d3TDfiswYMDYnKFslF1JKozKKNjkZgMGDBiNGJUULStTK6ln2G6DAQNGC4YeLvWD3fCtICdzbTBgwGjKcAcjsiPXXmdO/icwYMBox8hC4apArAxwSGkoDBgwWjP09VwSmZXEMGDAOI2hl5TGbUP2tqJUFQYMGOcwVo2IueF7WdCHAQMGDL1BL5Smbvlqz4zAgAHjeEYWcCttO/s+FgYMGE0Z+uhDNhLhNuPsVwYDBozWjKyArFwuugnlMgwMGDD2Y7wAYwLbGXNmymUAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>

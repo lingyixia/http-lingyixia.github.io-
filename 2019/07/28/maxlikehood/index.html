@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>顿悟最大熵 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="机器学习">
+    <meta name="description" content="虽然以前也了解最大熵模型，甚至以为自己完全理解了最大熵,知道今天才发现我以前都回了点啥。。。。今天发现自己顿悟了一下，特此记录，希望能给看到的人一点帮助，再次膜拜孔圣人的远见”温故而知新，可以为师矣.”(未完待续)   从最大熵思想开始其实在我看来，所谓的最大熵思想就是对已知的条件充分考虑,对未知的条件不做任何假设,这就是最大熵的真谛. 这就是最大熵模型5个海贼团$A、B、C、D、E$去争夺罗">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="顿悟最大熵">
+<meta property="og:url" content="https://lingyixia.github.io/2019/07/28/maxlikehood/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="虽然以前也了解最大熵模型，甚至以为自己完全理解了最大熵,知道今天才发现我以前都回了点啥。。。。今天发现自己顿悟了一下，特此记录，希望能给看到的人一点帮助，再次膜拜孔圣人的远见”温故而知新，可以为师矣.”(未完待续)   从最大熵思想开始其实在我看来，所谓的最大熵思想就是对已知的条件充分考虑,对未知的条件不做任何假设,这就是最大熵的真谛. 这就是最大熵模型5个海贼团$A、B、C、D、E$去争夺罗">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-09-19T18:01:25.960Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="顿悟最大熵">
+<meta name="twitter:description" content="虽然以前也了解最大熵模型，甚至以为自己完全理解了最大熵,知道今天才发现我以前都回了点啥。。。。今天发现自己顿悟了一下，特此记录，希望能给看到的人一点帮助，再次膜拜孔圣人的远见”温故而知新，可以为师矣.”(未完待续)   从最大熵思想开始其实在我看来，所谓的最大熵思想就是对已知的条件充分考虑,对未知的条件不做任何假设,这就是最大熵的真谛. 这就是最大熵模型5个海贼团$A、B、C、D、E$去争夺罗">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">顿悟最大熵</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">顿悟最大熵</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-07-28T07:27:59.000Z" itemprop="datePublished" class="page-time">
+  2019-07-28
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/数学/">数学</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#从最大熵思想开始"><span class="post-toc-number">1.</span> <span class="post-toc-text">从最大熵思想开始</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#这就是最大熵模型"><span class="post-toc-number">2.</span> <span class="post-toc-text">这就是最大熵模型</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#看看公式"><span class="post-toc-number">3.</span> <span class="post-toc-text">看看公式</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#充分考虑"><span class="post-toc-number">4.</span> <span class="post-toc-text">充分考虑</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#最大熵模型"><span class="post-toc-number">5.</span> <span class="post-toc-text">最大熵模型</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#最大熵模型求解"><span class="post-toc-number">6.</span> <span class="post-toc-text">最大熵模型求解</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#最大似然估计"><span class="post-toc-number">7.</span> <span class="post-toc-text">最大似然估计</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#从最大熵模型到逻辑回归"><span class="post-toc-number">8.</span> <span class="post-toc-text">从最大熵模型到逻辑回归</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#再到最大似然估计"><span class="post-toc-number">9.</span> <span class="post-toc-text">再到最大似然估计</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#从定义看开始"><span class="post-toc-number">10.</span> <span class="post-toc-text">从定义看开始</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-maxlikehood"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">顿悟最大熵</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-07-28 15:27:59" datetime="2019-07-28T07:27:59.000Z"  itemprop="datePublished">2019-07-28</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/数学/">数学</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<blockquote>
+<p>虽然以前也了解最大熵模型，甚至以为自己完全理解了最大熵,知道今天才发现我以前都回了点啥。。。。今天发现自己顿悟了一下，特此记录，希望能给看到的人一点帮助，再次膜拜孔圣人的远见”温故而知新，可以为师矣.”(未完待续)</p>
+</blockquote>
+</blockquote>
+<h1 id="从最大熵思想开始"><a href="#从最大熵思想开始" class="headerlink" title="从最大熵思想开始"></a>从最大熵思想开始</h1><p>其实在我看来，所谓的最大熵思想就是对已知的条件<strong>充分考虑</strong>,对未知的条件<strong>不做任何假设</strong>,这就是最大熵的真谛.</p>
+<h1 id="这就是最大熵模型"><a href="#这就是最大熵模型" class="headerlink" title="这就是最大熵模型"></a>这就是最大熵模型</h1><p>5个海贼团$A、B、C、D、E$去争夺罗杰的宝藏,宝藏只有一份,问谁能得到?<br>我们给他建立的模型是<strong>均匀模型</strong>$P(X=A)=\frac{1}{6},P(X=B)=\frac{1}{6},P(X=C)=\frac{1}{6},P(X=D)=\frac{1}{6},P(X=E)=\frac{1}{6},P(X=6)=\frac{1}{6}$<br>我们为毛会建立这样的模型呢?因为均匀模型的<strong>熵最大</strong>,我们对这个5个海贼团一无所知,因此只能创建<strong>均匀模型</strong>来保证<strong>熵最大</strong>，这就是<strong>最大熵</strong>的一个最简单应用</p>
+<p>5个海贼团$A、B、C、D、E$去争夺罗杰的宝藏,我们已知:$A$得到宝藏的概率和$B$一样,都是$\frac{1}{10}$,$C$和$D$一样,都是$\frac{3}{10}$,而$E$就比较牛逼了,他的概率是$\frac{5}{10},因为他叫路飞$,宝藏只有一份,问谁能得到?<br>现在我们有了条件，就不能简单的创建<strong>均匀模型</strong>了,因为此时我们要找的模型不是$P(X,\theta)$,而是$P(Y|X,\theta)$,我们需要的是$P(Y|X,\theta)$的熵最大，这便是<strong>最大熵模型</strong></p>
+<h1 id="看看公式"><a href="#看看公式" class="headerlink" title="看看公式"></a>看看公式</h1><p>已知:$T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N) }$<br>目标:运用最大熵原理找最大熵模型<br>由上诉<strong>最大熵模型</strong>的由来我们很容易得出公式,不是要找一个模型,在$X$的条件下这个模型的$P(Y|X,\theta)$的熵最大么,很明显这是个条件熵呀,那么这个模型在这份数据上的条件熵的公式:</p>
+<script type="math/tex; mode=display">
+H(Y|X) = \sum_{x \in X} \widetilde{P}(x)H(Y|X=x)) \tag{1}</script><p>很容易就得到了(其实想想交叉熵的公式很容易明白)<br>现在我们的目标确定了,我们要从<script type="math/tex">P(Y|X,\theta_1)，P(Y|X,\theta_2)，P(Y|X,\theta_3)，P(Y|X,\theta_4),,,</script>很多的模型中找到一个模型,这个模型<strong>充分考虑</strong>了已知数据$T$,而且对未知<strong>不做任何假设</strong>，<strong>不做任何假设</strong>解决了,我们让公式$(1)$要尽量大即可,那么<strong>充分考虑</strong>已知数据要怎样表示呢?说到这有人可能会有些思绪了,其实就是从$T$中找一个用来表示<strong>充分考虑</strong>已知条件的约束,让公式$(1)$在这个约数下尽量大.找到这个约束,一个最优化问题就出现了,现在我们的目的就是找这个约束。</p>
+<h1 id="充分考虑"><a href="#充分考虑" class="headerlink" title="充分考虑"></a>充分考虑</h1><p>现在我们想想，什么是<strong>充分考虑</strong>了已知数据呢?比如我们找到了一个模型$P(X|Y，\theta)$,要考量它是对已知数据的考虑程度,把这句话数学化就是考量这个模型对原始数据<strong>特征</strong>的考虑程度,怎样表示原始数据的特征呢?<strong>特征函数</strong>出现了！！！<br>我们一般用这样一个<strong>特征函数</strong>来描述<strong>特征</strong>:</p>
+<script type="math/tex; mode=display">
+f(x,y)=\begin{cases}
+1 这个x和y满足某一事实\\
+0 这个x和y不满足某一事实\\
+\end{cases}</script><p>那么这分数据特征的总值是多少呢?找期望呗</p>
+<script type="math/tex; mode=display">
+E_{\widetilde p}(f)=\sum_{x,y}\widetilde P(x,y)f(x,y) \tag{2}</script><p>谨记:$E_{\widetilde p}(f)$是原始数据的特征总值.<br>对于我们找的的模型$P(X|Y，\theta)$在这份数据的特征总值是多少呢?</p>
+<script type="math/tex; mode=display">
+E_{p}(f)=\sum_{x,y}\widetilde P(x)P(y|x,\theta)f(x,y) \tag{3}</script><p>要想让$P(Y|X,\theta)$<strong>充分考虑</strong>原始数据咋做呢?两个特征总值相等呗</p>
+<script type="math/tex; mode=display">
+E_{\widetilde p}(f)=E_{p}(f) \tag{4}</script><p>这就是约束条件了.</p>
+<h1 id="最大熵模型"><a href="#最大熵模型" class="headerlink" title="最大熵模型"></a>最大熵模型</h1><p>现在我们的目标确定了,我们要让公式$(1)$在约束条件为公式$(4)$的条件下越大越好,现在我们把公式$(1)$展开:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+H(Y|X) &= \sum_{x \in X} \widetilde{P}(x)H(Y|X=x)) \\
+&=-\sum_{x \in X}\widetilde P(x)\sum_{y \in Y}P(y|X=x) \log P(Y|X=x)\\
+&= -\sum_{x \in X}\sum_{y \in Y}\widetilde P(x)P(y|X=x) \log P(Y|X=x)\\
+&=-\sum_{x ,y}\widetilde P(x)P(y|x) \log P(y|x)
+\end{align}</script><p>所以最终公式为:</p>
+<script type="math/tex; mode=display">
+\max \quad \quad \quad -\sum_{x ,y}\widetilde P(x)P(y|x) \log P(y|x) \\
+s.t. \quad \quad \quad \quad E_{\widetilde p}(f_i)=E_{p}(f_i)  \quad i=1,2,3... \\ 
+\quad \quad \quad \quad \sum_{y}P(y|x)=1(隐含条件)</script><p>其中i代表第i个特征函数<br>完毕散花!!!!卧槽写完后发现写的好清楚…不信你看了还不明白！</p>
+<h1 id="最大熵模型求解"><a href="#最大熵模型求解" class="headerlink" title="最大熵模型求解"></a>最大熵模型求解</h1><p>1.首先引入拉格朗日乘子$w_0,w_1…$</p>
+<script type="math/tex; mode=display">
+\begin{align}
+L(P(y|x),w)&=-\sum_{x ,y}\widetilde P(x)P(y|x) \log P(y|x)+w_0(1-\sum_{y}P(y|x))+\sum_{i=0}^{n}w_i(E_{\widetilde p}(f_i)-E_{p}(f_i))\\
+&=\sum_{x ,y}\widetilde P(x)P(y|x) \log P(y|x)+w_0(1-\sum_{y}P(y|x))+\sum_{i=1}^n w_i(\sum_{x,y} w_i\widetilde P(x,y)f_i(x,y)-\sum_{x,y}\widetilde P(y|x)f_i(x,y))
+\end{align}</script><p>原始问题是:</p>
+<script type="math/tex; mode=display">
+\min_{P(y|x)} \max_wL(P(y|x),w)</script><p>对偶问题是:</p>
+<script type="math/tex; mode=display">
+\max_{w} \min_{P(y|x)}L(P(y|x),w)</script><p>令:</p>
+<script type="math/tex; mode=display">
+\Psi(w)=\min_{P(y|x)}L(P(y|x),w)</script><p>首先求内部:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial P(y|x,w)}{\partial P(y|x)}&=\sum_{x,y}\widetilde P(x)(\log P(y|x)+1)-\sum_y w_0 - \sum_{x,y}(\widetilde P(x)\sum_{i=1}^n w_if_i(x,y)) \\
+&=\sum_{x,y}\widetilde P(x)(\log P(y|x)+1-w_0-\sum_{i=1}^n w_if_i(x,y))
+\end{align}</script><p>令偏导数为0，得:</p>
+<script type="math/tex; mode=display">
+P(y|x)=e^{\sum_{i=1}^nw_if_i(x,y)+w_0-1}=\frac{e^{\sum_{i=1}^nw_if_i(x,y)}}{e^{1-w_0}}</script><p>因为有:</p>
+<script type="math/tex; mode=display">
+\sum_{y}P(y|x)=1</script><p>因此:</p>
+<script type="math/tex; mode=display">
+e^{1-w_0}=\sum_y e^{sum_{i=1}^n w_if_i(x,y)}=Z_w(x)</script><p>因此，最终求得:</p>
+<script type="math/tex; mode=display">
+P(y|x,\theta)=e^{\sum_{i=1}^nw_if_i(x,y)+w_0-1}=\frac{e^{\sum_{i=1}^nw_if_i(x,y)}}{\sum_y e^{sum_{i=1}^n w_if_i(x,y)}}</script><p><strong>注意看这里，这不就是Softmax么!!!!!!!!!!!!!!!!!!</strong><br>最后一步在求<br>$\max_w$$即可.</p>
+<h1 id="最大似然估计"><a href="#最大似然估计" class="headerlink" title="最大似然估计"></a>最大似然估计</h1><p>最大似然估计的一般公式为:</p>
+<script type="math/tex; mode=display">
+L(P_w)=log \prod_{x,y}P(y|x)^{\widetilde P(x,y)}=\sum_{x,y}\widetilde P(x,y)logP(x|y)</script><p>我们求得的最大熵模型为:</p>
+<script type="math/tex; mode=display">
+\Psi(w)=\sum_{x ,y}\widetilde P(x)P(y|x) \log P(y|x)+w_0(1-\sum_{y}P(y|x))+\sum_{i=1}^n w_i(\sum_{x,y} w_i\widetilde P(x,y)f_i(x,y)-\sum_{x,y}\widetilde P(y|x)f_i(x,y))</script><p>我们要证明这两个式子求得得结果是相同的,即:</p>
+<script type="math/tex; mode=display">
+P(y|x)=\frac{e^{\sum_{i=1}^nw_if_i(x,y)}}{e^{1-w_0}}</script><p>带入得:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+L(P_w)&=\sum_{x,y}\widetilde P(x,y)\sum_{i=1}^nw_if_i(x,y)-\sum_{x,y}\widetilde P(x,y)\log Z_w(x) \\
+&=\sum_{x,y}\widetilde P(x,y)\sum_{i=1}^nw_if_i(x,y)-\sum_x \widetilde P(x)\log Z_w(x) 
+\end{align}</script><p>得:</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\Psi(w)&=\sum_{x,y}^n\widetilde P(x,y)\sum_{i=1}^nw_if_i(x,y)+\sum_{x,y}\widetilde P(x)P(y|x)(\log P(y|x)-\sum_{i=1}w_if_i(x,y))\\
+&=\sum_{x,y}^n\widetilde P(x,y)\sum_{i=1}^nw_if_i(x,y)-\sum_{x,y}\widetilde P(x)P_w(y|x)\log Z_w(x)\\
+&=\sum_{x,y}^n\widetilde P(x,y)\sum_{i=1}^nw_if_i(x,y)-\sum_{x}\widetilde P(x)\log Z_w(x)
+\end{align}</script><p>因此，当带入$P(y|x,\theta)$时，得到得公式是相同得，因此求得的$\max_w$也一定相同.5236</p>
+<h1 id="从最大熵模型到逻辑回归"><a href="#从最大熵模型到逻辑回归" class="headerlink" title="从最大熵模型到逻辑回归"></a>从最大熵模型到逻辑回归</h1><p>二元逻辑回归的似然函数为:</p>
+<script type="math/tex; mode=display">
+L(\theta)=\prod_{i}^n[\pi(x_i)]^{y_i}[1-\pi(x_i)]^{1-y_i}</script><p>在这里，其实$\pi(x_i)$就是$P(Y=1|X=x_i)$而且$y_i$完全可以写成数据中$Y=1$的数量你说对也不对。。其实在细想还可以写成数据中$X=x_i,Y=1$的数量.所以可以写成:</p>
+<script type="math/tex; mode=display">
+L(\theta)=P(Y=1|X=x_i)^{N_{1x_i}}P(Y=0|X=x_i)^{N_{0x_i}}</script><p>在开个N(N是数据总量)次方得:</p>
+<script type="math/tex; mode=display">
+L(\theta)=P(Y=1|X=x_i)^\frac{N_{1x_i}}{N}P(Y=0|X=x_i)^\frac{N_{0x_i}}{N}</script><p>想想$\frac{N_{0x_i}}{N}$是啥,,,这不就是$\widetilde{P}(x,y)$么,,,而且开个N次方对优化也没有影响,拿这个公式和$公式(3)$去掉log,即$P(y|x)^{\widetilde{p}(x,y)}$对比一下，这不一样么.哈哈哈，有没有恍然大明白的感觉。</p>
+<h1 id="再到最大似然估计"><a href="#再到最大似然估计" class="headerlink" title="再到最大似然估计"></a>再到最大似然估计</h1><blockquote>
+<blockquote>
+<p>未完待续，先乱写一通最后整理<br>最大熵思想的核心思想其实是均匀分布,而均匀分布的熵最大,所以是最大熵思想</p>
+<p>今天重新梳理一下最大自然估计，本来以为很简单的东西发现内容好多都忘了，还明白了不少以前很模糊的知识点,特此记录.</p>
+</blockquote>
+</blockquote>
+<h1 id="从定义看开始"><a href="#从定义看开始" class="headerlink" title="从定义看开始"></a>从定义看开始</h1><blockquote>
+<blockquote>
+<p>设$X_1,X_2,…X_n$是来自总体的样本，$x_i,x_2,…x_n$是相对的观察值,则<strong>似然函数</strong>为:</p>
+<script type="math/tex; mode=display">
+L(\theta)= L(x_1,x_2,...x_n)=\begin{cases}
+\prod_{i=1}^np(x_i,\theta) 离散型(p是概率值)\\
+\prod_{i=1}^nf(x_i,\theta) 连续型(f是密度函数) \\
+\end{cases}</script><p>也就是把所有的概率连乘,而<strong>最大似然估计</strong>就是想求一个参数$\theta$,使得$L(\theta)$最大,这种情况下我们认为求得的模型是最好的.<br>已知:模型+样本+样本观察值(带入模型得概率)<br>求:模型参数</p>
+</blockquote>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-09-19T18:01:25.960Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2019/07/28/maxlikehood/" target="_blank" rel="external">https://lingyixia.github.io/2019/07/28/maxlikehood/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习/">机器学习</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/07/28/maxlikehood/&title=《顿悟最大熵》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/07/28/maxlikehood/&title=《顿悟最大熵》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/07/28/maxlikehood/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《顿悟最大熵》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/07/28/maxlikehood/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/07/28/maxlikehood/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/08/10/BPE/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">BPE 和 WordPiece</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/07/27/greedy/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">贪心</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/07/28/maxlikehood/&title=《顿悟最大熵》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/07/28/maxlikehood/&title=《顿悟最大熵》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2019/07/28/maxlikehood/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《顿悟最大熵》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/07/28/maxlikehood/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2019/07/28/maxlikehood/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aS3LDIBAFQN//0s42i0h+M4NTJWhWKQcLWgvMfF6veLxvx+85V/Pvn3n1yeKBgYHxWEa+xfsFkm+945HvDQMD4xzG1bbu59zPj5a/XSuZj4GBgZFf+3oHbu/1YWBgYCSPSz6ZXBwxMDAw5qm0XlCaP+GLsTgGBsYDGXnW/f///kp9AwMD41GMd3FMkvurUnV/rIKBgbE1o7pMtc2iGvTm1z4MDIxzGJPUfxKm9o7daiIPAwNjb0a1ZDgJO5OyZZKYi343MDAwtmZMWism2+2VRQtfxsDAeCwjaY9YVTCoNlUs6BbBwMDYgpGkvXqNEcknqw5xDAyMvRl5UFotaiYvJX/TH0JcDAyMrRl500Ne2sz/m88p7w0DA2MjRlKMzB+XFw+qm466RTAwMDZlrApoe8doNYhtdpFgYGBswcibvSaNFMlr6h30GBgYpzF6B+IkGJ63mmFgYOzNSJJlPVKvhJAXAz78YmBgYGzEyI/LSbSYY5bF4hgYGNsxehe+Xvp+ct388IoxMDAOYORFyt5GE/aIioGBcQCjGpTmLa3VtfJ9FiJyDAyMxzLexTG5FM5TcpfPxMDA2Jqx6syuJvrnRc3ekY2BgfFcRn7Vq6bAekdktcyJgYFxDmPt+V1Nn1ULA5cHLgYGBkZQTqhurlcELT8IAwPjSEb1IpiXCnolVQwMjBMYk5JkdeuTpN6CdBsGBsYDGfkC1Y0mm5iH0BgYGFszfgCKKQPxNTyXgQAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>
