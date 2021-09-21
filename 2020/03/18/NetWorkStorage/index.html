@@ -29,7 +29,7 @@
 <meta property="og:description" content="都知道，无论使用什么框架，神经网络都是非常消耗显存的，那么，这些消耗的显存到底保存了什么？  从一个例子开始                                                                                                           标注解释:$z_i^k$:第$k$层第$i$个$feature$的输出(不经">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://lingyixia.github.io/img/fullnet.png">
-<meta property="og:updated_time" content="2021-09-21T06:24:00.634Z">
+<meta property="og:updated_time" content="2021-09-21T06:26:13.935Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="神经网络到底保存了什么">
 <meta name="twitter:description" content="都知道，无论使用什么框架，神经网络都是非常消耗显存的，那么，这些消耗的显存到底保存了什么？  从一个例子开始                                                                                                           标注解释:$z_i^k$:第$k$层第$i$个$feature$的输出(不经">
@@ -240,7 +240,7 @@
                 </div>
                 <div class="image-caption"></div>
             </figure>
-<p>标注解释:<br>$z_i^k$:第$k$层第$i$个$feature$的输出(不经过激活函数))<br>$a_i^k$：其值为$g(z<em>\i^k)$,$g(x)$为激活函数，这里把输入层数据$x_i$看作第0层。<br>$w\</em>{ij}^k$: 从第$k-1$层到第$k$层的传播权重<br>这里去掉了偏置权重$b$</p>
+<p>标注解释:<br>$z_i^k$:第$k$层第$i$个$feature$的输出(不经过激活函数))<br>$a_i^k$：其值为$g(z_\i^k)$,$g(x)$为激活函数，这里把输入层数据$x<em>i$看作第0层。<br>$w\</em>{ij}^k$: 从第$k-1$层到第$k$层的传播权重<br>这里去掉了偏置权重$b$</p>
 <h2 id="正向传播"><a href="#正向传播" class="headerlink" title="正向传播:"></a>正向传播:</h2><script type="math/tex; mode=display">
 \left\{
     \begin{aligned}
@@ -294,7 +294,7 @@ Loss=\frac{1}{2}\sum_{i=0}^n(y_i-a_i^2)^2 \tag{5}</script><p>下面开始计算�
     \frac{\partial L}{\partial z_3^1}=\frac{\partial L}{\partial a_3^1}g'(z_3^1)=(\frac{\partial L}{\partial z_1^2}w_{31}^2+\frac{\partial L}{\partial z_2^2}w_{32}^2)g'(z_3^1)
     \end{aligned}
 \right. \tag{10}</script><p>由(9)(10)可知，要求得$\frac{\partial L}{\partial z_j^k}$，需要$w_{ij}^k$和$z_i^k$。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>$\qquad$现在可以得出结论，在整个神经网络训练过程中，出于反向传播的需要，我们需要在正向传播的时候在显存中记录$a_i^k$、$w_{ij}^k$和$z_i^k$。但是由于我们常用的激活函数都是可逆的，即知道$a<em>i^k$能反算出$z_i^k$，因此也可以只保存$a_i^k$、$w\</em>{ij}^k$。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>$\qquad$现在可以得出结论，在整个神经网络训练过程中，出于反向传播的需要，我们需要在正向传播的时候在显存中记录$a_i^k$、$w_{ij}^k$和$z_i^k$。但是由于我们常用的激活函数都是可逆的，即知道$a_i^k$能反算出$z_i^k$，因此也可以只保存$a_i^k$、$w_{ij}^k$。</p>
 
         </div>
 
@@ -303,7 +303,7 @@ Loss=\frac{1}{2}\sum_{i=0}^n(y_i-a_i^2)^2 \tag{5}</script><p>下面开始计算�
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-09-21T06:24:00.634Z" itemprop="dateUpdated">2021-09-21 14:24:00</time>
+    最后更新时间：<time datetime="2021-09-21T06:26:13.935Z" itemprop="dateUpdated">2021-09-21 14:26:13</time>
 </span><br>
 
 
@@ -624,8 +624,8 @@ MathJax.Hub.Queue(function() {
         }
     });
 })();
-</script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 </html>
