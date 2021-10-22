@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>神经网络生成模型学习总结 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content>
+    <meta name="description" content="生成模型$\qquad$众所周知，神经网络是个判别模型，此处所指”生成模型”指的是功能性质，即利用神经网络生成我们需要的数据，比如对话生成/图像生成/语音生成。$\qquad$试想，我们现在想生成一个图片，需要怎么做呢？  需要知道我们要生成一个什么样图片,比如我们想生成一个卡通头像 需要找到类似所需卡通图片的很多卡通图像 用2中的所有图像训练一个模型 给3中的模型一个输入，得到所需卡通头像  A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="神经网络生成模型学习总结">
+<meta property="og:url" content="https://lingyixia.github.io/2021/10/20/NetWorkGenerator/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="生成模型$\qquad$众所周知，神经网络是个判别模型，此处所指”生成模型”指的是功能性质，即利用神经网络生成我们需要的数据，比如对话生成/图像生成/语音生成。$\qquad$试想，我们现在想生成一个图片，需要怎么做呢？  需要知道我们要生成一个什么样图片,比如我们想生成一个卡通头像 需要找到类似所需卡通图片的很多卡通图像 用2中的所有图像训练一个模型 给3中的模型一个输入，得到所需卡通头像  A">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lingyixia.github.io/img/autoregression.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/autoencoder.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/gan.png">
+<meta property="og:updated_time" content="2021-10-21T08:54:59.058Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="神经网络生成模型学习总结">
+<meta name="twitter:description" content="生成模型$\qquad$众所周知，神经网络是个判别模型，此处所指”生成模型”指的是功能性质，即利用神经网络生成我们需要的数据，比如对话生成/图像生成/语音生成。$\qquad$试想，我们现在想生成一个图片，需要怎么做呢？  需要知道我们要生成一个什么样图片,比如我们想生成一个卡通头像 需要找到类似所需卡通图片的很多卡通图像 用2中的所有图像训练一个模型 给3中的模型一个输入，得到所需卡通头像  A">
+<meta name="twitter:image" content="https://lingyixia.github.io/img/autoregression.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">神经网络生成模型学习总结</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">神经网络生成模型学习总结</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-10-20T15:59:19.000Z" itemprop="datePublished" class="page-time">
+  2021-10-20
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#生成模型"><span class="post-toc-number">1.</span> <span class="post-toc-text">生成模型</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#AutoRegression"><span class="post-toc-number">2.</span> <span class="post-toc-text">AutoRegression</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#AutoEncoder"><span class="post-toc-number">3.</span> <span class="post-toc-text">AutoEncoder</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#GAN"><span class="post-toc-number">4.</span> <span class="post-toc-text">GAN</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-NetWorkGenerator"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">神经网络生成模型学习总结</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-10-20 23:59:19" datetime="2021-10-20T15:59:19.000Z"  itemprop="datePublished">2021-10-20</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="生成模型"><a href="#生成模型" class="headerlink" title="生成模型"></a>生成模型</h1><p>$\qquad$众所周知，神经网络是个<strong>判别模型</strong>，此处所指”生成模型”指的是功能性质，即利用神经网络生成我们需要的数据，比如对话生成/图像生成/语音生成。<br>$\qquad$试想，我们现在想生成一个图片，需要怎么做呢？</p>
+<ol>
+<li>需要知道我们要生成一个什么样图片,比如我们想生成一个卡通头像</li>
+<li>需要找到类似所需卡通图片的很多卡通图像</li>
+<li>用2中的所有图像训练一个模型</li>
+<li>给3中的模型一个输入，得到所需卡通头像</li>
+</ol>
+<h1 id="AutoRegression"><a href="#AutoRegression" class="headerlink" title="AutoRegression"></a>AutoRegression</h1><p><img src="/img/autoregression.png"></p>
+<center>AutoRegression</center>
+
+<p>自回归是一种Step By Step的方式<br>优点：对对话/语音这类顺序明显的类别比较友好<br>缺点：</p>
+<ol>
+<li>对图像而言，很难确定一个好的生成顺序</li>
+<li>在inference阶段，当前步骤严重依赖前一步骤</li>
+<li>慢<h1 id="AutoEncoder"><a href="#AutoEncoder" class="headerlink" title="AutoEncoder"></a>AutoEncoder</h1><img src="/img/autoencoder.png"><br><center>AutoEncoder</center><br>优点:</li>
+<li>无需Step By Step，可以并行生成</li>
+<li>生成数据更规则，一板一眼。<br>缺点：loss是对元素级别的监督度量，因此模型泛化不够，两个非常接近的输入，可能输出天差地别。<h1 id="GAN"><a href="#GAN" class="headerlink" title="GAN"></a>GAN</h1><img src="/img/gan.png"><center>GAN</center></li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-10-21T08:54:59.058Z" itemprop="dateUpdated">2021-10-21 16:54:59</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2021/10/20/NetWorkGenerator/" target="_blank" rel="external">https://lingyixia.github.io/2021/10/20/NetWorkGenerator/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2021/10/20/NetWorkGenerator/&title=《神经网络生成模型学习总结》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2021/10/20/NetWorkGenerator/&title=《神经网络生成模型学习总结》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2021/10/20/NetWorkGenerator/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《神经网络生成模型学习总结》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2021/10/20/NetWorkGenerator/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2021/10/20/NetWorkGenerator/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2021/09/05/Lipschitz/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Lipschitz连续条件</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2021/10/20/NetWorkGenerator/&title=《神经网络生成模型学习总结》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2021/10/20/NetWorkGenerator/&title=《神经网络生成模型学习总结》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2021/10/20/NetWorkGenerator/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《神经网络生成模型学习总结》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2021/10/20/NetWorkGenerator/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2021/10/20/NetWorkGenerator/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3aS27DMAwFwNz/0i7QbeD4kXSKWhqtgsaNNFkw4uf1itfxu85ev6/3d3vP37wwMDAeyzg+rs8bHMWV756fDQMDYx9GEmSrIfXsuEnMzM+GgYGBcfZM/pf8Wpnsi4GBgVFNXPPQWYVhYGBg9JLYXjjupb5fzMUxMDAeyJg3Br73+k/7GxgYGP+S0Svr39UAqLY5T/fCwMBYmpGXvfKI17ss5jsWbrgYGBjLMe4aoai2AapN01MMBgbGooxe4EuucXkboBfKMTAw9mHk7cZ5alodI0u+pnLXFAMD44GMXjuwNxKRB99q+xMDA2NPRjXUVi9zo0OfJbEYGBhLM6r3q/zohbL+JNBjYGAszej9c16Sy8t5vXYpBgbGPoxJMpmH5mqzoTy0gYGBsShjMhgxuTLmCW0UuDEwMDZj5MlnklJORjHy8Q4MDIwdGNV0ND9crwBXbQ9gYGCszZh83GuwJm2Di90xMDC2YSThtTdyWg3Qn3e8CLgYGBhLMJJtqgW46lHyQHzRGMDAwNiA8Y2hit7QRjWgY2BgrM1IAuXk4jhpf/bSbAwMjPUYR3FVU9b8+WprIfrdwMDAWILRK+UnzYPqiEb18zEwMHZjTILgfE2uobfFcgwMjIcwqkE2L9VdZM9xEnvxJAYGBkZxGGKS9FbTYAwMDIw81UwS0XtHLjAwMHZjVJPYpBBWDcFJYL253IaBgfEQRq8x0CvxJxfBaiMBAwNjacYPVxgUGR2Z0rYAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>

@@ -21,18 +21,18 @@
     
     
     <meta name="keywords" content="线性代数">
-    <meta name="description" content="参考1参考2参考3原理就是一句话,把原来的A个维度映射到(B">
+    <meta name="description" content="参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B">
 <meta name="keywords" content="线性代数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PCA">
 <meta property="og:url" content="https://lingyixia.github.io/2019/04/09/PCA/index.html">
 <meta property="og:site_name" content="灵翼俠的个人博客">
-<meta property="og:description" content="参考1参考2参考3原理就是一句话,把原来的A个维度映射到(B">
+<meta property="og:description" content="参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-09-19T18:01:25.947Z">
+<meta property="og:updated_time" content="2021-10-22T07:19:17.580Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PCA">
-<meta name="twitter:description" content="参考1参考2参考3原理就是一句话,把原来的A个维度映射到(B">
+<meta name="twitter:description" content="参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B">
     
         <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
     
@@ -200,6 +200,13 @@
 
 <div class="container body-wrap">
     
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#矩阵乘法"><span class="post-toc-number">1.</span> <span class="post-toc-text">矩阵乘法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#PCA"><span class="post-toc-number">2.</span> <span class="post-toc-text">PCA</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#PCA步骤总结"><span class="post-toc-number">3.</span> <span class="post-toc-text">PCA步骤总结</span></a></li></ol>
+        </nav>
+    </aside>
+
 
 <article id="post-PCA"
   class="post-article article-type-post fade" itemprop="blogPost">
@@ -222,11 +229,136 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p><a href="http://blog.codinglabs.org/articles/pca-tutorial.html" target="_blank" rel="noopener">参考1</a><br><a href="https://applenob.github.io/pca.html" target="_blank" rel="noopener">参考2</a><br><a href="https://blog.csdn.net/hjq376247328/article/details/80640544" target="_blank" rel="noopener">参考3</a><br>原理就是一句话,把原来的A个维度映射到(B<a)个维度。 <a id="more"></a></a)个维度。></p>
-<p>现在我尝试用最简答的方式回答PCA的原理,假设原始数据为$X$,$shape$=$n \times m$,它代表了$n$维,$m$个数据。<br>假设有一个由正交基安行组成的矩阵$P$,则令$Y=PX$,意义也就是将$X$的每一列映射到以$P$的每一行代表的基(坐标轴)上.如果现在$YY^T$是对角矩阵,那么也就是说$Y$数据的协方差为0,则正好是我们所需要的矩阵(不同维度不相关),现在我们就要找到$P$使得$YY^T$是对角矩阵:</p>
+            <p><a href="http://blog.codinglabs.org/articles/pca-tutorial.html" target="_blank" rel="noopener">参考1</a><br><a href="https://blog.csdn.net/hjq376247328/article/details/80640544" target="_blank" rel="noopener">参考2</a><br>原理就是一句话,把原来的$A$个维度映射到$(B<a)$个维度。 <a id="more"></a></a)$个维度。></p>
+<h1 id="矩阵乘法"><a href="#矩阵乘法" class="headerlink" title="矩阵乘法"></a>矩阵乘法</h1><p>首先阐述一下矩阵乘法的含义（以下都以矩阵和向量乘法为例，矩阵乘以矩阵类似）<br>举个例子：</p>
 <script type="math/tex; mode=display">
-\land = YY^T=PX(PX)^T=PXX^TP^T=P(XX^T)P^T</script><p>也就是说我们要找到$XX^T$的特征向量！！！<br>还要注意的是特征向量安行组成$P$,平常计算都是安列,这里是安行。<br>对于$\land$而言,对角线一定是$XX^T$的特征值,而此时的特征值一定是$Y$的方差,现在捋一捋。<br>$PX$表示对$X$更换坐标轴,坐标轴是$P$的每一行,而$PX$每一行的方差正好又是特征值,那么有结论:<br><strong>特征值对应的特征向量就是理想中想取得正确的坐标轴，而特征值就等于数据在旋转之后的坐标上对应维度上的方差。</strong><br>所以我们按照从大到小排序特征值.取的时候取方差大的特征值对应的特征向量。这样比如要求维度为1,那么我们取$P$第一行,这是方差最大的坐标,用它乘以$X$得到的就是使方差最大的数据变换。</p>
-<p>本来还想几句话了事，结果还是白话了半天。。。</p>
+\begin{gathered}               
+  \begin{bmatrix}
+    a & b & c\\
+    d & e & f\\
+    g & h & i 
+  \end{bmatrix} \times         
+  \begin{bmatrix}
+    x\\
+    y\\
+    z
+  \end{bmatrix}
+\end{gathered} \tag{1}</script><p>一个矩阵$A$和一个列向量$x$相乘。<br>我们知道，列向量各个维度上的值其实都是相应坐标系的<strong>坐标</strong>，因此该列向量也可以写作：</p>
+<script type="math/tex; mode=display">
+\begin{gathered}               
+  \begin{bmatrix}
+    x\\
+    y\\
+    z
+  \end{bmatrix}+x\begin{bmatrix}
+    1\\
+    0\\
+    0
+  \end{bmatrix}+y\begin{bmatrix}
+    0\\
+    1\\
+    0
+  \end{bmatrix}+z\begin{bmatrix}
+    0\\
+    0\\
+    1
+  \end{bmatrix}
+\end{gathered} \tag{2}</script><p>则公式$(1)$可以写作：</p>
+<script type="math/tex; mode=display">
+\begin{gathered}               
+  \begin{bmatrix}
+    a & b & c\\
+    d & e & f\\
+    g & h & i 
+  \end{bmatrix} \times         
+  (             
+  x\begin{bmatrix}
+    1\\
+    0\\
+    0
+  \end{bmatrix}+y\begin{bmatrix}
+    0\\
+    1\\
+    0
+  \end{bmatrix}+z\begin{bmatrix}
+    0\\
+    0\\
+    1
+  \end{bmatrix}
+)=             
+  x\begin{bmatrix}
+    a\\
+    d\\
+    g
+  \end{bmatrix}+y\begin{bmatrix}
+    b\\
+    e\\
+    h
+  \end{bmatrix}+z\begin{bmatrix}
+    c\\
+    f\\
+    i
+  \end{bmatrix}=\begin{bmatrix}
+    ax+by+zc\\
+    dx+ey+fz\\
+    gz+hy+iz \\
+  \end{bmatrix}
+\end{gathered} \tag{3}</script><p>则有：</p>
+<ol>
+<li>$x$的含义是：<strong>以$A$的列向量为基底的一个向量</strong>，$Ax$的含义是：<strong>以$A$的列向量为基底的的向量$x$在直角坐标下的坐标</strong>(要时刻谨记$Ax$是一个向量)。</li>
+<li>其实$Ax$才是准确定义向量的方式，其中$A$的列向量是基底，$x$是坐标，而我们平常所见的$x$其实是默认了$A$为单位矩阵。</li>
+<li>矩阵=线性变换,在直角坐标下，沿着矩阵$A$的列向量组成的矩阵，进行坐标为$x$的线性变换后的坐标。<br>由此可衍生以下三类问题：</li>
+<li>$Ax=?$: 求以$A$的列向量为基底的的向量$x$在直角坐标下的坐标。（直接计算）</li>
+<li>$A?=y$: 求直角坐标系中$y$在以$A$的列向量为基底的坐标系中的坐标。(求方程/基础解系)</li>
+<li>$?x=y$: 在某个坐标系中的向量$x$,其在直角坐标系下的坐标是$y$，求基底。</li>
+</ol>
+<h1 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h1><p>命题：对于$P<em>{b \times a}X</em>{a\times n}=Y<em>{b \times n}$，假设$X$已知，且$r(X)=a$，则有无数个$P</em>{b\times a}$可以得到满足题意的$Y<em>{b\times n}$，当$b \lt a$的时候，就实现了数据降维，PCA要做的就是，找出一个$P</em>{b\times a}$使得求出的$Y_{b\times a}$最好。<br>原理：<strong>最大方差理论</strong>：在信号处理中认为信号具有较大的方差，噪声有较小的方差(没找到出处)。在此理论下，PCA的目标有两个：</p>
+<ol>
+<li>$Y_{b\times n}$的列向量方差越大越好。</li>
+<li>$Y<em>{b\times n}$的不同列向量之间协方差越小越好(绝对值)。<br>那么当$Y</em>{b\times n}$满足什么条件时方差最大呢？<br>首先确定一下方差怎么计算，我们认为$n$个具有$m$个特征的向量${[x<em>{11},x</em>{12},x<em>{13},…,x</em>{1m}],[x<em>{21},x</em>{22},x<em>{23},…,x</em>{2m}],…[x<em>{1n},x</em>{n2},x<em>{3n},…,x</em>{3m}]}$的方差为：</li>
+</ol>
+<script type="math/tex; mode=display">
+Var_j=\frac{1}{n}\sum_{i=1}^n(x_{ij}-\mu_i)^2 \tag{4}</script><p>其中$\mu_i$是第$i$个分量的均值，可以看到，如果$\mu_i=0$那么公式(4)就可以写作：</p>
+<script type="math/tex; mode=display">
+Var_j=\frac{1}{n}\sum_{i=1}^nx_{ij}^2 \tag{4}</script><script type="math/tex; mode=display">
+Var=[Var_1,Var_2,Var_3,...Var_m]=\frac{1}{n}[\sum_{j=1}^nx_{1j}^2,\sum_{j=1}^nx_{2j}^2,\sum_{j=1}^nx_{3j}^2,...\sum_{j=1}^nx_{3m}^2] \tag{5}</script><p>同理,第$\alpha$个分量和第$\beta$个分量协方差为：</p>
+<script type="math/tex; mode=display">
+Cov(\alpha,\beta)=\frac{1}{n}\sum_{j=1}^nx_{j\alpha}x_{j\beta}</script><p>假设上诉$n$个具有$m$个特征的向量组成的矩阵为：</p>
+<script type="math/tex; mode=display">
+A=\begin{gathered}               
+  \begin{bmatrix}
+    x_{1,1} & x_{2,1} & x_{3,1} &...&x_{n,1}\\
+    x_{1,2} & x_{2,2} & x_{3,2} &...&x_{n,2}\\
+    x_{1,3} & x_{2,3} & x_{3,3} &...&x_{n,3} \\
+    ... &...&...&...&...\\
+    x_{1,m} & x_{2,m} & x_{3,m} &...&x_{n,m} \tag{6}
+  \end{bmatrix}     
+\end{gathered}</script><p>则</p>
+<script type="math/tex; mode=display">
+A\times A^T=\begin{gathered}               
+  \begin{bmatrix}
+    Var_1 & Cov(2,1) & Cov(3,1) &...&Cov(n,1)\\
+    Cov(1,2) & Var_2 & Cov(3,2) &...&Cov(n,2)\\
+    Cov(1,3) & Cov(2,3) & Var_3 &...&Cov(n,3) \\
+    ... &...&...&...&...\\
+    Cov(1,m) & Cov(2,m) & Cov(3,m) &...&Var_m
+  \end{bmatrix}      \tag{7}
+\end{gathered}</script><p>试想，$Cov(i,j)$的绝对值最小就是0，那么(7)其实就是一个对角矩阵，我们想要的$Y$其实就是满足$A$的矩阵。<br>现在重新命题：<br>对于$P<em>{b \times a}X</em>{a\times n}=Y<em>{b \times n}$，假设$X</em>{a\times n}$已知，且$r(X)=a$，则有无数个$P<em>{b\times a}$可以得到满足题意的$Y</em>{b\times n}$，当$b \lt a$的时候，就实现了数据降维，要求我们找出一个$P<em>{b\times a}$，使得求出的$Y</em>{b\times a} \times Y_{b\times a}^T=\land$。</p>
+<p>现在求解：</p>
+<script type="math/tex; mode=display">
+\land = YY^T=PX(PX)^T=PXX^TP^T=P(XX^T)P^T \tag{8}</script><p>我们知道$XX^T$是一个实对称矩阵，实对称矩阵有三条很重要的定理：</p>
+<ol>
+<li>一定可以对角化，而且特征值都是实数</li>
+<li>属于不同特征值的特征向量两两相交</li>
+<li>特征向量组成的矩阵正交化(施密特正交化+单位化)后所组成的矩阵依然可以将其对角化，特征值不变。</li>
+</ol>
+<p>从第三条看出，正交化后的矩阵，必然$P^T=P^{-1}$，因此我们最终得出结论：$P$其实就是$XX^T$的特征向量组成的矩阵经过正交化的矩阵。</p>
+<h1 id="PCA步骤总结"><a href="#PCA步骤总结" class="headerlink" title="PCA步骤总结"></a>PCA步骤总结</h1><ol>
+<li>对$X$每行零均值化(每行减去当行的均值)</li>
+<li>求实对称协方差矩阵$XX^T$</li>
+<li>求实对称协方差矩阵的各个特征值以及其相应的特征向量</li>
+<li>将从左向右按照特征值大小取$b$个组成的矩阵施密特正交化+单位化，得到$P$,$Y=PX$即为所求。</li>
+</ol>
 
         </div>
 
@@ -235,7 +367,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-09-19T18:01:25.947Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+    最后更新时间：<time datetime="2021-10-22T07:19:17.580Z" itemprop="dateUpdated">2021-10-22 15:19:17</time>
 </span><br>
 
 
@@ -281,7 +413,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/09/PCA/&title=《PCA》 — 灵翼俠的个人博客&source=参考1参考2参考3原理就是一句话,把原来的A个维度映射到(B" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/09/PCA/&title=《PCA》 — 灵翼俠的个人博客&source=参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -452,7 +584,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/09/PCA/&title=《PCA》 — 灵翼俠的个人博客&source=参考1参考2参考3原理就是一句话,把原来的A个维度映射到(B" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/09/PCA/&title=《PCA》 — 灵翼俠的个人博客&source=参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
