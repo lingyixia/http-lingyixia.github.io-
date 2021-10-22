@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-10-22T07:19:17.580Z">
+<meta property="og:updated_time" content="2021-10-22T07:24:54.630Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PCA">
 <meta name="twitter:description" content="参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B">
@@ -315,7 +315,7 @@
 <h1 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h1><p>命题：对于$P<em>{b \times a}X</em>{a\times n}=Y<em>{b \times n}$，假设$X$已知，且$r(X)=a$，则有无数个$P</em>{b\times a}$可以得到满足题意的$Y<em>{b\times n}$，当$b \lt a$的时候，就实现了数据降维，PCA要做的就是，找出一个$P</em>{b\times a}$使得求出的$Y_{b\times a}$最好。<br>原理：<strong>最大方差理论</strong>：在信号处理中认为信号具有较大的方差，噪声有较小的方差(没找到出处)。在此理论下，PCA的目标有两个：</p>
 <ol>
 <li>$Y_{b\times n}$的列向量方差越大越好。</li>
-<li>$Y<em>{b\times n}$的不同列向量之间协方差越小越好(绝对值)。<br>那么当$Y</em>{b\times n}$满足什么条件时方差最大呢？<br>首先确定一下方差怎么计算，我们认为$n$个具有$m$个特征的向量${[x<em>{11},x</em>{12},x<em>{13},…,x</em>{1m}],[x<em>{21},x</em>{22},x<em>{23},…,x</em>{2m}],…[x<em>{1n},x</em>{n2},x<em>{3n},…,x</em>{3m}]}$的方差为：</li>
+<li>$Y<em>{b\times n}$的不同行向量之间协方差越小越好(绝对值)。<br>那么当$Y</em>{b\times n}$满足什么条件时方差最大呢？<br>首先确定一下方差怎么计算，我们认为$n$个具有$m$个特征的向量${[x<em>{11},x</em>{12},x<em>{13},…,x</em>{1m}],[x<em>{21},x</em>{22},x<em>{23},…,x</em>{2m}],…[x<em>{1n},x</em>{n2},x<em>{3n},…,x</em>{3m}]}$的方差为：</li>
 </ol>
 <script type="math/tex; mode=display">
 Var_j=\frac{1}{n}\sum_{i=1}^n(x_{ij}-\mu_i)^2 \tag{4}</script><p>其中$\mu_i$是第$i$个分量的均值，可以看到，如果$\mu_i=0$那么公式(4)就可以写作：</p>
@@ -323,7 +323,7 @@ Var_j=\frac{1}{n}\sum_{i=1}^n(x_{ij}-\mu_i)^2 \tag{4}</script><p>其中$\mu_i$�
 Var_j=\frac{1}{n}\sum_{i=1}^nx_{ij}^2 \tag{4}</script><script type="math/tex; mode=display">
 Var=[Var_1,Var_2,Var_3,...Var_m]=\frac{1}{n}[\sum_{j=1}^nx_{1j}^2,\sum_{j=1}^nx_{2j}^2,\sum_{j=1}^nx_{3j}^2,...\sum_{j=1}^nx_{3m}^2] \tag{5}</script><p>同理,第$\alpha$个分量和第$\beta$个分量协方差为：</p>
 <script type="math/tex; mode=display">
-Cov(\alpha,\beta)=\frac{1}{n}\sum_{j=1}^nx_{j\alpha}x_{j\beta}</script><p>假设上诉$n$个具有$m$个特征的向量组成的矩阵为：</p>
+Cov(\alpha,\beta)=\frac{1}{n}\sum_{j=1}^nx_{j\alpha}x_{j\beta} \tag{6}</script><p>假设上诉$n$个具有$m$个特征的向量组成的矩阵为：</p>
 <script type="math/tex; mode=display">
 A=\begin{gathered}               
   \begin{bmatrix}
@@ -331,7 +331,7 @@ A=\begin{gathered}
     x_{1,2} & x_{2,2} & x_{3,2} &...&x_{n,2}\\
     x_{1,3} & x_{2,3} & x_{3,3} &...&x_{n,3} \\
     ... &...&...&...&...\\
-    x_{1,m} & x_{2,m} & x_{3,m} &...&x_{n,m} \tag{6}
+    x_{1,m} & x_{2,m} & x_{3,m} &...&x_{n,m} \tag{7}
   \end{bmatrix}     
 \end{gathered}</script><p>则</p>
 <script type="math/tex; mode=display">
@@ -342,11 +342,11 @@ A\times A^T=\begin{gathered}
     Cov(1,3) & Cov(2,3) & Var_3 &...&Cov(n,3) \\
     ... &...&...&...&...\\
     Cov(1,m) & Cov(2,m) & Cov(3,m) &...&Var_m
-  \end{bmatrix}      \tag{7}
+  \end{bmatrix}      \tag{8}
 \end{gathered}</script><p>试想，$Cov(i,j)$的绝对值最小就是0，那么(7)其实就是一个对角矩阵，我们想要的$Y$其实就是满足$A$的矩阵。<br>现在重新命题：<br>对于$P<em>{b \times a}X</em>{a\times n}=Y<em>{b \times n}$，假设$X</em>{a\times n}$已知，且$r(X)=a$，则有无数个$P<em>{b\times a}$可以得到满足题意的$Y</em>{b\times n}$，当$b \lt a$的时候，就实现了数据降维，要求我们找出一个$P<em>{b\times a}$，使得求出的$Y</em>{b\times a} \times Y_{b\times a}^T=\land$。</p>
 <p>现在求解：</p>
 <script type="math/tex; mode=display">
-\land = YY^T=PX(PX)^T=PXX^TP^T=P(XX^T)P^T \tag{8}</script><p>我们知道$XX^T$是一个实对称矩阵，实对称矩阵有三条很重要的定理：</p>
+\land = YY^T=PX(PX)^T=PXX^TP^T=P(XX^T)P^T \tag{9}</script><p>我们知道$XX^T$是一个实对称矩阵，实对称矩阵有三条很重要的定理：</p>
 <ol>
 <li>一定可以对角化，而且特征值都是实数</li>
 <li>属于不同特征值的特征向量两两相交</li>
@@ -367,7 +367,7 @@ A\times A^T=\begin{gathered}
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-10-22T07:19:17.580Z" itemprop="dateUpdated">2021-10-22 15:19:17</time>
+    最后更新时间：<time datetime="2021-10-22T07:24:54.630Z" itemprop="dateUpdated">2021-10-22 15:24:54</time>
 </span><br>
 
 
@@ -690,8 +690,8 @@ MathJax.Hub.Queue(function() {
         }
     });
 })();
-</script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 </html>
