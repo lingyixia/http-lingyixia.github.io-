@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://lingyixia.github.io/img/autoregression.png">
 <meta property="og:image" content="https://lingyixia.github.io/img/autoencoder.png">
 <meta property="og:image" content="https://lingyixia.github.io/img/gan.png">
-<meta property="og:updated_time" content="2021-10-21T08:54:59.058Z">
+<meta property="og:updated_time" content="2021-10-23T11:15:41.811Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="神经网络生成模型学习总结">
 <meta name="twitter:description" content="生成模型$\qquad$众所周知，神经网络是个判别模型，此处所指”生成模型”指的是功能性质，即利用神经网络生成我们需要的数据，比如对话生成/图像生成/语音生成。$\qquad$试想，我们现在想生成一个图片，需要怎么做呢？  需要知道我们要生成一个什么样图片,比如我们想生成一个卡通头像 需要找到类似所需卡通图片的很多卡通图像 用2中的所有图像训练一个模型 给3中的模型一个输入，得到所需卡通头像  A">
@@ -242,9 +242,24 @@
 <ol>
 <li>对图像而言，很难确定一个好的生成顺序</li>
 <li>在inference阶段，当前步骤严重依赖前一步骤</li>
-<li>慢<h1 id="AutoEncoder"><a href="#AutoEncoder" class="headerlink" title="AutoEncoder"></a>AutoEncoder</h1><img src="/img/autoencoder.png"><br><center>AutoEncoder</center><br>优点:</li>
+<li>慢<h1 id="AutoEncoder"><a href="#AutoEncoder" class="headerlink" title="AutoEncoder"></a>AutoEncoder</h1><img src="/img/autoencoder.png"><center>AutoEncoder</center>
+
+</li>
+</ol>
+<p>优点:</p>
+<ol>
 <li>无需Step By Step，可以并行生成</li>
-<li>生成数据更规则，一板一眼。<br>缺点：loss是对元素级别的监督度量，因此模型泛化不够，两个非常接近的输入，可能输出天差地别。<h1 id="GAN"><a href="#GAN" class="headerlink" title="GAN"></a>GAN</h1><img src="/img/gan.png"><center>GAN</center></li>
+<li>生成数据更规则，一板一眼。</li>
+</ol>
+<p>缺点：loss是对元素级别的监督度量，全局信息关注不足，因此模型泛化不够，两个非常接近的输入，可能输出天差地别。</p>
+<h1 id="GAN"><a href="#GAN" class="headerlink" title="GAN"></a>GAN</h1><p><img src="/img/gan.png"></p>
+<p><center>GAN</center></p>
+<ol>
+<li>从任意分布（如高斯分布）sample一个向量，输入Generator得到和所需图片相同size的输出</li>
+<li>把1中的输出当作副样本，从训练数据中sample一个正样本，以二分类的形式训练Discriminator(freeze Generator)。</li>
+<li>重新sample一个向量，输入Generator得到和所需图片相同size的输出，将其当作正样本输入Discriminator，计算loss 训练Generator(freeze Discriminator)<br>上诉三个步骤是一个轮次。<br>这里面有两个问题：</li>
+<li>为什么Generator不自己学？<br>如果这样做的话训练应该是这样一个流程：<br>从任意分布（如高斯分布）sample一个向量，输入Generator得到和所需图片相同size的输出，从训练数据中sample一个图像，和该输出计算loss并反向传播。<br>答：Generatory自己学其实就是训练AutoDecoder的Decoder部分，这样计算loss的时候只是对元素级别的监督度量，全局信息关注不足。</li>
+<li>为什么</li>
 </ol>
 
         </div>
@@ -254,7 +269,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-10-21T08:54:59.058Z" itemprop="dateUpdated">2021-10-21 16:54:59</time>
+    最后更新时间：<time datetime="2021-10-23T11:15:41.811Z" itemprop="dateUpdated">2021-10-23 19:15:41</time>
 </span><br>
 
 
@@ -568,8 +583,8 @@ MathJax.Hub.Queue(function() {
         }
     });
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</script>
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>

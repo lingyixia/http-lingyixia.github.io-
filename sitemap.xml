@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://lingyixia.github.io/2019/04/09/PCA/</loc>
+    <loc>https://lingyixia.github.io/2019/09/23/difference/</loc>
     
-    <lastmod>2021-10-22T07:35:04.165Z</lastmod>
+    <lastmod>2021-10-23T11:37:55.711Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://lingyixia.github.io/2021/10/20/NetWorkGenerator/</loc>
     
-    <lastmod>2021-10-21T08:54:59.058Z</lastmod>
+    <lastmod>2021-10-23T11:15:41.811Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://lingyixia.github.io/2019/04/09/PCA/</loc>
+    
+    <lastmod>2021-10-22T07:35:04.165Z</lastmod>
     
   </url>
   
@@ -72,13 +79,6 @@
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/links/index.html</loc>
-    
-    <lastmod>2021-09-19T18:01:25.967Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://lingyixia.github.io/about/index.html</loc>
     
     <lastmod>2021-09-19T18:01:25.967Z</lastmod>
@@ -87,6 +87,13 @@
   
   <url>
     <loc>https://lingyixia.github.io/categories/index.html</loc>
+    
+    <lastmod>2021-09-19T18:01:25.967Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://lingyixia.github.io/links/index.html</loc>
     
     <lastmod>2021-09-19T18:01:25.967Z</lastmod>
     
@@ -240,13 +247,6 @@
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/</loc>
-    
-    <lastmod>2021-09-19T18:01:25.962Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://lingyixia.github.io/2019/03/13/niudunanddescent/</loc>
     
     <lastmod>2021-09-19T18:01:25.962Z</lastmod>
@@ -261,7 +261,7 @@
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/2019/02/27/optimize/</loc>
+    <loc>https://lingyixia.github.io/2019/03/10/neuralNetWorkTips/</loc>
     
     <lastmod>2021-09-19T18:01:25.962Z</lastmod>
     
@@ -269,6 +269,13 @@
   
   <url>
     <loc>https://lingyixia.github.io/2019/05/29/otherProblems/</loc>
+    
+    <lastmod>2021-09-19T18:01:25.962Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://lingyixia.github.io/2019/02/27/optimize/</loc>
     
     <lastmod>2021-09-19T18:01:25.962Z</lastmod>
     
@@ -303,14 +310,14 @@
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/2019/01/17/mongo/</loc>
+    <loc>https://lingyixia.github.io/2019/06/09/morals/</loc>
     
     <lastmod>2021-09-19T18:01:25.961Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/2019/06/09/morals/</loc>
+    <loc>https://lingyixia.github.io/2019/01/17/mongo/</loc>
     
     <lastmod>2021-09-19T18:01:25.961Z</lastmod>
     
@@ -415,14 +422,14 @@
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/2019/06/23/gametheory/</loc>
+    <loc>https://lingyixia.github.io/2019/01/11/gradientDescent/</loc>
     
     <lastmod>2021-09-19T18:01:25.958Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/2019/01/11/gradientDescent/</loc>
+    <loc>https://lingyixia.github.io/2019/06/23/gametheory/</loc>
     
     <lastmod>2021-09-19T18:01:25.958Z</lastmod>
     
@@ -457,13 +464,6 @@
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/2018/12/27/convex/</loc>
-    
-    <lastmod>2021-09-19T18:01:25.957Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://lingyixia.github.io/2019/01/23/cpp-array/</loc>
     
     <lastmod>2021-09-19T18:01:25.957Z</lastmod>
@@ -471,14 +471,21 @@
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/2019/05/26/bleu/</loc>
+    <loc>https://lingyixia.github.io/2018/12/27/convex/</loc>
+    
+    <lastmod>2021-09-19T18:01:25.957Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://lingyixia.github.io/2019/02/22/boosting/</loc>
     
     <lastmod>2021-09-19T18:01:25.951Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/2019/02/22/boosting/</loc>
+    <loc>https://lingyixia.github.io/2019/05/26/bleu/</loc>
     
     <lastmod>2021-09-19T18:01:25.951Z</lastmod>
     
@@ -506,6 +513,13 @@
   </url>
   
   <url>
+    <loc>https://lingyixia.github.io/2019/01/08/TwoCrossEntropy/</loc>
+    
+    <lastmod>2021-09-19T18:01:25.949Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://lingyixia.github.io/2019/04/11/Trees/</loc>
     
     <lastmod>2021-09-19T18:01:25.949Z</lastmod>
@@ -520,13 +534,6 @@
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/2019/01/08/TwoCrossEntropy/</loc>
-    
-    <lastmod>2021-09-19T18:01:25.949Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://lingyixia.github.io/2019/01/02/VimLearn/</loc>
     
     <lastmod>2021-09-19T18:01:25.949Z</lastmod>
@@ -534,14 +541,14 @@
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/2019/01/26/activationFunction/</loc>
+    <loc>https://lingyixia.github.io/2019/06/23/array/</loc>
     
     <lastmod>2021-09-19T18:01:25.949Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/2019/06/23/array/</loc>
+    <loc>https://lingyixia.github.io/2019/01/26/activationFunction/</loc>
     
     <lastmod>2021-09-19T18:01:25.949Z</lastmod>
     
@@ -667,13 +674,6 @@
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/2019/03/13/CnnSizeCalc/</loc>
-    
-    <lastmod>2021-09-19T18:01:25.945Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://lingyixia.github.io/2018/08/28/CommonLabel/</loc>
     
     <lastmod>2021-09-19T18:01:25.945Z</lastmod>
@@ -681,7 +681,7 @@
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/2019/06/23/DFSandBFS/</loc>
+    <loc>https://lingyixia.github.io/2019/03/13/CnnSizeCalc/</loc>
     
     <lastmod>2021-09-19T18:01:25.945Z</lastmod>
     
@@ -702,6 +702,13 @@
   </url>
   
   <url>
+    <loc>https://lingyixia.github.io/2019/06/23/DFSandBFS/</loc>
+    
+    <lastmod>2021-09-19T18:01:25.945Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://lingyixia.github.io/2019/06/23/Binary/</loc>
     
     <lastmod>2021-09-19T18:01:25.944Z</lastmod>
@@ -716,14 +723,14 @@
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/2019/05/01/CNNdevelopment/</loc>
+    <loc>https://lingyixia.github.io/2019/01/23/CNN/</loc>
     
     <lastmod>2021-09-19T18:01:25.944Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://lingyixia.github.io/2019/01/23/CNN/</loc>
+    <loc>https://lingyixia.github.io/2019/05/01/CNNdevelopment/</loc>
     
     <lastmod>2021-09-19T18:01:25.944Z</lastmod>
     
