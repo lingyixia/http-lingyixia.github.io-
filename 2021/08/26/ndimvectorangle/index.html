@@ -14,25 +14,25 @@
     
     
     
-    <title>n维空间任意两向量夹角分布 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <title>n维空间任意两向量几乎正交 | 灵翼俠的个人博客 | 不做搬运工</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
     <meta name="keywords" content>
-    <meta name="description" content="命题本文要证明的是高n维空间中，任意两个向量都几乎垂直，注意：不是两个向量垂直的概率大，而是”几乎”垂直，即夹角接近$\frac{π}{2}$。基本思路就是考虑两个随机向量的夹角$\theta$分布，然后求导得到概率密度，就可以看出在$\theta$在哪个范围内最大。 命题重定义随机两个向量不好求，我们可以先固定一个，让另一个随机即可，假设固定向量为： x=(1,0,...,0) \tag{1}随">
+    <meta name="description" content="命题本文要证明的是高n维空间中，任意两个向量都几乎正交，注意：不是两个向量垂直的概率大，而是”几乎”垂直，即夹角接近$\frac{π}{2}$。基本思路就是考虑两个随机向量的夹角$\theta$分布，然后求导得到概率密度，就可以看出在$\theta$在哪个范围内最大。 命题重定义随机两个向量不好求，我们可以先固定一个，让另一个随机即可，假设固定向量为： x=(1,0,...,0) \tag{1}随">
 <meta property="og:type" content="article">
-<meta property="og:title" content="n维空间任意两向量夹角分布">
+<meta property="og:title" content="n维空间任意两向量几乎正交">
 <meta property="og:url" content="https://lingyixia.github.io/2021/08/26/ndimvectorangle/index.html">
 <meta property="og:site_name" content="灵翼俠的个人博客">
-<meta property="og:description" content="命题本文要证明的是高n维空间中，任意两个向量都几乎垂直，注意：不是两个向量垂直的概率大，而是”几乎”垂直，即夹角接近$\frac{π}{2}$。基本思路就是考虑两个随机向量的夹角$\theta$分布，然后求导得到概率密度，就可以看出在$\theta$在哪个范围内最大。 命题重定义随机两个向量不好求，我们可以先固定一个，让另一个随机即可，假设固定向量为： x=(1,0,...,0) \tag{1}随">
+<meta property="og:description" content="命题本文要证明的是高n维空间中，任意两个向量都几乎正交，注意：不是两个向量垂直的概率大，而是”几乎”垂直，即夹角接近$\frac{π}{2}$。基本思路就是考虑两个随机向量的夹角$\theta$分布，然后求导得到概率密度，就可以看出在$\theta$在哪个范围内最大。 命题重定义随机两个向量不好求，我们可以先固定一个，让另一个随机即可，假设固定向量为： x=(1,0,...,0) \tag{1}随">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://lingyixia.github.io/img/nvector.jpeg">
-<meta property="og:updated_time" content="2021-09-19T18:01:25.961Z">
+<meta property="og:updated_time" content="2021-10-26T03:54:53.012Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="n维空间任意两向量夹角分布">
-<meta name="twitter:description" content="命题本文要证明的是高n维空间中，任意两个向量都几乎垂直，注意：不是两个向量垂直的概率大，而是”几乎”垂直，即夹角接近$\frac{π}{2}$。基本思路就是考虑两个随机向量的夹角$\theta$分布，然后求导得到概率密度，就可以看出在$\theta$在哪个范围内最大。 命题重定义随机两个向量不好求，我们可以先固定一个，让另一个随机即可，假设固定向量为： x=(1,0,...,0) \tag{1}随">
+<meta name="twitter:title" content="n维空间任意两向量几乎正交">
+<meta name="twitter:description" content="命题本文要证明的是高n维空间中，任意两个向量都几乎正交，注意：不是两个向量垂直的概率大，而是”几乎”垂直，即夹角接近$\frac{π}{2}$。基本思路就是考虑两个随机向量的夹角$\theta$分布，然后求导得到概率密度，就可以看出在$\theta$在哪个范围内最大。 命题重定义随机两个向量不好求，我们可以先固定一个，让另一个随机即可，假设固定向量为： x=(1,0,...,0) \tag{1}随">
 <meta name="twitter:image" content="https://lingyixia.github.io/img/nvector.jpeg">
     
         <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
@@ -157,7 +157,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">n维空间任意两向量夹角分布</div>
+        <div class="flex-col header-title ellipsis">n维空间任意两向量几乎正交</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -179,7 +179,7 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale" align="center">
-        <h1 class="title">n维空间任意两向量夹角分布</h1>
+        <h1 class="title">n维空间任意两向量几乎正交</h1>
         <h5 class="subtitle">
             
                 <time datetime="2021-08-26T06:29:23.000Z" itemprop="datePublished" class="page-time">
@@ -213,7 +213,7 @@
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">n维空间任意两向量夹角分布</h1>
+        <h1 class="post-card-title">n维空间任意两向量几乎正交</h1>
         <div class="post-meta">
             <time class="post-time" title="2021-08-26 14:29:23" datetime="2021-08-26T06:29:23.000Z"  itemprop="datePublished">2021-08-26</time>
 
@@ -230,7 +230,7 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="命题"><a href="#命题" class="headerlink" title="命题"></a>命题</h1><p>本文要证明的是高<strong>n维空间中，任意两个向量都几乎垂直</strong>，注意：不是两个向量垂直的概率大，而是”几乎”垂直，即夹角接近$\frac{π}{2}$。基本思路就是考虑两个随机向量的夹角$\theta$分布，然后求导得到概率密度，就可以看出在$\theta$在哪个范围内最大。</p>
+            <h1 id="命题"><a href="#命题" class="headerlink" title="命题"></a>命题</h1><p>本文要证明的是高<strong>n维空间中，任意两个向量都几乎正交</strong>，注意：不是两个向量垂直的概率大，而是”几乎”垂直，即夹角接近$\frac{π}{2}$。基本思路就是考虑两个随机向量的夹角$\theta$分布，然后求导得到概率密度，就可以看出在$\theta$在哪个范围内最大。</p>
 <h1 id="命题重定义"><a href="#命题重定义" class="headerlink" title="命题重定义"></a>命题重定义</h1><p>随机两个向量不好求，我们可以先固定一个，让另一个随机即可，假设固定向量为：</p>
 <script type="math/tex; mode=display">x=(1,0,...,0) \tag{1}</script><p>随机向量为：</p>
 <script type="math/tex; mode=display">y=(y_1,y_2,...,y_n) \tag{2}</script><p>现在我们把原命题重新定义为<strong>n维单位超球面上，任意一个点与原点组成的单位向量和$(1,0,0,…,0)$向量都几乎垂直</strong><br>直接计算可以得到:</p>
@@ -277,6 +277,8 @@ p_n(\theta)=P_n(\varphi_1<\theta)'=\frac{\Gamma(\frac{n}{2})}{\Gamma(\frac{n-1}{
                 </div>
                 <div class="image-caption"></div>
             </figure>
+<p>参考：<br><a href="https://spaces.ac.cn/archives/7076" target="_blank" rel="noopener">https://spaces.ac.cn/archives/7076</a><br><a href="https://zhuanlan.zhihu.com/p/379317902" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/379317902</a></p>
+
         </div>
 
         <blockquote class="post-copyright">
@@ -284,7 +286,7 @@ p_n(\theta)=P_n(\varphi_1<\theta)'=\frac{\Gamma(\frac{n}{2})}{\Gamma(\frac{n-1}{
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-09-19T18:01:25.961Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+    最后更新时间：<time datetime="2021-10-26T03:54:53.012Z" itemprop="dateUpdated">2021-10-26 11:54:53</time>
 </span><br>
 
 
@@ -318,7 +320,7 @@ p_n(\theta)=P_n(\varphi_1<\theta)'=\frac{\Gamma(\frac{n}{2})}{\Gamma(\frac{n-1}{
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2021/08/26/ndimvectorangle/&title=《n维空间任意两向量夹角分布》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2021/08/26/ndimvectorangle/&title=《n维空间任意两向量几乎正交》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -328,7 +330,7 @@ p_n(\theta)=P_n(\varphi_1<\theta)'=\frac{\Gamma(\frac{n}{2})}{\Gamma(\frac{n-1}{
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2021/08/26/ndimvectorangle/&title=《n维空间任意两向量夹角分布》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2021/08/26/ndimvectorangle/&title=《n维空间任意两向量几乎正交》 — 灵翼俠的个人博客&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -338,7 +340,7 @@ p_n(\theta)=P_n(\varphi_1<\theta)'=\frac{\Gamma(\frac{n}{2})}{\Gamma(\frac{n-1}{
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《n维空间任意两向量夹角分布》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2021/08/26/ndimvectorangle/&via=https://lingyixia.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《n维空间任意两向量几乎正交》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2021/08/26/ndimvectorangle/&via=https://lingyixia.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
@@ -489,7 +491,7 @@ p_n(\theta)=P_n(\varphi_1<\theta)'=\frac{\Gamma(\frac{n}{2})}{\Gamma(\frac{n-1}{
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2021/08/26/ndimvectorangle/&title=《n维空间任意两向量夹角分布》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2021/08/26/ndimvectorangle/&title=《n维空间任意两向量几乎正交》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -499,7 +501,7 @@ p_n(\theta)=P_n(\varphi_1<\theta)'=\frac{\Gamma(\frac{n}{2})}{\Gamma(\frac{n-1}{
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2021/08/26/ndimvectorangle/&title=《n维空间任意两向量夹角分布》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2021/08/26/ndimvectorangle/&title=《n维空间任意两向量几乎正交》 — 灵翼俠的个人博客&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -509,7 +511,7 @@ p_n(\theta)=P_n(\varphi_1<\theta)'=\frac{\Gamma(\frac{n}{2})}{\Gamma(\frac{n-1}{
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《n维空间任意两向量夹角分布》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2021/08/26/ndimvectorangle/&via=https://lingyixia.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《n维空间任意两向量几乎正交》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2021/08/26/ndimvectorangle/&via=https://lingyixia.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
@@ -605,8 +607,8 @@ MathJax.Hub.Queue(function() {
         }
     });
 })();
-</script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 </html>

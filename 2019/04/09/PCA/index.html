@@ -14,7 +14,7 @@
     
     
     
-    <title>PCA | 灵翼俠的个人博客 | 不做搬运工</title>
+    <title>PCA和LDA | 灵翼俠的个人博客 | 不做搬运工</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -24,14 +24,14 @@
     <meta name="description" content="参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B">
 <meta name="keywords" content="线性代数">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PCA">
+<meta property="og:title" content="PCA和LDA">
 <meta property="og:url" content="https://lingyixia.github.io/2019/04/09/PCA/index.html">
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-10-22T07:35:04.165Z">
+<meta property="og:updated_time" content="2021-10-26T03:45:35.626Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PCA">
+<meta name="twitter:title" content="PCA和LDA">
 <meta name="twitter:description" content="参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B">
     
         <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
@@ -156,7 +156,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">PCA</div>
+        <div class="flex-col header-title ellipsis">PCA和LDA</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -178,7 +178,7 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale" align="center">
-        <h1 class="title">PCA</h1>
+        <h1 class="title">PCA和LDA</h1>
         <h5 class="subtitle">
             
                 <time datetime="2019-04-09T03:27:13.000Z" itemprop="datePublished" class="page-time">
@@ -203,7 +203,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#矩阵乘法"><span class="post-toc-number">1.</span> <span class="post-toc-text">矩阵乘法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#PCA"><span class="post-toc-number">2.</span> <span class="post-toc-text">PCA</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#PCA步骤总结"><span class="post-toc-number">3.</span> <span class="post-toc-text">PCA步骤总结</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#矩阵乘法"><span class="post-toc-number">1.</span> <span class="post-toc-text">矩阵乘法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#PCA"><span class="post-toc-number">2.</span> <span class="post-toc-text">PCA</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#命题："><span class="post-toc-number">2.1.</span> <span class="post-toc-text">命题：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PCA步骤总结"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">PCA步骤总结</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#LDA"><span class="post-toc-number">3.</span> <span class="post-toc-text">LDA</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#命题"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">命题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">定义</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#null"><span class="post-toc-number">4.</span> <span class="post-toc-text">#</span></a></li></ol>
         </nav>
     </aside>
 
@@ -212,7 +212,7 @@
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">PCA</h1>
+        <h1 class="post-card-title">PCA和LDA</h1>
         <div class="post-meta">
             <time class="post-time" title="2019-04-09 11:27:13" datetime="2019-04-09T03:27:13.000Z"  itemprop="datePublished">2019-04-09</time>
 
@@ -312,7 +312,7 @@
 <li>$A?=y$: 求直角坐标系中$y$在以$A$的列向量为基底的坐标系中的坐标。(求方程/基础解系)</li>
 <li>$?x=y$: 在某个坐标系中的向量$x$,其在直角坐标系下的坐标是$y$，求基底。</li>
 </ol>
-<h1 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h1><p>命题：对于$P_{b \times a}X_{a\times n}=Y_{b \times n}$，假设$X$已知，且$r(X)=a$，则有无数个$P_{b\times a}$可以得到满足题意的$Y_{b\times n}$，当$b \lt a$的时候，就实现了数据降维，PCA要做的就是，找出一个$P_{b\times a}$使得求出的$Y_{b\times a}$最好。<br>原理：<strong>最大方差理论</strong>：在信号处理中认为信号具有较大的方差，噪声有较小的方差(没找到出处)。在此理论下，PCA的目标有两个：</p>
+<h1 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h1><h2 id="命题："><a href="#命题：" class="headerlink" title="命题："></a>命题：</h2><p>对于$P_{b \times a}X_{a\times n}=Y_{b \times n}$，假设$X$已知，且$r(X)=a$，则有无数个$P_{b\times a}$可以得到满足题意的$Y_{b\times n}$，当$b \lt a$的时候，就实现了数据降维，PCA要做的就是，找出一个$P_{b\times a}$使得求出的$Y_{b\times a}$最好。<br>原理：<strong>最大方差理论</strong>：在信号处理中认为信号具有较大的方差，噪声有较小的方差(没找到出处)。在此理论下，PCA的目标有两个：</p>
 <ol>
 <li>$Y_{b\times n}$的列向量方差越大越好。</li>
 <li>$Y_{b\times n}$的不同行向量之间协方差越小越好(绝对值)。<br>那么当$Y_{b\times n}$满足什么条件时方差最大呢？<br>首先确定一下方差怎么计算，我们认为$n$个具有$m$个特征的向量${[x_{11},x_{12},x_{13},…,x_{1m}],[x_{21},x_{22},x_{23},…,x_{2m}],…[x_{1n},x_{n2},x_{3n},…,x_{3m}]}$的方差为：</li>
@@ -353,13 +353,27 @@ A\times A^T=\begin{gathered}
 <li>特征向量组成的矩阵正交化(施密特正交化+单位化)后所组成的矩阵依然可以将其对角化，特征值不变。</li>
 </ol>
 <p>从第三条看出，正交化后的矩阵，必然$P^T=P^{-1}$，因此我们最终得出结论：$P$其实就是$XX^T$的特征向量组成的矩阵经过正交化的矩阵。</p>
-<h1 id="PCA步骤总结"><a href="#PCA步骤总结" class="headerlink" title="PCA步骤总结"></a>PCA步骤总结</h1><ol>
+<h2 id="PCA步骤总结"><a href="#PCA步骤总结" class="headerlink" title="PCA步骤总结"></a>PCA步骤总结</h2><ol>
 <li>对$X$每行零均值化(每行减去当行的均值)</li>
 <li>求实对称协方差矩阵$XX^T$</li>
 <li>求实对称协方差矩阵的各个特征值以及其相应的特征向量</li>
-<li>将从左向右按照特征值大小取$b$个组成的矩阵施密特正交化+单位化，得到$P$,$Y=PX$即为所求。</li>
+<li>将从左向右按照特征值大小取$b$个组成的矩阵施密特正交化+单位化，得到$P$,$Y=PX$即为所求。<h1 id="LDA"><a href="#LDA" class="headerlink" title="LDA"></a>LDA</h1><h2 id="命题"><a href="#命题" class="headerlink" title="命题"></a>命题</h2>对于一个有监督二分类问题，训练样本$X_1=[x_1^1,x_2^1,x_3^1,…],X_2=[x_1^2,x_2^2,x_3^2,…]$，其中$x_i^k$维度为$d$，我们要寻找一个投影方向$w$(同为$d$维),使得投影后的样本变为$y_i^k=w^Tx_i^k$。要求类间间距要大，类内间距要小。<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2>各类内均值向量:<script type="math/tex; mode=display">
+m_k=\frac{1}{N_{X_k}}\sum_{x_i^k\in X_k}x_i^k \tag{10}</script>类内离散度矩阵:<script type="math/tex; mode=display">
+S_k=\sum_{x_i^k\in X_k}(x_i^k-m_k)(x_i^k-m_k)^T \tag{11}</script>总类内离散度矩阵(二分类):<script type="math/tex; mode=display">
+S_w=S_1+S_2 \tag{12}</script>类间离散度:<script type="math/tex; mode=display">
+S_b=(m_1-m_2)(m_1-m_2)^T</script></li>
 </ol>
-
+<p>可以看出，$y_i^k$就是个标量，则投影后各类内均值为:</p>
+<script type="math/tex; mode=display">
+\widetilde m_k=\frac{1}{N_{X_k}}\sum_{x_i^k\in X_k}w^Tx_i^k \tag{13}</script><p>同理类内离散度为:</p>
+<script type="math/tex; mode=display">
+\widetilde S_k=\sum_{x_i^k\in X_k}(w^Tx_i^k-\widetilde m_k)^2 \tag{14}</script><p>总类内离散度：</p>
+<script type="math/tex; mode=display">
+\widetilde S_w= \widetilde S_1+\widetilde S_2 \tag{15}</script><p>类间离散度：</p>
+<script type="math/tex; mode=display">
+\widetilde S_b=(\widetilde m_1- \widetilde m_2)^2 \tag{16}</script><p>回到命题，我们就是想让$\widetilde S_b$越大越好，$\widetilde S_w$越小越好，于是可以定义优化函数公式(Fisher准则)：</p>
+<script type="math/tex; mode=display">
+maxJ(w)=\frac{\widetilde S_b}{\widetilde S_w}=\frac{w^TS_bw}{w^TS_ww} \tag{17}</script><h1 id><a href="#" class="headerlink" title="#"></a>#</h1>
         </div>
 
         <blockquote class="post-copyright">
@@ -367,7 +381,7 @@ A\times A^T=\begin{gathered}
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-10-22T07:35:04.165Z" itemprop="dateUpdated">2021-10-22 15:35:04</time>
+    最后更新时间：<time datetime="2021-10-26T03:45:35.626Z" itemprop="dateUpdated">2021-10-26 11:45:35</time>
 </span><br>
 
 
@@ -403,7 +417,7 @@ A\times A^T=\begin{gathered}
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/04/09/PCA/&title=《PCA》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/04/09/PCA/&title=《PCA和LDA》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -413,7 +427,7 @@ A\times A^T=\begin{gathered}
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/09/PCA/&title=《PCA》 — 灵翼俠的个人博客&source=参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/09/PCA/&title=《PCA和LDA》 — 灵翼俠的个人博客&source=参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -423,7 +437,7 @@ A\times A^T=\begin{gathered}
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《PCA》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/04/09/PCA/&via=https://lingyixia.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《PCA和LDA》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/04/09/PCA/&via=https://lingyixia.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
@@ -574,7 +588,7 @@ A\times A^T=\begin{gathered}
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/04/09/PCA/&title=《PCA》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2019/04/09/PCA/&title=《PCA和LDA》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -584,7 +598,7 @@ A\times A^T=\begin{gathered}
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/09/PCA/&title=《PCA》 — 灵翼俠的个人博客&source=参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2019/04/09/PCA/&title=《PCA和LDA》 — 灵翼俠的个人博客&source=参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -594,7 +608,7 @@ A\times A^T=\begin{gathered}
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《PCA》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/04/09/PCA/&via=https://lingyixia.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《PCA和LDA》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2019/04/09/PCA/&via=https://lingyixia.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
@@ -690,8 +704,8 @@ MathJax.Hub.Queue(function() {
         }
     });
 })();
-</script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 </html>
