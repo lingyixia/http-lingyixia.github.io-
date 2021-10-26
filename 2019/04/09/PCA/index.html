@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-10-26T03:45:35.626Z">
+<meta property="og:updated_time" content="2021-10-26T05:22:02.056Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PCA和LDA">
 <meta name="twitter:description" content="参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B">
@@ -203,7 +203,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#矩阵乘法"><span class="post-toc-number">1.</span> <span class="post-toc-text">矩阵乘法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#PCA"><span class="post-toc-number">2.</span> <span class="post-toc-text">PCA</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#命题："><span class="post-toc-number">2.1.</span> <span class="post-toc-text">命题：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PCA步骤总结"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">PCA步骤总结</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#LDA"><span class="post-toc-number">3.</span> <span class="post-toc-text">LDA</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#命题"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">命题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">定义</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#null"><span class="post-toc-number">4.</span> <span class="post-toc-text">#</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#矩阵乘法"><span class="post-toc-number">1.</span> <span class="post-toc-text">矩阵乘法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#PCA"><span class="post-toc-number">2.</span> <span class="post-toc-text">PCA</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#命题："><span class="post-toc-number">2.1.</span> <span class="post-toc-text">命题：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PCA步骤总结"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">PCA步骤总结</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#LDA"><span class="post-toc-number">3.</span> <span class="post-toc-text">LDA</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#命题"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">命题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#定义"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">定义</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#求解"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">求解</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#LDA步骤总结"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">LDA步骤总结</span></a></li></ol></li></ol>
         </nav>
     </aside>
 
@@ -357,13 +357,18 @@ A\times A^T=\begin{gathered}
 <li>对$X$每行零均值化(每行减去当行的均值)</li>
 <li>求实对称协方差矩阵$XX^T$</li>
 <li>求实对称协方差矩阵的各个特征值以及其相应的特征向量</li>
-<li>将从左向右按照特征值大小取$b$个组成的矩阵施密特正交化+单位化，得到$P$,$Y=PX$即为所求。<h1 id="LDA"><a href="#LDA" class="headerlink" title="LDA"></a>LDA</h1><h2 id="命题"><a href="#命题" class="headerlink" title="命题"></a>命题</h2>对于一个有监督二分类问题，训练样本$X_1=[x_1^1,x_2^1,x_3^1,…],X_2=[x_1^2,x_2^2,x_3^2,…]$，其中$x_i^k$维度为$d$，我们要寻找一个投影方向$w$(同为$d$维),使得投影后的样本变为$y_i^k=w^Tx_i^k$。要求类间间距要大，类内间距要小。<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2>各类内均值向量:<script type="math/tex; mode=display">
-m_k=\frac{1}{N_{X_k}}\sum_{x_i^k\in X_k}x_i^k \tag{10}</script>类内离散度矩阵:<script type="math/tex; mode=display">
-S_k=\sum_{x_i^k\in X_k}(x_i^k-m_k)(x_i^k-m_k)^T \tag{11}</script>总类内离散度矩阵(二分类):<script type="math/tex; mode=display">
-S_w=S_1+S_2 \tag{12}</script>类间离散度:<script type="math/tex; mode=display">
-S_b=(m_1-m_2)(m_1-m_2)^T</script></li>
+<li>将从左向右按照特征值大小取$b$个组成的矩阵施密特正交化+单位化，得到$P$,$Y=PX$即为所求。</li>
 </ol>
-<p>可以看出，$y_i^k$就是个标量，则投影后各类内均值为:</p>
+<h1 id="LDA"><a href="#LDA" class="headerlink" title="LDA"></a>LDA</h1><h2 id="命题"><a href="#命题" class="headerlink" title="命题"></a>命题</h2><p>对于一个有监督二分类问题，训练样本$X_1=[x_1^1,x_2^1,x_3^1,…],X_2=[x_1^2,x_2^2,x_3^2,…]$，其中$x_i^k$维度为$d$，我们要寻找一个投影方向$w$(同为$d$维),使得投影后的样本变为$y_i^k=w^Tx_i^k$。要求类间间距要大，类内间距要小。</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>各类内均值向量:</p>
+<script type="math/tex; mode=display">
+m_k=\frac{1}{N_{X_k}}\sum_{x_i^k\in X_k}x_i^k \tag{10}</script><p>类内离散度矩阵:</p>
+<script type="math/tex; mode=display">
+S_k=\sum_{x_i^k\in X_k}(x_i^k-m_k)(x_i^k-m_k)^T \tag{11}</script><p>总类内离散度矩阵(二分类):</p>
+<script type="math/tex; mode=display">
+S_w=S_1+S_2 \tag{12}</script><p>类间离散度:</p>
+<script type="math/tex; mode=display">
+S_b=(m_1-m_2)(m_1-m_2)^T</script><p>可以看出，$y_i^k$就是个标量，则投影后各类内均值为:</p>
 <script type="math/tex; mode=display">
 \widetilde m_k=\frac{1}{N_{X_k}}\sum_{x_i^k\in X_k}w^Tx_i^k \tag{13}</script><p>同理类内离散度为:</p>
 <script type="math/tex; mode=display">
@@ -373,7 +378,21 @@ S_b=(m_1-m_2)(m_1-m_2)^T</script></li>
 <script type="math/tex; mode=display">
 \widetilde S_b=(\widetilde m_1- \widetilde m_2)^2 \tag{16}</script><p>回到命题，我们就是想让$\widetilde S_b$越大越好，$\widetilde S_w$越小越好，于是可以定义优化函数公式(Fisher准则)：</p>
 <script type="math/tex; mode=display">
-maxJ(w)=\frac{\widetilde S_b}{\widetilde S_w}=\frac{w^TS_bw}{w^TS_ww} \tag{17}</script><h1 id><a href="#" class="headerlink" title="#"></a>#</h1>
+maxJ(w)=\frac{\widetilde S_b}{\widetilde S_w}=\frac{w^TS_bw}{w^TS_ww} \tag{17}</script><h2 id="求解"><a href="#求解" class="headerlink" title="求解"></a>求解</h2><script type="math/tex; mode=display">
+maxJ(w)'=\frac{(w^TS_ww)\times(S_bw)-(w^TS_bw)\times(S_ww)}{(w^TS_ww)^2} \tag{18}</script><p>令(18)=0,可得:</p>
+<script type="math/tex; mode=display">
+S_bw=\frac{w^TS_bw}{w^TS_ww}S_ww \tag{19}</script><p>令$\lambda = \frac{w^TS_bw}{w^TS_ww}$</p>
+<script type="math/tex; mode=display">
+S_bw=\lambda S_ww \tag{19}</script><script type="math/tex; mode=display">
+S_w^{-1}S_bw=\lambda w \tag{19}</script><p>现在发现了，又是特征向量。</p>
+<h2 id="LDA步骤总结"><a href="#LDA步骤总结" class="headerlink" title="LDA步骤总结"></a>LDA步骤总结</h2><ol>
+<li>计算各类内均值向量$m_k$</li>
+<li>计算类内散度矩阵$S_w$和类间散度矩阵$S_b$</li>
+<li>计算$S_w^{-1}S_b$的特征向量和相应特征值，并按照从左到右特征值大小排序</li>
+<li>取top d 个最大特征值怼用的特征向量组成的特征矩阵$W_{n\times d}$</li>
+<li>$Y=W_{n\times d} \times X$的到降维后数据。</li>
+</ol>
+
         </div>
 
         <blockquote class="post-copyright">
@@ -381,7 +400,7 @@ maxJ(w)=\frac{\widetilde S_b}{\widetilde S_w}=\frac{w^TS_bw}{w^TS_ww} \tag{17}</
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-10-26T03:45:35.626Z" itemprop="dateUpdated">2021-10-26 11:45:35</time>
+    最后更新时间：<time datetime="2021-10-26T05:22:02.056Z" itemprop="dateUpdated">2021-10-26 13:22:02</time>
 </span><br>
 
 
@@ -704,8 +723,8 @@ MathJax.Hub.Queue(function() {
         }
     });
 })();
-</script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 </html>
