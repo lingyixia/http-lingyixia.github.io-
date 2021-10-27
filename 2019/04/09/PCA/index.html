@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-10-26T05:22:02.056Z">
+<meta property="og:updated_time" content="2021-10-26T05:24:41.630Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PCA和LDA">
 <meta name="twitter:description" content="参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B">
@@ -383,8 +383,8 @@ maxJ(w)'=\frac{(w^TS_ww)\times(S_bw)-(w^TS_bw)\times(S_ww)}{(w^TS_ww)^2} \tag{18
 <script type="math/tex; mode=display">
 S_bw=\frac{w^TS_bw}{w^TS_ww}S_ww \tag{19}</script><p>令$\lambda = \frac{w^TS_bw}{w^TS_ww}$</p>
 <script type="math/tex; mode=display">
-S_bw=\lambda S_ww \tag{19}</script><script type="math/tex; mode=display">
-S_w^{-1}S_bw=\lambda w \tag{19}</script><p>现在发现了，又是特征向量。</p>
+S_bw=\lambda S_ww \tag{20}</script><script type="math/tex; mode=display">
+S_w^{-1}S_bw=\lambda w \tag{21}</script><p>现在发现了，又是特征向量。</p>
 <h2 id="LDA步骤总结"><a href="#LDA步骤总结" class="headerlink" title="LDA步骤总结"></a>LDA步骤总结</h2><ol>
 <li>计算各类内均值向量$m_k$</li>
 <li>计算类内散度矩阵$S_w$和类间散度矩阵$S_b$</li>
@@ -400,7 +400,7 @@ S_w^{-1}S_bw=\lambda w \tag{19}</script><p>现在发现了，又是特征向量�
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-10-26T05:22:02.056Z" itemprop="dateUpdated">2021-10-26 13:22:02</time>
+    最后更新时间：<time datetime="2021-10-26T05:24:41.630Z" itemprop="dateUpdated">2021-10-26 13:24:41</time>
 </span><br>
 
 
