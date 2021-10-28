@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="虽然以前也了解最大熵模型，甚至以为自己完全理解了最大熵,知道今天才发现我以前都回了点啥。。。。今天发现自己顿悟了一下，特此记录，希望能给看到的人一点帮助，再次膜拜孔圣人的远见”温故而知新，可以为师矣.”(未完待续)   从最大熵思想开始其实在我看来，所谓的最大熵思想就是对已知的条件充分考虑,对未知的条件不做任何假设,这就是最大熵的真谛. 这就是最大熵模型5个海贼团$A、B、C、D、E$去争夺罗">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-10-28T05:26:48.962Z">
+<meta property="og:updated_time" content="2021-10-28T07:17:51.826Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="顿悟最大熵">
 <meta name="twitter:description" content="虽然以前也了解最大熵模型，甚至以为自己完全理解了最大熵,知道今天才发现我以前都回了点啥。。。。今天发现自己顿悟了一下，特此记录，希望能给看到的人一点帮助，再次膜拜孔圣人的远见”温故而知新，可以为师矣.”(未完待续)   从最大熵思想开始其实在我看来，所谓的最大熵思想就是对已知的条件充分考虑,对未知的条件不做任何假设,这就是最大熵的真谛. 这就是最大熵模型5个海贼团$A、B、C、D、E$去争夺罗">
@@ -239,15 +239,15 @@
 <p>5个海贼团$A、B、C、D、E$去争夺罗杰的宝藏,我们已知:$A$得到宝藏的概率和$B$一样,都是$\frac{1}{10}$,$C$和$D$一样,都是$\frac{3}{10}$,而$E$就比较牛逼了,他的概率是$\frac{5}{10},因为他叫路飞$,宝藏只有一份,问谁能得到?<br>现在我们有了条件，就不能简单的创建<strong>均匀模型</strong>了,因为此时我们要找的模型不是$P(X,\theta)$,而是$P(Y|X,\theta)$,我们需要的是$P(Y|X,\theta)$的熵最大，这便是<strong>最大熵模型</strong></p>
 <h1 id="看看公式"><a href="#看看公式" class="headerlink" title="看看公式"></a>看看公式</h1><p>已知:$T={(x_1,y_1),(x_2,y_2),…,(x_N,y_N) }$<br>目标:运用最大熵原理找最大熵模型<br>由上诉<strong>最大熵模型</strong>的由来我们很容易得出公式,不是要找一个模型,在$X$的条件下这个模型的$P(Y|X,\theta)$的熵最大么,很明显这是个条件熵呀,那么这个模型在这份数据上的条件熵的公式:</p>
 <script type="math/tex; mode=display">
-H(Y|X) = \sum_{x \in X} \widetilde{P}(x)H(Y|X=x)) \tag{1}</script><p>其中$\widetilde{P}(x)=\frac{N_x}{N}$<br>现在我们的目标确定了,我们要从<script type="math/tex">P(Y|X,\theta_1)，P(Y|X,\theta_2)，P(Y|X,\theta_3)，P(Y|X,\theta_4),,,</script>很多的模型中找到一个模型,这个模型<strong>充分考虑</strong>了已知数据$T$,而且对未知<strong>不做任何假设</strong>，<strong>不做任何假设</strong>解决了,我们让公式$(1)$要尽量大即可,那么<strong>充分考虑</strong>已知数据要怎样表示呢?说到这有人可能会有些思绪了,其实就是从$T$中找一个用来表示<strong>充分考虑</strong>已知条件的约束,让公式$(1)$在这个约数下尽量大.找到这个约束,一个最优化问题就出现了,现在我们的目的就是找这个约束。</p>
-<h1 id="充分考虑"><a href="#充分考虑" class="headerlink" title="充分考虑"></a>充分考虑</h1><p>现在我们想想，什么是<strong>充分考虑</strong>了已知数据呢?比如我们找到了一个模型$P(X|Y，\theta)$,要考量它是对已知数据的考虑程度,把这句话数学化就是考量这个模型对原始数据<strong>特征</strong>的考虑程度,怎样表示原始数据的特征呢?<strong>特征函数</strong>出现了！！！<br>我们一般用这样一个<strong>特征函数</strong>来描述<strong>特征</strong>:</p>
+H(Y|X) = \sum_{x \in X} \widetilde{P}(x)H(Y|X=x) \tag{1}</script><p>其中$\widetilde{P}(x)=\frac{N_x}{N}$<br>现在我们的目标确定了,我们要从<script type="math/tex">P(Y|X,\theta_1)，P(Y|X,\theta_2)，P(Y|X,\theta_3)，P(Y|X,\theta_4),,,</script>很多的模型中找到一个模型,这个模型<strong>充分考虑</strong>了已知数据$T$,而且对未知<strong>不做任何假设</strong>，<strong>不做任何假设</strong>解决了,我们让公式$(1)$要尽量大即可,那么<strong>充分考虑</strong>已知数据要怎样表示呢?说到这有人可能会有些思绪了,其实就是从$T$中找一个用来表示<strong>充分考虑</strong>已知条件的约束,让公式$(1)$在这个约数下尽量大.找到这个约束,一个最优化问题就出现了,现在我们的目的就是找这个约束。</p>
+<h1 id="充分考虑"><a href="#充分考虑" class="headerlink" title="充分考虑"></a>充分考虑</h1><p>现在我们想想，什么是<strong>充分考虑</strong>了已知数据呢?比如我们找到了一个模型$P(Y|X，\theta)$,要考量它是对已知数据的考虑程度,把这句话数学化就是考量这个模型对原始数据<strong>特征</strong>的考虑程度,怎样表示原始数据的特征呢?<strong>特征函数</strong>出现了！！！<br>我们一般用这样一个<strong>特征函数</strong>来描述<strong>特征</strong>:</p>
 <script type="math/tex; mode=display">
 f(x,y)=\begin{cases}
 1 这个x和y满足某一事实\\
 0 这个x和y不满足某一事实\\
 \end{cases}</script><p>那么这分数据特征的总值是多少呢?找期望呗</p>
 <script type="math/tex; mode=display">
-E_{\widetilde p}(f)=\sum_{x,y}\widetilde P(x,y)f(x,y) \tag{2}</script><p>其中$\widetilde P(x,y)=\frac{N_{xy}}{N}$，谨记:$E_{\widetilde p}(f)$是原始数据的特征总值.<br>对于我们找的的模型$P(X|Y，\theta)$在这份数据的特征总值是多少呢?</p>
+E_{\widetilde p}(f)=\sum_{x,y}\widetilde P(x,y)f(x,y) \tag{2}</script><p>其中$\widetilde P(x,y)=\frac{N_{xy}}{N}$，谨记:$E_{\widetilde p}(f)$是原始数据的特征总值.<br>对于我们找的的模型$P(Y|X，\theta)$在这份数据的特征总值是多少呢?</p>
 <script type="math/tex; mode=display">
 E_{p}(f)=\sum_{x,y}\widetilde P(x)P(y|x,\theta)f(x,y) \tag{3}</script><p>要想让$P(Y|X,\theta)$<strong>充分考虑</strong>原始数据咋做呢?两个特征总值相等呗</p>
 <script type="math/tex; mode=display">
@@ -328,7 +328,7 @@ L(\theta)&=log\prod_iP(x_i;\theta) \\
 L(\theta)=Nlog\prod_{i,j}P(x_i,y_j;\theta)^{\widetilde{P}(x_i,y_j)} \tag{25}</script><p>也就是说概率论与数理统计中的最大似然估计其实完全针对的是<strong>联合分布</strong>，特征和标签的地位完全一样,得到的似然函数公式其实是一个<strong>信息熵</strong>。但是我们的目的得到输入任何$x$后$y$的分布，是个<strong>边缘分布</strong>,则该边缘分布的熵就是个<strong>条件熵</strong>：</p>
 <script type="math/tex; mode=display">
 \begin{align}
-H(Y|x)&={P}(x) \sum_{y\in Y}P(x|y;\theta)logP(y|x;\theta) \\
+H(Y|x)&={P}(x) \sum_{y\in Y}P(y|x;\theta)logP(y|x;\theta) \\
 &=\sum_{y\in Y}P(x,y;\theta)logP(y|x;\theta) \\
 &=\prod_y logP(y|x;\theta)^{P(x,y;\theta)} \\
 &=\prod_y logP(y|x;\theta)^{\widetilde P(x,y)} (近似用数出来的数据代替P(x,y;\theta))\\
@@ -364,7 +364,7 @@ H(Y|x)&={P}(x) \sum_{y\in Y}P(x|y;\theta)logP(y|x;\theta) \\
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-10-28T05:26:48.962Z" itemprop="dateUpdated">2021-10-28 13:26:48</time>
+    最后更新时间：<time datetime="2021-10-28T07:17:51.826Z" itemprop="dateUpdated">2021-10-28 15:17:51</time>
 </span><br>
 
 

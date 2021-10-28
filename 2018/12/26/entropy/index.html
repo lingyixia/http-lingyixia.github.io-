@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="各种熵总结">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-09-19T18:01:25.958Z">
+<meta property="og:updated_time" content="2021-10-28T08:09:36.723Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="各种熵">
 <meta name="twitter:description" content="各种熵总结">
@@ -229,7 +229,7 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>熵(信息熵)、交叉熵和相对熵(KL散度)、条件熵<br><a id="more"></a></p>
+            <p>熵(信息熵)、交叉熵和相对熵(KL散度)、条件熵,谨记，无论设什么熵，都是一个期望。<br><a id="more"></a></p>
 <h3 id="熵-信息熵"><a href="#熵-信息熵" class="headerlink" title="熵(信息熵)"></a>熵(信息熵)</h3><blockquote>
 <p>信息熵有两个含义:1.系统包含的信息量的期望 2.定量描述该系统所需的编码长度的期望</p>
 </blockquote>
@@ -291,11 +291,12 @@ H(p) = \sum -p\log p</script><p>按照不真实分布q来编码样本所需的�
 H(p,q)= \sum -p\log q</script><p>注意:$H(p,q)≠H(q,p)!!!$而<strong>KL散度(相对熵)</strong>为:</p>
 <script type="math/tex; mode=display">
 H(p||q)=H(p,q)-H(p)</script><p>它表示两个分布的差异，差异越大，相对熵越大。</p>
-<h3 id="条件熵"><a href="#条件熵" class="headerlink" title="条件熵"></a>条件熵</h3><p>条件熵针对得是某个特征范围内来计算，而不是整个样本，即熵是整个样本的不确定性，而条件熵是特定特征条件下样本的不确定性。<a href="https://blog.csdn.net/xwd18280820053/article/details/70739368" target="_blank" rel="noopener">案例见此</a>,公式表达为:</p>
+<h3 id="条件熵"><a href="#条件熵" class="headerlink" title="条件熵"></a>条件熵</h3><p>条件熵表示特定特征条件下样本的不确定性。<a href="https://blog.csdn.net/xwd18280820053/article/details/70739368" target="_blank" rel="noopener">案例见此</a>,公式表达为:</p>
 <script type="math/tex; mode=display">
 \begin{align}
-H(Y|X) &=\sum_{x\in X}p(X)H(Y|X=x) \\
-       &=\sum _{x,y}-p(x,y)\log p(y|x)
+H(Y|X) &=-\sum_{x\in X}p(x)\sum_{y\in Y} H(y|x) \\
+       &= -\sum_{x\in X}p(x)\sum_{y\in Y}p(y|x)log(p(y|x)) \\
+       &=-\sum _{x,y}p(x,y)\log p(y|x)
 \end{align}</script><p>X表示总体样本的某个特征，条件熵和其他熵最大的不同就是条件熵和特征有关，其他熵只和Label有关，和特征无关。</p>
 <h3 id="联合熵"><a href="#联合熵" class="headerlink" title="联合熵"></a>联合熵</h3><p>表示X和Y是同一个分布中的两个特征，没有特征和Label之分.</p>
 <script type="math/tex; mode=display">
@@ -321,7 +322,7 @@ I(X,Y) &= H(X)-H(X|Y) \\
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-09-19T18:01:25.958Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+    最后更新时间：<time datetime="2021-10-28T08:09:36.723Z" itemprop="dateUpdated">2021-10-28 16:09:36</time>
 </span><br>
 
 
@@ -367,7 +368,7 @@ I(X,Y) &= H(X)-H(X|Y) \\
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2018/12/26/entropy/&title=《各种熵》 — 灵翼俠的个人博客&source=熵(信息熵)、交叉熵和相对熵(KL散度)、条件熵" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2018/12/26/entropy/&title=《各种熵》 — 灵翼俠的个人博客&source=熵(信息熵)、交叉熵和相对熵(KL散度)、条件熵,谨记，无论设什么熵，都是一个期望。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -538,7 +539,7 @@ I(X,Y) &= H(X)-H(X|Y) \\
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2018/12/26/entropy/&title=《各种熵》 — 灵翼俠的个人博客&source=熵(信息熵)、交叉熵和相对熵(KL散度)、条件熵" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2018/12/26/entropy/&title=《各种熵》 — 灵翼俠的个人博客&source=熵(信息熵)、交叉熵和相对熵(KL散度)、条件熵,谨记，无论设什么熵，都是一个期望。" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>

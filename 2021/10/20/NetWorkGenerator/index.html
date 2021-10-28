@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://lingyixia.github.io/img/autoregression.png">
 <meta property="og:image" content="https://lingyixia.github.io/img/autoencoder.png">
 <meta property="og:image" content="https://lingyixia.github.io/img/gan.png">
-<meta property="og:updated_time" content="2021-10-23T11:15:41.811Z">
+<meta property="og:updated_time" content="2021-10-28T09:44:24.236Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="神经网络生成模型学习总结">
 <meta name="twitter:description" content="生成模型$\qquad$众所周知，神经网络是个判别模型，此处所指”生成模型”指的是功能性质，即利用神经网络生成我们需要的数据，比如对话生成/图像生成/语音生成。$\qquad$试想，我们现在想生成一个图片，需要怎么做呢？  需要知道我们要生成一个什么样图片,比如我们想生成一个卡通头像 需要找到类似所需卡通图片的很多卡通图像 用2中的所有图像训练一个模型 给3中的模型一个输入，得到所需卡通头像  A">
@@ -204,7 +204,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#生成模型"><span class="post-toc-number">1.</span> <span class="post-toc-text">生成模型</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#AutoRegression"><span class="post-toc-number">2.</span> <span class="post-toc-text">AutoRegression</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#AutoEncoder"><span class="post-toc-number">3.</span> <span class="post-toc-text">AutoEncoder</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#GAN"><span class="post-toc-number">4.</span> <span class="post-toc-text">GAN</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#生成模型"><span class="post-toc-number">1.</span> <span class="post-toc-text">生成模型</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#AutoRegression"><span class="post-toc-number">2.</span> <span class="post-toc-text">AutoRegression</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#AutoEncoder"><span class="post-toc-number">3.</span> <span class="post-toc-text">AutoEncoder</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Variational-Autoencoder"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Variational Autoencoder</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#GAN"><span class="post-toc-number">4.</span> <span class="post-toc-text">GAN</span></a></li></ol>
         </nav>
     </aside>
 
@@ -242,16 +242,18 @@
 <ol>
 <li>对图像而言，很难确定一个好的生成顺序</li>
 <li>在inference阶段，当前步骤严重依赖前一步骤</li>
-<li>慢<h1 id="AutoEncoder"><a href="#AutoEncoder" class="headerlink" title="AutoEncoder"></a>AutoEncoder</h1><img src="/img/autoencoder.png"><center>AutoEncoder</center>
-
-</li>
+<li>慢</li>
 </ol>
+<h1 id="AutoEncoder"><a href="#AutoEncoder" class="headerlink" title="AutoEncoder"></a>AutoEncoder</h1><p><img src="/img/autoencoder.png"></p>
+<center>AutoEncoder</center>
+
 <p>优点:</p>
 <ol>
 <li>无需Step By Step，可以并行生成</li>
 <li>生成数据更规则，一板一眼。</li>
 </ol>
 <p>缺点：loss是对元素级别的监督度量，全局信息关注不足，因此模型泛化不够，两个非常接近的输入，可能输出天差地别。</p>
+<h2 id="Variational-Autoencoder"><a href="#Variational-Autoencoder" class="headerlink" title="Variational Autoencoder"></a>Variational Autoencoder</h2><p>$\qquad$现在想想，我们训练了这样一个模型，要怎么用呢？最简单的用法是把$Eocnder$编码后的向量(latent vertor)，保存下来，用的时候在用$Decoder$生成，但这仅仅是压缩的作用，显然大材小用了，我们其实想要的是,<strong>对于$Encoder$编码后的向量所符合的分布中，任意取一个向量都能产生合理的图片。</strong> 这样我们就能只保存$Decoder$和分布相关参数,从而产生出我们没见过的图片。很显然，现在的问题是，我们根本无法控制$Encoder$的输出分布，也就无法判断某一个向量是否符合该分布，这种情况下$VEA$出现了。<br>$\qquad$ VAE 其实最理想的控制$Encoder$分布的方式是模型训练好之后，用所有的训练输入通过$Encoder$各自得到一个向量，然后用这些向量得到分布，但是该方法几乎不可能，我们常用的方式类似最大似然，假设一个分布，然后用数据计算参数，VAE的思想是，对$Encoder$添加约束，强制使其输出符合高斯分布，那么模型训练好之后就能从该高斯分布中随机取向量生成没见过的图片了。</p>
 <h1 id="GAN"><a href="#GAN" class="headerlink" title="GAN"></a>GAN</h1><p><img src="/img/gan.png"></p>
 <p><center>GAN</center></p>
 <ol>
@@ -269,7 +271,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-10-23T11:15:41.811Z" itemprop="dateUpdated">2021-10-23 19:15:41</time>
+    最后更新时间：<time datetime="2021-10-28T09:44:24.236Z" itemprop="dateUpdated">2021-10-28 17:44:24</time>
 </span><br>
 
 

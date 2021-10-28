@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="若干有趣的有关概率计算的小问题">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-09-19T18:01:25.960Z">
+<meta property="og:updated_time" content="2021-10-28T10:31:06.035Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="概率计算问题">
 <meta name="twitter:description" content="若干有趣的有关概率计算的小问题">
@@ -249,17 +249,9 @@ E(N_K)&=\frac{1}{p^N}+\frac{1}{p^{N-1}}+...+\frac{1}{p} \\
 <p>有3扇关闭的门，一扇门后面停着汽车，另外两扇门后是山羊，只有主持人知道每扇门后面是什么。参赛者先选择一扇门，在开启它之前，主持人会开启另外一扇门，露出门后的山羊，然后如果你是参赛者，你换不换门? </p>
 </blockquote>
 </blockquote>
-<p>正常人会认为换不换几率都是1/2,但是真的是这样么?现在我们把此题用解答一下:</p>
+<p>正常人会认为换不换几率都是1/2,但是真的是这样么?:</p>
 <ol>
-<li>如果换门，那么所有的情况只有三种:<ul>
-<li>参赛者挑山羊一号，主持人挑山羊二号。转换将成功</li>
-<li>参赛者挑山羊二号，主持人挑山羊一号。转换将成功</li>
-<li>参赛者挑汽车，主持人挑两头山羊的任何一头。转换将失败<br>或者说不换门所有的情况只有三种:</li>
-<li>参赛者挑山羊一号，主持人挑山羊二号。不换将失败</li>
-<li>参赛者挑山羊二号，主持人挑山羊一号。不换则失败</li>
-<li>参赛者挑汽车，主持人挑两头山羊的任何一头。转换将成功<br>或者这样说:<br>已知第一个步骤得到车的概率是1/3，那第二个步骤换门得到车的概率是0，—&gt; 1/3 <em> 0 =0<br>已知第一个步骤得到羊的概率是2/3，那第二个步骤换门得到车的概率是1，—&gt; 2/3 </em> 1 =2/3<br>总的来说，换门得到的概率是2/3</li>
-</ul>
-</li>
+<li>这题其实和主持人开羊门压根儿，没关系，因为他是知道答案的，肯定会开羊门，成功率仅仅取决于第一次是不是选车，如果第一次选车那换门就输了，因此换门输的概率就是第一次选中车的概率，是1/3，赢的概率是2/3.就好比你选中了一个答案，然后主持人跟你说剩下的两个答案中有一个羊，这还用得着主持人告诉你么？？？根本就是已知条件好吧，所以主持人开羊门半点用都没有。</li>
 <li>现在把这个问题普遍化，问题就是计算换门和不换门两种情况下成功的概率,假设$N$扇门中有一个车，其他的都是羊<ul>
 <li>不换门:成功的条件是第一次选择了车 设事件A=第一次选择了车 则$P(A)=\frac{1}{N}$</li>
 <li>换门:成功的条件是第一次选择了羊 第二次选择了车   设事件B=第一次选择了羊，事件C=第二次选择了车 $P(C|B)=\frac{N-1}{N} \times \frac{1}{N-2} = \frac{N-1}{N-2} \times \frac{1}{N} &gt; \frac{1}{N}$<br>实例代码,更改N可以更改门的数量:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import time  # 导入时间库</span><br><span class="line">from random import choice</span><br><span class="line"></span><br><span class="line">TIMES = 100000  # 用来标记做了多少次选择</span><br><span class="line">che = 0  # 用来记录多少次选择了车</span><br><span class="line">yang = 0  # 用来记录多少次选了羊</span><br><span class="line">N = 5  # 标记多少个门</span><br><span class="line">time.clock()  # 开始计时</span><br><span class="line"># for 循环用于选择并判断多少次选择了车</span><br><span class="line">for i in range(TIMES):</span><br><span class="line">    l = [&apos;c&apos;] + [&apos;s&apos; + str(i + 1) for i in range(N - 1)]</span><br><span class="line">    # eg: l = [&apos;c&apos;, &apos;s1&apos;, &apos;s2&apos;, &apos;s3&apos;, &apos;s4&apos;]  # 选择内容，c代表车，sn代表第N只羊</span><br><span class="line">    first = choice(l)  # 随机从中选择一个</span><br><span class="line">    if first == &apos;c&apos;:</span><br><span class="line">        yang = yang + 1  # 当选择车时，主持人亮出一只羊，更改选择后就是选择了羊</span><br><span class="line">    else:</span><br><span class="line">        l.remove(first)  # 扔掉first选的的羊</span><br><span class="line">        sheeps = l.copy()</span><br><span class="line">        sheeps.remove(&apos;c&apos;)#主持人在剩下的羊中选择一只</span><br><span class="line">        sheep = choice(sheeps)  # 主持人选了这个羊</span><br><span class="line">        l.remove(sheep)</span><br><span class="line">        second = choice(l)</span><br><span class="line">        if second == &apos;c&apos;:#如果第二次选中了车</span><br><span class="line">            che = che + 1</span><br><span class="line"></span><br><span class="line">car = che / TIMES  # 得出选择车的概率</span><br><span class="line">sheep = yang / TIMES  # 得出选择羊的概率</span><br><span class="line">print(&quot;car =&quot;, car)</span><br><span class="line">print(&quot;sheep =&quot;, sheep)</span><br></pre></td></tr></table></figure>
@@ -285,7 +277,7 @@ P = 1- \frac{C_{365}^{23}}{365^{23}}≈1-0.493=0.507</script><p>也就是说，�
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-09-19T18:01:25.960Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+    最后更新时间：<time datetime="2021-10-28T10:31:06.035Z" itemprop="dateUpdated">2021-10-28 18:31:06</time>
 </span><br>
 
 
