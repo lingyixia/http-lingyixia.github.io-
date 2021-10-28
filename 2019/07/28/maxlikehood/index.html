@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="虽然以前也了解最大熵模型，甚至以为自己完全理解了最大熵,知道今天才发现我以前都回了点啥。。。。今天发现自己顿悟了一下，特此记录，希望能给看到的人一点帮助，再次膜拜孔圣人的远见”温故而知新，可以为师矣.”(未完待续)   从最大熵思想开始其实在我看来，所谓的最大熵思想就是对已知的条件充分考虑,对未知的条件不做任何假设,这就是最大熵的真谛. 这就是最大熵模型5个海贼团$A、B、C、D、E$去争夺罗">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-10-28T05:24:38.803Z">
+<meta property="og:updated_time" content="2021-10-28T05:26:48.962Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="顿悟最大熵">
 <meta name="twitter:description" content="虽然以前也了解最大熵模型，甚至以为自己完全理解了最大熵,知道今天才发现我以前都回了点啥。。。。今天发现自己顿悟了一下，特此记录，希望能给看到的人一点帮助，再次膜拜孔圣人的远见”温故而知新，可以为师矣.”(未完待续)   从最大熵思想开始其实在我看来，所谓的最大熵思想就是对已知的条件充分考虑,对未知的条件不做任何假设,这就是最大熵的真谛. 这就是最大熵模型5个海贼团$A、B、C、D、E$去争夺罗">
@@ -309,11 +309,11 @@ L(P_w)&=\sum_{x,y}\widetilde P(x,y)\sum_{i=1}^nw_if_i(x,y)-\sum_{x,y}\widetilde 
 \end{align} \tag{20}</script><p>因此，当带入$P(y|x,\theta)$时，得到得公式是相同得，因此求得的$\max_w$也一定相同.</p>
 <h1 id="从最大熵模型到逻辑回归"><a href="#从最大熵模型到逻辑回归" class="headerlink" title="从最大熵模型到逻辑回归"></a>从最大熵模型到逻辑回归</h1><p>二元逻辑回归的似然函数为:</p>
 <script type="math/tex; mode=display">
-L(\theta)=\prod_{i}^n[\pi(x_i)]^{y_i}[1-\pi(x_i)]^{1-y_i}</script><p>在这里，其实$\pi(x_i)$就是$P(Y=1|X=x_i)$而且$y_i$完全可以写成数据中$Y=1$的数量你说对也不对。。其实在细想还可以写成数据中$X=x_i,Y=1$的数量.所以可以写成:</p>
+L(\theta)=\prod_{i}^n[\pi(x_i)]^{y_i}[1-\pi(x_i)]^{1-y_i} \tag{21}</script><p>在这里，其实$\pi(x_i)$就是$P(Y=1|X=x_i)$而且$y_i$完全可以写成数据中$Y=1$的数量你说对也不对。。其实在细想还可以写成数据中$X=x_i,Y=1$的数量.所以可以写成:</p>
 <script type="math/tex; mode=display">
-L(\theta)=P(Y=1|X=x_i)^{N_{1x_i}}P(Y=0|X=x_i)^{N_{0x_i}}</script><p>在开个N(N是数据总量)次方得:</p>
+L(\theta)=P(Y=1|X=x_i)^{N_{1x_i}}P(Y=0|X=x_i)^{N_{0x_i}} \tag{22}</script><p>在开个N(N是数据总量)次方得:</p>
 <script type="math/tex; mode=display">
-L(\theta)=P(Y=1|X=x_i)^\frac{N_{1x_i}}{N}P(Y=0|X=x_i)^\frac{N_{0x_i}}{N}</script><p>想想$\frac{N_{0x_i}}{N}$是啥,,,这不就是$\widetilde{P}(x,y)$么,,,而且开个N次方对优化也没有影响,拿这个公式和$公式(3)$去掉log,即$P(y|x)^{\widetilde{p}(x,y)}$对比一下，这不一样么.哈哈哈，有没有恍然大明白的感觉。</p>
+L(\theta)=P(Y=1|X=x_i)^\frac{N_{1x_i}}{N}P(Y=0|X=x_i)^\frac{N_{0x_i}}{N} \tag{23}</script><p>想想$\frac{N_{0x_i}}{N}$是啥,,,这不就是$\widetilde{P}(x,y)$么,,,而且开个N次方对优化也没有影响,拿这个公式和$公式(3)$去掉log,即$P(y|x)^{\widetilde{p}(x,y)}$对比一下，这不一样么.哈哈哈，有没有恍然大明白的感觉。</p>
 <h1 id="再到最大似然估计"><a href="#再到最大似然估计" class="headerlink" title="再到最大似然估计"></a>再到最大似然估计</h1><p>概率论与数理统计中的最大似然概率为公式为:</p>
 <script type="math/tex; mode=display">
 \begin{align}
@@ -323,16 +323,16 @@ L(\theta)&=log\prod_iP(x_i;\theta) \\
 &=N\sum_i\frac{Nx_i}{N}logP(x_i;\theta)\\
 &=N\sum_i\widetilde{p}(x_i)logP(x_i;\theta)\\
 &=Nlog\prod_iP(x_i;\theta)^{\widetilde{P}(x_i)}
-\end{align}</script><p>这里只是一元$x$,怎么对应到二元$(x,y)$呢？其实两者同理，需要正确的理解<strong>无论是几元，这里的$p(x_i;\theta)$的真正意义是变量特征函数的联合分布</strong>，对应到二元就是:</p>
+\end{align} \tag{24}</script><p>这里只是一元$x$,怎么对应到二元$(x,y)$呢？其实两者同理，需要正确的理解<strong>无论是几元，这里的$p(x_i;\theta)$的真正意义是变量特征函数的联合分布</strong>，对应到二元就是:</p>
 <script type="math/tex; mode=display">
-L(\theta)=Nlog\prod_{i,j}P(x_i,y_j;\theta)^{\widetilde{P}(x_i,y_j)}</script><p>也就是说概率论与数理统计中的最大似然估计其实完全针对的是<strong>联合分布</strong>，特征和标签的地位完全一样,得到的似然函数公式其实是一个<strong>信息熵</strong>。但是我们的目的得到输入任何$x$后$y$的分布，是个<strong>边缘分布</strong>,则该边缘分布的熵就是个<strong>条件熵</strong>：</p>
+L(\theta)=Nlog\prod_{i,j}P(x_i,y_j;\theta)^{\widetilde{P}(x_i,y_j)} \tag{25}</script><p>也就是说概率论与数理统计中的最大似然估计其实完全针对的是<strong>联合分布</strong>，特征和标签的地位完全一样,得到的似然函数公式其实是一个<strong>信息熵</strong>。但是我们的目的得到输入任何$x$后$y$的分布，是个<strong>边缘分布</strong>,则该边缘分布的熵就是个<strong>条件熵</strong>：</p>
 <script type="math/tex; mode=display">
 \begin{align}
 H(Y|x)&={P}(x) \sum_{y\in Y}P(x|y;\theta)logP(y|x;\theta) \\
 &=\sum_{y\in Y}P(x,y;\theta)logP(y|x;\theta) \\
 &=\prod_y logP(y|x;\theta)^{P(x,y;\theta)} \\
 &=\prod_y logP(y|x;\theta)^{\widetilde P(x,y)} (近似用数出来的数据代替P(x,y;\theta))\\
-\end{align}</script><p>我觉得这里贴一道考研题比较合适：<br>设总体$X$的概率分布为：</p>
+\end{align} \tag{26}</script><p>我觉得这里贴一道考研题比较合适：<br>设总体$X$的概率分布为：</p>
 <div class="table-container">
 <table>
 <thead>
@@ -364,7 +364,7 @@ H(Y|x)&={P}(x) \sum_{y\in Y}P(x|y;\theta)logP(y|x;\theta) \\
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-10-28T05:24:38.803Z" itemprop="dateUpdated">2021-10-28 13:24:38</time>
+    最后更新时间：<time datetime="2021-10-28T05:26:48.962Z" itemprop="dateUpdated">2021-10-28 13:26:48</time>
 </span><br>
 
 
@@ -687,8 +687,8 @@ MathJax.Hub.Queue(function() {
         }
     });
 })();
-</script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 </html>
