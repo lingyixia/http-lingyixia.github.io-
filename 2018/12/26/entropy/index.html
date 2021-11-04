@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="各种熵总结">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-10-28T08:10:04.506Z">
+<meta property="og:updated_time" content="2021-10-31T10:19:37.885Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="各种熵">
 <meta name="twitter:description" content="各种熵总结">
@@ -286,11 +286,17 @@ r^{-l_i}= \frac{p_i}{\lambda \times \ln r} \\
 H(x) = -p(x)\log p(x)</script><p>自然是系统信息量的期望，或称为编码长度的期望.</p>
 <h3 id="交叉熵和相对熵-KL散度"><a href="#交叉熵和相对熵-KL散度" class="headerlink" title="交叉熵和相对熵(KL散度)"></a>交叉熵和相对熵(KL散度)</h3><p>现在有两个分布，真实分布p和非真实分布q，我们的样本来自真实分布p,按照真实分布p来编码样本所需的编码长度的期望为(<strong>信息熵</strong>):  </p>
 <script type="math/tex; mode=display">
-H(p) = \sum -p\log p</script><p>按照不真实分布q来编码样本所需的编码长度的期望为(<strong>交叉熵</strong>):   </p>
+H(p) = \sum -p\log p</script><p>按照不真实分布q来编码样本所需的编码长度的期望为(<strong>交叉熵</strong>):</p>
 <script type="math/tex; mode=display">
 H(p,q)= \sum -p\log q</script><p>注意:$H(p,q)≠H(q,p)!!!$而<strong>KL散度(相对熵)</strong>为:</p>
 <script type="math/tex; mode=display">
-H(p||q)=H(p,q)-H(p)</script><p>它表示两个分布的差异，差异越大，相对熵越大。</p>
+H(p||q)=KL(p||q)=H(p,q)-H(p)</script><p>它表示两个分布的差异，差异越大，相对熵越大。</p>
+<blockquote>
+<blockquote>
+<p>附加：JS散度:可以看到KL散度是不对称的，因此引入JS散度</p>
+<script type="math/tex; mode=display">
+JS(p||q)=\frac{1}{2}KL(p||\frac{p+q}{2})+\frac{1}{2}KL(q||\frac{p+q}{2})</script></blockquote>
+</blockquote>
 <h3 id="条件熵"><a href="#条件熵" class="headerlink" title="条件熵"></a>条件熵</h3><p>条件熵表示特定特征条件下样本的不确定性。<a href="https://blog.csdn.net/xwd18280820053/article/details/70739368" target="_blank" rel="noopener">案例见此</a>,公式表达为:</p>
 <script type="math/tex; mode=display">
 \begin{align}
@@ -314,6 +320,12 @@ I(X,Y) &= H(X)-H(X|Y) \\
        &= H(Y)-H(Y|X) \\
        &= H(X)+H(Y) - H(X,Y) \\
        &= H(X,Y) - H(X|Y) -H(Y|X)
+\end{align}</script><script type="math/tex; mode=display">
+\begin{align}
+I(X,Y) &= \sum_{X,Y}P(X,Y)log\frac{P(X,Y)}{P(X)P(Y)} \\
+       &= \sum_{X,Y}P(X,Y)log\frac{P(X,Y)}{P(X)}-\sum_{X,Y}P(X,Y)logP(X) \\
+       &= \sum_{X,Y}P(X,Y)logP(X|Y)-\sum_{X}P(X)logP(X) \\
+       &=H(X)-H(X|Y)
 \end{align}</script>
         </div>
 
@@ -322,7 +334,7 @@ I(X,Y) &= H(X)-H(X|Y) \\
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-10-28T08:10:04.506Z" itemprop="dateUpdated">2021-10-28 16:10:04</time>
+    最后更新时间：<time datetime="2021-10-31T10:19:37.885Z" itemprop="dateUpdated">2021-10-31 18:19:37</time>
 </span><br>
 
 
@@ -645,8 +657,8 @@ MathJax.Hub.Queue(function() {
         }
     });
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</script>
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>

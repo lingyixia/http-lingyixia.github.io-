@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-10-26T05:24:41.630Z">
+<meta property="og:updated_time" content="2021-10-30T11:56:50.312Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PCA和LDA">
 <meta name="twitter:description" content="参考1参考2原理就是一句话,把原来的$A$个维度映射到$(B">
@@ -337,11 +337,11 @@ A=\begin{gathered}
 <script type="math/tex; mode=display">
 A\times A^T=\begin{gathered}               
   \begin{bmatrix}
-    Var_1 & Cov(2,1) & Cov(3,1) &...&Cov(n,1)\\
-    Cov(1,2) & Var_2 & Cov(3,2) &...&Cov(n,2)\\
-    Cov(1,3) & Cov(2,3) & Var_3 &...&Cov(n,3) \\
+    Var_1 & Cov(1,2) & Cov(1,3) &...&Cov(1,m)\\
+    Cov(2,1) & Var_2 & Cov(2,3) &...&Cov(2,m)\\
+    Cov(3,1) & Cov(3,2) & Var_3 &...&Cov(3,m) \\
     ... &...&...&...&...\\
-    Cov(1,m) & Cov(2,m) & Cov(3,m) &...&Var_m
+    Cov(m,1) & Cov(m,2) & Cov(m,3) &...&Var_m
   \end{bmatrix}     
 \end{gathered} \tag{8}</script><p>试想，$Cov(i,j)$的绝对值最小就是0，那么(7)其实就是一个对角矩阵，我们想要的$Y$其实就是满足$A$的矩阵。<br>现在重新命题：<br>对于$P_{b \times a}X_{a\times n}=Y_{b \times n}$，假设$X_{a\times n}$已知，且$r(X)=a$，则有无数个$P_{b\times a}$可以得到满足题意的$Y_{b\times n}$，当$b \lt a$的时候，就实现了数据降维，要求我们找出一个$P_{b\times a}$，使得求出的$Y_{b\times a} \times Y_{b\times a}^T=\land$。</p>
 <p>现在求解：</p>
@@ -400,7 +400,7 @@ S_w^{-1}S_bw=\lambda w \tag{21}</script><p>现在发现了，又是特征向量�
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-10-26T05:24:41.630Z" itemprop="dateUpdated">2021-10-26 13:24:41</time>
+    最后更新时间：<time datetime="2021-10-30T11:56:50.312Z" itemprop="dateUpdated">2021-10-30 19:56:50</time>
 </span><br>
 
 
@@ -723,8 +723,8 @@ MathJax.Hub.Queue(function() {
         }
     });
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</script>
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>
