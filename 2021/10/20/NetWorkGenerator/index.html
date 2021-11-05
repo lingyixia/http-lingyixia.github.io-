@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://lingyixia.github.io/img/gan.png">
 <meta property="og:image" content="https://lingyixia.github.io/img/couple.png">
 <meta property="og:image" content="https://lingyixia.github.io/img/JG.png">
-<meta property="og:updated_time" content="2021-11-04T12:01:43.101Z">
+<meta property="og:updated_time" content="2021-11-05T06:40:39.148Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="神经网络生成模型学习总结">
 <meta name="twitter:description" content="生成模型$\qquad$众所周知，神经网络是个判别模型，此处所指”生成模型”指的是功能性质，即利用神经网络生成我们需要的数据，比如对话生成/图像生成/语音生成。$\qquad$试想，我们现在想生成一个图片，需要怎么做呢？  需要知道我们要生成一个什么样图片,比如我们想生成一个卡通头像 需要找到类似所需卡通图片的很多卡通图像 用2中的所有图像训练一个模型 给3中的模型一个输入，得到所需卡通头像  A">
@@ -296,7 +296,7 @@ JS(p_{data}(x)||p_g(x))&=\frac{1}{2}\int_x p_{data}(x)log\frac{p_{data}(x)}{p_{d
 &=log2+\frac{1}{2}\int_x p_{data}(x)\times logD^*_G(x)+ p_g(x)\times[log(1-D^*_G(x))]dx \\
 &=log2+\frac{1}{2}\min_G\max_DV(D,G)
 \end{align} \tag{10}</script><p>这就得到了GAN损失函数和JS散度的关系。</p>
-<h1 id="Flow"><a href="#Flow" class="headerlink" title="Flow"></a>Flow</h1><p>$\qquad$ 无论哪种生成模型，我们努力想要得到的无非两个东西，其一是$latent \quad vector$的分布，其二是$Generator$,这两者是成对的。基本原理就是如果从$latent \quad vector$输入$Generator$得到的结果分布$p_g$和真实数据分布$p_{data}$一致，那么我们就认为这个$latent \quad vector$的分布和$Generator$足够好.<br>$\qquad$ 在这个原理下就引入了两个难题，其一众所周知，数据分布是无法准确得知的，因此一般我们解决方式是强制固定分布来训练$Generator$，其二是如何衡量$Generator$的输出$p_g$和真实数据分布$p_{data}$足够近呢？两个分布距离一般用$KL$散度或$JS$散度，但不知道具体分布同样无法计算，$Gan$的方案是引入$Discriminator$，最后发现，诶，这个损失函数和$JS$散度等价，大功告成。<br>$\qquad$ 而Flow说，GAN算不了分布，我能算。<br>$\qquad$ 对于一个$Generator$而言，我们希望让其输出和真实数据分布越接近越好，即公式（1），但难点是$G(x_i)$未知，Flow的思想就是想方设法把这个分布用公式表达出来。<br>其基本原理是这样的，假设$z \sim \pi(z)$，经过$x=f(z)$函数的映射，得到$x\sim p(x)$,其中$f(z)$是可逆函数则有:</p>
+<h1 id="Flow"><a href="#Flow" class="headerlink" title="Flow"></a>Flow</h1><p>$\qquad$ 无论哪种生成模型，我们努力想要得到的无非两个东西，其一是$latent \quad vector$的分布，其二是$Generator$,这两者是成对的。基本原理就是如果从$latent \quad vector$输入$Generator$得到的结果分布$p_g$和真实数据分布$p_{data}$一致，那么我们就认为这个$latent \quad vector$的分布和$Generator$足够好.<br>$\qquad$ 在这个原理下就引入了两个难题，其一众所周知，数据分布是无法准确得知的，因此一般我们解决方式是强制固定分布来训练$Generator$，其二是如何衡量$Generator$的输出$p_g$和真实数据分布$p_{data}$足够近呢？两个分布距离一般用$KL$散度或$JS$散度，但不知道具体分布同样无法计算，$Gan$的方案是引入$Discriminator$，最后发现，诶，这个损失函数和$JS$散度等价，大功告成。<br>$\qquad$ 而Flow说，GAN算不了分布，我能算。<br>$\qquad$ 对于一个$Generator$而言，我们希望让其输出和真实数据分布越接近越好，即公式（1），但难点是$p_g(x_i)$未知，Flow的思想就是想方设法把这个分布用公式表达出来。<br>其基本原理是这样的，假设$z \sim \pi(z)$，经过$x=f(z)$函数的映射，得到$x\sim p(x)$,其中$f(z)$是可逆函数则有:</p>
 <script type="math/tex; mode=display">
 p(x)=\pi(z)\times |\det(J_f)| \tag{11}</script><p><a href="https://www.youtube.com/watch?v=i7LjDvsLWCg&amp;t=32s" target="_blank" rel="noopener">详见此处</a>，所以，我们可以把公式(1)改写为：</p>
 <script type="math/tex; mode=display">
@@ -326,7 +326,7 @@ $$
 
 <p>左上角是单位矩阵，右上角是0矩阵，左下角无关紧要，右下角是对角矩阵。</p>
 <script type="math/tex; mode=display">
-|\det(J\_{G^{-1}})|=\frac{1}{|\det(dignoal)|}=\frac{1}{|\prod_{d+1}^Da_i|}\tag{16}</script><p>因此$G$即为所求。</p>
+|\det(J_{G^{-1}})|=\frac{1}{|\det(dignoal)|}=\frac{1}{|\prod_{d+1}^Da_i|}\tag{16}</script><p>因此$G$即为所求。</p>
 
         </div>
 
@@ -335,7 +335,7 @@ $$
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-11-04T12:01:43.101Z" itemprop="dateUpdated">2021-11-04 20:01:43</time>
+    最后更新时间：<time datetime="2021-11-05T06:40:39.148Z" itemprop="dateUpdated">2021-11-05 14:40:39</time>
 </span><br>
 
 
