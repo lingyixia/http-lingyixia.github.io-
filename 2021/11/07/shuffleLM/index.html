@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://lingyixia.github.io/img/double_layer_attention.png">
 <meta property="og:image" content="https://lingyixia.github.io/img/stack_multi_attention.png">
 <meta property="og:image" content="https://lingyixia.github.io/img/pyramid_attention.png">
-<meta property="og:updated_time" content="2021-11-16T15:44:21.553Z">
+<meta property="og:updated_time" content="2021-11-16T15:49:26.695Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="双层自注意力Transformer">
 <meta name="twitter:description" content="立题依据研究意义Transformer[1]从2017年被提出至今，一直是NLP领域重点研究对象，各种SOTA模型的诞生几乎都离不开它的加持，如今甚至在NLP领域已经成为标配，有完全取代CNN和RNN的趋势，在CV领域也有席卷的迹象。尽管Transformer[1]取得这么大成功，但是它有一个致命缺陷，其时空复杂度均为$O(n^2)$,其中$n$代表序列长度,这也是限制其在CV领域发展的一个重要原">
@@ -245,7 +245,7 @@ Attention(Q_{n\times d_k},K_{n\times d_k},V_{n\times d_k})=\frac{softmax(Q_{n\ti
 
 <p>基本思想是对长序列进行分块，先通过块内计算Attention Score，然后通过块间计算全局Attention Score。图中$token_{ij}$中$i$表示第$i$个块,$j$表示块中第$j$个token，$SA_{ij}$表示第$i$层第$j$个块的$SA$。</p>
 <h3 id="关键问题"><a href="#关键问题" class="headerlink" title="关键问题"></a>关键问题</h3><ol>
-<li>如何设各个分块大小？<br>常见方式是固定窗口大小，本论文拟尝试的方式如下：<br>固定分区后分块数量$m$，则平均每个块长度为$\frac{n}{m}$,然后每个块实际大小设置为$r_i=random[1,\frac{2n}{m}]$，且满足$\sum_ir_i=n$。之所以希望窗口大小随机而不是固定主要是考虑希望窗口在序列的位置信息不是固定位置而是一定范围的位置。</li>
+<li>如何设置各个分块大小？<br>常见方式是固定窗口大小，本论文拟尝试的方式如下：<br>固定分区后分块数量$m$，则平均每个块长度为$\frac{n}{m}$,然后每个块实际大小设置为$r_i=random[1,\frac{2n}{m}]$，且满足$\sum_ir_i=n$。之所以希望窗口大小随机而不是固定主要是考虑希望窗口在序列的位置信息不是固定位置而是一定范围的位置。</li>
 <li>按照标准Transformer，backbone需要串联起来，但是上诉方式，第一层backbone之后序列长度就和之前不一样了，无法直接衔接到相同形状的下一层，在BP-Transformer中解决该问题的方案是用根节点去做类似分类任务，用叶子结点去做生成任务，但是叶子是处于第一层，理论上越深层语义信息越丰富，经典论文Transformer中做翻译任务用的就是Encoder的最后一层。本论文中该问题拟尝试的解决方案有两个:</li>
 </ol>
 <ul>
@@ -285,7 +285,7 @@ f'(m)=\frac{2m^3-n^2}{m^2}\quad (1<m<n)</script><p>令$f’(m)=0$,求得$m=(\fra
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-11-16T15:44:21.553Z" itemprop="dateUpdated">2021-11-16 23:44:21</time>
+    最后更新时间：<time datetime="2021-11-16T15:49:26.695Z" itemprop="dateUpdated">2021-11-16 23:49:26</time>
 </span><br>
 
 
