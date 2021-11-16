@@ -28,14 +28,14 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="立题依据研究意义Transformer[1]从2017年被提出至今，一直是NLP领域重点研究对象，各种SOTA模型的诞生几乎都离不开它的加持，如今甚至在NLP领域已经成为标配，有完全取代CNN和RNN的趋势，在CV领域也有席卷的迹象。尽管Transformer[1]取得这么大成功，但是它有一个致命缺陷，其时空复杂度均为$O(n^2)$,其中$n$代表序列长度,这也是限制其在CV领域发展的一个重要原">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://lingyixia.github.io/img/double_layer_Attention.png">
-<meta property="og:image" content="https://lingyixia.github.io/img/stack_multi_Attention.png">
-<meta property="og:image" content="https://lingyixia.github.io/img/pyramid_Attention.png">
-<meta property="og:updated_time" content="2021-11-16T15:39:26.053Z">
+<meta property="og:image" content="https://lingyixia.github.io/img/double_layer_attention.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/stack_multi_attention.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/pyramid_attention.png">
+<meta property="og:updated_time" content="2021-11-16T15:42:50.663Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="双层自注意力Transformer">
 <meta name="twitter:description" content="立题依据研究意义Transformer[1]从2017年被提出至今，一直是NLP领域重点研究对象，各种SOTA模型的诞生几乎都离不开它的加持，如今甚至在NLP领域已经成为标配，有完全取代CNN和RNN的趋势，在CV领域也有席卷的迹象。尽管Transformer[1]取得这么大成功，但是它有一个致命缺陷，其时空复杂度均为$O(n^2)$,其中$n$代表序列长度,这也是限制其在CV领域发展的一个重要原">
-<meta name="twitter:image" content="https://lingyixia.github.io/img/double_layer_Attention.png">
+<meta name="twitter:image" content="https://lingyixia.github.io/img/double_layer_attention.png">
     
         <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
     
@@ -204,7 +204,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#立题依据"><span class="post-toc-number">1.</span> <span class="post-toc-text">立题依据</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#研究意义"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">研究意义</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#国内外研究现状"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">国内外研究现状</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#研究方案"><span class="post-toc-number">2.</span> <span class="post-toc-text">研究方案</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#研究目标、研究内容和关键问题"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">研究目标、研究内容和关键问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#研究目标"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">研究目标</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#研究内容"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">研究内容</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#可行性分析"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">可行性分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#命题"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">命题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#解题"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">解题</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#创新点"><span class="post-toc-number">3.</span> <span class="post-toc-text">创新点</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#研究计划"><span class="post-toc-number">4.</span> <span class="post-toc-text">研究计划</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考文献"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考文献</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#立题依据"><span class="post-toc-number">1.</span> <span class="post-toc-text">立题依据</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#研究意义"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">研究意义</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#国内外研究现状"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">国内外研究现状</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#研究方案"><span class="post-toc-number">2.</span> <span class="post-toc-text">研究方案</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#研究目标、研究内容和关键问题"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">研究目标、研究内容和关键问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#研究目标"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">研究目标</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#研究内容"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">研究内容</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关键问题"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">关键问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#可行性分析"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">可行性分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#命题"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">命题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#解题"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">解题</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#创新点"><span class="post-toc-number">3.</span> <span class="post-toc-text">创新点</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#研究计划"><span class="post-toc-number">4.</span> <span class="post-toc-text">研究计划</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#参考文献"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考文献</span></a></li></ol>
         </nav>
     </aside>
 
@@ -239,26 +239,25 @@ Attention(Q_{n\times d_k},K_{n\times d_k},V_{n\times d_k})=\frac{softmax(Q_{n\ti
 <p>第四步:$\frac{softmax(Q_{n\times d_k}\times K_{n\times d_k}^T)}{\sqrt{d_k}} \times V_{n\times d_k}$乘法计算量为$d_k\times n^2$.</p>
 <p>综上所述，去除常数$d_k$，可得复杂度为$O(n^2)$,如此大的复杂度在面对长文本时很难处理，时间上勉强可以接受，但是空间上很难解决，通常只能通过限制文本长度或减小batchsize来解决，此方式过于暴力，无疑会增加降低模型效果，本论文拟尝试一种双层self-Attention的Transformer模型，其基本结构如下：</p>
 <div align="center">
-<img src="/img/double_layer_Attention.png">
-</div>
+<img src="/img/double_layer_attention.png">
 <center>双层self-Attention</center>
+</div>
 
-基本思想是对长序列进行分块，先通过块内计算Attention Score，然后通过块间计算全局Attention Score。图中$token\_{ij}$中$i$表示第$i$个块,$j$表示块中第$j$个token，$SA_{ij}$表示第$i$层第$j$个块的$SA$。
-###关键问题
-
-1. 如何设各个分块大小？ 
-常见方式是固定窗口大小，本论文拟尝试的方式如下：
-固定分区后分块数量$m$，则平均每个块长度为$\frac{n}{m}$,然后每个块实际大小设置为$r_i=random[1,\frac{2n}{m}]$，且满足$\sum_ir_i=n$。之所以希望窗口大小随机而不是固定主要是考虑希望窗口在序列的位置信息不是固定位置而是一定范围的位置。
-2. 按照标准Transformer，backbone需要串联起来，但是上诉方式，第一层backbone之后序列长度就和之前不一样了，无法直接衔接到相同形状的下一层，在BP-Transformer中解决该问题的方案是用根节点去做类似分类任务，用叶子结点去做生成任务，但是叶子是处于第一层，理论上越深层语义信息越丰富，经典论文Transformer中做翻译任务用的就是Encoder的最后一层。本论文中该问题拟尝试的解决方案有两个:
-* 方案一：基本思路是为使每一个backbone输入输出相同，可尝试将两层Attention结合，即第一层SA用于捕获块内注意力，第二层SA用于捕获全局注意力，然后两者拼接即可恢复输入形状，进而可以随意串联，同时每一个backbone会重新分块。该方式可以用于任何任务。
+<p>基本思想是对长序列进行分块，先通过块内计算Attention Score，然后通过块间计算全局Attention Score。图中$token_{ij}$中$i$表示第$i$个块,$j$表示块中第$j$个token，$SA_{ij}$表示第$i$层第$j$个块的$SA$。</p>
+<h3 id="关键问题"><a href="#关键问题" class="headerlink" title="关键问题"></a>关键问题</h3><ol>
+<li>如何设各个分块大小？<br>常见方式是固定窗口大小，本论文拟尝试的方式如下：<br>固定分区后分块数量$m$，则平均每个块长度为$\frac{n}{m}$,然后每个块实际大小设置为$r_i=random[1,\frac{2n}{m}]$，且满足$\sum_ir_i=n$。之所以希望窗口大小随机而不是固定主要是考虑希望窗口在序列的位置信息不是固定位置而是一定范围的位置。</li>
+<li>按照标准Transformer，backbone需要串联起来，但是上诉方式，第一层backbone之后序列长度就和之前不一样了，无法直接衔接到相同形状的下一层，在BP-Transformer中解决该问题的方案是用根节点去做类似分类任务，用叶子结点去做生成任务，但是叶子是处于第一层，理论上越深层语义信息越丰富，经典论文Transformer中做翻译任务用的就是Encoder的最后一层。本论文中该问题拟尝试的解决方案有两个:</li>
+</ol>
+<ul>
+<li><p>方案一：基本思路是为使每一个backbone输入输出相同，可尝试将两层Attention结合，即第一层SA用于捕获块内注意力，第二层SA用于捕获全局注意力，然后两者拼接即可恢复输入形状，进而可以随意串联，同时每一个backbone会重新分块。该方式可以用于任何任务。</p>
 <div align="center">
-<img src="/img/stack_multi_Attention.png">
+<img src="/img/stack_multi_attention.png">
 <center>stack muiti self-Attention</center>
 </div>
-
-<ul>
-<li>方案二：基本思路是类似多层cnn堆叠的方式，呈现金字塔形状，同时并行训练多个不同分块方式的相同模型，最后一层concat在一起，该方式可用于多对一的任务中。<div align="center">
-<img src="/img/pyramid_Attention.png">
+</li>
+<li><p>方案二：基本思路是类似多层cnn堆叠的方式，呈现金字塔形状，同时并行训练多个不同分块方式的相同模型，最后一层concat在一起，该方式可用于多对一的任务中。</p>
+<div align="center">
+<img src="/img/pyramid_attention.png">
 <center>金字塔self-Attention</center>
 </div>
 </li>
@@ -286,7 +285,7 @@ f'(m)=\frac{2m^3-n^2}{m^2}\quad (1<m<n)</script><p>令$f’(m)=0$,求得$m=(\fra
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-11-16T15:39:26.053Z" itemprop="dateUpdated">2021-11-16 23:39:26</time>
+    最后更新时间：<time datetime="2021-11-16T15:42:50.663Z" itemprop="dateUpdated">2021-11-16 23:42:50</time>
 </span><br>
 
 
@@ -600,8 +599,8 @@ MathJax.Hub.Queue(function() {
         }
     });
 })();
-</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</script>
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
 </html>
