@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://lingyixia.github.io/img/double_layer_attention.png">
 <meta property="og:image" content="https://lingyixia.github.io/img/stack_multi_attention.png">
 <meta property="og:image" content="https://lingyixia.github.io/img/pyramid_attention.png">
-<meta property="og:updated_time" content="2021-11-16T15:42:50.663Z">
+<meta property="og:updated_time" content="2021-11-16T15:44:21.553Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="双层自注意力Transformer">
 <meta name="twitter:description" content="立题依据研究意义Transformer[1]从2017年被提出至今，一直是NLP领域重点研究对象，各种SOTA模型的诞生几乎都离不开它的加持，如今甚至在NLP领域已经成为标配，有完全取代CNN和RNN的趋势，在CV领域也有席卷的迹象。尽管Transformer[1]取得这么大成功，但是它有一个致命缺陷，其时空复杂度均为$O(n^2)$,其中$n$代表序列长度,这也是限制其在CV领域发展的一个重要原">
@@ -252,7 +252,7 @@ Attention(Q_{n\times d_k},K_{n\times d_k},V_{n\times d_k})=\frac{softmax(Q_{n\ti
 <li><p>方案一：基本思路是为使每一个backbone输入输出相同，可尝试将两层Attention结合，即第一层SA用于捕获块内注意力，第二层SA用于捕获全局注意力，然后两者拼接即可恢复输入形状，进而可以随意串联，同时每一个backbone会重新分块。该方式可以用于任何任务。</p>
 <div align="center">
 <img src="/img/stack_multi_attention.png">
-<center>stack muiti self-Attention</center>
+<center>堆叠self-Attention</center>
 </div>
 </li>
 <li><p>方案二：基本思路是类似多层cnn堆叠的方式，呈现金字塔形状，同时并行训练多个不同分块方式的相同模型，最后一层concat在一起，该方式可用于多对一的任务中。</p>
@@ -285,7 +285,7 @@ f'(m)=\frac{2m^3-n^2}{m^2}\quad (1<m<n)</script><p>令$f’(m)=0$,求得$m=(\fra
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-11-16T15:42:50.663Z" itemprop="dateUpdated">2021-11-16 23:42:50</time>
+    最后更新时间：<time datetime="2021-11-16T15:44:21.553Z" itemprop="dateUpdated">2021-11-16 23:44:21</time>
 </span><br>
 
 
