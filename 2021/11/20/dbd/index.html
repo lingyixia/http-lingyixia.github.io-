@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    
+    
+    
+    
+    <title>基于知识的多模态对话生成 | 灵翼俠的个人博客 | 不做搬运工</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content>
+    <meta name="description" content="研究意义对话问题是NLP领域一个常见问题，重点研究如何让用户和机器进行顺畅的交流，从功能上可分为任务式对话、聊天式对话对话。目前研究任务型对话相对较为成熟，当前市面产品例如苹果Siri、微软Cortana、百度小度等等在完成用户指令方面都比较出色，显现了对话系统极大的潜力，但闲聊问题比较复杂难度较大，但事实上大多数人类的对话都会集中在闲聊、社交、个人情感上，比如在推特上80%都是关于个人情感、想法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于知识的多模态对话生成">
+<meta property="og:url" content="https://lingyixia.github.io/2021/11/20/dbd/index.html">
+<meta property="og:site_name" content="灵翼俠的个人博客">
+<meta property="og:description" content="研究意义对话问题是NLP领域一个常见问题，重点研究如何让用户和机器进行顺畅的交流，从功能上可分为任务式对话、聊天式对话对话。目前研究任务型对话相对较为成熟，当前市面产品例如苹果Siri、微软Cortana、百度小度等等在完成用户指令方面都比较出色，显现了对话系统极大的潜力，但闲聊问题比较复杂难度较大，但事实上大多数人类的对话都会集中在闲聊、社交、个人情感上，比如在推特上80%都是关于个人情感、想法">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lingyixia.github.io/img/dialogue_pretrain.png">
+<meta property="og:image" content="https://lingyixia.github.io/img/finetune.png">
+<meta property="og:updated_time" content="2021-11-28T09:45:20.537Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于知识的多模态对话生成">
+<meta name="twitter:description" content="研究意义对话问题是NLP领域一个常见问题，重点研究如何让用户和机器进行顺畅的交流，从功能上可分为任务式对话、聊天式对话对话。目前研究任务型对话相对较为成熟，当前市面产品例如苹果Siri、微软Cortana、百度小度等等在完成用户指令方面都比较出色，显现了对话系统极大的潜力，但闲聊问题比较复杂难度较大，但事实上大多数人类的对话都会集中在闲聊、社交、个人情感上，比如在推特上80%都是关于个人情感、想法">
+<meta name="twitter:image" content="https://lingyixia.github.io/img/dialogue_pretrain.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="灵翼俠的个人博客" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/Favicon.png">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand_background.jpeg)">
+      <div class="brand">
+        <a href="/about/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.png">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">陈飞宇</h5>
+          <a href="mailto:chinachenfeiyu@outlook.com" title="chinachenfeiyu@outlook.com" class="mail">chinachenfeiyu@outlook.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                类别
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                读书
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                影视
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/games"  >
+                <i class="icon icon-lg icon-gamepad"></i>
+                游戏
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/meditations"  >
+                <i class="icon icon-lg icon-leaf"></i>
+                随笔
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/links"  >
+                <i class="icon icon-lg icon-link"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingyixia" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">基于知识的多模态对话生成</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale" align="center">
+        <h1 class="title">基于知识的多模态对话生成</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2021-11-20T10:50:23.000Z" itemprop="datePublished" class="page-time">
+  2021-11-20
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#研究意义"><span class="post-toc-number">1.</span> <span class="post-toc-text">研究意义</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#研究现状"><span class="post-toc-number">2.</span> <span class="post-toc-text">研究现状</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#研究难点以及拟解决方案"><span class="post-toc-number">3.</span> <span class="post-toc-text">研究难点以及拟解决方案</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#研究方法"><span class="post-toc-number">4.</span> <span class="post-toc-text">研究方法</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-dbd"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">基于知识的多模态对话生成</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2021-11-20 18:50:23" datetime="2021-11-20T10:50:23.000Z"  itemprop="datePublished">2021-11-20</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="研究意义"><a href="#研究意义" class="headerlink" title="研究意义"></a>研究意义</h1><p>对话问题是NLP领域一个常见问题，重点研究如何让用户和机器进行顺畅的交流，从功能上可分为任务式对话、聊天式对话对话。目前研究任务型对话相对较为成熟，当前市面产品例如苹果Siri、微软Cortana、百度小度等等在完成用户指令方面都比较出色，显现了对话系统极大的潜力，但闲聊问题比较复杂难度较大，但事实上大多数人类的对话都会集中在闲聊、社交、个人情感上，比如在推特上80%都是关于个人情感、想法。因此针对该问题的研究很有价值。<br>对话问题从领域上可分为开放领域对话和基于知识对话，当前开放领域研究较多，常见手机聊天软件也都是开放领域，虽然此类对话系统对也可以很好的满足人们的一些常见情感需求，但是却有很大的限制，例如：Q：儿子，你不要娶了媳妇忘了娘呀！A：放心，我会一直娘下去的。之所以Agent会给出这样的回答是因为没有”娶了媳妇忘了娘”这句俗语的背景知识。如果对话系统有这种学习能力，其作用会更加广泛，例如让掌握商品情况，然后User对其提问Agent自动回答实现自动化购买，甚至给出教材让Agent模拟教师备课，由Agent提出有意义的问题和学生对话，同时检测学生的知识掌握情况并提出指导性建议。<br>因此，基于知识的对话研究非常有必要，本课题拟所涉及到的的是多模态的知识，因为学习的内容一般不仅仅包含文字，同时也少不了图像、视频等，这些都对模型学习背景知识提供很大的帮助，该领域常被称为Knowledge Grounded Conversation (KGC),旨在研究对于一定的知识背景，User和Agent根据其内容进行多轮对话，同时Agent的每次回答不仅会考虑User的提问以及对话历史，还会考虑文档内容，但是对于开放领域的知识会较少考虑，可以看做增添额外的信息与约束的对话生成。</p>
+<h1 id="研究现状"><a href="#研究现状" class="headerlink" title="研究现状"></a>研究现状</h1><p>对话系统从NLP起步阶段就一直是热点问题，从模型角度讲可以分为两大类别：检索式和生成式，检索式对话是一种比较经典的方式，将对话问题抽象为搜索问题，先经过query理解，然后进一步进行召回、排序，等人在Multi-view Response Selection中认为在对话模型中将单词作为单元很难捕捉到话语层面的信息和依赖关系，因此提出了一种多视图响应模型，将单词级别和话语级别进行联合建模。 等人在SMN中认为全部话语拼接是不利的，并且在抽象的高层语义中直接匹配是不可取的，因此提出当前回应和每个历史话语分别匹配，再过交替CNN和MaxPooling，最后RNN累积匹配信息的处理方法和流程。等人在DUA中对SMN进一步改进，提出用最后一个话语来区别前面历史话语中词重要程度的方式。针对生成式对话生成中，Iulian V. Serban等人建议训练时考虑让答复引入新信息（Deep Reinforcement Learning for Dialogue Generation），保证语义连贯性等因素， 等人提出一种多层生成式模型（Building End-To-End Dialogue Systems Using Generative Hierarchical Neural Network Models），利用层级RNN把之前多轮对话背景加以考虑。等人认为，对话里面的句子一个是token等局部特征组成了句子级别的特征，另外一个是存在于句子之间的隐藏特征，为了利用这些隐藏特征，作者提出了一种包含隐藏变量的神经网络生成模型，并利用了VAE的生成能力来编码隐藏变量。<br>除了开放领域的对话生成，基于知识的对话生成也是近些年研究热点，针对背景文档过长的问题，等人提出TMN模型，从文档中筛选关键句子然后以学习这些句子来建模，等人提出GLKS，模型在对输入信息（对话和文档）进行交互后采用一种全局指导局部的思路，使用对话历史从文档中筛选出重要的n-gram信息来指导后续的生成过程。由于背景知识大多不只有文字，还有图片等等，只用文字必然会损失信息，因此多模态对话也是当前一个研究热点，等人在OpenViDial中提出三种模型，分别通过纯文本、粗粒度视觉信息、细粒度视觉信息的对比，证明视觉对对话任务的增强作用。有等人提出Maria模型，该模型包含三个组件：图像检索模型、视觉概念检测模型和基于视觉知识的对话生成模型，利用三个组件检索出的视觉信息增强对话知识（Maria: A Visual Experience Powered Conversational Agent）。等人提出一种响应驱动的视觉状态估计器，通过响应驱动的注意力更新以及视觉信息的条件融合机制分别增强语言编码能力和视觉融合能力（Answer-Driven Visual State Estimator for Goal-Oriented Visual Dialogue-commentCZ）。</p>
+<h1 id="研究难点以及拟解决方案"><a href="#研究难点以及拟解决方案" class="headerlink" title="研究难点以及拟解决方案"></a>研究难点以及拟解决方案</h1><p>数据集严重匮乏<br>    本课题拟研究多模态背景知识下多模态的对话，当前相关数据集大多是广泛领域的对话，基于背景知识的对话数据集并不多，仅存在的几个数据集例如CMUDoG、Movie-chats、Persona都是完全基于语言的数据集，最近的OpenViDial虽然背景知识是多模态，但对话内容完全基于语言，因此首要问题是数据集的创建。</p>
+<ul>
+<li><p>多模态知识的有效利用</p>
+<p>  和开放领域的对话不同，本课题的对话需要基于背景知识，因此如何让生成的对话仅仅围绕所给背景知识至关重要，例如背景知识是电影简介，对话内容应当围绕电影的情节、角色进行。同时，作为多轮对话模型，不仅仅要考虑到背景知识、当前语句，还需要考虑到上一轮次，而且不同于常见的对话模型，本课题还需要考虑到多模态融合。<br>  本课题拟使用基于pretrain-finetune的方式，其中pretrain阶段可以看作一个多任务的自监督多模态模型，用于学习背景知识，finetune阶段则可以看作对话生成阶段。<br>  pretrain模型类似图示：</p>
+<p>  <div align="center">
+  <img src="/img/dialogue_pretrain.png" alt width="650">
+  <center>pretrain</center>
+  </div><br>  该预训练模型包含三种损失函数：</p>
+<ul>
+<li>Text-Image Contrasive Loss: Image Transformer的输入是文档中的图片，并将图片分为多个Patch，Text Transformer 的输入是文档中的文字，该Loss相当于有监督对比学习，在同一个训练Batch，只有一组Image和Text来自同一个文档，Batch内其他Image和Text的组合分别来自不同文档。</li>
+<li>Text-Image Align Loss: Fusion Transformer输入序列是整个文档，对于输入数据，随机替换若干Image或Text为其他文档的数据，</li>
+<li><p>MLM Loss: Fusion Transformer的输入包含两种Mask数据</p>
+<ul>
+<li>某个文档的图片和文字，并采取和Bert一样的方式进行Mask。</li>
+<li>某个文档的图片和文字，并对某段文字或某个图片整个Mask掉，旨在强制模型学习“背诵课文“。</li>
+</ul>
+<p>finetune模型类似图示<br><div align="center">
+<img src="/img/finetune.png">
+<center>finetune</center>
+</div><br>整体相当于Encoder-Decoder结构，Encoder阶输入背景知识[CLS]和某一条对话前所有的对话(包含User和Agent)，并对User和Agent前面各自加上特殊标记[U]和[A],并用[Seq]标记隔开，同时，考虑Transformer复杂度为O(n^2)，随着到对话的加长有可能Encoder阶段速度会越来越慢，因此本文引入双层Self-Attention机制，对每个句子单独做Inner-Self-Attention，然后对整个序列做Global-Self—Attention,从而大幅度降低序列长度。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>对话质量的自动评价<br>    当前业内针对对话系统的评价指标往往是和其他生成类任务相同都采用类似BLEU词重叠的方法，但是对于对话系统来说这些评判标准往往比较死板，甚至与人类评判相关性很差。基于知识的对话系统基本评价指标包含两个：其一是正确性，其二是和人类语言的相似程度。针对前者可以采取关键词匹配的方式，后者比较难解决，本课题拟尝试基于Gan的评价指标，在Gan模型中，Generator用于将隐变量编码为某一个概率分布，Discriminator用于判断该概率分布是否符合人类语言，因此理论上Discriminator可以用来当作指标，但该方案存在的问题是作为指标，本质上应当是固定的，而该方式不同研究者需要训练指标模型，因此不确定性较大。<br>MRC一般可以采用准确率、F1等，但文本生成的自动评价指标（如PPL）无法反映对话质量的好坏，而人工评价方法代价过高。我们需要一种代价低廉，自动评对话有趣程度、信息含量、一致性等问题的评价方式；</p>
+<ol>
+<li>将文字、图片、视频等多模态资源作为外部知识加入到对话中，同时，各模态的存在形态也不尽相同，例如文字不仅可以表现为句子、段落，同时还可以表现为表格，相关数据集的数量和规模还有待提高；</li>
+<li>终身学习问题。<br>对话系统还有一个和其他生成任务最大的区别，当User和Agent在对话的时候，User很有可能会在对话中添加背景以外的知识，我们希望在对话的进行中，模型能够持续地利用两者的交互进行自身的更新和优化，能利用已得到的“技能”融合不同结构的资源，这是本课题的另一个研究重点，即终身学习(life-long问题)。<br>该问题最大的难点是Catastropic forget，由于用交流的过程有时序，模型训练的数据顺序需要严格而不能打散， 判断神经元输出归一化后绝对值越接近0越不重要<h1 id="研究方法"><a href="#研究方法" class="headerlink" title="研究方法"></a>研究方法</h1>本课题针对基于知识的多模态对话生成拟提出一种finetune方式，对多模态知识进行统一建模，同时设计了多种损失函数，针对对话生成阶段可能序列过长的问题，提出一种双层Self-Attention结构，</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2021-11-28T09:45:20.537Z" itemprop="dateUpdated">2021-11-28 17:45:20</time>
+</span><br>
+
+
+        
+        转载请标注:<a href="/2021/11/20/dbd/" target="_blank" rel="external">https://lingyixia.github.io/2021/11/20/dbd/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingyixia.github.io">
+            <img src="/img/avatar.png" alt="陈飞宇">
+            陈飞宇
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2021/11/20/dbd/&title=《基于知识的多模态对话生成》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2021/11/20/dbd/&title=《基于知识的多模态对话生成》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2021/11/20/dbd/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《基于知识的多模态对话生成》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2021/11/20/dbd/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2021/11/20/dbd/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2021/11/13/shuffleLM/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">双层自注意力Transformer</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'true' == 'true',
+            verify: 'false' == 'true',
+            appId: "Jh0zRO9WoRQ3PcY9WjRbmeXT-gzGzoHsz",
+            appKey: "tOx3IvcUkfWzD24UccR4A41Y",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢~~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="bottom">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            <span>
+            PLM's Notes &nbsp; &copy; &nbsp
+            </span>
+            2016 - 2021
+        </p>
+    </div>
+</footer>
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingyixia.github.io/2021/11/20/dbd/&title=《基于知识的多模态对话生成》 — 灵翼俠的个人博客&pic=https://lingyixia.github.io/img/avatar.png" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingyixia.github.io/2021/11/20/dbd/&title=《基于知识的多模态对话生成》 — 灵翼俠的个人博客&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingyixia.github.io/2021/11/20/dbd/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《基于知识的多模态对话生成》 — 灵翼俠的个人博客&url=https://lingyixia.github.io/2021/11/20/dbd/&via=https://lingyixia.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingyixia.github.io/2021/11/20/dbd/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIklEQVR42u3aQW6EMAwF0Ln/padSt23p/05aifCyGsEQeCwsG/v1itf7c3098nX9dDbZOfn/0sLAwLgt43251hn5kWvYL68GAwPjAYw2FObB8Xr/9vX9eBwDAwMjDpSzsJvcFwMDAyMPuLM0MQ/TGBgYGCtF7N5ytw3Z22pxDAyMGzLaxsB//v7D/gYGBsZNGO9yrdw+L2Xrp8LAwDiakXzwuo5syfFkaGMGfrVbY2Bg3JAxDG1lttYC8teKgYHxBMZsSGJX2rc+ooGBgfEERlJ2ztaucjd6ERgYGEcz8hStDZErAxb1mAUGBsbRjHbAomUnmHa04pvfGBgYRzPyGje5fRL9VgY4rl8uBgbGqYz2gjYcbwigSfjGwMA4mtF2D/IQmaeVbeKIgYHxNMb1xW0DYDZM1jYyi6wWAwPjCMZKM2Dlg9psFKxoZGJgYBzEaC/eG0bbz231mAUGBsbRjDohG41u5L2LX4pqDAyMoxltQZsPSex9uCKsY2BgHMeYbZ08dMtLEsEN9TcGBsZtGesDFsmN/2I3DAyMJzBmQ1crQXbWhMDAwHgy412uNjVs2wCz1BMDA+NsRr5mxW1+VXJ2FqYxMDDOYORBNs/EZoNlbXL5SupvDAyMgxh5MN1bjs6CPgYGBsZ6ppl/klsZy8DAwMDIU8N8t7ZpWtwdAwPjAYxZM2BlqKsoUJO0EgMD42jGrIBMwCtZ3Cx8Y2BgHMf4AJtk0T8KCgBeAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '哎哎哎，网呢？？？';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>

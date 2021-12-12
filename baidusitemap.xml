@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://lingyixia.github.io/2019/04/11/DynamicProgramming/</loc>
+    <lastmod>2021-12-12</lastmod>
+  </url>  <url>
+    <loc>https://lingyixia.github.io/2021/11/20/dbd/</loc>
+    <lastmod>2021-11-28</lastmod>
+  </url>  <url>
     <loc>https://lingyixia.github.io/2021/11/13/shuffleLM/</loc>
-    <lastmod>2021-11-16</lastmod>
+    <lastmod>2021-11-28</lastmod>
   </url>  <url>
     <loc>https://lingyixia.github.io/2021/10/20/NetWorkGenerator/</loc>
     <lastmod>2021-11-06</lastmod>
-  </url>  <url>
-    <loc>https://lingyixia.github.io/2019/04/11/DynamicProgramming/</loc>
-    <lastmod>2021-11-01</lastmod>
   </url>  <url>
     <loc>https://lingyixia.github.io/2021/10/31/bert-flow-whiten/</loc>
     <lastmod>2021-11-01</lastmod>
@@ -70,13 +73,13 @@
     <loc>https://lingyixia.github.io/2019/02/26/softmax/</loc>
     <lastmod>2021-09-19</lastmod>
   </url>  <url>
-    <loc>https://lingyixia.github.io/2018/11/20/sort/</loc>
-    <lastmod>2021-09-19</lastmod>
-  </url>  <url>
     <loc>https://lingyixia.github.io/2019/01/22/sqrt/</loc>
     <lastmod>2021-09-19</lastmod>
   </url>  <url>
     <loc>https://lingyixia.github.io/2019/02/08/stack/</loc>
+    <lastmod>2021-09-19</lastmod>
+  </url>  <url>
+    <loc>https://lingyixia.github.io/2018/11/20/sort/</loc>
     <lastmod>2021-09-19</lastmod>
   </url>  <url>
     <loc>https://lingyixia.github.io/2019/02/20/regression/</loc>
@@ -178,10 +181,10 @@
     <loc>https://lingyixia.github.io/2019/06/23/gametheory/</loc>
     <lastmod>2021-09-19</lastmod>
   </url>  <url>
-    <loc>https://lingyixia.github.io/2019/01/11/gradientDescent/</loc>
+    <loc>https://lingyixia.github.io/2019/07/27/greedy/</loc>
     <lastmod>2021-09-19</lastmod>
   </url>  <url>
-    <loc>https://lingyixia.github.io/2019/07/27/greedy/</loc>
+    <loc>https://lingyixia.github.io/2019/01/11/gradientDescent/</loc>
     <lastmod>2021-09-19</lastmod>
   </url>  <url>
     <loc>https://lingyixia.github.io/2019/01/10/characteristic-value/</loc>
@@ -214,13 +217,13 @@
     <loc>https://lingyixia.github.io/2019/02/14/binaryOne/</loc>
     <lastmod>2021-09-19</lastmod>
   </url>  <url>
-    <loc>https://lingyixia.github.io/2019/04/11/Trees/</loc>
-    <lastmod>2021-09-19</lastmod>
-  </url>  <url>
     <loc>https://lingyixia.github.io/2019/01/08/TwoCrossEntropy/</loc>
     <lastmod>2021-09-19</lastmod>
   </url>  <url>
     <loc>https://lingyixia.github.io/2019/02/23/ViEmu/</loc>
+    <lastmod>2021-09-19</lastmod>
+  </url>  <url>
+    <loc>https://lingyixia.github.io/2019/04/11/Trees/</loc>
     <lastmod>2021-09-19</lastmod>
   </url>  <url>
     <loc>https://lingyixia.github.io/2019/01/02/VimLearn/</loc>
@@ -289,10 +292,10 @@
     <loc>https://lingyixia.github.io/2018/08/28/CommonLabel/</loc>
     <lastmod>2021-09-19</lastmod>
   </url>  <url>
-    <loc>https://lingyixia.github.io/2019/06/23/DFSandBFS/</loc>
+    <loc>https://lingyixia.github.io/2019/05/13/DilatedConvolution/</loc>
     <lastmod>2021-09-19</lastmod>
   </url>  <url>
-    <loc>https://lingyixia.github.io/2019/05/13/DilatedConvolution/</loc>
+    <loc>https://lingyixia.github.io/2019/06/23/DFSandBFS/</loc>
     <lastmod>2021-09-19</lastmod>
   </url>  <url>
     <loc>https://lingyixia.github.io/2019/06/23/Binary/</loc>
