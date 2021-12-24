@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://lingyixia.github.io/img/transform2.jpg">
 <meta property="og:image" content="https://lingyixia.github.io/img/transform1.gif">
 <meta property="og:image" content="https://lingyixia.github.io/img/selfattention.jpg">
-<meta property="og:updated_time" content="2021-09-19T18:01:25.966Z">
+<meta property="og:updated_time" content="2021-12-24T10:54:05.767Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Transformer">
 <meta name="twitter:description" content="本文章只用于自己记录,详细内容好多博客已经讲的很清楚了。参考博客1参考博客2参考博客3参考平博客(最佳)残差网络我的实现">
@@ -257,7 +257,7 @@
             </figure><br>其实就是计算句子中每个单词对其他所有单词的关注程度:</p>
 <script type="math/tex; mode=display">
 Attention(Q,K,V)=\frac{softmax(Q \times K^T)}{\sqrt{d_k}} \times V</script><p>这里只解释为啥要除以$\sqrt{dk}$:</p>
-<h2 id="解释一"><a href="#解释一" class="headerlink" title="解释一"></a>解释一</h2><p>已知:$E(Q_n \times d_k)=0,D(Q_n \times d_k)=1,E(K_n \times d_k)=0,D(K_n \times d_k)=1$,注意，此时的期望和方差都是指的$d_k$维向量的每个分量，且假设这$d_k$个分量独立同分布。<br>目的是保持点积后期望方差不变。如果直接计算点积:$Q \times K^T$为$n \times n$维矩阵,<strong>注意，后面计算的期望和方差都是按照行或者列，不要想成整个矩阵的期望方差</strong>。以某个单词$q$为例:<br>$E(qK^T)=E(\sum_0^{d_k}q_iK^T)=\sum_0^{d_k}E(K^T)=d_k \times 0=0$。其实把$Q$的每个分量看作一个常数即可<br>$D(qK^T)=D(\sum_0^{d_k}q_iK^T)=\sum_0^{d_k}D(K^T)=d_k \times 1=d_k$<br>而$D(\frac{qK^T}{\sqrt{d_k}})=D((qKT)^2)\times D((\frac{1}{d_k})^2)=d_k/d_k=1$</p>
+<h2 id="解释一"><a href="#解释一" class="headerlink" title="解释一"></a>解释一</h2><p>已知:$E(Q_{n \times d_k},axis=0)=0,D(Q_{n \times d_k},axis=0)=1,E(K_{n \times d<em>k},axis=0)=0,D(K\</em>{n \times d_k},axis=0)=1$,注意，$axis=0$的意义是期望和方差都是指的$d_k$维向量的每个分量，且假设这$d_k$个分量独立同分布。<br>目的是保持点积后期望方差不变。如果直接计算点积:$Q \times K^T$为$n \times n$维矩阵,<strong>注意，后面计算的期望和方差都是按照行或者列，不要想成整个矩阵的期望方差</strong>。以某个单词$q$为例($q_i$表示$q$的每个分量):<br>$E(qK^T)=E(\sum_0^{d_k}q_iK^T)=\sum_0^{d_k}E(K^T)=d_k \times 0=0$。其实把$q_i$看作一个常数即可<br>$D(qK^T)=D(\sum_0^{d_k}q_iK^T)=\sum_0^{d_k}D(K^T)=d_k \times 1=d_k$<br>而$D(\frac{qK^T}{\sqrt{d_k}})=D(qK^T)\times D((\frac{1}{d_k})^2)=d_k/d_k=1$</p>
 <h2 id="解释二"><a href="#解释二" class="headerlink" title="解释二"></a>解释二</h2><p>很简单的方法，一个$d_k$维的向量$q_i$，去乘以$d_k \times n$维度的向量，同时这个$d_k \times n$的向量在$d_k$的每个维度上(设第$i$个维度的随机变量为$X_i$)均值为零，方差为1，现在要求相乘后得到的向量,即一个$n$维向量的均值和方差，其实这和乘不乘$q_i$没关系，只和相乘的时候的加法有关系，最后$n$维度向量的均值$E=E(\sum_{i=0}^{d_k}X_i)=d_kE(X)=0$,同理$D(\sum_{i=0}^{d_k}X_i)=\sum_{i=0}^{d_k}D(X)=d_k$,因此要除以$\sqrt d_k$.</p>
 <h2 id="解释三：复杂度-O-n-2-n为序列"><a href="#解释三：复杂度-O-n-2-n为序列" class="headerlink" title="解释三：复杂度$O(n^2)$(n为序列)"></a>解释三：复杂度$O(n^2)$(n为序列)</h2><p>三个步骤：<br>1.$Q \times K^T$，其实就是$n \times d_k$矩阵乘以$d_k \times n$维矩阵，复杂度是$O(d_kn^2)$<br>2.$softmax(Q \times K^T)$,没什么好说的，复杂度$O(n^2)$<br>3.$\frac{softmax(Q \times K^T)}{\sqrt{d_k}}$,就是一个$n\times d_k$矩阵乘以$d_k\times n$矩阵,复杂度$O(d_k^2 \times n)$<br>因此，去除常数$d_k$,复杂度就是$O(n^2)$</p>
 <h1 id="ResNet-And-Norm"><a href="#ResNet-And-Norm" class="headerlink" title="ResNet And Norm"></a>ResNet And Norm</h1><p>残差网络的作用见<a href="https://www.jianshu.com/p/e58437f39f65" target="_blank" rel="noopener">残差网络</a>,Norm的作用自然是加快收敛,防止梯度消失.</p>
@@ -300,7 +300,7 @@ d&=U_i^TU_{i+k}\\
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-09-19T18:01:25.966Z" itemprop="dateUpdated">2021-09-20 02:01:25</time>
+    最后更新时间：<time datetime="2021-12-24T10:54:05.767Z" itemprop="dateUpdated">2021-12-24 18:54:05</time>
 </span><br>
 
 
