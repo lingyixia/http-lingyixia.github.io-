@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://lingyixia.github.io/img/transform2.jpg">
 <meta property="og:image" content="https://lingyixia.github.io/img/transform1.gif">
 <meta property="og:image" content="https://lingyixia.github.io/img/selfattention.jpg">
-<meta property="og:updated_time" content="2021-12-24T11:50:19.879Z">
+<meta property="og:updated_time" content="2021-12-27T09:18:53.728Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Transformer">
 <meta name="twitter:description" content="本文章只用于自己记录,详细内容好多博客已经讲的很清楚了。参考博客1参考博客2参考博客3参考平博客(最佳)残差网络我的实现">
@@ -279,13 +279,13 @@ A_{i,j}=(W_q(E_i+U_i))^T(W_k(E_j+U_j))</script><p>其中，$W_q$和$W_k$分别�
 <script type="math/tex; mode=display">
 A_{i,j}=\underbrace{E_i^TW_qW_kE_j}_a+\underbrace{E_i^TW_qW_kU_j}_b+ \underbrace{U_i^TW_qW_kE_j}_c+\underbrace{U_i^TW_qW_kU_j}_d</script><p>其中，只有$d$包含$i$和$j$的位置相对信息,我们知道:</p>
 <script type="math/tex; mode=display">
-U_t=\left[ sin(f(0,t)),cos(f(0,t)),sin(f(1,t)),cos(f(1,t))...sin(f(d_{model}/2,t)),cos(f(d_{model}/2,t)) \right]^T</script><p>如果没有$W_q$和$W_k$,假设$j-k=i$则有:</p>
+U_t=\left[sin{\frac{t}{10000^{\frac{0}{d_k}}}},cos{\frac{t}{10000^{\frac{0}{d_k}}}},sin{\frac{t}{10000^{\frac{2}{d_k}}}},cos{\frac{t}{10000^{\frac{2}{d_k}}}},...,sin{\frac{t}{10000^{\frac{d_k-2}{2}}}},cos{\frac{t}{10000^{\frac{d_k-2}{2}}}} \right]^T</script><p>如果没有$W_q$和$W_k$,则第$t$和词和第$t+k$个词的位置函数计算结果为:</p>
 <script type="math/tex; mode=display">
 \begin{aligned}
-d&=U_i^TU_{i+k}\\
-&=\sum_{j=0}^{d_{model}-1}[sin(f(j,i))sin(f(j,i+k))]+[cos(f(j,i))cos(f(j,i+k))] \\
-&=\sum_{j=0}^{d_{model}-1}cos(f(j,(t-(t+k))))\\
-&=\sum_{j=0}^{d_{model}-1}cos(f(j,-k))
+d&=U_t^TU_{t+k}\\
+&=\sum_{i=0}^{d_k-1}sin{\frac{t}{10000^{\frac{2i}{d_k}}}}\times sin{\frac{t+k}{10000^{\frac{2i}{d_k}}}}+cos{\frac{t}{10000^{\frac{2i}{d_k}}}}\times cos{\frac{t+k}{10000^{\frac{2i}{d_k}}}}\\
+&=\sum_{i=0}^{d_k-1} cos(\frac{t}{10000^{\frac{2i}{d_k}}}-\frac{t+k}{10000^{\frac{2i}{d_k}}}) \\
+&=\sum_{i=0}^{d_k-1} cos\frac{k}{10000^{\frac{2i}{d_k}}} \\
 \end{aligned}</script><p>发现如果没有$W_q$和$W_k$,位置距离为$k$的两个单词的同一维度只和相对位置有关，即包含了相对位置信息，但是加上这两个矩阵之后这种相对信息不复存在，但是在学习的过程中可以学出来，比如学到$W_qW_k=E$，这种相对位置信息就完全恢复了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import math</span><br><span class="line"></span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line">flag = 0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def attention_scores(d_model, t, k):</span><br><span class="line">    def get_angle(pos, i):</span><br><span class="line">        return pos / math.pow(10000, 2 * i / d_model)</span><br><span class="line"></span><br><span class="line">    angles1 = map(lambda x: get_angle(t, x), range(d_model // 2))</span><br><span class="line">    angles2 = map(lambda x: get_angle(t + k, x), range(d_model // 2))</span><br><span class="line">    result1 = list()</span><br><span class="line">    for angle in list(angles1):</span><br><span class="line">        result1.append(math.sin(angle))</span><br><span class="line">        result1.append(math.cos(angle))</span><br><span class="line">    result2 = list()</span><br><span class="line">    for angle in list(angles2):</span><br><span class="line">        result2.append(math.sin(angle))</span><br><span class="line">        result2.append(math.cos(angle))</span><br><span class="line">    result1 = np.asarray(result1)</span><br><span class="line">    result2 = np.asarray(result2)</span><br><span class="line">    if flag == 0:</span><br><span class="line">        return sum(result1 * result2)</span><br><span class="line">    elif flag == 1:</span><br><span class="line">        W1 = np.random.normal(size=(128, 256))</span><br><span class="line">        W2 = np.random.normal(size=(256, 128))</span><br><span class="line">        W = np.dot(W1, W2)</span><br><span class="line">        return sum(np.dot(result1.T, W) * result2)</span><br><span class="line">    else:</span><br><span class="line">        W = np.identity(128)</span><br><span class="line">        return sum(np.dot(result1.T, W) * result2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    result = list()</span><br><span class="line">    for pos in range(-50, 50):</span><br><span class="line">        result.append(attention_scores(d_model=128, t=64, k=pos))</span><br><span class="line">    data = pd.Series(result)</span><br><span class="line">    data.plot()</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <blockquote>
@@ -304,7 +304,7 @@ d&=U_i^TU_{i+k}\\
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-12-24T11:50:19.879Z" itemprop="dateUpdated">2021-12-24 19:50:19</time>
+    最后更新时间：<time datetime="2021-12-27T09:18:53.728Z" itemprop="dateUpdated">2021-12-27 17:18:53</time>
 </span><br>
 
 
