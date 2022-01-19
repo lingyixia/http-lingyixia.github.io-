@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="分享两篇论文:BERT-Flow和BERT-whitening  BERT-Flow提出问题$\qquad$论文中作者发现，Bert虽然作为上游任务在特定任务上做有监督微调的时候会有大幅度提升，但在无监督任务，即直接用Bert输出作为特征的时候，效果往往不如意，作者实验的任务无监督语义检索（句子相似度评估），通常利用Bert做寓意检索任务包含两个步骤，分别将两个句子输入Bert，直接用$[CLS">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-11-01T08:49:05.653Z">
+<meta property="og:updated_time" content="2022-01-19T12:53:25.303Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="bert-flow&amp;&amp;whiten">
 <meta name="twitter:description" content="分享两篇论文:BERT-Flow和BERT-whitening  BERT-Flow提出问题$\qquad$论文中作者发现，Bert虽然作为上游任务在特定任务上做有监督微调的时候会有大幅度提升，但在无监督任务，即直接用Bert输出作为特征的时候，效果往往不如意，作者实验的任务无监督语义检索（句子相似度评估），通常利用Bert做寓意检索任务包含两个步骤，分别将两个句子输入Bert，直接用$[CLS">
@@ -259,7 +259,7 @@ H_\theta=\begin{bmatrix}
 F(A)=\{A+ \Lambda J_{N,M}|\Lambda \quad \in diagonal \} \tag{3}</script><p>其中$J_{N,M}$是一个全为1的矩阵，$\Lambda$是一个随机初始化的对角矩阵，可以看出来$F(A)$中的每个矩阵都和$A$同型，且$F(A)$实际上就是给$A$的每行加一个数，比如第一行加2，第二行加1等等。由于$\Lambda$的随机性，$F(A)$是一个无穷大的矩阵集合，该集合有两个性质：</p>
 <ol>
 <li>矩阵$A’ \in F(A)$ 当且仅当$Softmax(A’,axis=1)=P^*$,即$F(A)$定义了训练数据所有可能的logits,这个logits的概念可以认为是模型输出未经过$Softmax$的结果，和tensorflow的参数一样。</li>
-<li>对任意$A \in F(A),B \in F(A),|R(A)-R(B) \leq 1$.</li>
+<li>对任意$A \in F(A),B \in F(A),|R(A)-R(B)|\leq 1$.</li>
 </ol>
 <p>第一条不好理解，我解释一下:<br>我们希望$P_\theta(x|c)=P^*(x|c)$,而有：</p>
 <script type="math/tex; mode=display">
@@ -315,7 +315,7 @@ h_c^Tw_x=PMI(x,c)+logP^*(x)+\lambda_c \tag{5}</script><p>$\qquad$说明训练充
   \begin{bmatrix}
   2 & -2 & 2\\
   4 & 4 & -4\\
-\end{bmatrix} \quad cos<\alpha,\beta>=12,cos<\alpha,\gamma>=-12</script><p>看到没有，三种坐标系下的cos距离完全不同，甚至大小排序都发生了变化。<br>$\qquad$那下一个问题就是， 之所以$Cosine$距离效果差，是不是因为$Bert$的词向量不是来自标准正基？要证明这个问题就要知道其基底是什么，但是这个无法准确得知，但是我们可以猜测，结社我们在选择基底的时候，会设法让词向量的各个维度独立同分布，如果$Bert$得到的各个词向量满足的话则认为是基底是正交基（并不是充要条件，只是这样猜测），而当词向量的各个维度独立同分布的时候，自然满足各向同性(协方差矩阵为$aE$的形式，a是常数，E是单位矩阵)，因此我们就看是否满足各向同性即可。<br>$\qquad$我比较疑惑的是这一点，文章经过实验发现高频距离原点近，低频距离远点远，并根据这个现象认为不满足各向同性，这不应该是正常现象么？即使标准正态分布也是这样的呀？反正作者最后认为，由于各向异性，$Cosine$距离判断相似度不准，需要修正。</p>
+\end{bmatrix} \quad cos<\alpha,\beta>=12,cos<\alpha,\gamma>=-12</script><p>看到没有，三种坐标系下的cos距离完全不同，甚至大小排序都发生了变化。<br>$\qquad$那下一个问题就是， 之所以$Cosine$距离效果差，是不是因为$Bert$的词向量不是来自标准正基？要证明这个问题就要知道其基底是什么，但是这个无法准确得知，但是我们可以猜测，我们在选择基底的时候，会设法让词向量的各个维度独立同分布，如果$Bert$得到的各个词向量满足的话则认为是基底是正交基（并不是充要条件，只是这样猜测），而当词向量的各个维度独立同分布的时候，自然满足各向同性(协方差矩阵为$aE$的形式，a是常数，E是单位矩阵)，因此我们就看是否满足各向同性即可。<br>$\qquad$我比较疑惑的是这一点，文章经过实验发现高频距离原点近，低频距离远点远，并根据这个现象认为不满足各向同性，这不应该是正常现象么？即使标准正态分布也是这样的呀？反正作者最后认为，由于各向异性，$Cosine$距离判断相似度不准，需要修正。</p>
 </li>
 </ul>
 <h2 id="flow"><a href="#flow" class="headerlink" title="flow"></a>flow</h2><p>$\qquad$<a href="https://arxiv.org/abs/2011.05864" target="_blank" rel="noopener">flow</a>是一种</p>
@@ -327,7 +327,7 @@ h_c^Tw_x=PMI(x,c)+logP^*(x)+\lambda_c \tag{5}</script><p>$\qquad$说明训练充
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-11-01T08:49:05.653Z" itemprop="dateUpdated">2021-11-01 16:49:05</time>
+    最后更新时间：<time datetime="2022-01-19T12:53:25.303Z" itemprop="dateUpdated">2022-01-19 20:53:25</time>
 </span><br>
 
 
@@ -519,7 +519,7 @@ h_c^Tw_x=PMI(x,c)+logP^*(x)+\lambda_c \tag{5}</script><p>$\qquad$说明训练充
             <span>
             PLM's Notes &nbsp; &copy; &nbsp
             </span>
-            2016 - 2021
+            2016 - 2022
         </p>
     </div>
 </footer>
