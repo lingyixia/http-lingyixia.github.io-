@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="分享两篇论文:BERT-Flow和BERT-whitening  BERT-Flow提出问题$\qquad$论文中作者发现，Bert虽然作为上游任务在特定任务上做有监督微调的时候会有大幅度提升，但在无监督任务，即直接用Bert输出作为特征的时候，效果往往不如意，作者实验的任务无监督语义检索（句子相似度评估），通常利用Bert做寓意检索任务包含两个步骤，分别将两个句子输入Bert，直接用$[CLS">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-01-19T12:53:25.303Z">
+<meta property="og:updated_time" content="2022-01-19T13:13:46.516Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="bert-flow&amp;&amp;whiten">
 <meta name="twitter:description" content="分享两篇论文:BERT-Flow和BERT-whitening  BERT-Flow提出问题$\qquad$论文中作者发现，Bert虽然作为上游任务在特定任务上做有监督微调的时候会有大幅度提升，但在无监督任务，即直接用Bert输出作为特征的时候，效果往往不如意，作者实验的任务无监督语义检索（句子相似度评估），通常利用Bert做寓意检索任务包含两个步骤，分别将两个句子输入Bert，直接用$[CLS">
@@ -287,7 +287,7 @@ h_c^Tw_x=PMI(x,c)+logP^*(x)+\lambda_c \tag{5}</script><p>$\qquad$说明训练充
   \begin{bmatrix}
   2 & -2 & 2\\
   1 & 1 & -1\\
-\end{bmatrix} \quad cos<\alpha,\beta>=3,cos<\alpha,\gamma>=-3</script></li>
+\end{bmatrix} \quad cos<\alpha,\beta>=\frac{-3}{5},cos<\alpha,\gamma>=\frac{3}{5}</script></li>
 <li><p>坐标系1</p>
 <script type="math/tex; mode=display">
 \begin{bmatrix}
@@ -315,7 +315,7 @@ h_c^Tw_x=PMI(x,c)+logP^*(x)+\lambda_c \tag{5}</script><p>$\qquad$说明训练充
   \begin{bmatrix}
   2 & -2 & 2\\
   4 & 4 & -4\\
-\end{bmatrix} \quad cos<\alpha,\beta>=12,cos<\alpha,\gamma>=-12</script><p>看到没有，三种坐标系下的cos距离完全不同，甚至大小排序都发生了变化。<br>$\qquad$那下一个问题就是， 之所以$Cosine$距离效果差，是不是因为$Bert$的词向量不是来自标准正基？要证明这个问题就要知道其基底是什么，但是这个无法准确得知，但是我们可以猜测，我们在选择基底的时候，会设法让词向量的各个维度独立同分布，如果$Bert$得到的各个词向量满足的话则认为是基底是正交基（并不是充要条件，只是这样猜测），而当词向量的各个维度独立同分布的时候，自然满足各向同性(协方差矩阵为$aE$的形式，a是常数，E是单位矩阵)，因此我们就看是否满足各向同性即可。<br>$\qquad$我比较疑惑的是这一点，文章经过实验发现高频距离原点近，低频距离远点远，并根据这个现象认为不满足各向同性，这不应该是正常现象么？即使标准正态分布也是这样的呀？反正作者最后认为，由于各向异性，$Cosine$距离判断相似度不准，需要修正。</p>
+\end{bmatrix} \quad cos<\alpha,\beta>=\frac{3}{5},cos<\alpha,\gamma>=-\frac{3}{5}</script><p>看到没有，三种坐标系下的cos距离完全不同，甚至大小排序都发生了变化。<br>$\qquad$那下一个问题就是， 之所以$Cosine$距离效果差，是不是因为$Bert$的词向量不是来自标准正基？要证明这个问题就要知道其基底是什么，但是这个无法准确得知，但是我们可以猜测，我们在选择基底的时候，会设法让词向量的各个维度独立同分布，如果$Bert$得到的各个词向量满足的话则认为是基底是正交基（并不是充要条件，只是这样猜测），而当词向量的各个维度独立同分布的时候，自然满足各向同性(协方差矩阵为$aE$的形式，a是常数，E是单位矩阵)，因此我们就看是否满足各向同性即可。<br>$\qquad$我比较疑惑的是这一点，文章经过实验发现高频距离原点近，低频距离远点远，并根据这个现象认为不满足各向同性，这不应该是正常现象么？即使标准正态分布也是这样的呀？反正作者最后认为，由于各向异性，$Cosine$距离判断相似度不准，需要修正。</p>
 </li>
 </ul>
 <h2 id="flow"><a href="#flow" class="headerlink" title="flow"></a>flow</h2><p>$\qquad$<a href="https://arxiv.org/abs/2011.05864" target="_blank" rel="noopener">flow</a>是一种</p>
@@ -327,7 +327,7 @@ h_c^Tw_x=PMI(x,c)+logP^*(x)+\lambda_c \tag{5}</script><p>$\qquad$说明训练充
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2022-01-19T12:53:25.303Z" itemprop="dateUpdated">2022-01-19 20:53:25</time>
+    最后更新时间：<time datetime="2022-01-19T13:13:46.516Z" itemprop="dateUpdated">2022-01-19 21:13:46</time>
 </span><br>
 
 
@@ -648,8 +648,8 @@ MathJax.Hub.Queue(function() {
         }
     });
 })();
-</script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 </html>
