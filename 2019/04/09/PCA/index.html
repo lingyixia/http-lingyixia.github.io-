@@ -29,7 +29,7 @@
 <meta property="og:site_name" content="灵翼俠的个人博客">
 <meta property="og:description" content="参考1参考2原理就是一句话,把原来的$A$个维度映射到B(B">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2022-01-19T12:54:37.807Z">
+<meta property="og:updated_time" content="2022-03-17T12:58:19.928Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PCA和LDA">
 <meta name="twitter:description" content="参考1参考2原理就是一句话,把原来的$A$个维度映射到B(B">
@@ -315,15 +315,15 @@
 <h1 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h1><h2 id="命题："><a href="#命题：" class="headerlink" title="命题："></a>命题：</h2><p>对于$P_{b \times a}X_{a\times n}=Y_{b \times n}$，假设$X$已知，且$r(X)=a$，则有无数个$P_{b\times a}$可以得到满足题意的$Y_{b\times n}$，当$b \lt a$的时候，就实现了数据降维，PCA要做的就是，找出一个$P_{b\times a}$使得求出的$Y_{b\times a}$最好。<br>原理：<strong>最大方差理论</strong>：在信号处理中认为信号具有较大的方差，噪声有较小的方差(没找到出处)。在此理论下，PCA的目标有两个：</p>
 <ol>
 <li>$Y_{b\times n}$的列向量方差越大越好。</li>
-<li>$Y_{b\times n}$的不同行向量之间协方差越小越好(绝对值)。<br>那么当$Y_{b\times n}$满足什么条件时方差最大呢？<br>首先确定一下方差怎么计算，我们认为$n$个具有$m$个特征的向量${[x_{11},x_{12},x_{13},…,x_{1m}],[x_{21},x_{22},x_{23},…,x_{2m}],…[x_{1n},x_{n2},x_{3n},…,x_{3m}]}$的方差为：</li>
+<li>$Y_{b\times n}$的不同行向量之间协方差越小越好(绝对值)。<br>那么当$Y_{b\times n}$满足什么条件时方差最大呢？<br>首先确定一下方差怎么计算，我们认为$n$个具有$m$个特征的向量${[x_{11},x_{12},x_{13},…,x_{1m}],[x_{21},x_{22},x_{23},…,x_{2m}],…[x_{n1},x_{n2},x_{n3},…,x_{nm}]}$的方差为：</li>
 </ol>
 <script type="math/tex; mode=display">
-Var_j=\frac{1}{n}\sum_{i=1}^n(x_{ij}-\mu_i)^2 \tag{4}</script><p>其中$\mu_i$是第$i$个分量的均值，可以看到，如果$\mu_i=0$那么公式(4)就可以写作：</p>
+Var_j=\frac{1}{n}\sum_{i=1}^n(x_{ij}-\mu_j)^2 \tag{4}</script><p>其中$\mu_j$是第$j$个分量的均值，可以看到，如果$\mu_i=0$那么公式(4)就可以写作：</p>
 <script type="math/tex; mode=display">
 Var_j=\frac{1}{n}\sum_{i=1}^nx_{ij}^2 \tag{4}</script><script type="math/tex; mode=display">
-Var=[Var_1,Var_2,Var_3,...Var_m]=\frac{1}{n}[\sum_{j=1}^nx_{1j}^2,\sum_{j=1}^nx_{2j}^2,\sum_{j=1}^nx_{3j}^2,...\sum_{j=1}^nx_{3m}^2] \tag{5}</script><p>同理,第$\alpha$个分量和第$\beta$个分量协方差为：</p>
+Var=[Var_1,Var_2,Var_3,...Var_m]=\frac{1}{n}[\sum_{i=1}^nx_{i1}^2,\sum_{i=1}^nx_{i2}^2,\sum_{i=1}^nx_{i3}^2,...\sum_{i=1}^nx_{im}^2] \tag{5}</script><p>同理,第$\alpha$个分量和第$\beta$个分量协方差为：</p>
 <script type="math/tex; mode=display">
-Cov(\alpha,\beta)=\frac{1}{n}\sum_{j=1}^nx_{j\alpha}x_{j\beta} \tag{6}</script><p>假设上诉$n$个具有$m$个特征的向量组成的矩阵为：</p>
+Cov(\alpha,\beta)=\frac{1}{n}\sum_{i=1}^nx_{i\alpha}x_{i\beta} \tag{6}</script><p>假设上诉$n$个具有$m$个特征的向量组成的矩阵为：</p>
 <script type="math/tex; mode=display">
 A=\begin{gathered}               
   \begin{bmatrix}
@@ -400,7 +400,7 @@ S_w^{-1}S_bw=\lambda w \tag{21}</script><p>现在发现了，又是特征向量�
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2022-01-19T12:54:37.807Z" itemprop="dateUpdated">2022-01-19 20:54:37</time>
+    最后更新时间：<time datetime="2022-03-17T12:58:19.928Z" itemprop="dateUpdated">2022-03-17 20:58:19</time>
 </span><br>
 
 
